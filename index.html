@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mirakelprogrammet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --ink:#09090A;
+  --ink2:#131315;
+  --ink3:#1E1E21;
+  --ink4:#2A2A2E;
+  --lime:#CBFF4D;
+  --lime-glow:rgba(203,255,77,0.18);
+  --lime-dim:rgba(203,255,77,0.07);
+  --cream:#F0EDE6;
+  --dust:#6E6E78;
+  --dust2:#3E3E44;
+  --bb:'Bebas Neue',sans-serif;
+  --sg:'Space Grotesk',sans-serif;
+  --mono:'DM Mono',monospace;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--ink);color:var(--cream);font-family:var(--sg);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+/* ── TOPBAR ── */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 48px;
+  border-bottom:1px solid var(--ink3);
+  position:sticky;top:0;z-index:100;
+  background:rgba(9,9,10,0.85);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+@media(max-width:640px){.topbar{padding:18px 20px;}}
+.logo{font-family:var(--bb);font-size:18px;letter-spacing:0.06em;color:var(--lime);text-transform:uppercase;}
+.toptag{font-family:var(--mono);font-size:10px;color:var(--dust);letter-spacing:0.1em;text-transform:uppercase;}
+
+/* ── HERO ── */
+.hero{
+  min-height:calc(100vh - 65px);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:72px 48px 80px;
+  max-width:1080px;margin:0 auto;
+}
+@media(max-width:640px){.hero{padding:48px 20px 60px;}}
+
+.hero-eyebrow{
+  font-family:var(--mono);font-size:10px;letter-spacing:0.16em;
+  color:var(--lime);text-transform:uppercase;margin-bottom:20px;
+  display:flex;align-items:center;gap:10px;
+}
+.hero-eyebrow::before{content:'';display:block;width:24px;height:1px;background:var(--lime);}
+
+.hero-title{
+  font-family:var(--bb);
+  font-size:clamp(64px,13vw,160px);
+  line-height:0.88;letter-spacing:0.01em;
+  margin-bottom:28px;text-transform:uppercase;
+}
+.hero-title .l1{display:block;color:var(--cream);}
+.hero-title .l2{
+  display:block;color:transparent;
+  -webkit-text-stroke:2px var(--lime);
+  text-stroke:2px var(--lime);
+}
+
+.hero-desc{
+  font-size:15px;color:var(--dust);
+  max-width:380px;line-height:1.75;
+  margin-bottom:56px;font-weight:300;
+  letter-spacing:0.01em;
+}
+
+/* ── PROG TYPE TABS ── */
+.prog-type-tabs{
+  display:inline-flex;gap:2px;
+  background:var(--ink3);
+  border-radius:100px;
+  padding:3px;
+  margin-bottom:20px;
+  border:1px solid var(--ink4);
+}
+.ptt{
+  font-family:var(--sg);font-size:13px;font-weight:500;
+  letter-spacing:0.02em;
+  padding:8px 22px;
+  border-radius:100px;
+  background:none;color:var(--dust);
+  border:none;cursor:pointer;
+  transition:all 0.2s;
+  white-space:nowrap;
+}
+.ptt.active{background:var(--lime);color:var(--ink);font-weight:600;}
+.ptt:hover:not(.active){color:var(--cream);}
+
+/* ── INPUTS ── */
+.inputs-wrap{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--ink3);
+  border:1px solid var(--ink3);
+  border-radius:16px;overflow:hidden;
+  margin-bottom:1px;
+}
+@media(max-width:580px){.inputs-wrap{grid-template-columns:1fr;}}
+
+.lift-cell{
+  background:var(--ink2);
+  padding:24px 28px 20px;
+  display:flex;flex-direction:column;
+  position:relative;
+  transition:background 0.2s;
+}
+.lift-cell:focus-within{background:#16161A;}
+
+.lift-cell-label{
+  font-family:var(--mono);font-size:9px;letter-spacing:0.18em;
+  color:var(--dust);text-transform:uppercase;margin-bottom:2px;
+}
+.lift-cell-sub{font-family:var(--mono);font-size:10px;color:var(--dust2);margin-bottom:10px;}
+
+.lift-input-row{display:flex;align-items:baseline;gap:6px;}
+.lift-num{
+  font-family:var(--bb);
+  font-size:clamp(44px,8vw,80px);
+  color:var(--lime);
+  background:none;border:none;outline:none;
+  width:100%;line-height:1;
+  caret-color:var(--lime);
+}
+.lift-num::placeholder{color:var(--ink4);}
+.lift-kg{font-family:var(--mono);font-size:13px;color:var(--dust);font-weight:400;}
+
+.lift-underline{
+  position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:transparent;
+  transition:background 0.2s, box-shadow 0.2s;
+}
+.lift-cell:focus-within .lift-underline{
+  background:var(--lime);
+  box-shadow:0 0 12px var(--lime-glow);
+}
+
+/* ── GENERATE BUTTON ── */
+.cta-btn{
+  font-family:var(--bb);font-size:20px;letter-spacing:0.08em;
+  background:var(--lime);color:var(--ink);
+  border:none;width:100%;padding:20px;
+  cursor:pointer;
+  margin-top:12px;
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  transition:all 0.2s;
+  position:relative;overflow:hidden;
+}
+.cta-btn:hover{
+  background:#D6FF5C;
+  box-shadow:0 0 32px var(--lime-glow);
+  transform:translateY(-1px);
+}
+.cta-btn:active{transform:translateY(0);}
+.cta-arrow{font-size:22px;display:inline-block;transition:transform 0.2s;}
+.cta-btn:hover .cta-arrow{transform:translateX(6px);}
+
+/* ── PROGRAM SECTION ── */
+.prog-section{
+  max-width:1080px;margin:0 auto;
+  padding:0 48px 120px;display:none;
+}
+@media(max-width:640px){.prog-section{padding:0 20px 80px;}}
+
+.prog-top{
+  padding:64px 0 28px;
+  border-top:1px solid var(--ink3);
+  display:flex;align-items:flex-end;justify-content:space-between;
+  flex-wrap:wrap;gap:16px;
+}
+.prog-heading{
+  font-family:var(--bb);
+  font-size:clamp(36px,6vw,72px);
+  line-height:1;letter-spacing:0.01em;
+}
+.prog-heading span{color:var(--lime);}
+.prog-summary{
+  font-family:var(--mono);font-size:11px;color:var(--dust);
+  line-height:2;text-align:right;
+}
+@media(max-width:640px){.prog-summary{text-align:left;}}
+
+/* ── WEEK TABS (inside program) ── */
+.week-tabs-bar{
+  display:inline-flex;gap:2px;
+  background:var(--ink3);
+  border-radius:100px;padding:3px;
+  border:1px solid var(--ink4);
+  margin-bottom:24px;
+  flex-wrap:wrap;
+}
+.wtab{
+  font-family:var(--sg);font-size:12px;font-weight:500;
+  letter-spacing:0.02em;
+  padding:7px 18px;border-radius:100px;
+  background:none;color:var(--dust);
+  border:none;cursor:pointer;transition:all 0.2s;
+  white-space:nowrap;
+}
+.wtab.active{background:var(--lime);color:var(--ink);font-weight:600;}
+.wtab:hover:not(.active){color:var(--cream);}
+
+.week-panel{display:none;}
+.week-panel.active{display:block;}
+
+.week-meta{
+  font-family:var(--mono);font-size:9px;color:var(--dust);
+  letter-spacing:0.14em;text-transform:uppercase;
+  padding:12px 0 16px;
+  border-bottom:1px solid var(--ink3);
+  margin-bottom:16px;
+}
+
+/* ── DAY GRID ── */
+.days-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:12px;
+}
+
+.day-card{
+  background:var(--ink2);
+  border:1px solid var(--ink3);
+  border-radius:16px;
+  padding:24px;
+  animation:slideUp 0.4s ease both;
+  transition:border-color 0.2s;
+}
+.day-card:hover{border-color:var(--ink4);}
+
+@keyframes slideUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+.day-card-rest{
+  background:var(--ink);
+  border:1px solid var(--ink3);
+  border-radius:16px;
+  padding:24px;
+  animation:slideUp 0.4s ease both;
+  opacity:0.5;
+}
+
+.dc-eyebrow{
+  font-family:var(--mono);font-size:9px;letter-spacing:0.16em;
+  color:var(--lime);text-transform:uppercase;margin-bottom:3px;
+}
+.dc-title{
+  font-family:var(--bb);font-size:24px;letter-spacing:0.02em;
+  color:var(--cream);margin-bottom:18px;
+}
+.dc-rest{font-size:13px;color:var(--dust2);font-weight:300;padding:4px 0;}
+
+/* ── EXERCISES ── */
+.ex-wrap{padding:12px 0;border-top:1px solid var(--ink3);}
+.ex-wrap:first-of-type{border-top:none;padding-top:0;}
+
+.ex-name-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px;}
+.ex-name{font-size:13px;font-weight:600;color:var(--cream);letter-spacing:0.01em;}
+.ex-note{font-family:var(--mono);font-size:9px;color:var(--dust2);letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;}
+
+/* ── SET BARS (nytt design – horisontella bars istf runda chips) ── */
+.set-bars{display:flex;flex-direction:column;gap:4px;}
+.set-bar{
+  display:flex;align-items:center;
+  background:var(--ink3);
+  border-radius:8px;
+  padding:6px 12px;
+  gap:10px;
+  transition:background 0.15s;
+}
+.set-bar-top{
+  background:var(--lime-dim);
+  border:1px solid rgba(203,255,77,0.15);
+}
+.set-bar-top .sb-kg{color:var(--lime);}
+.sb-reps{
+  font-family:var(--mono);font-size:10px;color:var(--dust);
+  min-width:22px;
+}
+.sb-bar-track{flex:1;height:3px;background:var(--ink4);border-radius:99px;overflow:hidden;}
+.sb-bar-fill{height:3px;border-radius:99px;background:var(--ink4);transition:width 0.3s;}
+.sb-kg{
+  font-family:var(--bb);font-size:17px;color:var(--cream);
+  min-width:52px;text-align:right;line-height:1;
+}
+.sb-pct{
+  font-family:var(--mono);font-size:9px;color:var(--dust2);
+  min-width:36px;text-align:right;
+}
+
+/* ── AMRAP ── */
+.amrap-bar{
+  display:flex;align-items:center;gap:10px;
+  background:var(--ink3);border-radius:8px;
+  padding:6px 12px;
+  border:1px dashed var(--dust2);
+  margin-top:4px;
+}
+.amrap-label{font-family:var(--mono);font-size:10px;color:var(--dust);letter-spacing:0.08em;}
+.amrap-kg{font-family:var(--bb);font-size:17px;color:var(--cream);margin-left:auto;}
+.amrap-pct{font-family:var(--mono);font-size:9px;color:var(--dust2);}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid var(--ink3);
+  padding:28px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;
+}
+@media(max-width:640px){footer{padding:24px 20px;}}
+.footer-logo{font-family:var(--bb);font-size:15px;color:var(--lime);letter-spacing:0.06em;}
+.footer-note{font-family:var(--mono);font-size:9px;color:var(--dust2);letter-spacing:0.1em;text-transform:uppercase;}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">Mirakelprogrammet</div>
+  <div class="toptag">Styrkelyft · Periodisering</div>
+</header>
+
+<section class="hero">
+  <div class="hero-eyebrow">Baserat på dina personbästan</div>
+  <h1 class="hero-title">
+    <span class="l1">MIRAKEL</span>
+    <span class="l2">PROGRAMMET</span>
+  </h1>
+  <p class="hero-desc">Lyft tungt, lyft smart och för guds skull akta ryggen.</p>
+
+  <div class="prog-type-tabs">
+    <button class="ptt active" id="ptt-2" onclick="setProgType('2veckor')">2-veckorscykel</button>
+    <button class="ptt" id="ptt-5" onclick="setProgType('5veckor')">5-veckorscykel</button>
+  </div>
+
+  <div class="inputs-wrap">
+    <div class="lift-cell">
+      <div class="lift-cell-label">Knäböj</div>
+      <div class="lift-cell-sub">Personbästa</div>
+      <div class="lift-input-row">
+        <input class="lift-num" id="squat" type="number" placeholder="—" min="60" max="500"/>
+        <span class="lift-kg">kg</span>
+      </div>
+      <div class="lift-underline"></div>
+    </div>
+    <div class="lift-cell">
+      <div class="lift-cell-label">Bänkpress</div>
+      <div class="lift-cell-sub">Personbästa</div>
+      <div class="lift-input-row">
+        <input class="lift-num" id="bench" type="number" placeholder="—" min="40" max="400"/>
+        <span class="lift-kg">kg</span>
+      </div>
+      <div class="lift-underline"></div>
+    </div>
+    <div class="lift-cell">
+      <div class="lift-cell-label">Marklyft</div>
+      <div class="lift-cell-sub">Personbästa</div>
+      <div class="lift-input-row">
+        <input class="lift-num" id="dead" type="number" placeholder="—" min="60" max="600"/>
+        <span class="lift-kg">kg</span>
+      </div>
+      <div class="lift-underline"></div>
+    </div>
+  </div>
+
+  <button class="cta-btn" onclick="generate()">
+    Generera mitt program <span class="cta-arrow">→</span>
+  </button>
+</section>
+
+<section class="prog-section" id="prog-section">
+  <div class="prog-top">
+    <div class="prog-heading">Ditt <span>program</span></div>
+    <div class="prog-summary" id="prog-summary"></div>
+  </div>
+  <div id="prog-output"></div>
+</section>
+
+<footer>
+  <div class="footer-logo">Mirakelprogrammet</div>
+  <div class="footer-note">Procenten speglar din faktiska träning</div>
+</footer>
+
+<script>
+let progType = '2veckor';
+
+function setProgType(t){
+  progType = t;
+  document.getElementById('ptt-2').classList.toggle('active', t==='2veckor');
+  document.getElementById('ptt-5').classList.toggle('active', t==='5veckor');
+}
+
+function rnd(v){ return Math.round(v/2.5)*2.5; }
+
+function baseEx(s, b, d){
+  return {
+    tue_squat: [[6,63.8],[6,67.2],[5,70.7],[5,74.1],[2,77.6],[2,81.0]].map(([reps,pct])=>({reps,kg:rnd(s*pct/100),pct})),
+    tue_bench: [[15,64.7],[12,64.7],[10,64.7],[10,64.7],[10,64.7],[10,64.7],[10,64.7],[10,64.7]].map(([reps,pct])=>({reps,kg:rnd(b*pct/100),pct})),
+    wed_stop:  [[3,82.4],[3,82.4],[2,82.4],[2,82.4],[2,82.4],[2,82.4],[2,82.4]].map(([reps,pct])=>({reps,kg:rnd(b*pct/100),pct})),
+    wed_dead:  [[6,67.2],[6,70.2],[5,73.3],[5,76.3],[2,79.4],[2,82.4]].map(([reps,pct])=>({reps,kg:rnd(d*pct/100),pct})),
+    fri_bench: Array(7).fill([7,73.5]).map(([reps,pct])=>({reps,kg:rnd(b*pct/100),pct})),
+    sun_bench: [[10,70.6],[6,76.5],[3,82.4],[3,82.4],[5,76.5],[8,70.6],[8,70.6]].map(([reps,pct])=>({reps,kg:rnd(b*pct/100),pct})),
+    amrap: {kg:rnd(b*58.8/100), pct:58.8},
+    sat_stop_a: [[2,88.2],[2,88.2],[2,88.2],[3,82.4],[3,82.4],[3,82.4],[2,82.4]].map(([reps,pct])=>({reps,kg:rnd(b*pct/100),pct})),
+    sat_stop_b: [[1,94.1],[2,88.2],[2,88.2],[3,82.4],[3,82.4],[3,82.4],[2,82.4]].map(([reps,pct])=>({reps,kg:rnd(b*pct/100),pct})),
+  };
+}
+
+function sat2week(s, isA){
+  const base = isA
+    ? [[6,0.6897],[5,0.7328],[4,0.7759],[3,0.8190],[2,0.8621],[2,0.8966]]
+    : [[6,0.6897],[5,0.7414],[4,0.7931],[3,0.8448],[2,0.8966],[1,0.9310]];
+  return base.map(([reps,f])=>({reps,kg:rnd(s*f),pct:f*100}));
+}
+function sun2week(d, isA){
+  const base = isA
+    ? [[6,0.7023],[5,0.7481],[4,0.7939],[3,0.8397],[2,0.8855],[2,0.9160]]
+    : [[6,0.7023],[5,0.7634],[4,0.8168],[3,0.8626],[2,0.9084],[1,0.9466]];
+  return base.map(([reps,f])=>({reps,kg:rnd(d*f),pct:f*100}));
+}
+
+const SAT5 = [
+  [[6,0.6897],[5,0.7241],[4,0.7586],[3,0.7931],[2,0.8276],[5,0.8621]],
+  [[6,0.6897],[5,0.7328],[4,0.7759],[3,0.8190],[2,0.8621],[4,0.8879]],
+  [[6,0.6897],[5,0.7328],[4,0.7759],[3,0.8190],[2,0.8621],[3,0.9052]],
+  [[6,0.6897],[5,0.7414],[4,0.7931],[3,0.8448],[2,0.8966],[2,0.9310]],
+  [[6,0.6897],[5,0.7241],[4,0.7759],[3,0.8448],[2,0.9138],[1,0.9828]],
+];
+const SUN5 = [
+  [[6,0.7023],[5,0.7328],[4,0.7710],[3,0.8015],[2,0.8321],[5,0.8626]],
+  [[6,0.7023],[5,0.7405],[4,0.7786],[3,0.8168],[2,0.8550],[4,0.8855]],
+  [[6,0.7023],[5,0.7481],[4,0.7939],[3,0.8321],[2,0.8702],[3,0.9084]],
+  [[6,0.7023],[5,0.7481],[4,0.7939],[3,0.8397],[2,0.8855],[2,0.9313]],
+  [[6,0.7023],[5,0.7328],[4,0.7939],[3,0.8550],[2,0.9160],[1,0.9771]],
+];
+
+function toChips(table, pb){
+  return table.map(([reps,f])=>({reps, kg:rnd(pb*f), pct:f*100}));
+}
+
+function buildWeek(s, b, d, isA, weekNum){
+  const ex = baseEx(s, b, d);
+  let satSquat, sunDead;
+  if(weekNum === null){
+    satSquat = sat2week(s, isA);
+    sunDead  = sun2week(d, isA);
+  } else {
+    const wi = weekNum - 1;
+    satSquat = toChips(SAT5[wi], s);
+    sunDead  = toChips(SUN5[wi], d);
+  }
+  return [
+    {day:'Måndag',  tag:'Dag 1', rest:true},
+    {day:'Tisdag',  tag:'Dag 2', exercises:[
+      {name:'Knäböj',    sets:ex.tue_squat},
+      {name:'Bänkpress', sets:ex.tue_bench, note:'Volympass'},
+    ]},
+    {day:'Onsdag',  tag:'Dag 3', exercises:[
+      {name:'Bänk med stopp', sets:ex.wed_stop},
+      {name:'Bänkpress TNG', amrap:true, kg:ex.amrap.kg, pct:ex.amrap.pct, note:'AMRAP touch & go'},
+      {name:'Marklyft', sets:ex.wed_dead},
+    ]},
+    {day:'Torsdag', tag:'Dag 4', rest:true},
+    {day:'Fredag',  tag:'Dag 5', exercises:[
+      {name:'Bänkpress 7×7', sets:ex.fri_bench},
+    ]},
+    {day:'Lördag',  tag:'Dag 6', exercises:[
+      {name:'Knäböj',         sets:satSquat, highlightLast:true},
+      {name:'Bänk med stopp', sets:isA?ex.sat_stop_a:ex.sat_stop_b, highlightFirst:true},
+      {name:'Bänkpress TNG',  amrap:true, kg:ex.amrap.kg, pct:ex.amrap.pct, note:'AMRAP touch & go'},
+    ]},
+    {day:'Söndag',  tag:'Dag 7', exercises:[
+      {name:'Bänkpress', sets:ex.sun_bench, note:'Varierad intensitet'},
+      {name:'Marklyft',  sets:sunDead, highlightLast:true},
+    ]},
+  ];
+}
+
+// Hitta max kg i en set-lista för att beräkna bar-bredd
+function maxKg(sets){ return Math.max(...sets.map(s=>s.kg)); }
+
+function renderEx(ex){
+  let h = `<div class="ex-wrap"><div class="ex-name-row"><span class="ex-name">${ex.name}</span>${ex.note?`<span class="ex-note">${ex.note}</span>`:''}</div>`;
+  if(ex.amrap){
+    h += `<div class="amrap-bar">
+      <span class="amrap-label">AMRAP</span>
+      <span class="amrap-kg">${ex.kg} kg</span>
+      <span class="amrap-pct">${ex.pct.toFixed(1)}%</span>
+    </div>`;
+  } else {
+    const mx = maxKg(ex.sets);
+    h += `<div class="set-bars">`;
+    ex.sets.forEach((s,i)=>{
+      const pct_bar = mx > 0 ? (s.kg/mx*100).toFixed(1) : 0;
+      const isHighlight = (ex.highlightLast && i === ex.sets.length - 1)
+                       || (ex.highlightFirst && i === 0);
+      h += `<div class="set-bar${isHighlight?' set-bar-top':''}">
+        <span class="sb-reps">${s.reps}r</span>
+        <div class="sb-bar-track"><div class="sb-bar-fill" style="width:${pct_bar}%${isHighlight?';background:var(--lime)':''}"></div></div>
+        <span class="sb-kg">${s.kg}</span>
+        <span class="sb-pct">${s.pct.toFixed(1)}%</span>
+      </div>`;
+    });
+    h += `</div>`;
+  }
+  return h + `</div>`;
+}
+
+function renderGrid(days){
+  let h = `<div class="days-grid">`;
+  days.forEach((day,i)=>{
+    h += `<div class="${day.rest?'day-card-rest':'day-card'}" style="animation-delay:${i*0.06}s">`;
+    h += `<div class="dc-eyebrow">${day.tag}</div><div class="dc-title">${day.day}</div>`;
+    if(day.rest) h += `<div class="dc-rest">Vila</div>`;
+    else day.exercises.forEach(ex=>{ h += renderEx(ex); });
+    h += `</div>`;
+  });
+  return h + `</div>`;
+}
+
+function generate(){
+  const s = parseFloat(document.getElementById('squat').value);
+  const b = parseFloat(document.getElementById('bench').value);
+  const d = parseFloat(document.getElementById('dead').value);
+  if(!s||!b||!d||s<40||b<20||d<40){ alert('Fyll i dina personbästan i alla tre lyfter.'); return; }
+
+  const sec = document.getElementById('prog-section');
+  const out = document.getElementById('prog-output');
+  document.getElementById('prog-summary').innerHTML =
+    `Knäböj <strong style="color:var(--lime)">${s} kg</strong><br>` +
+    `Bänkpress <strong style="color:var(--lime)">${b} kg</strong><br>` +
+    `Marklyft <strong style="color:var(--lime)">${d} kg</strong>`;
+
+  const topRepsLabel = ['5 reps','4 reps','3 reps','2 reps','1 rep'];
+
+  if(progType === '2veckor'){
+    let html = `<div class="week-tabs-bar">
+      <button class="wtab active" onclick="switchTab(0,this)">Vecka 1</button>
+      <button class="wtab" onclick="switchTab(1,this)">Vecka 2</button>
+    </div>`;
+    [{label:'Vecka 1',isA:true},{label:'Vecka 2',isA:false}].forEach((w,i)=>{
+      html += `<div class="week-panel${i===0?' active':''}" id="wpanel-${i}">
+        <div class="week-meta">${w.label}</div>${renderGrid(buildWeek(s,b,d,w.isA,null))}</div>`;
+    });
+    out.innerHTML = html;
+  } else {
+    const variants = [true,false,true,false,true];
+    let html = `<div class="week-tabs-bar">`;
+    variants.forEach((_,i)=>{ html+=`<button class="wtab${i===0?' active':''}" onclick="switchTab(${i},this)">Vecka ${i+1}</button>`; });
+    html += `</div>`;
+    variants.forEach((isA,i)=>{
+      html += `<div class="week-panel${i===0?' active':''}" id="wpanel-${i}">
+        <div class="week-meta">Vecka ${i+1} · ${isA?'A':'B'}-variant · Toppset: ${topRepsLabel[i]}</div>
+        ${renderGrid(buildWeek(s,b,d,isA,i+1))}</div>`;
+    });
+    out.innerHTML = html;
+  }
+
+  sec.style.display = 'block';
+  sec.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function switchTab(idx, btn){
+  btn.closest('.week-tabs-bar').querySelectorAll('.wtab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  document.querySelectorAll('.week-panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
+}
+
+document.addEventListener('keydown',e=>{ if(e.key==='Enter') generate(); });
+</script>
+</body>
+</html>
