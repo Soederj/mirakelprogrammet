@@ -221,6 +221,18 @@ body{background:var(--ink);color:var(--cream);font-family:var(--sg);min-height:1
   border-bottom:1px solid var(--ink3);
   margin-bottom:16px;
 }
+.week-legend{
+  display:flex;align-items:center;gap:8px;
+  margin-top:10px;padding-top:10px;
+  border-top:1px solid var(--ink3);
+  font-family:var(--mono);font-size:9px;color:var(--dust2);
+  letter-spacing:0.06em;
+}
+.week-legend-dot{
+  width:8px;height:8px;border-radius:2px;
+  background:var(--lime-dim);border:1px solid rgba(203,255,77,0.25);
+  flex-shrink:0;
+}
 
 /* ── DAY GRID ── */
 .days-grid{
@@ -387,7 +399,7 @@ footer{
 
 <footer>
   <div class="footer-logo">Mirakelprogrammet</div>
-  <div class="footer-note">Procenten speglar din faktiska träning</div>
+  <div class="footer-note">Inga ursäkter. Bara procent.</div>
 </footer>
 
 <script>
@@ -461,26 +473,26 @@ function buildWeek(s, b, d, isA, weekNum){
   return [
     {day:'Måndag',  tag:'Dag 1', rest:true},
     {day:'Tisdag',  tag:'Dag 2', exercises:[
-      {name:'Knäböj',    sets:ex.tue_squat},
-      {name:'Bänkpress', sets:ex.tue_bench, note:'Volympass'},
+      {name:'Knäböj',        sets:ex.tue_squat},
+      {name:'Bänkpress TNG', sets:ex.tue_bench, note:'Volympass'},
     ]},
     {day:'Onsdag',  tag:'Dag 3', exercises:[
-      {name:'Bänk med stopp', sets:ex.wed_stop},
+      {name:'Bänkpress med stopp', sets:ex.wed_stop},
       {name:'Bänkpress TNG', amrap:true, kg:ex.amrap.kg, pct:ex.amrap.pct, note:'AMRAP touch & go'},
       {name:'Marklyft', sets:ex.wed_dead},
     ]},
     {day:'Torsdag', tag:'Dag 4', rest:true},
     {day:'Fredag',  tag:'Dag 5', exercises:[
-      {name:'Bänkpress 7×7', sets:ex.fri_bench},
+      {name:'Bänkpress TNG', sets:ex.fri_bench},
     ]},
     {day:'Lördag',  tag:'Dag 6', exercises:[
-      {name:'Knäböj',         sets:satSquat, highlightLast:true},
-      {name:'Bänk med stopp', sets:isA?ex.sat_stop_a:ex.sat_stop_b, highlightFirst:true},
+      {name:'Knäböj',              sets:satSquat, highlightLast:true},
+      {name:'Bänkpress med stopp', sets:isA?ex.sat_stop_a:ex.sat_stop_b, highlightFirst:true},
       {name:'Bänkpress TNG',  amrap:true, kg:ex.amrap.kg, pct:ex.amrap.pct, note:'AMRAP touch & go'},
     ]},
     {day:'Söndag',  tag:'Dag 7', exercises:[
-      {name:'Bänkpress', sets:ex.sun_bench, note:'Varierad intensitet'},
-      {name:'Marklyft',  sets:sunDead, highlightLast:true},
+      {name:'Bänkpress TNG', sets:ex.sun_bench, note:'Varierad intensitet'},
+      {name:'Marklyft',      sets:sunDead, highlightLast:true},
     ]},
   ];
 }
@@ -493,7 +505,7 @@ function renderEx(ex){
   if(ex.amrap){
     h += `<div class="amrap-bar">
       <span class="amrap-label">AMRAP</span>
-      <span class="amrap-kg">${ex.kg} kg</span>
+      <span class="amrap-kg">${ex.kg}</span>
       <span class="amrap-pct">${ex.pct.toFixed(1)}%</span>
     </div>`;
   } else {
@@ -549,7 +561,7 @@ function generate(){
     </div>`;
     [{label:'Vecka 1',isA:true},{label:'Vecka 2',isA:false}].forEach((w,i)=>{
       html += `<div class="week-panel${i===0?' active':''}" id="wpanel-${i}">
-        <div class="week-meta">${w.label}</div>${renderGrid(buildWeek(s,b,d,w.isA,null))}</div>`;
+        <div class="week-meta">${w.label}<div class="week-legend"><div class="week-legend-dot"></div>Markerade set är veckans viktigaste – kräver lite extra mental förberedelse.</div></div>${renderGrid(buildWeek(s,b,d,w.isA,null))}</div>`;
     });
     out.innerHTML = html;
   } else {
@@ -559,7 +571,7 @@ function generate(){
     html += `</div>`;
     variants.forEach((isA,i)=>{
       html += `<div class="week-panel${i===0?' active':''}" id="wpanel-${i}">
-        <div class="week-meta">Vecka ${i+1} · ${isA?'A':'B'}-variant · Toppset: ${topRepsLabel[i]}</div>
+        <div class="week-meta">Vecka ${i+1} · ${isA?'A':'B'}-variant · Toppset: ${topRepsLabel[i]}<div class="week-legend"><div class="week-legend-dot"></div>Markerade set är veckans viktigaste – kräver lite extra mental förberedelse.</div></div>
         ${renderGrid(buildWeek(s,b,d,isA,i+1))}</div>`;
     });
     out.innerHTML = html;
