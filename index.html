@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏋️</text></svg>"/>
 <title>Mirakelprogrammet</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -309,6 +310,12 @@ body{background:var(--ink);color:var(--cream);font-family:var(--sg);min-height:1
   font-family:var(--mono);font-size:9px;color:var(--dust2);
   min-width:36px;text-align:right;
 }
+.sb-e1rm{
+  font-family:var(--mono);font-size:9px;color:var(--dust2);
+  min-width:48px;text-align:right;
+  opacity:0.6;
+  letter-spacing:0.02em;
+}
 
 /* ── AMRAP ── */
 .amrap-bar{
@@ -331,7 +338,80 @@ footer{
 }
 @media(max-width:640px){footer{padding:24px 20px;}}
 .footer-logo{font-family:var(--bb);font-size:15px;color:var(--lime);letter-spacing:0.06em;}
-.footer-note{font-family:var(--mono);font-size:9px;color:var(--dust2);letter-spacing:0.1em;text-transform:uppercase;}
+/* ── INPUT MODE TOGGLE ── */
+.input-mode-toggle{
+  display:inline-flex;gap:2px;
+  background:var(--ink3);border-radius:100px;
+  padding:3px;border:1px solid var(--ink4);
+  margin-bottom:12px;
+}
+.imt{
+  font-family:var(--sg);font-size:12px;font-weight:500;
+  padding:7px 18px;border-radius:100px;
+  background:none;color:var(--dust);
+  border:none;cursor:pointer;transition:all 0.2s;
+  white-space:nowrap;
+}
+.imt.active{background:var(--cream);color:var(--ink);font-weight:600;}
+.imt:hover:not(.active){color:var(--cream);}
+
+/* ── E1RM INPUTS (aktuellt läge) ── */
+.e1rm-wrap{display:none;}
+.e1rm-wrap.visible{display:block;}
+.e1rm-intro{
+  font-family:var(--mono);font-size:10px;color:var(--dust);
+  letter-spacing:0.08em;line-height:1.7;
+  padding:12px 0 14px;
+}
+.e1rm-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--ink3);
+  border:1px solid var(--ink3);border-radius:16px;overflow:hidden;
+  margin-bottom:1px;
+}
+@media(max-width:580px){.e1rm-grid{grid-template-columns:1fr;}}
+.e1rm-cell{
+  background:var(--ink2);padding:18px 22px 16px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.e1rm-cell-label{
+  font-family:var(--mono);font-size:9px;letter-spacing:0.18em;
+  color:var(--dust);text-transform:uppercase;
+}
+.e1rm-row{display:flex;align-items:center;gap:8px;}
+.e1rm-field{display:flex;flex-direction:column;gap:4px;flex:1;}
+.e1rm-field-label{font-family:var(--mono);font-size:9px;color:var(--dust2);letter-spacing:0.06em;}
+.e1rm-input{
+  font-family:var(--bb);font-size:28px;color:var(--lime);
+  background:var(--ink3);border:1px solid var(--ink4);
+  border-radius:8px;outline:none;
+  width:100%;padding:6px 10px;line-height:1;
+  caret-color:var(--lime);
+  transition:border-color 0.2s;
+}
+.e1rm-input:focus{border-color:var(--lime);}
+.e1rm-input::placeholder{color:var(--ink4);}
+.e1rm-input.small{font-size:22px;}
+.e1rm-result{
+  background:var(--lime-dim);border:1px solid rgba(203,255,77,0.15);
+  border-radius:8px;padding:8px 12px;
+  display:flex;align-items:center;justify-content:space-between;
+  min-height:40px;
+}
+.e1rm-result-label{font-family:var(--mono);font-size:9px;color:var(--dust);letter-spacing:0.08em;text-transform:uppercase;}
+.e1rm-result-val{font-family:var(--bb);font-size:22px;color:var(--lime);line-height:1;}
+.e1rm-result-empty{font-family:var(--mono);font-size:10px;color:var(--dust2);}
+/* Mobil: stacka e1rm-fälten vertikalt och gör inputs större att trycka på */
+@media(max-width:480px){
+  .e1rm-row{flex-direction:column;gap:10px;}
+  .e1rm-field{width:100%;}
+  .e1rm-input{font-size:32px;padding:8px 12px;}
+  .e1rm-input.small{font-size:28px;}
+  .input-mode-toggle{width:100%;justify-content:center;}
+  .imt{flex:1;text-align:center;}
+  .prog-type-tabs{width:100%;justify-content:center;}
+  .ptt{flex:1;text-align:center;}
+}
 </style>
 </head>
 <body>
@@ -354,33 +434,116 @@ footer{
     <button class="ptt" id="ptt-5" onclick="setProgType('5veckor')">5-veckorscykel</button>
   </div>
 
-  <div class="inputs-wrap">
-    <div class="lift-cell">
-      <div class="lift-cell-label">Knäböj</div>
-      <div class="lift-cell-sub">Personbästa</div>
-      <div class="lift-input-row">
-        <input class="lift-num" id="squat" type="number" placeholder="—" min="60" max="500"/>
-        <span class="lift-kg">kg</span>
+  <!-- INPUT MODE TOGGLE -->
+  <div class="input-mode-toggle">
+    <button class="imt active" id="imt-pb" onclick="setInputMode('pb')">Personbästa</button>
+    <button class="imt" id="imt-e1rm" onclick="setInputMode('e1rm')">Senaste 6 månaderna</button>
+  </div>
+
+  <!-- PB-LÄGE -->
+  <div id="pb-wrap">
+    <div class="inputs-wrap">
+      <div class="lift-cell">
+        <div class="lift-cell-label">Knäböj</div>
+        <div class="lift-cell-sub">Personbästa</div>
+        <div class="lift-input-row">
+          <input class="lift-num" id="squat" type="number" placeholder="—" min="60" max="500"/>
+          <span class="lift-kg">kg</span>
+        </div>
+        <div class="lift-underline"></div>
       </div>
-      <div class="lift-underline"></div>
+      <div class="lift-cell">
+        <div class="lift-cell-label">Bänkpress</div>
+        <div class="lift-cell-sub">Personbästa</div>
+        <div class="lift-input-row">
+          <input class="lift-num" id="bench" type="number" placeholder="—" min="40" max="400"/>
+          <span class="lift-kg">kg</span>
+        </div>
+        <div class="lift-underline"></div>
+      </div>
+      <div class="lift-cell">
+        <div class="lift-cell-label">Marklyft</div>
+        <div class="lift-cell-sub">Personbästa</div>
+        <div class="lift-input-row">
+          <input class="lift-num" id="dead" type="number" placeholder="—" min="60" max="600"/>
+          <span class="lift-kg">kg</span>
+        </div>
+        <div class="lift-underline"></div>
+      </div>
     </div>
-    <div class="lift-cell">
-      <div class="lift-cell-label">Bänkpress</div>
-      <div class="lift-cell-sub">Personbästa</div>
-      <div class="lift-input-row">
-        <input class="lift-num" id="bench" type="number" placeholder="—" min="40" max="400"/>
-        <span class="lift-kg">kg</span>
+  </div>
+
+  <!-- E1RM-LÄGE -->
+  <div class="e1rm-wrap" id="e1rm-wrap">
+    <div class="e1rm-intro">Fyll i det tyngsta setet du gjort i varje lyft de senaste 6 månaderna.<br>Ange också hur många reps du bedömer att du hade kvar i tanken – de adderas och ger ett estimerat max via Epleys ekvation.</div>
+    <div class="e1rm-grid">
+
+      <div class="e1rm-cell">
+        <div class="e1rm-cell-label">Knäböj</div>
+        <div class="e1rm-row">
+          <div class="e1rm-field">
+            <div class="e1rm-field-label">Vikt (kg)</div>
+            <input class="e1rm-input" id="s-kg" type="number" placeholder="—" min="20" max="500" oninput="calcE1RM('s')"/>
+          </div>
+          <div class="e1rm-field">
+            <div class="e1rm-field-label">Reps</div>
+            <input class="e1rm-input small" id="s-reps" type="number" placeholder="—" min="1" max="10" oninput="calcE1RM('s')"/>
+          </div>
+          <div class="e1rm-field">
+            <div class="e1rm-field-label">Reps i tanken</div>
+            <input class="e1rm-input small" id="s-rit" type="number" placeholder="—" min="0" max="10" oninput="calcE1RM('s')"/>
+          </div>
+        </div>
+        <div class="e1rm-result" id="s-result">
+          <span class="e1rm-result-label">Estimerat max</span>
+          <span class="e1rm-result-empty" id="s-val">Fyll i ovan</span>
+        </div>
       </div>
-      <div class="lift-underline"></div>
-    </div>
-    <div class="lift-cell">
-      <div class="lift-cell-label">Marklyft</div>
-      <div class="lift-cell-sub">Personbästa</div>
-      <div class="lift-input-row">
-        <input class="lift-num" id="dead" type="number" placeholder="—" min="60" max="600"/>
-        <span class="lift-kg">kg</span>
+
+      <div class="e1rm-cell">
+        <div class="e1rm-cell-label">Bänkpress</div>
+        <div class="e1rm-row">
+          <div class="e1rm-field">
+            <div class="e1rm-field-label">Vikt (kg)</div>
+            <input class="e1rm-input" id="b-kg" type="number" placeholder="—" min="20" max="400" oninput="calcE1RM('b')"/>
+          </div>
+          <div class="e1rm-field">
+            <div class="e1rm-field-label">Reps</div>
+            <input class="e1rm-input small" id="b-reps" type="number" placeholder="—" min="1" max="10" oninput="calcE1RM('b')"/>
+          </div>
+          <div class="e1rm-field">
+            <div class="e1rm-field-label">Reps i tanken</div>
+            <input class="e1rm-input small" id="b-rit" type="number" placeholder="—" min="0" max="10" oninput="calcE1RM('b')"/>
+          </div>
+        </div>
+        <div class="e1rm-result" id="b-result">
+          <span class="e1rm-result-label">Estimerat max</span>
+          <span class="e1rm-result-empty" id="b-val">Fyll i ovan</span>
+        </div>
       </div>
-      <div class="lift-underline"></div>
+
+      <div class="e1rm-cell">
+        <div class="e1rm-cell-label">Marklyft</div>
+        <div class="e1rm-row">
+          <div class="e1rm-field">
+            <div class="e1rm-field-label">Vikt (kg)</div>
+            <input class="e1rm-input" id="d-kg" type="number" placeholder="—" min="20" max="600" oninput="calcE1RM('d')"/>
+          </div>
+          <div class="e1rm-field">
+            <div class="e1rm-field-label">Reps</div>
+            <input class="e1rm-input small" id="d-reps" type="number" placeholder="—" min="1" max="10" oninput="calcE1RM('d')"/>
+          </div>
+          <div class="e1rm-field">
+            <div class="e1rm-field-label">Reps i tanken</div>
+            <input class="e1rm-input small" id="d-rit" type="number" placeholder="—" min="0" max="10" oninput="calcE1RM('d')"/>
+          </div>
+        </div>
+        <div class="e1rm-result" id="d-result">
+          <span class="e1rm-result-label">Estimerat max</span>
+          <span class="e1rm-result-empty" id="d-val">Fyll i ovan</span>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -399,16 +562,51 @@ footer{
 
 <footer>
   <div class="footer-logo">Mirakelprogrammet</div>
-  <div class="footer-note">Inga ursäkter. Bara procent.</div>
+  <div class="footer-note">Akta ryggen. Inte vikterna.</div>
 </footer>
 
 <script>
 let progType = '2veckor';
+let inputMode = 'pb';
+// Lagrar E1RM-värden från aktuellt läge
+const e1rmValues = {s: null, b: null, d: null};
 
 function setProgType(t){
   progType = t;
   document.getElementById('ptt-2').classList.toggle('active', t==='2veckor');
   document.getElementById('ptt-5').classList.toggle('active', t==='5veckor');
+}
+
+function setInputMode(mode){
+  inputMode = mode;
+  document.getElementById('imt-pb').classList.toggle('active', mode==='pb');
+  document.getElementById('imt-e1rm').classList.toggle('active', mode==='e1rm');
+  document.getElementById('pb-wrap').style.display = mode==='pb' ? 'block' : 'none';
+  document.getElementById('e1rm-wrap').classList.toggle('visible', mode==='e1rm');
+}
+
+function epley(w, r){
+  if(r <= 1) return w;
+  return w * (1 + r/30);
+}
+
+function calcE1RM(lift){
+  const kg   = parseFloat(document.getElementById(lift+'-kg').value);
+  const reps = parseFloat(document.getElementById(lift+'-reps').value);
+  const rit  = parseFloat(document.getElementById(lift+'-rit').value) || 0;
+  const valEl = document.getElementById(lift+'-val');
+
+  if(!kg || !reps || reps < 1){
+    valEl.className = 'e1rm-result-empty';
+    valEl.textContent = 'Fyll i ovan';
+    e1rmValues[lift] = null;
+    return;
+  }
+  const totalReps = reps + rit;
+  const estimated = Math.round(epley(kg, totalReps) / 2.5) * 2.5;
+  e1rmValues[lift] = estimated;
+  valEl.className = 'e1rm-result-val';
+  valEl.textContent = estimated + ' kg';
 }
 
 function rnd(v){ return Math.round(v/2.5)*2.5; }
@@ -515,11 +713,13 @@ function renderEx(ex){
       const pct_bar = mx > 0 ? (s.kg/mx*100).toFixed(1) : 0;
       const isHighlight = (ex.highlightLast && i === ex.sets.length - 1)
                        || (ex.highlightFirst && i === 0);
+      const e1rm = s.reps === 1 ? s.kg : Math.round(s.kg * (1 + s.reps/30) / 2.5) * 2.5;
       h += `<div class="set-bar${isHighlight?' set-bar-top':''}">
         <span class="sb-reps">${s.reps}r</span>
         <div class="sb-bar-track"><div class="sb-bar-fill" style="width:${pct_bar}%${isHighlight?';background:var(--lime)':''}"></div></div>
         <span class="sb-kg">${s.kg}</span>
         <span class="sb-pct">${s.pct.toFixed(1)}%</span>
+        <span class="sb-e1rm">≈ ${e1rm}</span>
       </div>`;
     });
     h += `</div>`;
@@ -540,10 +740,18 @@ function renderGrid(days){
 }
 
 function generate(){
-  const s = parseFloat(document.getElementById('squat').value);
-  const b = parseFloat(document.getElementById('bench').value);
-  const d = parseFloat(document.getElementById('dead').value);
-  if(!s||!b||!d||s<40||b<20||d<40){ alert('Fyll i dina personbästan i alla tre lyfter.'); return; }
+  let s, b, d;
+  if(inputMode === 'pb'){
+    s = parseFloat(document.getElementById('squat').value);
+    b = parseFloat(document.getElementById('bench').value);
+    d = parseFloat(document.getElementById('dead').value);
+    if(!s||!b||!d||s<40||b<20||d<40){ alert('Fyll i dina personbästan i alla tre lyfter.'); return; }
+  } else {
+    s = e1rmValues.s;
+    b = e1rmValues.b;
+    d = e1rmValues.d;
+    if(!s||!b||!d){ alert('Fyll i vikt, reps och reps i tanken för alla tre lyfter.'); return; }
+  }
 
   const sec = document.getElementById('prog-section');
   const out = document.getElementById('prog-output');
