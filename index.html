@@ -38,7 +38,9 @@ body{background:var(--ink);color:var(--cream);font-family:var(--sg);min-height:1
   -webkit-backdrop-filter:blur(12px);
 }
 @media(max-width:640px){.topbar{padding:18px 20px;}}
+.topbar-left{display:flex;flex-direction:column;gap:2px;}
 .logo{font-family:var(--bb);font-size:18px;letter-spacing:0.06em;color:var(--lime);text-transform:uppercase;}
+.logo-slogan{font-family:var(--mono);font-size:10px;color:var(--dust);letter-spacing:0.08em;}
 .toptag{font-family:var(--mono);font-size:10px;color:var(--dust);letter-spacing:0.1em;text-transform:uppercase;}
 
 /* ── HERO ── */
@@ -61,7 +63,7 @@ body{background:var(--ink);color:var(--cream);font-family:var(--sg);min-height:1
   font-family:var(--bb);
   font-size:clamp(64px,13vw,160px);
   line-height:0.88;letter-spacing:0.01em;
-  margin-bottom:28px;text-transform:uppercase;
+  margin-bottom:8px;text-transform:uppercase;
 }
 .hero-title .l1{display:block;color:var(--cream);}
 .hero-title .l2{
@@ -70,6 +72,11 @@ body{background:var(--ink);color:var(--cream);font-family:var(--sg);min-height:1
   text-stroke:2px var(--lime);
 }
 
+.hero-slogan{
+  font-family:var(--mono);font-size:13px;color:var(--dust);
+  letter-spacing:0.14em;margin-bottom:36px;
+  text-transform:lowercase;
+}
 .hero-desc{
   font-size:15px;color:var(--dust);
   max-width:380px;line-height:1.75;
@@ -289,8 +296,29 @@ body{background:var(--ink);color:var(--cream);font-family:var(--sg);min-height:1
   border-radius:8px;
   padding:6px 12px;
   gap:10px;
-  transition:background 0.15s;
+  transition:all 0.2s;
+  cursor:pointer;
+  user-select:none;
 }
+.set-bar:hover{background:var(--ink4);}
+.set-bar.done{
+  background:var(--ink2);
+  opacity:0.38;
+}
+.set-bar.done .sb-kg{text-decoration:line-through;color:var(--dust2);}
+.sb-check{
+  width:14px;height:14px;border-radius:50%;
+  border:1.5px solid var(--dust2);
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  transition:all 0.15s;
+  font-size:8px;color:transparent;
+}
+.set-bar.done .sb-check{
+  background:var(--dust2);border-color:var(--dust2);color:var(--ink);
+  content:'✓';
+}
+.set-bar-top .sb-check{border-color:var(--lime);}
+.set-bar-top.done .sb-check{background:var(--lime);border-color:var(--lime);}
 .set-bar-top{
   background:var(--lime-dim);
   border:1px solid rgba(203,255,77,0.15);
@@ -317,6 +345,14 @@ body{background:var(--ink);color:var(--cream);font-family:var(--sg);min-height:1
   letter-spacing:0.02em;
 }
 
+.accessory-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--ink3);border-radius:8px;
+  padding:6px 12px;margin-top:4px;
+  border:1px dashed var(--dust2);
+}
+.acc-sets{font-family:var(--bb);font-size:15px;color:var(--dust);letter-spacing:0.04em;}
+.acc-label{font-family:var(--mono);font-size:9px;color:var(--dust2);letter-spacing:0.06em;}
 /* ── AMRAP ── */
 .amrap-bar{
   display:flex;align-items:center;gap:10px;
@@ -338,6 +374,48 @@ footer{
 }
 @media(max-width:640px){footer{padding:24px 20px;}}
 .footer-logo{font-family:var(--bb);font-size:15px;color:var(--lime);letter-spacing:0.06em;}
+.dl-btn{
+  font-family:var(--sg);font-size:12px;font-weight:500;
+  background:none;border:1px solid var(--ink4);
+  color:var(--dust);border-radius:8px;
+  padding:8px 16px;cursor:pointer;
+  transition:all 0.2s;letter-spacing:0.02em;
+}
+.dl-btn:hover{border-color:var(--lime);color:var(--lime);}
+.print-title{display:none;font-family:sans-serif;font-size:28px;font-weight:700;padding:16px 0 4px;color:#111;}
+@media print{
+  body{background:#fff!important;color:#111!important;}
+  .topbar,.hero,footer,.dl-btn,.week-tabs-bar,.input-mode-toggle,.prog-type-tabs{display:none!important;}
+  .prog-section{display:block!important;padding:0 16px;}
+  .prog-top{padding:16px 0 10px;border-top:none;}
+  .prog-heading{font-size:24px;color:#111;}
+  .prog-heading span{color:#111;}
+  .prog-summary{color:#555;text-align:left;font-size:10px;}
+  .week-panel{display:block!important;}
+  .week-meta{color:#555;border-color:#ddd;font-size:9px;}
+  .week-legend{display:none!important;}
+  .days-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
+  .day-card,.day-card-rest{background:#f7f7f7!important;border:1px solid #ddd!important;border-radius:6px;break-inside:avoid;opacity:1!important;}
+  .dc-eyebrow{color:#888!important;}
+  .dc-title{color:#111!important;font-size:18px;}
+  .dc-rest{color:#aaa!important;}
+  .ex-wrap{border-color:#eee!important;}
+  .ex-name{color:#111!important;}
+  .ex-note{color:#888!important;}
+  .set-bar{background:#efefef!important;}
+  .set-bar-top{background:#eaf5c0!important;border:1px solid #b5d96a!important;}
+  .set-bar-top .sb-kg{color:#4a7800!important;}
+  .sb-reps,.sb-pct,.sb-e1rm,.sb-kg{color:#333!important;}
+  .sb-bar-track{background:#ddd!important;}
+  .sb-bar-fill{background:#aaa!important;}
+  .amrap-bar{background:#efefef!important;border:1px dashed #ccc!important;}
+  .amrap-label,.amrap-pct{color:#888!important;}
+  .amrap-kg{color:#111!important;}
+  .accessory-bar{background:#efefef!important;border:1px dashed #ccc!important;}
+  .acc-sets{color:#444!important;}
+  .acc-label{color:#aaa!important;}
+  .print-title{display:block!important;}
+}
 /* ── INPUT MODE TOGGLE ── */
 .input-mode-toggle{
   display:inline-flex;gap:2px;
@@ -417,16 +495,19 @@ footer{
 <body>
 
 <header class="topbar">
-  <div class="logo">Mirakelprogrammet</div>
+  <div class="topbar-left">
+    <div class="logo">Mirakelprogrammet</div>
+    <div class="logo-slogan">based on magkänsla</div>
+  </div>
   <div class="toptag">Styrkelyft · Periodisering</div>
 </header>
 
 <section class="hero">
-  <div class="hero-eyebrow">Baserat på dina personbästan</div>
   <h1 class="hero-title">
     <span class="l1">MIRAKEL</span>
     <span class="l2">PROGRAMMET</span>
   </h1>
+  <div class="hero-slogan">based on magkänsla</div>
   <p class="hero-desc">Lyft tungt, lyft smart och för guds skull akta ryggen.</p>
 
   <div class="prog-type-tabs">
@@ -555,7 +636,11 @@ footer{
 <section class="prog-section" id="prog-section">
   <div class="prog-top">
     <div class="prog-heading">Ditt <span>program</span></div>
-    <div class="prog-summary" id="prog-summary"></div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
+      <div class="prog-summary" id="prog-summary"></div>
+      <button class="dl-btn" onclick="downloadPDF()">↓ Ladda ner som PDF</button>
+      <button class="dl-btn" onclick="downloadExcel()">↓ Ladda ner som Excel</button>
+    </div>
   </div>
   <div id="prog-output"></div>
 </section>
@@ -691,6 +776,9 @@ function buildWeek(s, b, d, isA, weekNum){
     {day:'Söndag',  tag:'Dag 7', exercises:[
       {name:'Bänkpress TNG', sets:ex.sun_bench, note:'Varierad intensitet'},
       {name:'Marklyft',      sets:sunDead, highlightLast:true},
+      {name:'Chins',         accessory:true, setsLabel:'4 set'},
+      {name:'Triceps pushdowns', accessory:true, setsLabel:'3 set'},
+      {name:'Mage',          accessory:true, setsLabel:'4 set'},
     ]},
   ];
 }
@@ -700,7 +788,9 @@ function maxKg(sets){ return Math.max(...sets.map(s=>s.kg)); }
 
 function renderEx(ex){
   let h = `<div class="ex-wrap"><div class="ex-name-row"><span class="ex-name">${ex.name}</span>${ex.note?`<span class="ex-note">${ex.note}</span>`:''}</div>`;
-  if(ex.amrap){
+  if(ex.accessory){
+    h += `<div class="accessory-bar"><span class="acc-sets">${ex.setsLabel}</span><span class="acc-label">Välj vikt själv</span></div>`;
+  } else if(ex.amrap){
     h += `<div class="amrap-bar">
       <span class="amrap-label">AMRAP</span>
       <span class="amrap-kg">${ex.kg}</span>
@@ -714,7 +804,8 @@ function renderEx(ex){
       const isHighlight = (ex.highlightLast && i === ex.sets.length - 1)
                        || (ex.highlightFirst && i === 0);
       const e1rm = s.reps === 1 ? s.kg : Math.round(s.kg * (1 + s.reps/30) / 2.5) * 2.5;
-      h += `<div class="set-bar${isHighlight?' set-bar-top':''}">
+      h += `<div class="set-bar${isHighlight?' set-bar-top':''}" onclick="this.classList.toggle('done')">
+        <span class="sb-check">✓</span>
         <span class="sb-reps">${s.reps}r</span>
         <div class="sb-bar-track"><div class="sb-bar-fill" style="width:${pct_bar}%${isHighlight?';background:var(--lime)':''}"></div></div>
         <span class="sb-kg">${s.kg}</span>
@@ -779,7 +870,7 @@ function generate(){
     html += `</div>`;
     variants.forEach((isA,i)=>{
       html += `<div class="week-panel${i===0?' active':''}" id="wpanel-${i}">
-        <div class="week-meta">Vecka ${i+1} · ${isA?'A':'B'}-variant · Toppset: ${topRepsLabel[i]}<div class="week-legend"><div class="week-legend-dot"></div>Markerade set är veckans viktigaste – kräver lite extra mental förberedelse.</div></div>
+        <div class="week-meta">Vecka ${i+1} · Toppset: ${topRepsLabel[i]}<div class="week-legend"><div class="week-legend-dot"></div>Markerade set är veckans viktigaste – kräver lite extra mental förberedelse.</div></div>
         ${renderGrid(buildWeek(s,b,d,isA,i+1))}</div>`;
     });
     out.innerHTML = html;
@@ -792,6 +883,81 @@ function generate(){
 function switchTab(idx, btn){
   btn.closest('.week-tabs-bar').querySelectorAll('.wtab').forEach((t,i)=>t.classList.toggle('active',i===idx));
   document.querySelectorAll('.week-panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
+}
+
+function downloadPDF(){
+  window.print();
+}
+
+function downloadExcel(){
+  const rows = [['Vecka','Dag','Övning','Set #','Reps','Vikt (kg)','%','E1RM (kg)','Notering']];
+
+  // Byt punkt mot komma i tal för svenska Excel
+  function swapDec(v){
+    const n = parseFloat(v);
+    if(!isNaN(n)) return String(n).replace('.',',');
+    return v;
+  }
+
+  document.querySelectorAll('.week-panel').forEach((panel, wi) => {
+    const metaEl = panel.querySelector('.week-meta');
+    let weekLabel = `Vecka ${wi+1}`;
+    if(metaEl){
+      const clone = metaEl.cloneNode(true);
+      clone.querySelectorAll('.week-legend').forEach(el=>el.remove());
+      weekLabel = clone.textContent.trim();
+    }
+
+    panel.querySelectorAll('.day-card, .day-card-rest').forEach(card => {
+      const day = card.querySelector('.dc-title')?.textContent.trim() || '';
+      const isRest = card.classList.contains('day-card-rest');
+
+      if(isRest){
+        rows.push([weekLabel, day, 'Vila', '','','','','','']);
+        rows.push(['','','','','','','','','']);
+        return;
+      }
+
+      card.querySelectorAll('.ex-wrap').forEach(ex => {
+        const exName = ex.querySelector('.ex-name')?.textContent.trim() || '';
+        const exNote = ex.querySelector('.ex-note')?.textContent.trim() || '';
+        const setBars = ex.querySelectorAll('.set-bar');
+
+        if(setBars.length > 0){
+          setBars.forEach((bar, si) => {
+            const reps = bar.querySelector('.sb-reps')?.textContent.replace('r','').trim() || '';
+            const kg   = swapDec(bar.querySelector('.sb-kg')?.textContent.trim());
+            const pct  = swapDec(bar.querySelector('.sb-pct')?.textContent.replace('%','').trim());
+            const e1rm = swapDec(bar.querySelector('.sb-e1rm')?.textContent.replace('≈','').trim());
+            rows.push([weekLabel, day, exName, si+1, reps, kg, pct, e1rm, si===0 ? exNote : '']);
+          });
+        } else if(ex.querySelector('.amrap-bar')){
+          const kg  = swapDec(ex.querySelector('.amrap-kg')?.textContent.trim());
+          const pct = swapDec(ex.querySelector('.amrap-pct')?.textContent.replace('%','').trim());
+          rows.push([weekLabel, day, exName, 1, 'AMRAP', kg, pct, '', exNote]);
+        } else if(ex.querySelector('.accessory-bar')){
+          const sets = ex.querySelector('.acc-sets')?.textContent.trim() || '';
+          rows.push([weekLabel, day, exName, sets, '', '', '', '', 'Välj vikt själv']);
+        }
+      });
+
+      // Tom rad efter varje övningsblock (dag)
+      rows.push(['','','','','','','','','']);
+    });
+
+    // Extra tom rad mellan veckor
+    rows.push(['','','','','','','','','']);
+  });
+
+  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(';')).join('\r\n');
+  const bom = '\uFEFF';
+  const blob = new Blob([bom + csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'mirakelprogrammet.csv';
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 document.addEventListener('keydown',e=>{ if(e.key==='Enter') generate(); });
