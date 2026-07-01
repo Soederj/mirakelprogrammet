@@ -522,6 +522,12 @@ footer{
     <button class="ptt" id="ptt-5" onclick="setProgType('5veckor')">5-veckorscykel</button>
   </div>
 
+  <!-- INTENSITY TOGGLE -->
+  <div class="input-mode-toggle" style="margin-bottom:8px;">
+    <button class="imt active" id="int-full" onclick="setIntensity('full')">🏋️ Full</button>
+    <button class="imt" id="int-light" onclick="setIntensity('light')">🥂 Light – för latmaskar & glaslyftare</button>
+  </div>
+
   <!-- INPUT MODE TOGGLE -->
   <div class="input-mode-toggle">
     <button class="imt active" id="imt-pb" onclick="setInputMode('pb')">Personbästa</button>
@@ -660,13 +666,19 @@ footer{
 <script>
 let progType = '2veckor';
 let inputMode = 'pb';
-// Lagrar E1RM-värden från aktuellt läge
+let intensity = 'full';
 const e1rmValues = {s: null, b: null, d: null};
 
 function setProgType(t){
   progType = t;
   document.getElementById('ptt-2').classList.toggle('active', t==='2veckor');
   document.getElementById('ptt-5').classList.toggle('active', t==='5veckor');
+}
+
+function setIntensity(v){
+  intensity = v;
+  document.getElementById('int-full').classList.toggle('active', v==='full');
+  document.getElementById('int-light').classList.toggle('active', v==='light');
 }
 
 function setInputMode(mode){
@@ -790,7 +802,64 @@ function buildWeek(s, b, d, isA, weekNum){
   ];
 }
 
-// Hitta max kg i en set-lista för att beräkna bar-bredd
+// Light-version: reducerade set enligt spec
+function buildWeekLight(s, b, d, isA, weekNum){
+  const base = buildWeek(s, b, d, isA, weekNum);
+  return base.map(day => {
+    if(day.rest) return day;
+    // Fredag: vila
+    if(day.day === 'Fredag') return {...day, rest:true, exercises:undefined};
+    const exs = (day.exercises || []).map(ex => {
+      if(ex.amrap || ex.accessory) return ex;
+      // Tisdag
+      if(day.day === 'Tisdag'){
+        if(ex.name === 'Knäböj')
+          return {...ex, sets: ex.sets.slice(1,-1)}; // ta bort första och sista
+        if(ex.name === 'Bänkpress TNG')
+          return {...ex, sets: ex.sets.slice(0,-3)}; // ta bort 3 sista
+      }
+      // Onsdag
+      if(day.day === 'Onsdag'){
+        if(ex.name === 'Marklyft')
+          return {...ex, sets: ex.sets.slice(1,-1)};
+        if(ex.name === 'Bänkpress med stopp')
+          return {...ex, sets: ex.sets.slice(0,-3), highlightFirst: ex.highlightFirst};
+      }
+      // Lördag
+      if(day.day === 'Lördag'){
+        if(ex.name === 'Knäböj')
+          return {...ex, sets: ex.sets.slice(2), highlightLast: ex.highlightLast}; // ta bort 2 första
+        if(ex.name === 'Bänkpress med stopp')
+          return {...ex, sets: ex.sets.slice(0,-3), highlightFirst: ex.highlightFirst};
+      }
+      // Söndag
+      if(day.day === 'Söndag'){
+        if(ex.name === 'Marklyft')
+          return {...ex, sets: ex.sets.slice(2), highlightLast: ex.highlightLast}; // ta bort 2 första
+        if(ex.name === 'Bänkpress TNG'){
+          // Ta bort set 4 (index 3) och set 7 (index 6)
+          const filtered = ex.sets.filter((_,i) => i !== 3 && i !== 6);
+          return {...ex, sets: filtered};
+        }
+      }
+      return ex;
+    });
+    return {...day, exercises: exs};
+  });
+}
+
+function downloadPDF(){
+  // Funkar på alla enheter inkl iPhone
+  const style = document.createElement('style');
+  style.id = 'pdf-override';
+  style.innerHTML = `
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  `;
+  document.head.appendChild(style);
+  setTimeout(()=>{ window.print(); document.getElementById('pdf-override')?.remove(); }, 100);
+}
 function maxKg(sets){ return Math.max(...sets.map(s=>s.kg)); }
 
 function renderEx(ex){
@@ -853,6 +922,10 @@ function generate(){
 
   const sec = document.getElementById('prog-section');
   const out = document.getElementById('prog-output');
+  const isLight = intensity === 'light';
+  const builder = (s,b,d,isA,wn) => isLight ? buildWeekLight(s,b,d,isA,wn) : buildWeek(s,b,d,isA,wn);
+  const lightLabel = isLight ? ' · <span style="color:var(--dust);font-size:9px;">🥂 Light</span>' : '';
+
   document.getElementById('prog-summary').innerHTML =
     `Knäböj <strong style="color:var(--lime)">${s} kg</strong><br>` +
     `Bänkpress <strong style="color:var(--lime)">${b} kg</strong><br>` +
@@ -867,7 +940,7 @@ function generate(){
     </div>`;
     [{label:'Vecka 1',isA:true},{label:'Vecka 2',isA:false}].forEach((w,i)=>{
       html += `<div class="week-panel${i===0?' active':''}" id="wpanel-${i}">
-        <div class="week-meta">${w.label}<div class="week-legend"><div class="week-legend-dot"></div>Markerade set är veckans viktigaste – kräver lite extra mental förberedelse.</div></div>${renderGrid(buildWeek(s,b,d,w.isA,null))}</div>`;
+        <div class="week-meta">${w.label}${lightLabel}<div class="week-legend"><div class="week-legend-dot"></div>Markerade set är veckans viktigaste – kräver lite extra mental förberedelse.</div></div>${renderGrid(builder(s,b,d,w.isA,null))}</div>`;
     });
     out.innerHTML = html;
   } else {
@@ -877,8 +950,8 @@ function generate(){
     html += `</div>`;
     variants.forEach((isA,i)=>{
       html += `<div class="week-panel${i===0?' active':''}" id="wpanel-${i}">
-        <div class="week-meta">Vecka ${i+1} · Toppset: ${topRepsLabel[i]}<div class="week-legend"><div class="week-legend-dot"></div>Markerade set är veckans viktigaste – kräver lite extra mental förberedelse.</div></div>
-        ${renderGrid(buildWeek(s,b,d,isA,i+1))}</div>`;
+        <div class="week-meta">Vecka ${i+1} · Toppset: ${topRepsLabel[i]}${lightLabel}<div class="week-legend"><div class="week-legend-dot"></div>Markerade set är veckans viktigaste – kräver lite extra mental förberedelse.</div></div>
+        ${renderGrid(builder(s,b,d,isA,i+1))}</div>`;
     });
     out.innerHTML = html;
   }
@@ -890,10 +963,6 @@ function generate(){
 function switchTab(idx, btn){
   btn.closest('.week-tabs-bar').querySelectorAll('.wtab').forEach((t,i)=>t.classList.toggle('active',i===idx));
   document.querySelectorAll('.week-panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
-}
-
-function downloadPDF(){
-  window.print();
 }
 
 function downloadExcel(){
