@@ -24,6 +24,194 @@
   --sg:'Space Grotesk',sans-serif;
   --mono:'DM Mono',monospace;
 }
+body.light-mode{
+  --ink:#F5F5F0;
+  --ink2:#EEEEE8;
+  --ink3:#E0E0D8;
+  --ink4:#CACAC0;
+  --lime:#5A8A00;
+  --lime-glow:rgba(90,138,0,0.18);
+  --lime-dim:rgba(90,138,0,0.08);
+  --cream:#111110;
+  --dust:#555550;
+  --dust2:#888880;
+}
+/* Tooltip */
+.tt{position:relative;display:inline;border-bottom:1px dashed var(--dust2);cursor:help;}
+.tt::after{
+  content:attr(data-tip);
+  position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);
+  background:var(--ink4);color:var(--cream);
+  font-family:var(--mono);font-size:10px;letter-spacing:0.04em;
+  padding:5px 10px;border-radius:6px;white-space:nowrap;
+  pointer-events:none;opacity:0;transition:opacity 0.15s;
+  z-index:100;
+}
+.tt:hover::after{opacity:1;}
+/* ── FLOATING TIMER BUTTON ── */
+.fab-timer{
+  position:fixed;bottom:28px;right:24px;z-index:200;
+  background:var(--lime);color:var(--ink);
+  border:none;border-radius:100px;
+  padding:12px 20px;
+  display:flex;align-items:center;gap:8px;
+  cursor:pointer;
+  box-shadow:0 4px 24px rgba(203,255,77,0.35);
+  font-family:var(--sg);font-size:13px;font-weight:600;
+  transition:transform 0.2s, box-shadow 0.2s;
+}
+.fab-timer:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(203,255,77,0.45);}
+.fab-timer.running{
+  animation:fab-pulse 1.5s ease-in-out infinite;
+}
+@keyframes fab-pulse{
+  0%,100%{box-shadow:0 4px 24px rgba(203,255,77,0.35);}
+  50%{box-shadow:0 4px 36px rgba(203,255,77,0.7);}
+}
+.fab-timer-label{font-family:var(--mono);font-size:12px;}
+
+/* ── TIMER OVERLAY ── */
+.timer-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.5);
+  z-index:300;opacity:0;pointer-events:none;
+  transition:opacity 0.3s;
+}
+.timer-overlay.open{opacity:1;pointer-events:all;}
+
+/* ── TIMER BOTTOM SHEET ── */
+.timer-sheet{
+  position:fixed;bottom:0;left:0;right:0;z-index:400;
+  background:var(--ink2);
+  border-radius:24px 24px 0 0;
+  padding:12px 28px 40px;
+  transform:translateY(100%);
+  transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  max-width:540px;margin:0 auto;
+}
+.timer-sheet.open{transform:translateY(0);}
+
+.timer-drag-handle{
+  width:40px;height:4px;border-radius:99px;
+  background:var(--ink4);margin:0 auto 20px;
+}
+
+/* ── BARBELL SVG ── */
+.timer-barbell{
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:16px;
+  position:relative;
+}
+/* Plate fade-in when sheet opens */
+#plates-left rect, #plates-right rect{
+  opacity:0;
+  transition:opacity 0.3s ease, transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+.timer-sheet.open #plates-left rect,
+.timer-sheet.open #plates-right rect{opacity:1;}
+/* Pumping animation */
+@keyframes barbell-pump{
+  0%,100%{transform:translateY(0) rotate(0deg);}
+  25%{transform:translateY(-8px) rotate(-1deg);}
+  75%{transform:translateY(-8px) rotate(1deg);}
+}
+.timer-barbell.pumping #barbell-svg{animation:barbell-pump 1.4s ease-in-out infinite;}
+
+/* ── COUNTDOWN ── */
+.timer-countdown{
+  font-family:var(--bb);font-size:72px;color:var(--cream);
+  text-align:center;line-height:1;margin-bottom:4px;
+  transition:color 0.3s;
+  letter-spacing:0.02em;
+}
+.timer-countdown.urgent{color:var(--lime);animation:countdown-pulse 0.5s ease-in-out infinite;}
+@keyframes countdown-pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+.timer-sub{
+  font-family:var(--mono);font-size:11px;color:var(--dust);
+  text-align:center;letter-spacing:0.1em;margin-bottom:24px;
+}
+
+/* ── KNOB / SLIDER ── */
+.timer-knob-wrap{margin-bottom:24px;}
+.timer-knob-track{position:relative;padding:0 4px;}
+.timer-knob{
+  -webkit-appearance:none;appearance:none;
+  width:100%;height:6px;border-radius:99px;
+  background:var(--ink3);outline:none;cursor:pointer;
+}
+.timer-knob::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--lime);cursor:grab;
+  box-shadow:0 0 12px rgba(203,255,77,0.4);
+  transition:transform 0.1s, box-shadow 0.1s;
+}
+.timer-knob::-webkit-slider-thumb:active{
+  cursor:grabbing;transform:scale(1.2);
+  box-shadow:0 0 24px rgba(203,255,77,0.7);
+}
+.timer-knob::-moz-range-thumb{
+  width:28px;height:28px;border-radius:50%;border:none;
+  background:var(--lime);cursor:grab;
+}
+.timer-knob-ticks{
+  display:flex;justify-content:space-between;
+  font-family:var(--mono);font-size:9px;color:var(--dust2);
+  padding:6px 4px 0;
+}
+.timer-knob-label{
+  font-family:var(--bb);font-size:22px;color:var(--lime);
+  text-align:center;margin-top:4px;letter-spacing:0.04em;
+}
+
+/* ── BUTTONS ── */
+.timer-btns{display:flex;gap:10px;}
+.timer-action-btn{
+  flex:1;font-family:var(--bb);font-size:20px;letter-spacing:0.06em;
+  background:var(--lime);color:var(--ink);
+  border:none;border-radius:12px;padding:14px;cursor:pointer;
+  transition:all 0.2s;
+}
+.timer-action-btn:hover{opacity:0.9;transform:translateY(-1px);}
+.timer-action-btn.stop{background:var(--ink3);color:var(--cream);}
+.timer-close-btn{
+  font-family:var(--sg);font-size:13px;font-weight:500;
+  background:none;border:1px solid var(--ink4);color:var(--dust);
+  border-radius:12px;padding:14px 20px;cursor:pointer;
+  transition:all 0.2s;
+}
+.timer-close-btn:hover{border-color:var(--dust);color:var(--cream);}
+
+/* Shake animation when done */
+@keyframes shake{
+  0%,100%{transform:translateX(0);}
+  10%,30%,50%,70%,90%{transform:translateX(-6px);}
+  20%,40%,60%,80%{transform:translateX(6px);}
+}
+.timer-sheet.shake{animation:shake 0.5s ease;}
+/* Today badge */
+.today-badge{
+  display:inline-block;
+  background:var(--lime);color:var(--ink);
+  font-family:var(--mono);font-size:8px;letter-spacing:0.1em;
+  text-transform:uppercase;padding:2px 7px;border-radius:99px;
+  margin-left:8px;vertical-align:middle;font-weight:600;
+}
+/* Share btn */
+.share-btn{
+  font-family:var(--sg);font-size:12px;font-weight:500;
+  background:none;border:1px solid var(--ink4);
+  color:var(--dust);border-radius:8px;
+  padding:8px 16px;cursor:pointer;
+  transition:all 0.2s;letter-spacing:0.02em;
+}
+.share-btn:hover{border-color:var(--lime);color:var(--lime);}
+/* Theme toggle */
+.theme-btn{
+  background:none;border:none;cursor:pointer;
+  font-size:16px;padding:4px 8px;border-radius:6px;
+  transition:opacity 0.2s;
+}
+.theme-btn:hover{opacity:0.7;}
 html{scroll-behavior:smooth;}
 body{background:var(--ink);color:var(--cream);font-family:var(--sg);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
 
@@ -385,7 +573,7 @@ footer{
 .print-title{display:none;font-family:sans-serif;font-size:28px;font-weight:700;padding:16px 0 4px;color:#111;}
 @media print{
   body{background:#fff!important;color:#111!important;}
-  .topbar,.hero,footer,.dl-btn,.week-tabs-bar,.input-mode-toggle,.prog-type-tabs{display:none!important;}
+  .topbar,.hero,footer,.dl-btn,.week-tabs-bar,.input-mode-toggle,.prog-type-tabs,.fab-timer,.timer-sheet,.timer-overlay,.share-btn,#unit-toggle-wrap{display:none!important;}
   .prog-section{display:block!important;padding:0 16px;}
   .prog-top{padding:16px 0 10px;border-top:none;}
   .prog-heading{font-size:24px;color:#111;}
@@ -503,35 +691,119 @@ footer{
 
 <header class="topbar">
   <div class="topbar-left">
-    <div class="logo">Mirakelprogrammet</div>
-    <div class="logo-slogan">based on magkänsla</div>
+    <div class="logo" id="logo-text">Mirakelprogrammet</div>
+    <div class="logo-slogan" id="logo-slogan">based on magkänsla</div>
   </div>
-  <div class="toptag">Styrkelyft · Periodisering</div>
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+    <button class="theme-btn" onclick="toggleTheme()" id="theme-btn" title="Byt tema">🌙</button>
+    <button class="theme-btn" onclick="toggleLang()" id="lang-btn" title="Change language" style="font-family:var(--mono);font-size:11px;border:1px solid var(--ink4);border-radius:6px;padding:4px 10px;color:var(--dust);">EN</button>
+    <div class="toptag">Styrkelyft · Periodisering</div>
+  </div>
 </header>
+
+<!-- FLOATING TIMER BUTTON -->
+<button class="fab-timer" id="fab-timer" onclick="openTimer()" title="Vila-timer" style="display:none">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5"/><path d="M9 3h6"/><path d="M12 3v2"/></svg>
+  <span class="fab-timer-label" id="fab-label">Vila</span>
+</button>
+
+<!-- TIMER BOTTOM SHEET -->
+<div class="timer-overlay" id="timer-overlay" onclick="closeTimer()"></div>
+<div class="timer-sheet" id="timer-sheet">
+  <div class="timer-drag-handle"></div>
+
+  <div class="timer-barbell" id="timer-barbell">
+    <svg id="barbell-svg" viewBox="0 0 900 90" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:480px;height:80px;">
+      <defs>
+        <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#888"/><stop offset="50%" stop-color="#ccc"/><stop offset="100%" stop-color="#666"/>
+        </linearGradient>
+        <linearGradient id="sleeveGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#777"/><stop offset="50%" stop-color="#aaa"/><stop offset="100%" stop-color="#555"/>
+        </linearGradient>
+        <linearGradient id="capGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#555"/><stop offset="50%" stop-color="#999"/><stop offset="100%" stop-color="#555"/>
+        </linearGradient>
+        <linearGradient id="p25Grad"  x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#aa1111"/><stop offset="50%" stop-color="#ff3333"/><stop offset="100%" stop-color="#aa1111"/></linearGradient>
+        <linearGradient id="p20Grad"  x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#1133aa"/><stop offset="50%" stop-color="#2255ff"/><stop offset="100%" stop-color="#1133aa"/></linearGradient>
+        <linearGradient id="p15Grad"  x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#aa8800"/><stop offset="50%" stop-color="#ffcc00"/><stop offset="100%" stop-color="#aa8800"/></linearGradient>
+        <linearGradient id="p10Grad"  x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#116611"/><stop offset="50%" stop-color="#22bb22"/><stop offset="100%" stop-color="#116611"/></linearGradient>
+        <linearGradient id="p5Grad"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#cccccc"/><stop offset="50%" stop-color="#ffffff"/><stop offset="100%" stop-color="#cccccc"/></linearGradient>
+        <linearGradient id="p25sGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#111111"/><stop offset="50%" stop-color="#333333"/><stop offset="100%" stop-color="#111111"/></linearGradient>
+        <linearGradient id="p125Grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#888"/><stop offset="50%" stop-color="#ddd"/><stop offset="100%" stop-color="#888"/></linearGradient>
+      </defs>
+      <!-- Bar -->
+      <rect x="165" y="42" width="570" height="7" rx="3" fill="url(#barGrad)"/>
+      <!-- Left sleeve -->
+      <rect x="50" y="37" width="115" height="17" rx="3" fill="url(#sleeveGrad)"/>
+      <!-- Right sleeve -->
+      <rect x="735" y="37" width="115" height="17" rx="3" fill="url(#sleeveGrad)"/>
+      <!-- Left collar -->
+      <rect x="155" y="33" width="7" height="24" rx="2" fill="#ccc"/>
+      <!-- Right collar -->
+      <rect x="735" y="33" width="7" height="24" rx="2" fill="#ccc"/>
+      <!-- End caps -->
+      <rect x="10" y="24" width="40" height="42" rx="5" fill="url(#capGrad)"/>
+      <rect x="850" y="24" width="40" height="42" rx="5" fill="url(#capGrad)"/>
+      <!-- Dynamic plates -->
+      <g id="plates-left"></g>
+      <g id="plates-right"></g>
+      <!-- Weight label -->
+      <text id="bb-weight-label" x="450" y="85" text-anchor="middle" font-family="'DM Mono',monospace" font-size="11" fill="#555" letter-spacing="0.05em"></text>
+    </svg>
+  </div>
+
+  <div class="timer-countdown" id="timer-countdown">—</div>
+  <div class="timer-sub" id="timer-sub">Sätt vilotid</div>
+
+  <div class="timer-knob-wrap">
+    <div class="timer-knob-track">
+      <input type="range" class="timer-knob" id="timer-knob" min="1" max="10" value="3" oninput="onKnobChange(this.value)"/>
+      <div class="timer-knob-ticks">
+        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+        <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+      </div>
+    </div>
+    <div class="timer-knob-label" id="knob-label">3 min</div>
+  </div>
+
+  <div class="timer-btns">
+    <button class="timer-action-btn" id="timer-action" onclick="globalTimerToggle()">▶ Starta</button>
+    <button class="timer-close-btn" id="timer-close" onclick="closeTimer()">Stäng</button>
+  </div>
+</div>
 
 <section class="hero">
   <h1 class="hero-title">
-    <span class="l1">MIRAKEL</span>
-    <span class="l2">PROGRAMMET</span>
+    <span class="l1" id="hero-l1">MIRAKEL</span>
+    <span class="l2" id="hero-l2">PROGRAMMET</span>
   </h1>
-  <div class="hero-slogan">based on magkänsla</div>
-  <p class="hero-desc">Lyft tungt, lyft smart och för guds skull akta ryggen.</p>
+  <div class="hero-slogan" id="hero-slogan">based on magkänsla</div>
+  <p class="hero-desc" data-i18n="hero_desc">Lyft tungt, lyft smart och för guds skull akta ryggen.</p>
 
   <div class="prog-type-tabs">
-    <button class="ptt active" id="ptt-2" onclick="setProgType('2veckor')">2-veckorscykel</button>
-    <button class="ptt" id="ptt-5" onclick="setProgType('5veckor')">5-veckorscykel</button>
+    <button class="ptt active" id="ptt-2" onclick="setProgType('2veckor')" data-i18n="tab_2week">2-veckorscykel</button>
+    <button class="ptt" id="ptt-5" onclick="setProgType('5veckor')" data-i18n="tab_5week">5-veckorscykel</button>
+  </div>
+
+  <!-- LBS TOGGLE (only shown in English) -->
+  <div id="unit-toggle-wrap" style="display:none;margin-bottom:0;">
+    <div class="input-mode-toggle">
+      <button class="imt active" id="unit-kg" onclick="setUnit('kg')">kg</button>
+      <button class="imt" id="unit-lbs" onclick="setUnit('lbs')">lbs</button>
+    </div>
   </div>
 
   <!-- INTENSITY TOGGLE -->
   <div class="input-mode-toggle" style="margin-bottom:8px;">
-    <button class="imt active" id="int-full" onclick="setIntensity('full')">🏋️ Full</button>
-    <button class="imt" id="int-light" onclick="setIntensity('light')">🥂 Light – för latmaskar & glaslyftare</button>
+    <button class="imt active" id="int-full" onclick="setIntensity('full')" data-i18n="int_full">🏋️ Full</button>
+    <button class="imt" id="int-light" onclick="setIntensity('light')" data-i18n="int_light">🥂 Light – för latmaskar & glaslyftare</button>
   </div>
 
   <!-- INPUT MODE TOGGLE -->
   <div class="input-mode-toggle">
-    <button class="imt active" id="imt-pb" onclick="setInputMode('pb')">Personbästa</button>
-    <button class="imt" id="imt-e1rm" onclick="setInputMode('e1rm')">Senaste 6 månaderna</button>
+    <button class="imt active" id="imt-pb" onclick="setInputMode('pb')" data-i18n="imt_pb">Personbästa</button>
+    <button class="imt" id="imt-e1rm" onclick="setInputMode('e1rm')" data-i18n="imt_e1rm">Toppset</button>
   </div>
 
   <!-- PB-LÄGE -->
@@ -542,7 +814,7 @@ footer{
         <div class="lift-cell-sub">Personbästa</div>
         <div class="lift-input-row">
           <input class="lift-num" id="squat" type="number" placeholder="—" min="60" max="500"/>
-          <span class="lift-kg">kg</span>
+          <span class="lift-kg unit-label">kg</span>
         </div>
         <div class="lift-underline"></div>
       </div>
@@ -551,7 +823,7 @@ footer{
         <div class="lift-cell-sub">Personbästa</div>
         <div class="lift-input-row">
           <input class="lift-num" id="bench" type="number" placeholder="—" min="40" max="400"/>
-          <span class="lift-kg">kg</span>
+          <span class="lift-kg unit-label">kg</span>
         </div>
         <div class="lift-underline"></div>
       </div>
@@ -560,7 +832,7 @@ footer{
         <div class="lift-cell-sub">Personbästa</div>
         <div class="lift-input-row">
           <input class="lift-num" id="dead" type="number" placeholder="—" min="60" max="600"/>
-          <span class="lift-kg">kg</span>
+          <span class="lift-kg unit-label">kg</span>
         </div>
         <div class="lift-underline"></div>
       </div>
@@ -649,12 +921,16 @@ footer{
 <section class="prog-section" id="prog-section">
   <div class="prog-top">
     <div class="prog-heading">Ditt <span>program</span></div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
       <div class="prog-summary" id="prog-summary"></div>
-      <button class="dl-btn" onclick="downloadPDF()">↓ Ladda ner som PDF</button>
-      <button class="dl-btn" onclick="downloadExcel()">↓ Ladda ner som Excel</button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
+        <button class="share-btn" onclick="shareProgram()">⬆ Dela program</button>
+        <button class="dl-btn" onclick="downloadPDF()">↓ PDF</button>
+        <button class="dl-btn" onclick="downloadExcel()">↓ Excel</button>
+      </div>
     </div>
   </div>
+  <div id="today-banner" style="display:none;margin-bottom:12px;"></div>
   <div id="prog-output"></div>
 </section>
 
@@ -667,7 +943,24 @@ footer{
 let progType = '2veckor';
 let inputMode = 'pb';
 let intensity = 'full';
+let currentUnit = 'kg'; // 'kg' or 'lbs'
+const LBS_PER_KG = 2.2046;
 const e1rmValues = {s: null, b: null, d: null};
+
+function rndLbs(lbs){ return Math.round(lbs/2.5)*2.5; }
+
+function toKg(val){ return currentUnit === 'lbs' ? val / LBS_PER_KG : val; }
+function fromKg(kg){ return currentUnit === 'lbs' ? rndLbs(kg * LBS_PER_KG) : kg; }
+function unitLabel(){ return currentUnit; }
+
+function setUnit(unit){
+  currentUnit = unit;
+  document.getElementById('unit-kg').classList.toggle('active', unit==='kg');
+  document.getElementById('unit-lbs').classList.toggle('active', unit==='lbs');
+  // Update all unit labels
+  document.querySelectorAll('.unit-label').forEach(el => el.textContent = unit);
+  localStorage.setItem('unit', unit);
+}
 
 function setProgType(t){
   progType = t;
@@ -775,29 +1068,29 @@ function buildWeek(s, b, d, isA, weekNum){
   return [
     {day:'Måndag',  tag:'Dag 1', rest:true},
     {day:'Tisdag',  tag:'Dag 2', exercises:[
-      {name:'Knäböj',        sets:ex.tue_squat},
-      {name:'Bänkpress TNG', sets:ex.tue_bench, note:'Volympass'},
+      {name:t('ex_squat'),        sets:ex.tue_squat},
+      {name:t('ex_bench_tng'),    sets:ex.tue_bench, note:t('note_volym')},
     ]},
     {day:'Onsdag',  tag:'Dag 3', exercises:[
-      {name:'Bänkpress med stopp', sets:ex.wed_stop},
-      {name:'Bänkpress TNG', amrap:true, kg:ex.amrap.kg, pct:ex.amrap.pct, note:'AMRAP touch & go'},
-      {name:'Marklyft', sets:ex.wed_dead},
+      {name:t('ex_bench_stop'),   sets:ex.wed_stop},
+      {name:t('ex_bench_tng'),    amrap:true, kg:ex.amrap.kg, pct:ex.amrap.pct, note:t('note_amrap')},
+      {name:t('ex_dead'),         sets:ex.wed_dead},
     ]},
     {day:'Torsdag', tag:'Dag 4', rest:true},
     {day:'Fredag',  tag:'Dag 5', exercises:[
-      {name:'Bänkpress TNG', sets:ex.fri_bench},
+      {name:t('ex_bench_tng'),    sets:ex.fri_bench},
     ]},
     {day:'Lördag',  tag:'Dag 6', exercises:[
-      {name:'Knäböj',              sets:satSquat, highlightLast:true},
-      {name:'Bänkpress med stopp', sets:isA?ex.sat_stop_a:ex.sat_stop_b, highlightFirst:true},
-      {name:'Bänkpress TNG',  amrap:true, kg:ex.amrap.kg, pct:ex.amrap.pct, note:'AMRAP touch & go'},
+      {name:t('ex_squat'),        sets:satSquat, highlightLast:true},
+      {name:t('ex_bench_stop'),   sets:isA?ex.sat_stop_a:ex.sat_stop_b, highlightFirst:true},
+      {name:t('ex_bench_tng'),    amrap:true, kg:ex.amrap.kg, pct:ex.amrap.pct, note:t('note_amrap')},
     ]},
     {day:'Söndag',  tag:'Dag 7', exercises:[
-      {name:'Bänkpress TNG', sets:ex.sun_bench, note:'Varierad intensitet'},
-      {name:'Marklyft',      sets:sunDead, highlightLast:true},
-      {name:'Chins',         accessory:true, setsLabel:'4 set'},
-      {name:'Triceps pushdowns', accessory:true, setsLabel:'3 set'},
-      {name:'Mage',          accessory:true, setsLabel:'4 set'},
+      {name:t('ex_bench_tng'),    sets:ex.sun_bench},
+      {name:t('ex_dead'),         sets:sunDead, highlightLast:true},
+      {name:t('ex_chins'),        accessory:true, setsLabel:'4 set'},
+      {name:t('ex_triceps'),      accessory:true, setsLabel:'3 set'},
+      {name:t('ex_abs'),          accessory:true, setsLabel:'4 set'},
     ]},
   ];
 }
@@ -811,33 +1104,22 @@ function buildWeekLight(s, b, d, isA, weekNum){
     if(day.day === 'Fredag') return {...day, rest:true, exercises:undefined};
     const exs = (day.exercises || []).map(ex => {
       if(ex.amrap || ex.accessory) return ex;
-      // Tisdag
+      const squat = t('ex_squat'), benchTng = t('ex_bench_tng'), benchStop = t('ex_bench_stop'), dead = t('ex_dead');
       if(day.day === 'Tisdag'){
-        if(ex.name === 'Knäböj')
-          return {...ex, sets: ex.sets.slice(1,-1)}; // ta bort första och sista
-        if(ex.name === 'Bänkpress TNG')
-          return {...ex, sets: ex.sets.slice(0,-3)}; // ta bort 3 sista
+        if(ex.name === squat)    return {...ex, sets: ex.sets.slice(1,-1)};
+        if(ex.name === benchTng) return {...ex, sets: ex.sets.slice(0,-3)};
       }
-      // Onsdag
       if(day.day === 'Onsdag'){
-        if(ex.name === 'Marklyft')
-          return {...ex, sets: ex.sets.slice(1,-1)};
-        if(ex.name === 'Bänkpress med stopp')
-          return {...ex, sets: ex.sets.slice(0,-3), highlightFirst: ex.highlightFirst};
+        if(ex.name === dead)      return {...ex, sets: ex.sets.slice(1,-1)};
+        if(ex.name === benchStop) return {...ex, sets: ex.sets.slice(0,-3), highlightFirst: ex.highlightFirst};
       }
-      // Lördag
       if(day.day === 'Lördag'){
-        if(ex.name === 'Knäböj')
-          return {...ex, sets: ex.sets.slice(2), highlightLast: ex.highlightLast}; // ta bort 2 första
-        if(ex.name === 'Bänkpress med stopp')
-          return {...ex, sets: ex.sets.slice(0,-3), highlightFirst: ex.highlightFirst};
+        if(ex.name === squat)     return {...ex, sets: ex.sets.slice(2), highlightLast: ex.highlightLast};
+        if(ex.name === benchStop) return {...ex, sets: ex.sets.slice(0,-3), highlightFirst: ex.highlightFirst};
       }
-      // Söndag
       if(day.day === 'Söndag'){
-        if(ex.name === 'Marklyft')
-          return {...ex, sets: ex.sets.slice(2), highlightLast: ex.highlightLast}; // ta bort 2 första
-        if(ex.name === 'Bänkpress TNG'){
-          // Ta bort set 4 (index 3) och set 7 (index 6)
+        if(ex.name === dead)      return {...ex, sets: ex.sets.slice(2), highlightLast: ex.highlightLast};
+        if(ex.name === benchTng){
           const filtered = ex.sets.filter((_,i) => i !== 3 && i !== 6);
           return {...ex, sets: filtered};
         }
@@ -860,16 +1142,226 @@ function downloadPDF(){
   document.head.appendChild(style);
   setTimeout(()=>{ window.print(); document.getElementById('pdf-override')?.remove(); }, 100);
 }
+// Ordlista hanteras via T[currentLang].glossary
+function glossaryName(name){
+  const glossary = T[currentLang].glossary;
+  for(const [term, tip] of Object.entries(glossary)){
+    if(name.includes(term)) return `<span class="tt" data-tip="${tip}">${name}</span>`;
+  }
+  return name;
+}
+
+// Dagens dag -> index i veckan (0=Mån,...,6=Sön)
+const DAY_NAMES = ['Måndag','Tisdag','Onsdag','Torsdag','Fredag','Lördag','Söndag'];
+function todayDayName(){ const d=new Date().getDay(); return DAY_NAMES[d===0?6:d-1]; }
+
+// ── BOTTOM SHEET TIMER ──────────────────────────────────────────
+let globalTimerInterval = null;
+let globalTimerLeft = 0;
+let timerMinutes = 3;
+let notifPermission = false;
+let currentBarbellKg = 20;
+
+function openTimer(){
+  document.getElementById('timer-overlay').classList.add('open');
+  document.getElementById('timer-sheet').classList.add('open');
+  drawBarbell(currentBarbellKg || 20);
+  // Only ask for notification permission once – check stored answer
+  if('Notification' in window){
+    notifPermission = Notification.permission === 'granted';
+    if(Notification.permission === 'default' && !localStorage.getItem('notif_asked')){
+      localStorage.setItem('notif_asked', '1');
+      Notification.requestPermission().then(p=>{ notifPermission = p==='granted'; });
+    }
+  }
+}
+function closeTimer(){
+  document.getElementById('timer-overlay').classList.remove('open');
+  document.getElementById('timer-sheet').classList.remove('open');
+}
+
+function onKnobChange(val){
+  timerMinutes = parseInt(val);
+  document.getElementById('knob-label').textContent = t('timer_knob_label', timerMinutes);
+  if(!globalTimerInterval){
+    document.getElementById('timer-countdown').textContent = formatTime(timerMinutes*60);
+    document.getElementById('timer-sub').textContent = t('timer_set');
+  }
+  if(navigator.vibrate) navigator.vibrate(10);
+}
+
+function formatTime(s){
+  return Math.floor(s/60).toString().padStart(2,'0')+':'+((s%60).toString().padStart(2,'0'));
+}
+
+function globalTimerToggle(){
+  if(globalTimerInterval){
+    // Stop
+    clearInterval(globalTimerInterval);
+    globalTimerInterval = null;
+    document.getElementById('timer-barbell').classList.remove('pumping');
+    document.getElementById('timer-countdown').classList.remove('urgent');
+    document.getElementById('timer-countdown').textContent = formatTime(timerMinutes*60);
+    document.getElementById('timer-sub').textContent = t('timer_set');
+    document.getElementById('timer-action').textContent = t('timer_start');
+    document.getElementById('timer-action').classList.remove('stop');
+    document.getElementById('fab-timer').classList.remove('running');
+    document.getElementById('fab-label').textContent = t('timer_fab');
+    return;
+  }
+  // Start
+  globalTimerLeft = timerMinutes * 60;
+  document.getElementById('timer-barbell').classList.add('pumping');
+  document.getElementById('timer-action').textContent = t('timer_stop');
+  document.getElementById('timer-action').classList.add('stop');
+  document.getElementById('fab-timer').classList.add('running');
+  updateTimerUI();
+  globalTimerInterval = setInterval(()=>{
+    globalTimerLeft--;
+    if(globalTimerLeft <= 30){
+      document.getElementById('timer-countdown').classList.add('urgent');
+    }
+    if(globalTimerLeft <= 0){
+      timerDone();
+    } else {
+      updateTimerUI();
+    }
+  }, 1000);
+}
+
+function updateTimerUI(){
+  document.getElementById('timer-countdown').textContent = formatTime(globalTimerLeft);
+  const pct = 1 - globalTimerLeft/(timerMinutes*60);
+  document.getElementById('timer-sub').textContent = pct < 0.5 ? t('timer_rest1') : t('timer_rest2');
+  document.getElementById('fab-label').textContent = formatTime(globalTimerLeft);
+}
+
+function timerDone(){
+  clearInterval(globalTimerInterval);
+  globalTimerInterval = null;
+  document.getElementById('timer-barbell').classList.remove('pumping');
+  document.getElementById('timer-countdown').classList.remove('urgent');
+  document.getElementById('timer-countdown').textContent = '💪';
+  document.getElementById('timer-sub').textContent = t('timer_done_sub');
+  document.getElementById('timer-action').textContent = t('timer_start');
+  document.getElementById('timer-action').classList.remove('stop');
+  document.getElementById('fab-timer').classList.remove('running');
+  document.getElementById('fab-label').textContent = t('timer_fab');
+  // Shake the sheet
+  const sheet = document.getElementById('timer-sheet');
+  sheet.classList.add('shake');
+  setTimeout(()=>sheet.classList.remove('shake'), 500);
+  // Vibrate
+  if(navigator.vibrate) navigator.vibrate([300,100,300,100,500]);
+  // Notification
+  if(notifPermission){
+    new Notification(t('timer_notif_title'), {body: t('timer_notif_body'), icon:'data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><text y=\'.9em\' font-size=\'90\'>🏋️</text></svg>'});
+  }
+  // Beep using Web Audio API
+  try {
+    const ctx = new (window.AudioContext||window.webkitAudioContext)();
+    [0, 0.15, 0.3].forEach(t=>{
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.frequency.value = 880;
+      gain.gain.setValueAtTime(0.3, ctx.currentTime+t);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+t+0.12);
+      osc.start(ctx.currentTime+t);
+      osc.stop(ctx.currentTime+t+0.12);
+    });
+  } catch(e){}
+}
+
+let timerIdCounter = 0;
+
+// ── PLATE CALCULATOR ──────────────────────────────────────────────
+const BAR_WEIGHT = 20;
+const COLLAR_WEIGHT = 5; // 2 × 2.5kg klover
+const PLATE_DEFS = [
+  {kg:25,  grad:'p25Grad',  w:14, h:54, r:4},  // röd, störst
+  {kg:20,  grad:'p20Grad',  w:14, h:54, r:4},  // blå, lika stor som 25
+  {kg:15,  grad:'p15Grad',  w:12, h:46, r:3},  // gul, lite mindre
+  {kg:10,  grad:'p10Grad',  w:10, h:38, r:3},  // grön, lite mindre
+  {kg:5,   grad:'p5Grad',   w:8,  h:30, r:2},  // vit, lite mindre
+  {kg:2.5, grad:'p25sGrad', w:6,  h:22, r:2},  // svart, lite mindre
+  {kg:1.25,grad:'p125Grad', w:4,  h:16, r:1},  // silver, minst
+];
+
+function calcPlates(totalKg){
+  const load = totalKg - BAR_WEIGHT - COLLAR_WEIGHT;
+  if(load <= 0) return [];
+  let remaining = Math.round(load / 2 * 100) / 100;
+  const result = [];
+  for(const p of PLATE_DEFS){
+    const count = Math.floor(remaining / p.kg + 0.001);
+    for(let i=0;i<count;i++) result.push(p);
+    remaining = Math.round((remaining - p.kg * count) * 100) / 100;
+  }
+  return result;
+}
+
+function drawBarbell(kg){
+  const plates = calcPlates(kg);
+  const CY = 45;
+  const LEFT_COLLAR_X  = 155;  // left edge of left collar
+  const RIGHT_COLLAR_X = 742;  // right edge of right collar (735 + 7)
+
+  // Left side: stack outward (going left) from collar
+  let leftSVG = '';
+  let lx = LEFT_COLLAR_X - 1;
+  plates.forEach((p, i) => {
+    const x = lx - p.w;
+    const y = Math.round(CY - p.h/2);
+    leftSVG += `<rect x="${x}" y="${y}" width="${p.w}" height="${p.h}" rx="${p.r}" fill="url(#${p.grad})" style="transition-delay:${i*0.07}s"/>`;
+    lx = x;
+  });
+
+  // Right side: stack outward (going right) from collar
+  let rightSVG = '';
+  let rx = RIGHT_COLLAR_X + 1; // start just outside right collar
+  plates.forEach((p, i) => {
+    const y = Math.round(CY - p.h/2);
+    rightSVG += `<rect x="${rx}" y="${y}" width="${p.w}" height="${p.h}" rx="${p.r}" fill="url(#${p.grad})" style="transition-delay:${i*0.07}s"/>`;
+    rx += p.w;
+  });
+
+  document.getElementById('plates-left').innerHTML  = leftSVG;
+  document.getElementById('plates-right').innerHTML = rightSVG;
+
+  const label = plates.length > 0
+    ? t('bb_per_side', kg, plates.map(p=>p.kg).join(' + '), COLLAR_WEIGHT)
+    : t('bb_bar_only', BAR_WEIGHT + COLLAR_WEIGHT);
+  document.getElementById('bb-weight-label').textContent = label;
+}
+
+function toggleSetDone(el){
+  el.classList.toggle('done');
+  if(el.classList.contains('done')){
+    const nextKg = parseFloat(el.dataset.nextKg);
+    if(!isNaN(nextKg) && nextKg > 0){
+      currentBarbellKg = nextKg;
+      drawBarbell(nextKg);
+      // Flash barbell
+      const bb = document.getElementById('timer-barbell');
+      bb.style.transition = 'transform 0.1s';
+      bb.style.transform = 'scale(1.04)';
+      setTimeout(()=>bb.style.transform = 'scale(1)', 120);
+    }
+  }
+}
+
 function maxKg(sets){ return Math.max(...sets.map(s=>s.kg)); }
 
 function renderEx(ex){
-  let h = `<div class="ex-wrap"><div class="ex-name-row"><span class="ex-name">${ex.name}</span>${ex.note?`<span class="ex-note">${ex.note}</span>`:''}</div>`;
+  const displayName = glossaryName(ex.name);
+  let h = `<div class="ex-wrap"><div class="ex-name-row"><span class="ex-name">${displayName}</span>${ex.note?`<span class="ex-note">${ex.note}</span>`:''}</div>`;
   if(ex.accessory){
-    h += `<div class="accessory-bar"><span class="acc-sets">${ex.setsLabel}</span><span class="acc-label">Välj vikt själv</span></div>`;
+    h += `<div class="accessory-bar"><span class="acc-sets">${ex.setsLabel}</span><span class="acc-label">${t('accessory_label')}</span></div>`;
   } else if(ex.amrap){
     h += `<div class="amrap-bar">
-      <span class="amrap-label">AMRAP</span>
-      <span class="amrap-kg">${ex.kg}</span>
+      <span class="amrap-label"><span class="tt" data-tip="${T[currentLang].glossary['AMRAP']||''}">AMRAP</span></span>
+      <span class="amrap-kg">${currentUnit === 'lbs' ? rndLbs(ex.kg*LBS_PER_KG) : ex.kg}</span>
       <span class="amrap-pct">${ex.pct.toFixed(1)}%</span>
     </div>`;
   } else {
@@ -879,14 +1371,18 @@ function renderEx(ex){
       const pct_bar = mx > 0 ? (s.kg/mx*100).toFixed(1) : 0;
       const isHighlight = (ex.highlightLast && i === ex.sets.length - 1)
                        || (ex.highlightFirst && i === 0);
-      const e1rm = s.reps === 1 ? s.kg : Math.round(s.kg * (1 + s.reps/30) / 2.5) * 2.5;
-      h += `<div class="set-bar${isHighlight?' set-bar-top':''}" onclick="this.classList.toggle('done')">
+      const e1rm_kg = s.reps === 1 ? s.kg : Math.round(s.kg * (1 + s.reps/30) / 2.5) * 2.5;
+      const dispKg = currentUnit === 'lbs' ? rndLbs(s.kg * LBS_PER_KG) : s.kg;
+      const dispE1rm = currentUnit === 'lbs' ? rndLbs(e1rm_kg * LBS_PER_KG) : e1rm_kg;
+      const nextKg = ex.sets[i+1] ? ex.sets[i+1].kg : null;
+      const nextAttr = nextKg !== null ? `data-next-kg="${nextKg}"` : '';
+      h += `<div class="set-bar${isHighlight?' set-bar-top':''}" ${nextAttr} onclick="toggleSetDone(this)">
         <span class="sb-check">✓</span>
         <span class="sb-reps">${s.reps}r</span>
         <div class="sb-bar-track"><div class="sb-bar-fill" style="width:${pct_bar}%${isHighlight?';background:var(--lime)':''}"></div></div>
-        <span class="sb-kg">${s.kg}</span>
+        <span class="sb-kg">${dispKg}</span>
         <span class="sb-pct">${s.pct.toFixed(1)}%</span>
-        <span class="sb-e1rm">≈ ${e1rm}</span>
+        <span class="sb-e1rm"><span class="tt" data-tip="${T[currentLang].glossary['E1RM']||''}">≈ ${dispE1rm} ${unitLabel()}</span></span>
       </div>`;
     });
     h += `</div>`;
@@ -894,12 +1390,16 @@ function renderEx(ex){
   return h + `</div>`;
 }
 
-function renderGrid(days){
+function renderGrid(days, showToday){
+  const todayName = t('days')[DAY_NAMES.indexOf(todayDayName())];
+  const dayMap = Object.fromEntries(DAY_NAMES.map((sv,i)=>[sv, T[currentLang].days[i]]));
   let h = `<div class="days-grid">`;
   days.forEach((day,i)=>{
-    h += `<div class="${day.rest?'day-card-rest':'day-card'}" style="animation-delay:${i*0.06}s">`;
-    h += `<div class="dc-eyebrow">${day.tag}</div><div class="dc-title">${day.day}</div>`;
-    if(day.rest) h += `<div class="dc-rest">Vila</div>`;
+    const dayDisplayName = dayMap[day.day] || day.day;
+    const isToday = showToday && day.day === DAY_NAMES[DAY_NAMES.indexOf(todayDayName())] ;
+    h += `<div class="${day.rest?'day-card-rest':'day-card'}" style="animation-delay:${i*0.06}s${isToday?';border-color:var(--lime)':''}">`;
+    h += `<div class="dc-eyebrow">${day.tag}</div><div class="dc-title">${dayDisplayName}${isToday?`<span class="today-badge">${t('today_badge')}</span>`:''}</div>`;
+    if(day.rest) h += `<div class="dc-rest">${t('rest_day')}</div>`;
     else day.exercises.forEach(ex=>{ h += renderEx(ex); });
     h += `</div>`;
   });
@@ -909,61 +1409,135 @@ function renderGrid(days){
 function generate(){
   let s, b, d;
   if(inputMode === 'pb'){
-    s = parseFloat(document.getElementById('squat').value);
-    b = parseFloat(document.getElementById('bench').value);
-    d = parseFloat(document.getElementById('dead').value);
-    if(!s||!b||!d||s<40||b<20||d<40){ alert('Fyll i dina personbästan i alla tre lyfter.'); return; }
+    let sv = parseFloat(document.getElementById('squat').value);
+    let bv = parseFloat(document.getElementById('bench').value);
+    let dv = parseFloat(document.getElementById('dead').value);
+    if(!sv||!bv||!dv||sv<20||bv<10||dv<20){ alert(t('fill_error')); return; }
+    // Convert lbs to kg for internal calculations
+    s = currentUnit === 'lbs' ? sv / LBS_PER_KG : sv;
+    b = currentUnit === 'lbs' ? bv / LBS_PER_KG : bv;
+    d = currentUnit === 'lbs' ? dv / LBS_PER_KG : dv;
   } else {
     s = e1rmValues.s;
     b = e1rmValues.b;
     d = e1rmValues.d;
-    if(!s||!b||!d){ alert('Fyll i vikt, reps och reps i tanken för alla tre lyfter.'); return; }
+    if(!s||!b||!d){ alert(t('fill_error_e1rm')); return; }
   }
 
   const sec = document.getElementById('prog-section');
   const out = document.getElementById('prog-output');
   const isLight = intensity === 'light';
   const builder = (s,b,d,isA,wn) => isLight ? buildWeekLight(s,b,d,isA,wn) : buildWeek(s,b,d,isA,wn);
-  const lightLabel = isLight ? ' · <span style="color:var(--dust);font-size:9px;">🥂 Light</span>' : '';
+  const lightLabel = isLight ? ` · <span style="color:var(--dust);font-size:9px;">${t('light_label')}</span>` : '';
+  const legendText = t('legend_text');
+  const ul = unitLabel();
 
+  // Show summary in user's chosen unit
+  const sDisp = currentUnit === 'lbs' ? rndLbs(s*LBS_PER_KG) : s;
+  const bDisp = currentUnit === 'lbs' ? rndLbs(b*LBS_PER_KG) : b;
+  const dDisp = currentUnit === 'lbs' ? rndLbs(d*LBS_PER_KG) : d;
   document.getElementById('prog-summary').innerHTML =
-    `Knäböj <strong style="color:var(--lime)">${s} kg</strong><br>` +
-    `Bänkpress <strong style="color:var(--lime)">${b} kg</strong><br>` +
-    `Marklyft <strong style="color:var(--lime)">${d} kg</strong>`;
+    `${t('pb_label_s')} <strong style="color:var(--lime)">${sDisp} ${ul}</strong><br>` +
+    `${t('pb_label_b')} <strong style="color:var(--lime)">${bDisp} ${ul}</strong><br>` +
+    `${t('pb_label_d')} <strong style="color:var(--lime)">${dDisp} ${ul}</strong>`;
 
-  const topRepsLabel = ['5 reps','4 reps','3 reps','2 reps','1 rep'];
+  const topRepsLabel = t('top_reps');
 
   if(progType === '2veckor'){
     let html = `<div class="week-tabs-bar">
-      <button class="wtab active" onclick="switchTab(0,this)">Vecka 1</button>
-      <button class="wtab" onclick="switchTab(1,this)">Vecka 2</button>
+      <button class="wtab active" onclick="switchTab(0,this)">${t('week_a')}</button>
+      <button class="wtab" onclick="switchTab(1,this)">${t('week_b')}</button>
     </div>`;
-    [{label:'Vecka 1',isA:true},{label:'Vecka 2',isA:false}].forEach((w,i)=>{
+    [{label:t('week_a'),isA:true},{label:t('week_b'),isA:false}].forEach((w,i)=>{
       html += `<div class="week-panel${i===0?' active':''}" id="wpanel-${i}">
-        <div class="week-meta">${w.label}${lightLabel}<div class="week-legend"><div class="week-legend-dot"></div>Markerade set är veckans viktigaste – kräver lite extra mental förberedelse.</div></div>${renderGrid(builder(s,b,d,w.isA,null))}</div>`;
+        <div class="week-meta">${w.label}${lightLabel}<div class="week-legend"><div class="week-legend-dot"></div>${legendText}</div></div>${renderGrid(builder(s,b,d,w.isA,null), true)}</div>`;
     });
     out.innerHTML = html;
   } else {
     const variants = [true,false,true,false,true];
     let html = `<div class="week-tabs-bar">`;
-    variants.forEach((_,i)=>{ html+=`<button class="wtab${i===0?' active':''}" onclick="switchTab(${i},this)">Vecka ${i+1}</button>`; });
+    variants.forEach((_,i)=>{ html+=`<button class="wtab${i===0?' active':''}" onclick="switchTab(${i},this)">${t('week_label',i+1)}</button>`; });
     html += `</div>`;
     variants.forEach((isA,i)=>{
       html += `<div class="week-panel${i===0?' active':''}" id="wpanel-${i}">
-        <div class="week-meta">Vecka ${i+1} · Toppset: ${topRepsLabel[i]}${lightLabel}<div class="week-legend"><div class="week-legend-dot"></div>Markerade set är veckans viktigaste – kräver lite extra mental förberedelse.</div></div>
-        ${renderGrid(builder(s,b,d,isA,i+1))}</div>`;
+        <div class="week-meta">${t('week_label',i+1)} · Toppset: ${topRepsLabel[i]}${lightLabel}<div class="week-legend"><div class="week-legend-dot"></div>${legendText}</div></div>
+        ${renderGrid(builder(s,b,d,isA,i+1), true)}</div>`;
     });
     out.innerHTML = html;
   }
 
+  // Today banner
+  const todayIdx = new Date().getDay();
+  const todaySv = DAY_NAMES[todayIdx===0?6:todayIdx-1];
+  const todayDisplay = T[currentLang].days[DAY_NAMES.indexOf(todaySv)];
+  const banner = document.getElementById('today-banner');
+  banner.innerHTML = `<div style="background:var(--lime-dim);border:1px solid rgba(203,255,77,0.2);border-radius:10px;padding:10px 16px;font-family:var(--mono);font-size:11px;color:var(--dust);">${t('today_banner', todayDisplay)}</div>`;
+  banner.style.display = 'block';
+
   sec.style.display = 'block';
   sec.scrollIntoView({behavior:'smooth', block:'start'});
+  document.getElementById('fab-timer').style.display = 'flex';
+  // Init timer display
+  document.getElementById('timer-countdown').textContent = formatTime(timerMinutes*60);
 }
 
 function switchTab(idx, btn){
   btn.closest('.week-tabs-bar').querySelectorAll('.wtab').forEach((t,i)=>t.classList.toggle('active',i===idx));
   document.querySelectorAll('.week-panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
 }
+
+function shareProgram(){
+  const s = document.getElementById('squat').value || (e1rmValues.s||'');
+  const b = document.getElementById('bench').value || (e1rmValues.b||'');
+  const d = document.getElementById('dead').value || (e1rmValues.d||'');
+  if(!s||!b||!d){ alert(t('share_error')); return; }
+  const url = `${location.origin}${location.pathname}?s=${s}&b=${b}&d=${d}&p=${progType}&i=${intensity}`;
+  navigator.clipboard.writeText(url).then(()=>{
+    alert(t('share_copied'));
+  }).catch(()=>{
+    prompt(t('share_prompt'), url);
+  });
+}
+
+function toggleTheme(){
+  const light = document.body.classList.toggle('light-mode');
+  document.getElementById('theme-btn').textContent = light ? '🌕' : '🌙';
+  localStorage.setItem('theme', light ? 'light' : 'dark');
+}
+
+// Läs URL-parametrar vid sidladdning
+window.addEventListener('DOMContentLoaded', ()=>{
+  // Tema
+  if(localStorage.getItem('theme') === 'light'){
+    document.body.classList.add('light-mode');
+    document.getElementById('theme-btn').textContent = '🌕';
+  }
+  // Spara PB i localStorage
+  const savedS = localStorage.getItem('pb_s');
+  const savedB = localStorage.getItem('pb_b');
+  const savedD = localStorage.getItem('pb_d');
+  if(savedS) document.getElementById('squat').value = savedS;
+  if(savedB) document.getElementById('bench').value = savedB;
+  if(savedD) document.getElementById('dead').value = savedD;
+
+  // URL-params
+  const p = new URLSearchParams(location.search);
+  if(p.get('s') && p.get('b') && p.get('d')){
+    document.getElementById('squat').value = p.get('s');
+    document.getElementById('bench').value = p.get('b');
+    document.getElementById('dead').value = p.get('d');
+    if(p.get('p')) { progType = p.get('p'); setProgType(progType); }
+    if(p.get('i')) { intensity = p.get('i'); setIntensity(intensity); }
+    setTimeout(generate, 300);
+  }
+});
+
+// Spara PB i localStorage när man fyller i
+['squat','bench','dead'].forEach(id=>{
+  document.getElementById(id)?.addEventListener('change', e=>{
+    localStorage.setItem('pb_'+id[0], e.target.value);
+  });
+});
 
 function downloadExcel(){
   const rows = [['Vecka','Dag','Övning','Set #','Reps','Vikt (kg)','%','E1RM (kg)','Notering']];
@@ -985,7 +1559,14 @@ function downloadExcel(){
     }
 
     panel.querySelectorAll('.day-card, .day-card-rest').forEach(card => {
-      const day = card.querySelector('.dc-title')?.textContent.trim() || '';
+      // Hämta dagnamn utan "Idag"-badge
+      const titleEl = card.querySelector('.dc-title');
+      let day = '';
+      if(titleEl){
+        const clone = titleEl.cloneNode(true);
+        clone.querySelectorAll('.today-badge').forEach(el=>el.remove());
+        day = clone.textContent.trim();
+      }
       const isRest = card.classList.contains('day-card-rest');
 
       if(isRest){
@@ -1037,6 +1618,214 @@ function downloadExcel(){
 }
 
 document.addEventListener('keydown',e=>{ if(e.key==='Enter') generate(); });
+
+// ── TRANSLATIONS ─────────────────────────────────────────────────
+let currentLang = 'sv';
+const T = {
+  sv: {
+    toptag: 'Styrkelyft · Periodisering',
+    hero_desc: 'Lyft tungt, lyft smart och för guds skull akta ryggen.',
+    tab_2week: '2-veckorscykel', tab_5week: '5-veckorscykel',
+    int_full: '🏋️ Full', int_light: '🥂 Light – för latmaskar & glaslyftare',
+    imt_pb: 'Personbästa', imt_e1rm: 'Toppset',
+    pb_label_s: 'Knäböj', pb_label_b: 'Bänkpress', pb_label_d: 'Marklyft',
+    pb_sub: 'Personbästa',
+    ex_squat: 'Knäböj', ex_bench_tng: 'Bänkpress TNG', ex_bench_stop: 'Bänkpress med stopp',
+    ex_dead: 'Marklyft', ex_chins: 'Chins', ex_triceps: 'Triceps pushdowns', ex_abs: 'Mage',
+    note_volym: 'Volympass', note_amrap: 'AMRAP touch & go',
+    timer_set: 'Sätt vilotid', timer_rest1: 'Pusta ut...', timer_rest2: 'Snart dags att lyfta!',
+    timer_done_sub: 'Dags att lyfta!', timer_start: '▶ Starta', timer_stop: '■ Avbryt',
+    timer_close: 'Stäng', timer_fab: 'Vila', timer_title: 'Vila-timer',
+    timer_knob_label: (m) => `${m} min`,
+    timer_notif_title: '💪 Dags att lyfta!', timer_notif_body: 'Vilotiden är över – nästa set väntar.',
+    bb_per_side: (kg, parts, collar) => `${kg} kg  ·  per sida: ${parts} kg  (klover ${collar} kg ingår)`,
+    bb_bar_only: (total) => `${total} kg  ·  stång + klover`,
+    site_title: 'Mirakelprogrammet',
+    logo_text: 'Mirakelprogrammet',
+    logo_slogan: 'based on magkänsla',
+    hero_l1: 'MIRAKEL', hero_l2: 'PROGRAMMET',
+    hero_slogan: 'based on magkänsla',
+    e1rm_intro: 'Fyll i det tyngsta setet du gjort i varje lyft de senaste 6 månaderna.<br>Ange också hur många reps du bedömer att du hade kvar i tanken – de adderas och ger ett estimerat max via Epleys ekvation.',
+    e1rm_weight: 'Vikt (kg)', e1rm_reps: 'Reps', e1rm_rit: 'Reps i tanken',
+    e1rm_label: 'Estimerat max', e1rm_empty: 'Fyll i ovan',
+    cta: 'Generera mitt program',
+    prog_heading: 'Ditt <span>program</span>',
+    share: '⬆ Dela program', dl_pdf: '↓ PDF', dl_excel: '↓ Excel',
+    today_banner: (day) => `📅 Idag är det <strong style="color:var(--lime)">${day}</strong> – scrolla ner för att hitta ditt pass markerat med <span style="background:var(--lime);color:var(--ink);padding:1px 6px;border-radius:99px;font-size:9px;">Idag</span>`,
+    today_badge: 'Idag',
+    legend_text: 'Markerade set är veckans viktigaste – kräver lite extra mental förberedelse.',
+    rest_label: 'Vila:', rest_abort: 'Avbryt',
+    volympass: 'Volympass', amrap_note: 'AMRAP touch & go',
+    accessory_label: 'Välj vikt själv', rest_day: 'Vila',
+    week_label: (n) => `Vecka ${n}`,
+    week_a: 'Vecka 1', week_b: 'Vecka 2',
+    top_reps: ['5 reps','4 reps','3 reps','2 reps','1 rep'],
+    light_label: '🥂 Light',
+    footer: 'Akta ryggen. Inte vikterna.',
+    days: ['Måndag','Tisdag','Onsdag','Torsdag','Fredag','Lördag','Söndag'],
+    share_copied: 'Länk kopierad! Skicka den till den du vill dela med.',
+    share_prompt: 'Kopiera länken:',
+    share_error: 'Generera ett program först.',
+    fill_error: 'Fyll i dina personbästan i alla tre lyfter.',
+    fill_error_e1rm: 'Fyll i vikt, reps och reps i tanken för alla tre lyfter.',
+    glossary: {
+      'TNG': 'Touch and go – stången nuddar bröstet men stannar inte',
+      'AMRAP': 'As Many Reps As Possible – kör så många reps du kan',
+      'E1RM': 'Estimerat 1RM – beräknat maxlyft via Epleys ekvation (vikt × (1 + reps÷30))',
+      'Stopp': 'Bänk med stopp – paus mot bröstet, ingen studs',
+    },
+  },
+  en: {
+    toptag: 'Powerlifting · Periodization',
+    hero_desc: 'Lift heavy, lift smart and for the love of god, protect your back.',
+    tab_2week: '2-week cycle', tab_5week: '5-week cycle',
+    int_full: '🏋️ Full', int_light: '🥂 Light – for lazy days & beginners',
+    imt_pb: 'Personal best', imt_e1rm: 'Top set',
+    pb_label_s: 'Squat', pb_label_b: 'Bench press', pb_label_d: 'Deadlift',
+    pb_sub: 'Personal best',
+    ex_squat: 'Squat', ex_bench_tng: 'Bench press TNG', ex_bench_stop: 'Bench press paused',
+    ex_dead: 'Deadlift', ex_chins: 'Chin-ups', ex_triceps: 'Triceps pushdowns', ex_abs: 'Core',
+    note_volym: 'Volume session', note_amrap: 'AMRAP touch & go',
+    timer_set: 'Set rest time', timer_rest1: 'Catch your breath...', timer_rest2: 'Almost time to lift!',
+    timer_done_sub: 'Time to lift!', timer_start: '▶ Start', timer_stop: '■ Stop',
+    timer_close: 'Close', timer_fab: 'Rest', timer_title: 'Rest timer',
+    timer_knob_label: (m) => `${m} min`,
+    timer_notif_title: '💪 Time to lift!', timer_notif_body: 'Rest is over – next set is waiting.',
+    bb_per_side: (kg, parts, collar) => `${kg} kg  ·  per side: ${parts} kg  (collars ${collar} kg incl.)`,
+    bb_bar_only: (total) => `${total} kg  ·  bar + collars`,
+    site_title: 'The Miracle Program',
+    logo_text: 'The Miracle Program',
+    logo_slogan: 'based on gut feeling',
+    hero_l1: 'THE', hero_l2: 'MIRACLE PROGRAM',
+    hero_slogan: 'based on gut feeling',
+    pb_label_s: 'Squat', pb_label_b: 'Bench press', pb_label_d: 'Deadlift',
+    pb_sub: 'Personal best',
+    e1rm_intro: 'Enter the heaviest set you\'ve done in each lift in the last 6 months.<br>Also enter how many reps you estimated you had left in the tank – they are added and give an estimated max via Epley\'s equation.',
+    e1rm_weight: 'Weight (kg)', e1rm_reps: 'Reps', e1rm_rit: 'Reps in tank',
+    e1rm_label: 'Estimated max', e1rm_empty: 'Fill in above',
+    cta: 'Generate my program',
+    prog_heading: 'Your <span>program</span>',
+    share: '⬆ Share program', dl_pdf: '↓ PDF', dl_excel: '↓ Excel',
+    today_banner: (day) => `📅 Today is <strong style="color:var(--lime)">${day}</strong> – scroll down to find your session marked with <span style="background:var(--lime);color:var(--ink);padding:1px 6px;border-radius:99px;font-size:9px;">Today</span>`,
+    today_badge: 'Today',
+    legend_text: 'Highlighted sets are the most important of the week – require a bit of extra mental preparation.',
+    rest_label: 'Rest:', rest_abort: 'Cancel',
+    volympass: 'Volume session', varierad: 'Varied intensity', amrap_note: 'AMRAP touch & go',
+    accessory_label: 'Choose weight yourself', rest_day: 'Rest',
+    week_label: (n) => `Week ${n}`,
+    week_a: 'Week 1', week_b: 'Week 2',
+    top_reps: ['5 reps','4 reps','3 reps','2 reps','1 rep'],
+    light_label: '🥂 Light',
+    footer: 'Watch your back. Not the weight.',
+    days: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+    share_copied: 'Link copied! Send it to whoever you want to share with.',
+    share_prompt: 'Copy the link:',
+    share_error: 'Generate a program first.',
+    fill_error: 'Please enter your personal bests for all three lifts.',
+    fill_error_e1rm: 'Please enter weight, reps and reps in tank for all three lifts.',
+    glossary: {
+      'TNG': 'Touch and go – the bar touches the chest but doesn\'t stop',
+      'AMRAP': 'As Many Reps As Possible – do as many reps as you can',
+      'E1RM': 'Estimated 1RM – calculated max via Epley\'s equation (weight × (1 + reps÷30))',
+      'Stopp': 'Paused bench – pause on chest, no bounce',
+    },
+  }
+};
+
+function t(key, ...args){
+  const val = T[currentLang][key];
+  if(typeof val === 'function') return val(...args);
+  return val ?? T.sv[key] ?? key;
+}
+
+function toggleLang(){
+  currentLang = currentLang === 'sv' ? 'en' : 'sv';
+  const btn = document.getElementById('lang-btn');
+  btn.textContent = currentLang === 'sv' ? 'EN' : 'SV';
+  // Reset to kg when switching to Swedish
+  if(currentLang === 'sv' && currentUnit === 'lbs'){
+    setUnit('kg');
+  }
+  document.getElementById('unit-toggle-wrap').style.display = currentLang === 'en' ? 'block' : 'none';
+  applyLang();
+  localStorage.setItem('lang', currentLang);
+}
+
+function applyLang(){
+  const L = T[currentLang];
+  // Static elements with data-i18n
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.dataset.i18n;
+    if(L[key]) el.innerHTML = L[key];
+  });
+  // Topbar tag
+  document.querySelector('.toptag').textContent = L.toptag;
+  // Footer
+  document.querySelector('.footer-note').textContent = L.footer;
+  // CTA
+  document.querySelector('.cta-btn').innerHTML = `${L.cta} <span class="cta-arrow">→</span>`;
+  // Prog heading
+  const ph = document.querySelector('.prog-heading');
+  if(ph) ph.innerHTML = L.prog_heading;
+  // Buttons in prog section
+  const shareBtn = document.querySelector('.share-btn');
+  if(shareBtn) shareBtn.textContent = L.share;
+  const dlBtns = document.querySelectorAll('.dl-btn');
+  if(dlBtns[0]) dlBtns[0].textContent = L.dl_pdf;
+  if(dlBtns[1]) dlBtns[1].textContent = L.dl_excel;
+  // PB labels
+  const pbLabels = document.querySelectorAll('.lift-cell-label');
+  if(pbLabels[0]) pbLabels[0].textContent = L.pb_label_s;
+  if(pbLabels[1]) pbLabels[1].textContent = L.pb_label_b;
+  if(pbLabels[2]) pbLabels[2].textContent = L.pb_label_d;
+  document.querySelectorAll('.lift-cell-sub').forEach(el=>el.textContent = L.pb_sub);
+  // E1RM labels
+  const e1rmIntro = document.querySelector('.e1rm-intro');
+  if(e1rmIntro) e1rmIntro.innerHTML = L.e1rm_intro;
+  document.querySelectorAll('.e1rm-cell-label').forEach((el,i)=>{
+    el.textContent = [L.pb_label_s, L.pb_label_b, L.pb_label_d][i] || el.textContent;
+  });
+  document.querySelectorAll('.e1rm-field-label').forEach((el,i)=>{
+    const labels = [L.e1rm_weight, L.e1rm_reps, L.e1rm_rit];
+    el.textContent = labels[i%3] || el.textContent;
+  });
+  document.querySelectorAll('.e1rm-result-label').forEach(el=>el.textContent = L.e1rm_label);
+  document.querySelectorAll('.e1rm-result-empty').forEach(el=>el.textContent = L.e1rm_empty);
+  // Timer UI
+  document.getElementById('fab-timer').title = L.timer_title;
+  const fabLabel = document.getElementById('fab-label');
+  if(fabLabel && !globalTimerInterval) fabLabel.textContent = L.timer_fab;
+  const timerSub = document.getElementById('timer-sub');
+  if(timerSub && !globalTimerInterval) timerSub.textContent = L.timer_set;
+  const timerAction = document.getElementById('timer-action');
+  if(timerAction) timerAction.textContent = globalTimerInterval ? L.timer_stop : L.timer_start;
+  const timerClose = document.getElementById('timer-close');
+  if(timerClose) timerClose.textContent = L.timer_close;
+  const knobLabel = document.getElementById('knob-label');
+  if(knobLabel) knobLabel.textContent = L.timer_knob_label(timerMinutes);
+  // Logo + title + hero
+  document.getElementById('logo-text').textContent = L.logo_text;
+  document.getElementById('logo-slogan').textContent = L.logo_slogan;
+  document.getElementById('hero-l1').textContent = L.hero_l1;
+  document.getElementById('hero-l2').textContent = L.hero_l2;
+  document.getElementById('hero-slogan').textContent = L.hero_slogan;
+  document.title = L.site_title;
+}
+
+// Load saved lang on startup
+window.addEventListener('DOMContentLoaded', ()=>{
+  const savedLang = localStorage.getItem('lang');
+  if(savedLang && savedLang !== currentLang){
+    currentLang = savedLang;
+    document.getElementById('lang-btn').textContent = currentLang === 'sv' ? 'EN' : 'SV';
+    if(currentLang === 'en'){
+      document.getElementById('unit-toggle-wrap').style.display = 'block';
+      const savedUnit = localStorage.getItem('unit');
+      if(savedUnit) setUnit(savedUnit);
+    }
+    applyLang();
+  }
+});
 </script>
 </body>
 </html>
