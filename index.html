@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="sv">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏋️</text></svg>"/>
+<!-- saved from url=(0058)file:///C:/Users/jonat/Downloads/mirakelprogrammet_37.html -->
+<html lang="sv"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,&lt;svg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 100 100&#39;&gt;&lt;text y=&#39;.9em&#39; font-size=&#39;90&#39;&gt;%F0%9F%8F%8B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;">
 <title>Mirakelprogrammet</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./index_files/css2" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -562,6 +562,17 @@ footer{
 }
 @media(max-width:640px){footer{padding:24px 20px;}}
 .footer-logo{font-family:var(--bb);font-size:15px;color:var(--lime);letter-spacing:0.06em;}
+.bb-ep-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:7px 0;border-top:1px solid var(--ink3);gap:8px;
+}
+.bb-ep-row:first-of-type{border-top:none;}
+.bb-ep-info{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0;}
+.bb-ep-code{font-family:var(--mono);font-size:9px;color:var(--dust2);letter-spacing:0.1em;}
+.bb-ep-title{font-size:12px;font-weight:500;color:var(--cream);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bb-ep-rating{display:flex;flex-direction:column;align-items:flex-end;flex-shrink:0;gap:1px;}
+.bb-rating-num{font-family:var(--bb);font-size:18px;line-height:1;}
+.bb-rating-stars{font-size:8px;letter-spacing:0.02em;}
 .dl-btn{
   font-family:var(--sg);font-size:12px;font-weight:500;
   background:none;border:1px solid var(--ink4);
@@ -679,7 +690,7 @@ footer{
   .ptt{flex:1;text-align:center;}
 }
 </style>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3S4C1Q1HZT"></script>
+<script async="" src="./index_files/js"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -703,7 +714,7 @@ footer{
 
 <!-- FLOATING TIMER BUTTON -->
 <button class="fab-timer" id="fab-timer" onclick="openTimer()" title="Vila-timer" style="display:none">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5"/><path d="M9 3h6"/><path d="M12 3v2"/></svg>
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"></circle><path d="M12 9v4l2.5 2.5"></path><path d="M9 3h6"></path><path d="M12 3v2"></path></svg>
   <span class="fab-timer-label" id="fab-label">Vila</span>
 </button>
 
@@ -713,43 +724,37 @@ footer{
   <div class="timer-drag-handle"></div>
 
   <div class="timer-barbell" id="timer-barbell">
-    <svg id="barbell-svg" viewBox="0 0 900 90" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:480px;height:80px;">
+    <svg id="barbell-svg" viewBox="0 0 700 80" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px;height:80px;">
       <defs>
-        <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#888"/><stop offset="50%" stop-color="#ccc"/><stop offset="100%" stop-color="#666"/>
-        </linearGradient>
-        <linearGradient id="sleeveGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#777"/><stop offset="50%" stop-color="#aaa"/><stop offset="100%" stop-color="#555"/>
-        </linearGradient>
-        <linearGradient id="capGrad" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stop-color="#555"/><stop offset="50%" stop-color="#999"/><stop offset="100%" stop-color="#555"/>
-        </linearGradient>
-        <linearGradient id="p25Grad"  x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#aa1111"/><stop offset="50%" stop-color="#ff3333"/><stop offset="100%" stop-color="#aa1111"/></linearGradient>
-        <linearGradient id="p20Grad"  x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#1133aa"/><stop offset="50%" stop-color="#2255ff"/><stop offset="100%" stop-color="#1133aa"/></linearGradient>
-        <linearGradient id="p15Grad"  x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#aa8800"/><stop offset="50%" stop-color="#ffcc00"/><stop offset="100%" stop-color="#aa8800"/></linearGradient>
-        <linearGradient id="p10Grad"  x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#116611"/><stop offset="50%" stop-color="#22bb22"/><stop offset="100%" stop-color="#116611"/></linearGradient>
-        <linearGradient id="p5Grad"   x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#cccccc"/><stop offset="50%" stop-color="#ffffff"/><stop offset="100%" stop-color="#cccccc"/></linearGradient>
-        <linearGradient id="p25sGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#111111"/><stop offset="50%" stop-color="#333333"/><stop offset="100%" stop-color="#111111"/></linearGradient>
-        <linearGradient id="p125Grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#888"/><stop offset="50%" stop-color="#ddd"/><stop offset="100%" stop-color="#888"/></linearGradient>
+        <lineargradient id="barGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#888"></stop><stop offset="50%" stop-color="#ccc"></stop><stop offset="100%" stop-color="#666"></stop></lineargradient>
+        <lineargradient id="sleeveGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#777"></stop><stop offset="50%" stop-color="#aaa"></stop><stop offset="100%" stop-color="#555"></stop></lineargradient>
+        <lineargradient id="capGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#555"></stop><stop offset="50%" stop-color="#999"></stop><stop offset="100%" stop-color="#555"></stop></lineargradient>
+        <lineargradient id="p25Grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#aa1111"></stop><stop offset="50%" stop-color="#ff3333"></stop><stop offset="100%" stop-color="#aa1111"></stop></lineargradient>
+        <lineargradient id="p20Grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#1133aa"></stop><stop offset="50%" stop-color="#2255ff"></stop><stop offset="100%" stop-color="#1133aa"></stop></lineargradient>
+        <lineargradient id="p15Grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#aa8800"></stop><stop offset="50%" stop-color="#ffcc00"></stop><stop offset="100%" stop-color="#aa8800"></stop></lineargradient>
+        <lineargradient id="p10Grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#116611"></stop><stop offset="50%" stop-color="#22bb22"></stop><stop offset="100%" stop-color="#116611"></stop></lineargradient>
+        <lineargradient id="p5Grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#cccccc"></stop><stop offset="50%" stop-color="#ffffff"></stop><stop offset="100%" stop-color="#cccccc"></stop></lineargradient>
+        <lineargradient id="p25sGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#111111"></stop><stop offset="50%" stop-color="#333333"></stop><stop offset="100%" stop-color="#111111"></stop></lineargradient>
+        <lineargradient id="p125Grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#888"></stop><stop offset="50%" stop-color="#ddd"></stop><stop offset="100%" stop-color="#888"></stop></lineargradient>
       </defs>
       <!-- Bar -->
-      <rect x="165" y="42" width="570" height="7" rx="3" fill="url(#barGrad)"/>
-      <!-- Left sleeve -->
-      <rect x="50" y="37" width="115" height="17" rx="3" fill="url(#sleeveGrad)"/>
+      <rect x="140" y="37" width="420" height="7" rx="3" fill="url(#barGrad)"></rect>
+      <!-- Left sleeve (short ~50px where plates sit) -->
+      <rect x="90" y="33" width="50" height="15" rx="3" fill="url(#sleeveGrad)"></rect>
       <!-- Right sleeve -->
-      <rect x="735" y="37" width="115" height="17" rx="3" fill="url(#sleeveGrad)"/>
-      <!-- Left collar -->
-      <rect x="155" y="33" width="7" height="24" rx="2" fill="#ccc"/>
+      <rect x="560" y="33" width="50" height="15" rx="3" fill="url(#sleeveGrad)"></rect>
+      <!-- Left collar (narrow ring at inner edge of sleeve) -->
+      <rect x="138" y="31" width="6" height="19" rx="2" fill="#ccc"></rect>
       <!-- Right collar -->
-      <rect x="735" y="33" width="7" height="24" rx="2" fill="#ccc"/>
+      <rect x="556" y="31" width="6" height="19" rx="2" fill="#ccc"></rect>
       <!-- End caps -->
-      <rect x="10" y="24" width="40" height="42" rx="5" fill="url(#capGrad)"/>
-      <rect x="850" y="24" width="40" height="42" rx="5" fill="url(#capGrad)"/>
+      <rect x="62" y="30" width="28" height="21" rx="4" fill="url(#capGrad)"></rect>
+      <rect x="610" y="30" width="28" height="21" rx="4" fill="url(#capGrad)"></rect>
       <!-- Dynamic plates -->
       <g id="plates-left"></g>
       <g id="plates-right"></g>
       <!-- Weight label -->
-      <text id="bb-weight-label" x="450" y="85" text-anchor="middle" font-family="'DM Mono',monospace" font-size="11" fill="#555" letter-spacing="0.05em"></text>
+      <text id="bb-weight-label" x="350" y="76" text-anchor="middle" font-family="&#39;DM Mono&#39;,monospace" font-size="10" fill="#555" letter-spacing="0.05em"></text>
     </svg>
   </div>
 
@@ -758,7 +763,7 @@ footer{
 
   <div class="timer-knob-wrap">
     <div class="timer-knob-track">
-      <input type="range" class="timer-knob" id="timer-knob" min="1" max="10" value="3" oninput="onKnobChange(this.value)"/>
+      <input type="range" class="timer-knob" id="timer-knob" min="1" max="10" value="3" oninput="onKnobChange(this.value)">
       <div class="timer-knob-ticks">
         <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
         <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
@@ -782,28 +787,30 @@ footer{
   <p class="hero-desc" data-i18n="hero_desc">Lyft tungt, lyft smart och för guds skull akta ryggen.</p>
 
   <div class="prog-type-tabs">
-    <button class="ptt active" id="ptt-2" onclick="setProgType('2veckor')" data-i18n="tab_2week">2-veckorscykel</button>
-    <button class="ptt" id="ptt-5" onclick="setProgType('5veckor')" data-i18n="tab_5week">5-veckorscykel</button>
+    <button class="ptt active" id="ptt-2" onclick="setProgType(&#39;2veckor&#39;)" data-i18n="tab_2week">2-veckorscykel</button>
+    <button class="ptt" id="ptt-5" onclick="setProgType(&#39;5veckor&#39;)" data-i18n="tab_5week">5-veckorscykel</button>
+
   </div>
 
   <!-- LBS TOGGLE (only shown in English) -->
   <div id="unit-toggle-wrap" style="display:none;margin-bottom:0;">
     <div class="input-mode-toggle">
-      <button class="imt active" id="unit-kg" onclick="setUnit('kg')">kg</button>
-      <button class="imt" id="unit-lbs" onclick="setUnit('lbs')">lbs</button>
+      <button class="imt active" id="unit-kg" onclick="setUnit(&#39;kg&#39;)">kg</button>
+      <button class="imt" id="unit-lbs" onclick="setUnit(&#39;lbs&#39;)">lbs</button>
     </div>
   </div>
 
   <!-- INTENSITY TOGGLE -->
   <div class="input-mode-toggle" style="margin-bottom:8px;">
-    <button class="imt active" id="int-full" onclick="setIntensity('full')" data-i18n="int_full">🏋️ Full</button>
-    <button class="imt" id="int-light" onclick="setIntensity('light')" data-i18n="int_light">🥂 Light – för latmaskar & glaslyftare</button>
+    <button class="imt active" id="int-full" onclick="setIntensity(&#39;full&#39;)" data-i18n="int_full">🏋️ Full</button>
+    <button class="imt" id="int-light" onclick="setIntensity(&#39;light&#39;)" data-i18n="int_light">🥂 Light – för latmaskar &amp; glaslyftare</button>
+    <button class="imt" id="int-bb" onclick="setProgType(&#39;breakingbad&#39;)"><span id="bb-tab-label">📺 Chilla galet</span></button>
   </div>
 
   <!-- INPUT MODE TOGGLE -->
   <div class="input-mode-toggle">
-    <button class="imt active" id="imt-pb" onclick="setInputMode('pb')" data-i18n="imt_pb">Personbästa</button>
-    <button class="imt" id="imt-e1rm" onclick="setInputMode('e1rm')" data-i18n="imt_e1rm">Toppset</button>
+    <button class="imt active" id="imt-pb" onclick="setInputMode(&#39;pb&#39;)" data-i18n="imt_pb">Personbästa</button>
+    <button class="imt" id="imt-e1rm" onclick="setInputMode(&#39;e1rm&#39;)" data-i18n="imt_e1rm">Toppset</button>
   </div>
 
   <!-- PB-LÄGE -->
@@ -813,7 +820,7 @@ footer{
         <div class="lift-cell-label">Knäböj</div>
         <div class="lift-cell-sub">Personbästa</div>
         <div class="lift-input-row">
-          <input class="lift-num" id="squat" type="number" placeholder="—" min="60" max="500"/>
+          <input class="lift-num" id="squat" type="number" placeholder="—" min="60" max="500">
           <span class="lift-kg unit-label">kg</span>
         </div>
         <div class="lift-underline"></div>
@@ -822,7 +829,7 @@ footer{
         <div class="lift-cell-label">Bänkpress</div>
         <div class="lift-cell-sub">Personbästa</div>
         <div class="lift-input-row">
-          <input class="lift-num" id="bench" type="number" placeholder="—" min="40" max="400"/>
+          <input class="lift-num" id="bench" type="number" placeholder="—" min="40" max="400">
           <span class="lift-kg unit-label">kg</span>
         </div>
         <div class="lift-underline"></div>
@@ -831,7 +838,7 @@ footer{
         <div class="lift-cell-label">Marklyft</div>
         <div class="lift-cell-sub">Personbästa</div>
         <div class="lift-input-row">
-          <input class="lift-num" id="dead" type="number" placeholder="—" min="60" max="600"/>
+          <input class="lift-num" id="dead" type="number" placeholder="—" min="60" max="600">
           <span class="lift-kg unit-label">kg</span>
         </div>
         <div class="lift-underline"></div>
@@ -849,15 +856,15 @@ footer{
         <div class="e1rm-row">
           <div class="e1rm-field">
             <div class="e1rm-field-label">Vikt (kg)</div>
-            <input class="e1rm-input" id="s-kg" type="number" placeholder="—" min="20" max="500" oninput="calcE1RM('s')"/>
+            <input class="e1rm-input" id="s-kg" type="number" placeholder="—" min="20" max="500" oninput="calcE1RM(&#39;s&#39;)">
           </div>
           <div class="e1rm-field">
             <div class="e1rm-field-label">Reps</div>
-            <input class="e1rm-input small" id="s-reps" type="number" placeholder="—" min="1" max="10" oninput="calcE1RM('s')"/>
+            <input class="e1rm-input small" id="s-reps" type="number" placeholder="—" min="1" max="10" oninput="calcE1RM(&#39;s&#39;)">
           </div>
           <div class="e1rm-field">
             <div class="e1rm-field-label">Reps i tanken</div>
-            <input class="e1rm-input small" id="s-rit" type="number" placeholder="—" min="0" max="10" oninput="calcE1RM('s')"/>
+            <input class="e1rm-input small" id="s-rit" type="number" placeholder="—" min="0" max="10" oninput="calcE1RM(&#39;s&#39;)">
           </div>
         </div>
         <div class="e1rm-result" id="s-result">
@@ -871,15 +878,15 @@ footer{
         <div class="e1rm-row">
           <div class="e1rm-field">
             <div class="e1rm-field-label">Vikt (kg)</div>
-            <input class="e1rm-input" id="b-kg" type="number" placeholder="—" min="20" max="400" oninput="calcE1RM('b')"/>
+            <input class="e1rm-input" id="b-kg" type="number" placeholder="—" min="20" max="400" oninput="calcE1RM(&#39;b&#39;)">
           </div>
           <div class="e1rm-field">
             <div class="e1rm-field-label">Reps</div>
-            <input class="e1rm-input small" id="b-reps" type="number" placeholder="—" min="1" max="10" oninput="calcE1RM('b')"/>
+            <input class="e1rm-input small" id="b-reps" type="number" placeholder="—" min="1" max="10" oninput="calcE1RM(&#39;b&#39;)">
           </div>
           <div class="e1rm-field">
             <div class="e1rm-field-label">Reps i tanken</div>
-            <input class="e1rm-input small" id="b-rit" type="number" placeholder="—" min="0" max="10" oninput="calcE1RM('b')"/>
+            <input class="e1rm-input small" id="b-rit" type="number" placeholder="—" min="0" max="10" oninput="calcE1RM(&#39;b&#39;)">
           </div>
         </div>
         <div class="e1rm-result" id="b-result">
@@ -893,15 +900,15 @@ footer{
         <div class="e1rm-row">
           <div class="e1rm-field">
             <div class="e1rm-field-label">Vikt (kg)</div>
-            <input class="e1rm-input" id="d-kg" type="number" placeholder="—" min="20" max="600" oninput="calcE1RM('d')"/>
+            <input class="e1rm-input" id="d-kg" type="number" placeholder="—" min="20" max="600" oninput="calcE1RM(&#39;d&#39;)">
           </div>
           <div class="e1rm-field">
             <div class="e1rm-field-label">Reps</div>
-            <input class="e1rm-input small" id="d-reps" type="number" placeholder="—" min="1" max="10" oninput="calcE1RM('d')"/>
+            <input class="e1rm-input small" id="d-reps" type="number" placeholder="—" min="1" max="10" oninput="calcE1RM(&#39;d&#39;)">
           </div>
           <div class="e1rm-field">
             <div class="e1rm-field-label">Reps i tanken</div>
-            <input class="e1rm-input small" id="d-rit" type="number" placeholder="—" min="0" max="10" oninput="calcE1RM('d')"/>
+            <input class="e1rm-input small" id="d-rit" type="number" placeholder="—" min="0" max="10" oninput="calcE1RM(&#39;d&#39;)">
           </div>
         </div>
         <div class="e1rm-result" id="d-result">
@@ -920,7 +927,7 @@ footer{
 
 <section class="prog-section" id="prog-section">
   <div class="prog-top">
-    <div class="prog-heading">Ditt <span>program</span></div>
+    <div class="prog-heading" id="prog-heading">Ditt <span>program</span></div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
       <div class="prog-summary" id="prog-summary"></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;">
@@ -966,12 +973,29 @@ function setProgType(t){
   progType = t;
   document.getElementById('ptt-2').classList.toggle('active', t==='2veckor');
   document.getElementById('ptt-5').classList.toggle('active', t==='5veckor');
+  const bbBtn = document.getElementById('int-bb');
+  if(bbBtn) bbBtn.classList.toggle('active', t==='breakingbad');
+  // Deactivate intensity buttons when BB is selected
+  if(t==='breakingbad'){
+    document.getElementById('int-full').classList.remove('active');
+    document.getElementById('int-light').classList.remove('active');
+  }
+  // Hide inputs/intensity/unit for BB mode
+  const hideEls = document.querySelectorAll('.inputs-wrap, .e1rm-wrap');
+  hideEls.forEach(el => el.style.display = t==='breakingbad' ? 'none' : '');
+  // lbs-toggle only visible in English, never in Swedish
+  document.getElementById('unit-toggle-wrap').style.display =
+    (currentLang === 'en' && t !== 'breakingbad') ? 'block' : 'none';
 }
 
 function setIntensity(v){
   intensity = v;
+  if(progType === 'breakingbad'){ progType = '2veckor'; document.getElementById('ptt-2').classList.add('active'); document.getElementById('ptt-5').classList.remove('active'); }
   document.getElementById('int-full').classList.toggle('active', v==='full');
   document.getElementById('int-light').classList.toggle('active', v==='light');
+  const bbBtn = document.getElementById('int-bb');
+  if(bbBtn) bbBtn.classList.remove('active');
+  document.querySelectorAll('.inputs-wrap, .e1rm-wrap').forEach(el => el.style.display = '');
 }
 
 function setInputMode(mode){
@@ -1303,9 +1327,9 @@ function calcPlates(totalKg){
 
 function drawBarbell(kg){
   const plates = calcPlates(kg);
-  const CY = 45;
-  const LEFT_COLLAR_X  = 155;  // left edge of left collar
-  const RIGHT_COLLAR_X = 742;  // right edge of right collar (735 + 7)
+  const CY = 40;
+  const LEFT_COLLAR_X  = 138;  // left edge of left collar
+  const RIGHT_COLLAR_X = 562;  // right edge of right collar (556 + 6)
 
   // Left side: stack outward (going left) from collar
   let leftSVG = '';
@@ -1407,6 +1431,18 @@ function renderGrid(days, showToday){
 }
 
 function generate(){
+  // Breaking Bad mode – inga PB behövs
+  if(progType === 'breakingbad'){
+    const sec = document.getElementById('prog-section');
+    const out = document.getElementById('prog-output');
+    document.getElementById('prog-summary').innerHTML = t('bb_summary');
+    out.innerHTML = renderBBProgram();
+    sec.style.display = 'block';
+    sec.scrollIntoView({behavior:'smooth', block:'start'});
+    document.getElementById('fab-timer').style.display = 'flex';
+    document.getElementById('timer-countdown').textContent = formatTime(timerMinutes*60);
+    return;
+  }
   let s, b, d;
   if(inputMode === 'pb'){
     let sv = parseFloat(document.getElementById('squat').value);
@@ -1428,6 +1464,7 @@ function generate(){
   const out = document.getElementById('prog-output');
   const isLight = intensity === 'light';
   const builder = (s,b,d,isA,wn) => isLight ? buildWeekLight(s,b,d,isA,wn) : buildWeek(s,b,d,isA,wn);
+  document.getElementById('prog-heading').innerHTML = t('prog_heading');
   const lightLabel = isLight ? ` · <span style="color:var(--dust);font-size:9px;">${t('light_label')}</span>` : '';
   const legendText = t('legend_text');
   const ul = unitLabel();
@@ -1617,7 +1654,110 @@ function downloadExcel(){
   URL.revokeObjectURL(url);
 }
 
-document.addEventListener('keydown',e=>{ if(e.key==='Enter') generate(); });
+// ── BREAKING BAD ──────────────────────────────────────────────────
+const BB_EPISODES = [
+  // Season 1
+  {s:1,e:1,title:"Pilot",rating:9.0},{s:1,e:2,title:"Cat's in the Bag",rating:8.6},
+  {s:1,e:3,title:"...And the Bag's in the River",rating:8.7},{s:1,e:4,title:"Cancer Man",rating:8.2},
+  {s:1,e:5,title:"Gray Matter",rating:8.4},{s:1,e:6,title:"Crazy Handful of Nothin'",rating:9.2},
+  {s:1,e:7,title:"A No-Rough-Stuff-Type Deal",rating:8.7},
+  // Season 2
+  {s:2,e:1,title:"Seven Thirty-Seven",rating:8.6},{s:2,e:2,title:"Grilled",rating:9.2},
+  {s:2,e:3,title:"Bit by a Dead Bee",rating:8.5},{s:2,e:4,title:"Down",rating:8.1},
+  {s:2,e:5,title:"Breakage",rating:8.3},{s:2,e:6,title:"Peekaboo",rating:8.7},
+  {s:2,e:7,title:"Negro y Azul",rating:8.5},{s:2,e:8,title:"Better Call Saul",rating:9.0},
+  {s:2,e:9,title:"4 Days Out",rating:9.4},{s:2,e:10,title:"Over",rating:8.4},
+  {s:2,e:11,title:"Mandala",rating:8.8},{s:2,e:12,title:"Phoenix",rating:9.3},
+  {s:2,e:13,title:"ABQ",rating:8.9},
+  // Season 3
+  {s:3,e:1,title:"No Más",rating:8.7},{s:3,e:2,title:"Caballo Sin Nombre",rating:8.6},
+  {s:3,e:3,title:"I.F.T.",rating:8.5},{s:3,e:4,title:"Green Light",rating:8.5},
+  {s:3,e:5,title:"Más",rating:8.8},{s:3,e:6,title:"Sunset",rating:9.1},
+  {s:3,e:7,title:"One Minute",rating:9.6},{s:3,e:8,title:"I See You",rating:8.8},
+  {s:3,e:9,title:"Kafkaesque",rating:8.5},{s:3,e:10,title:"Fly",rating:8.1},
+  {s:3,e:11,title:"Abiquiú",rating:8.8},{s:3,e:12,title:"Half Measures",rating:9.5},
+  {s:3,e:13,title:"Full Measure",rating:9.6},
+  // Season 4
+  {s:4,e:1,title:"Box Cutter",rating:9.2},{s:4,e:2,title:"Thirty-Eight Snub",rating:8.5},
+  {s:4,e:3,title:"Open House",rating:8.3},{s:4,e:4,title:"Bullet Points",rating:8.6},
+  {s:4,e:5,title:"Shotgun",rating:8.7},{s:4,e:6,title:"Cornered",rating:8.7},
+  {s:4,e:7,title:"Problem Dog",rating:8.8},{s:4,e:8,title:"Hermanos",rating:9.0},
+  {s:4,e:9,title:"Bug",rating:8.7},{s:4,e:10,title:"Salud",rating:9.3},
+  {s:4,e:11,title:"Crawl Space",rating:9.5},{s:4,e:12,title:"End Times",rating:9.3},
+  {s:4,e:13,title:"Face Off",rating:9.9},
+  // Season 5
+  {s:5,e:1,title:"Live Free or Die",rating:9.2},{s:5,e:2,title:"Madrigal",rating:8.8},
+  {s:5,e:3,title:"Hazard Pay",rating:8.8},{s:5,e:4,title:"Fifty-One",rating:8.8},
+  {s:5,e:5,title:"Dead Freight",rating:9.8},{s:5,e:6,title:"Buyout",rating:8.9},
+  {s:5,e:7,title:"Say My Name",rating:9.4},{s:5,e:8,title:"Gliding Over All",rating:9.5},
+  {s:5,e:9,title:"Blood Money",rating:9.2},{s:5,e:10,title:"Buried",rating:8.9},
+  {s:5,e:11,title:"Confessions",rating:9.5},{s:5,e:12,title:"Rabid Dog",rating:9.0},
+  {s:5,e:13,title:"To'hajiilee",rating:9.7},{s:5,e:14,title:"Ozymandias",rating:10.0},
+  {s:5,e:15,title:"Granite State",rating:9.6},{s:5,e:16,title:"Felina",rating:9.8},
+];
+
+// Programdagarna (samma som vanliga program): Tis, Ons, Fre, Lör, Sön
+const BB_DAYS = ['Tisdag','Onsdag','Fredag','Lördag','Söndag'];
+// Per pass: 62 avsnitt / 5 pass/vecka = 12-13 pass -> vi delar jämnt
+function buildBBProgram(){
+  const days = BB_DAYS;
+  const eps = [...BB_EPISODES];
+  const perDay = Math.ceil(eps.length / days.length);
+  // Fyll ut dagar med avsnitt
+  const schedule = days.map((day, i) => ({
+    day,
+    tag: `Dag ${[2,3,5,6,7][i]}`,
+    episodes: eps.splice(0, perDay),
+  }));
+  return schedule;
+}
+
+function renderStars(rating){
+  const full = Math.floor(rating);
+  const frac = rating - full;
+  let s = '';
+  for(let i=0;i<full;i++) s += '★';
+  if(frac >= 0.5) s += '½';
+  return s;
+}
+
+function ratingColor(r){
+  if(r >= 9.8) return '#ff6b35'; // legendary
+  if(r >= 9.4) return '#CBFF4D'; // lime
+  if(r >= 9.0) return '#7eb8f7'; // blue
+  if(r >= 8.5) return '#aaa';    // silver
+  return '#666';
+}
+
+function renderBBProgram(){
+  const schedule = buildBBProgram();
+  let html = `<div class="days-grid">`;
+  schedule.forEach((day, di) => {
+    html += `<div class="day-card" style="animation-delay:${di*0.07}s">
+      <div class="dc-eyebrow">${day.tag}</div>
+      <div class="dc-title">${day.day}</div>`;
+    day.episodes.forEach(ep => {
+      const col = ratingColor(ep.rating);
+      html += `<div class="bb-ep-row">
+        <div class="bb-ep-info">
+          <span class="bb-ep-code">S${ep.s}E${String(ep.e).padStart(2,'0')}</span>
+          <span class="bb-ep-title">${ep.title}</span>
+        </div>
+        <div class="bb-ep-rating" style="color:${col}">
+          <span class="bb-rating-num">${ep.rating.toFixed(1)}</span>
+          <span class="bb-rating-stars">${renderStars(ep.rating)}</span>
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+  });
+  html += `</div>`;
+
+  // Disclaimer
+  const bbDisc = t('bb_disclaimer');
+  html += `<div style="font-family:var(--mono);font-size:10px;color:var(--dust2);margin-top:16px;padding-top:12px;border-top:1px solid var(--ink3);letter-spacing:0.06em;">${bbDisc}</div>`;
+  return html;
+}
 
 // ── TRANSLATIONS ─────────────────────────────────────────────────
 let currentLang = 'sv';
@@ -1645,6 +1785,9 @@ const T = {
     logo_slogan: 'based on magkänsla',
     hero_l1: 'MIRAKEL', hero_l2: 'PROGRAMMET',
     hero_slogan: 'based on magkänsla',
+    bb_tab: '📺 Chilla galet',
+    bb_summary: 'Breaking Bad · 62 avsnitt · IMDb ⭐',
+    bb_disclaimer: '⚗️ Detta är ett träningsprogram. Typ. Betyg från IMDb. Ozymandias är fortfarande den bästa TV-episoden som gjorts.',
     e1rm_intro: 'Fyll i det tyngsta setet du gjort i varje lyft de senaste 6 månaderna.<br>Ange också hur många reps du bedömer att du hade kvar i tanken – de adderas och ger ett estimerat max via Epleys ekvation.',
     e1rm_weight: 'Vikt (kg)', e1rm_reps: 'Reps', e1rm_rit: 'Reps i tanken',
     e1rm_label: 'Estimerat max', e1rm_empty: 'Fyll i ovan',
@@ -1698,6 +1841,9 @@ const T = {
     logo_slogan: 'based on gut feeling',
     hero_l1: 'THE', hero_l2: 'MIRACLE PROGRAM',
     hero_slogan: 'based on gut feeling',
+    bb_tab: '📺 Chill mode',
+    bb_summary: 'Breaking Bad · 62 episodes · IMDb ⭐',
+    bb_disclaimer: '⚗️ This is a training program. Sort of. Ratings from IMDb. Ozymandias is still the greatest TV episode ever made.',
     pb_label_s: 'Squat', pb_label_b: 'Bench press', pb_label_d: 'Deadlift',
     pb_sub: 'Personal best',
     e1rm_intro: 'Enter the heaviest set you\'ve done in each lift in the last 6 months.<br>Also enter how many reps you estimated you had left in the tank – they are added and give an estimated max via Epley\'s equation.',
@@ -1803,7 +1949,10 @@ function applyLang(){
   if(timerClose) timerClose.textContent = L.timer_close;
   const knobLabel = document.getElementById('knob-label');
   if(knobLabel) knobLabel.textContent = L.timer_knob_label(timerMinutes);
-  // Logo + title + hero
+  const bbTabLabel = document.getElementById('bb-tab-label');
+  if(bbTabLabel) bbTabLabel.textContent = L.bb_tab.replace(/^\S+\s/,''); // keep emoji, translate text
+  // Actually replace whole thing including emoji
+  if(bbTabLabel) bbTabLabel.innerHTML = L.bb_tab;
   document.getElementById('logo-text').textContent = L.logo_text;
   document.getElementById('logo-slogan').textContent = L.logo_slogan;
   document.getElementById('hero-l1').textContent = L.hero_l1;
@@ -1822,10 +1971,13 @@ window.addEventListener('DOMContentLoaded', ()=>{
       document.getElementById('unit-toggle-wrap').style.display = 'block';
       const savedUnit = localStorage.getItem('unit');
       if(savedUnit) setUnit(savedUnit);
+    } else {
+      document.getElementById('unit-toggle-wrap').style.display = 'none';
     }
     applyLang();
   }
 });
 </script>
-</body>
-</html>
+
+
+</body></html>
