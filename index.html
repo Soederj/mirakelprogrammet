@@ -740,10 +740,11 @@ footer{
 .rlc-goal{font-family:var(--mono);font-size:10.5px;color:var(--dust);line-height:1.5;letter-spacing:0.02em;}
 .rlc-goal strong{color:var(--lime);font-weight:500;}
 .rlc-weak{
-  position:absolute;top:12px;right:-1px;
+  display:inline-block;
   font-family:var(--mono);font-size:9px;letter-spacing:0.08em;
-  background:rgba(255,107,53,0.15);color:#ff9b6b;border:1px solid rgba(255,107,53,0.3);border-right:none;
-  padding:4px 10px;border-radius:8px 0 0 8px;
+  background:rgba(255,107,53,0.15);color:#ff9b6b;border:1px solid rgba(255,107,53,0.3);
+  padding:3px 10px;border-radius:8px;
+  margin-bottom:12px;
 }
 .rank-note{font-family:var(--mono);font-size:10px;color:var(--dust2);margin-top:20px;line-height:1.6;letter-spacing:0.03em;max-width:640px;}
 @media print{.rank-section{display:none!important;}}
@@ -1048,6 +1049,8 @@ footer{
     <div class="rank-controls">
       <select class="rank-select" id="rank-class" onchange="onRankClassChange()">
         <option value="">…</option>
+      </select>
+      <select class="rank-select" id="rank-age" onchange="onRankAgeChange()" style="display:none;max-width:220px;">
       </select>
       <button class="rank-btn" id="rank-btn" onclick="checkRanking()">🏆 Jämför mina lyft</button>
     </div>
@@ -2101,6 +2104,7 @@ const T = {
     rank_pick_class: 'Välj viktklass…',
     rank_men: 'Herrar',
     rank_women: 'Damer',
+    rank_age_all: 'Alla åldersklasser',
     rank_loading_classes: 'Hämtar viktklasser…',
     rank_classes_error: 'Kunde inte hämta viktklasser',
     rank_loading: 'Hämtar rankingen…',
@@ -2110,13 +2114,13 @@ const T = {
     rank_place: (p,n) => `Plats <strong>${p}</strong> av ${n}`,
     rank_top: (pct) => `· topp ${pct} %`,
     rank_meta_line: (cls,n,y,d) => `${cls} · Klassiskt styrkelyft · ${n} lyftare · ${y} · uppdaterad ${d}`,
-    rank_goal: (kg,u,pos,name,val) => `<strong>+${kg} ${u}</strong> till topp ${pos} — där ligger ${name} på ${val} ${u}`,
+    rank_goal: (kg,u,pos,val) => `<strong>+${kg} ${u}</strong> till topp ${pos} — där krävs ${val} ${u}`,
     rank_first: '🥇 Du toppar listan i Sverige!',
-    rank_goal_first: (kg,u,name,val) => `<strong>+${kg} ${u}</strong> till förstaplatsen — där ligger ${name} på ${val} ${u}`,
+    rank_goal_first: (kg,u,val) => `<strong>+${kg} ${u}</strong> till förstaplatsen — där krävs ${val} ${u}`,
     rank_outside: (val,u) => `Sist på listan har ${val} ${u} – du är med så fort du tävlar!`,
     rank_weak: '💡 störst potential',
     rank_lift_names: ['Knäböj','Bänkpress','Marklyft','Totalt'],
-    rank_note: 'Baserat på tävlingsresultat registrerade hos Svenska Styrkelyftförbundet i år (via data.styrkelyft.se). Placeringen visar var dina siffror skulle hamna om du tävlade in dem. Data cachas i 12 timmar.',
+    rank_note: 'Baserat på tävlingsresultat registrerade hos Svenska Styrkelyftförbundet i år (via data.styrkelyft.se). Kom ihåg att rankingens lyft är gjorda under betydligt tuffare betingelser än på gymmet: godkänt djup i böjen, paus på bröstet i bänken, domarbedömning, invägning och nio bedömda försök under en och samma dag. Ett tränings-PB brukar därför motsvara något mindre på tävlingsflaket – jämförelsen visar var dina siffror skulle hamna om du tävlade in dem. Data cachas i 12 timmar.',
     glossary: {
       'TNG': 'Touch and go – stången nuddar bröstet men stannar inte',
       'AMRAP': 'As Many Reps As Possible – kör så många reps du kan',
@@ -2188,6 +2192,7 @@ const T = {
     rank_pick_class: 'Pick weight class…',
     rank_men: 'Men',
     rank_women: 'Women',
+    rank_age_all: 'All age categories',
     rank_loading_classes: 'Loading weight classes…',
     rank_classes_error: 'Could not load weight classes',
     rank_loading: 'Fetching rankings…',
@@ -2197,13 +2202,13 @@ const T = {
     rank_place: (p,n) => `Rank <strong>${p}</strong> of ${n}`,
     rank_top: (pct) => `· top ${pct}%`,
     rank_meta_line: (cls,n,y,d) => `${cls} · Classic powerlifting · ${n} lifters · ${y} · updated ${d}`,
-    rank_goal: (kg,u,pos,name,val) => `<strong>+${kg} ${u}</strong> to reach top ${pos} — ${name} holds it at ${val} ${u}`,
+    rank_goal: (kg,u,pos,val) => `<strong>+${kg} ${u}</strong> to reach top ${pos} — that spot requires ${val} ${u}`,
     rank_first: '🥇 You top the Swedish list!',
-    rank_goal_first: (kg,u,name,val) => `<strong>+${kg} ${u}</strong> to take first place — ${name} holds it at ${val} ${u}`,
+    rank_goal_first: (kg,u,val) => `<strong>+${kg} ${u}</strong> to take first place — it requires ${val} ${u}`,
     rank_outside: (val,u) => `Last on the list has ${val} ${u} – you are on it as soon as you compete!`,
     rank_weak: '💡 biggest upside',
     rank_lift_names: ['Squat','Bench press','Deadlift','Total'],
-    rank_note: 'Based on competition results registered with the Swedish Powerlifting Federation this year (via data.styrkelyft.se). Your position shows where your numbers would land if you competed them. Data is cached for 12 hours.',
+    rank_note: 'Based on competition results registered with the Swedish Powerlifting Federation this year (via data.styrkelyft.se). Keep in mind that ranking lifts are performed under far tougher conditions than in the gym: judged depth in the squat, a pause on the chest in the bench, weigh-ins and nine judged attempts in a single day. A gym PB usually translates to a bit less on the platform – the comparison shows where your numbers would land if you competed them. Data is cached for 12 hours.',
     glossary: {
       'TNG': 'Touch and go – the bar touches the chest but doesn\'t stop',
       'AMRAP': 'As Many Reps As Possible – do as many reps as you can',
@@ -2263,6 +2268,7 @@ function applyLang(){
   document.getElementById('rank-btn').textContent = L.rank_btn;
   document.getElementById('rank-note').textContent = L.rank_note;
   populateRankClasses();
+  populateRankAges();
   if(lastRankRender) renderRanking(lastRankRender);
   // PB labels
   const pbLabels = document.querySelectorAll('.lift-cell-label');
@@ -2355,15 +2361,15 @@ async function loadRankClasses(){
     document.getElementById('rank-status').textContent = t('rank_setup');
     return;
   }
-  const cached = rankCacheGet('rank_classes_' + RANKING_CT + '_' + RANK_YEAR, 7*24*3600e3);
+  const cached = rankCacheGet('rank_classes2_' + RANKING_CT + '_' + RANK_YEAR, 7*24*3600e3);
   if(cached){ rankClasses = cached; populateRankClasses(); return; }
   sel.innerHTML = `<option value="">${t('rank_loading_classes')}</option>`;
   try {
-    const res = await fetch(`${RANKING_API_URL}/classes?ct=${RANKING_CT}&year=${RANK_YEAR}`);
+    const res = await fetch(`${RANKING_API_URL}/classes?ct=${RANKING_CT}&year=${RANK_YEAR}&v=2`);
     if(!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
     rankClasses = data.classes || [];
-    rankCacheSet('rank_classes_' + RANKING_CT + '_' + RANK_YEAR, rankClasses);
+    rankCacheSet('rank_classes2_' + RANKING_CT + '_' + RANK_YEAR, rankClasses);
     populateRankClasses();
   } catch(e){
     sel.innerHTML = `<option value="">${t('rank_classes_error')}</option>`;
@@ -2390,6 +2396,28 @@ function populateRankClasses(){
 
 function onRankClassChange(){
   localStorage.setItem('rank_class_sel', document.getElementById('rank-class').value);
+}
+
+const AGE_ORDER = { 'SJ':1, 'J':2, 'S':3, 'M1':4, 'M2':5, 'M3':6, 'M4':7 };
+let rankAgeCats = []; // fylls från det ofiltrerade svaret
+
+function populateRankAges(){
+  const sel = document.getElementById('rank-age');
+  if(!sel) return;
+  if(rankAgeCats.length < 2){ sel.style.display = 'none'; return; }
+  const prev = sel.value;
+  const sorted = rankAgeCats.slice().sort((a,b)=>(AGE_ORDER[a.code]||99)-(AGE_ORDER[b.code]||99));
+  let html = `<option value="">${t('rank_age_all')}</option>`;
+  sorted.forEach(c=>{
+    const val = c.id != null ? c.id : c.code;
+    html += `<option value="${val}" data-code="${c.code}"${String(val)===prev?' selected':''}>${c.label || c.code}</option>`;
+  });
+  sel.innerHTML = html;
+  sel.style.display = 'block';
+}
+
+function onRankAgeChange(){
+  checkRanking(); // hämta officiellt filtrerad ranking (cachas per åldersklass)
 }
 
 function getUserLiftsKg(){
@@ -2419,16 +2447,26 @@ async function checkRanking(){
   status.textContent = t('rank_loading');
 
   try {
-    const cacheKey = `rank_${RANKING_CT}_${wc}_${RANK_YEAR}`;
+    const ageSel = document.getElementById('rank-age');
+    const ageOpt = ageSel.selectedOptions ? ageSel.selectedOptions[0] : null;
+    const ageId = ageSel.style.display !== 'none' ? ageSel.value : '';
+    const ageCode = ageId && ageOpt ? (ageOpt.dataset.code || '') : '';
+    const cacheKey = `rank3_${RANKING_CT}_${wc}_${RANK_YEAR}_a${ageId}`;
     let data = rankCacheGet(cacheKey, 12*3600e3);
     if(!data){
-      const res = await fetch(`${RANKING_API_URL}/ranking?wc=${wc}&ct=${RANKING_CT}&year=${RANK_YEAR}`);
+      const ageParam = ageId ? `&age=${ageId}` : '';
+      const res = await fetch(`${RANKING_API_URL}/ranking?wc=${wc}&ct=${RANKING_CT}&year=${RANK_YEAR}${ageParam}&v=3`);
       if(!res.ok) throw new Error('HTTP ' + res.status);
       data = await res.json();
       rankCacheSet(cacheKey, data);
     }
+    // Spara klassens ålderskategorier från det ofiltrerade svaret
+    if(!ageId && data.age_categories && data.age_categories.length){
+      rankAgeCats = data.age_categories;
+      populateRankAges();
+    }
     status.textContent = '';
-    lastRankRender = { data, lifts, wc };
+    lastRankRender = { data, lifts, wc, ageCode };
     renderRanking(lastRankRender);
     if(typeof gtag === 'function') gtag('event', 'ranking_check', { weight_class: wc });
   } catch(e){
@@ -2450,9 +2488,13 @@ function rkg(v){
 }
 
 function renderRanking(ctx){
-  const { data, lifts, wc } = ctx;
+  const { data, lifts, wc, ageCode } = ctx;
   const out = document.getElementById('rank-results');
-  const results = data.results || [];
+  let results = data.results || [];
+  // Skyddsnät: om API:et inte filtrerade på åldersklass gör vi det själva
+  if(ageCode && results.some(r=>r.ageCat && r.ageCat !== ageCode)){
+    results = results.filter(r=>!r.ageCat || r.ageCat === ageCode);
+  }
   const n = results.length;
   if(n === 0){ document.getElementById('rank-status').textContent = t('rank_error'); return; }
 
@@ -2463,7 +2505,12 @@ function renderRanking(ctx){
   const dateStr = updated.toLocaleDateString(currentLang==='sv'?'sv-SE':'en-US',{day:'numeric',month:'short'});
   const meta = document.getElementById('rank-meta');
   meta.style.display = 'block';
-  meta.textContent = t('rank_meta_line', clsName, n, data.year || RANK_YEAR, dateStr);
+  let metaTxt = t('rank_meta_line', clsName, n, data.year || RANK_YEAR, dateStr);
+  if(ageCode){
+    const cat = (data.age_categories||[]).find(c=>c.code===ageCode);
+    metaTxt = (cat ? (cat.label || cat.code) : ageCode) + ' · ' + metaTxt;
+  }
+  meta.textContent = metaTxt;
 
   const liftDefs = [
     { key:'squat', user: lifts.s },
@@ -2503,13 +2550,9 @@ function renderRanking(ctx){
       if(targetPos < 1) targetPos = 1;
       const targetVal = c.vals[targetPos - 1];
       const need = Math.max(2.5, Math.ceil(((targetVal + 2.5) - c.user) / 2.5) * 2.5);
-      const holder = results
-        .slice()
-        .sort((a,b)=>b[c.key]-a[c.key])
-        .filter(r=>r[c.key]>0)[targetPos - 1];
       goal = targetPos === 1
-        ? t('rank_goal_first', rkg(need), ul, holder ? holder.name : '–', rkg(targetVal))
-        : t('rank_goal', rkg(need), ul, targetPos, holder ? holder.name : '–', rkg(targetVal));
+        ? t('rank_goal_first', rkg(need), ul, rkg(targetVal))
+        : t('rank_goal', rkg(need), ul, targetPos, rkg(targetVal));
       const floorPos = Math.min(targetPos + 10, c.nn);
       const floorVal = c.vals[floorPos - 1] || 0;
       const range = (targetVal + 2.5) - floorVal;
@@ -2517,7 +2560,7 @@ function renderRanking(ctx){
     }
 
     html += `<div class="rank-lift-card${isTotal?' total':''}" style="animation-delay:${i*0.07}s">
-      ${i===weakIdx?`<div class="rlc-weak">${t('rank_weak')}</div>`:''}
+      ${i===weakIdx?`<div><span class="rlc-weak">${t('rank_weak')}</span></div>`:''}
       <div class="rlc-head"><span class="rlc-name">${c.name}</span><span class="rlc-val">${rkg(c.user)} ${ul}</span></div>
       <div class="rlc-place">${t('rank_place', c.rank, c.nn)} <span class="rlc-pct">${t('rank_top', pctTop)}</span></div>
       <div class="rlc-bar"><div class="rlc-fill" data-fill="${fill}"></div></div>
@@ -2526,7 +2569,9 @@ function renderRanking(ctx){
   });
 
   out.innerHTML = html;
-  document.getElementById('rank-note').style.display = 'block';
+  const rankNote = document.getElementById('rank-note');
+  rankNote.textContent = t('rank_note');
+  rankNote.style.display = 'block';
   requestAnimationFrame(()=>{
     out.querySelectorAll('.rlc-fill').forEach(f=>{ f.style.width = f.dataset.fill + '%'; });
   });
