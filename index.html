@@ -5,8 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 100 100&#39;&gt;&lt;text y=&#39;.9em&#39; font-size=&#39;90&#39;&gt;%F0%9F%8F%8B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;">
 <title>Mirakelprogrammet</title>
-<link rel="preconnect" href="https://fonts.googleapis.com/">
-<link href="./index_files/css2" rel="stylesheet">
+<meta name="description" content="Mirakelprogrammet – styrkelyftsprogram baserat på magkänsla. Generera ditt periodiserade program för knäböj, bänkpress och marklyft.">
+<meta name="theme-color" content="#09090A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -593,6 +596,9 @@ footer{
   .week-panel{display:block!important;}
   .week-meta{color:#555;border-color:#ddd;font-size:9px;}
   .week-legend{display:none!important;}
+  .dc-progress{display:none!important;}
+  .dc-volume{color:#888!important;}
+  .week-tabs-wrap{display:none!important;}
   .days-grid{grid-template-columns:repeat(2,1fr);gap:8px;}
   .day-card,.day-card-rest{background:#f7f7f7!important;border:1px solid #ddd!important;border-radius:6px;break-inside:avoid;opacity:1!important;}
   .dc-eyebrow{color:#888!important;}
@@ -689,8 +695,95 @@ footer{
   .prog-type-tabs{width:100%;justify-content:center;}
   .ptt{flex:1;text-align:center;}
 }
+
+
+/* ── RANKING (SSF) ── */
+.rank-section{max-width:1200px;margin:0 auto;padding:0 40px 100px;}
+@media(max-width:640px){.rank-section{padding:0 20px 80px;}}
+.rank-card{background:var(--ink2);border:1px solid var(--ink4);border-radius:20px;padding:40px;}
+@media(max-width:640px){.rank-card{padding:26px 20px;}}
+.rank-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:0.2em;color:var(--dust2);margin-bottom:12px;text-transform:uppercase;}
+.rank-title{font-family:var(--bb);font-size:clamp(34px,5vw,52px);line-height:1;letter-spacing:0.02em;margin-bottom:10px;}
+.rank-title span{color:var(--lime);}
+.rank-sub{font-size:14px;color:var(--dust);max-width:560px;line-height:1.6;margin-bottom:24px;}
+.rank-controls{display:flex;gap:12px;flex-wrap:wrap;align-items:stretch;margin-bottom:18px;}
+.rank-select{
+  font-family:var(--mono);font-size:13px;color:var(--cream);
+  background:var(--ink3);border:1px solid var(--ink4);border-radius:10px;
+  padding:14px 16px;min-width:220px;cursor:pointer;outline:none;flex:1;max-width:320px;
+}
+.rank-select:focus{border-color:var(--lime);}
+.rank-btn{
+  font-family:var(--bb);font-size:17px;letter-spacing:0.08em;
+  background:var(--lime);color:var(--ink);border:none;border-radius:10px;
+  padding:14px 26px;cursor:pointer;transition:all 0.2s;white-space:nowrap;
+}
+.rank-btn:hover{background:#D6FF5C;box-shadow:0 0 24px var(--lime-glow);transform:translateY(-1px);}
+.rank-btn:disabled{opacity:0.45;cursor:wait;transform:none;box-shadow:none;}
+.rank-status{font-family:var(--mono);font-size:11px;color:var(--dust);min-height:16px;margin-bottom:8px;letter-spacing:0.04em;}
+.rank-meta{font-family:var(--mono);font-size:11px;color:var(--dust2);margin-bottom:18px;letter-spacing:0.06em;}
+.rank-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;}
+.rank-lift-card{
+  background:var(--ink3);border:1px solid var(--ink4);border-radius:14px;
+  padding:20px;position:relative;overflow:hidden;
+  animation:cardIn 0.4s cubic-bezier(0.22,1,0.36,1) both;
+}
+.rank-lift-card.total{border-color:rgba(203,255,77,0.35);background:linear-gradient(160deg,var(--ink3),rgba(203,255,77,0.05));}
+.rlc-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:12px;}
+.rlc-name{font-family:var(--mono);font-size:10px;letter-spacing:0.16em;color:var(--dust);text-transform:uppercase;}
+.rlc-val{font-family:var(--bb);font-size:26px;color:var(--cream);letter-spacing:0.02em;}
+.rlc-place{font-size:14px;color:var(--cream);margin-bottom:4px;}
+.rlc-place strong{font-family:var(--bb);font-size:30px;color:var(--lime);letter-spacing:0.02em;margin-right:2px;}
+.rlc-pct{font-family:var(--mono);font-size:10px;color:var(--dust);letter-spacing:0.04em;}
+.rlc-bar{height:5px;background:var(--ink4);border-radius:99px;overflow:hidden;margin:12px 0 10px;}
+.rlc-fill{height:100%;width:0;background:var(--lime);border-radius:99px;transition:width 0.8s cubic-bezier(0.22,1,0.36,1);}
+.rlc-goal{font-family:var(--mono);font-size:10.5px;color:var(--dust);line-height:1.5;letter-spacing:0.02em;}
+.rlc-goal strong{color:var(--lime);font-weight:500;}
+.rlc-weak{
+  position:absolute;top:12px;right:-1px;
+  font-family:var(--mono);font-size:9px;letter-spacing:0.08em;
+  background:rgba(255,107,53,0.15);color:#ff9b6b;border:1px solid rgba(255,107,53,0.3);border-right:none;
+  padding:4px 10px;border-radius:8px 0 0 8px;
+}
+.rank-note{font-family:var(--mono);font-size:10px;color:var(--dust2);margin-top:20px;line-height:1.6;letter-spacing:0.03em;max-width:640px;}
+@media print{.rank-section{display:none!important;}}
+
+/* ── STICKY WEEK TABS ── */
+.week-tabs-wrap{position:sticky;top:0;z-index:60;background:var(--ink);padding:10px 0 6px;margin-bottom:14px;}
+.week-tabs-wrap .week-tabs-bar{margin-bottom:0;}
+
+/* ── DAY CARD: eyebrow-row, volym & progress ── */
+.dc-eyebrow-row{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:3px;}
+.dc-eyebrow-row .dc-eyebrow{margin-bottom:0;}
+.dc-volume{font-family:var(--mono);font-size:9px;color:var(--dust2);letter-spacing:0.06em;white-space:nowrap;}
+.dc-progress{display:flex;align-items:center;gap:8px;margin:-10px 0 14px;}
+.dc-progress-track{flex:1;height:4px;background:var(--ink3);border-radius:99px;overflow:hidden;}
+.dc-progress-fill{height:100%;width:0;background:var(--lime);border-radius:99px;transition:width 0.35s cubic-bezier(0.22,1,0.36,1);}
+.dc-progress-txt{font-family:var(--mono);font-size:9px;color:var(--dust);min-width:36px;text-align:right;letter-spacing:0.04em;transition:color 0.2s;}
+.dc-progress.complete .dc-progress-txt{color:var(--lime);font-weight:500;}
+.day-card.day-complete{border-color:rgba(203,255,77,0.45);box-shadow:0 0 0 1px rgba(203,255,77,0.15),0 4px 24px rgba(203,255,77,0.08);}
+
+/* ── CONFETTI ── */
+.confetti{position:fixed;width:7px;height:11px;border-radius:2px;pointer-events:none;z-index:999;animation:confetti-fly 1s ease-out forwards;}
+@keyframes confetti-fly{
+  0%{transform:translate(0,0) rotate(0deg);opacity:1;}
+  100%{transform:translate(var(--dx),var(--dy)) rotate(var(--rot));opacity:0;}
+}
+
+/* ── AUTO-TIMER TOGGLE ── */
+.timer-auto{
+  display:flex;align-items:center;gap:10px;justify-content:center;
+  font-family:var(--mono);font-size:10px;color:var(--dust);
+  letter-spacing:0.06em;cursor:pointer;user-select:none;
+  margin:14px 0 6px;
+}
+.timer-auto input{accent-color:var(--lime);width:15px;height:15px;cursor:pointer;}
+
+/* Klickbar idag-banner */
+#today-banner > div{cursor:pointer;transition:border-color 0.2s;}
+#today-banner > div:hover{border-color:rgba(203,255,77,0.5)!important;}
 </style>
-<script async="" src="./index_files/js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3S4C1Q1HZT"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -771,6 +864,11 @@ footer{
     </div>
     <div class="timer-knob-label" id="knob-label">3 min</div>
   </div>
+
+  <label class="timer-auto">
+    <input type="checkbox" id="auto-timer-check" onchange="toggleAutoTimer(this.checked)">
+    <span id="auto-timer-label">Starta timern automatiskt när ett set bockas av</span>
+  </label>
 
   <div class="timer-btns">
     <button class="timer-action-btn" id="timer-action" onclick="globalTimerToggle()">▶ Starta</button>
@@ -934,11 +1032,30 @@ footer{
         <button class="share-btn" onclick="shareProgram()">⬆ Dela program</button>
         <button class="dl-btn" onclick="downloadPDF()">↓ PDF</button>
         <button class="dl-btn" onclick="downloadExcel()">↓ Excel</button>
+        <button class="dl-btn" onclick="resetDone()">↺ Nollställ set</button>
       </div>
     </div>
   </div>
   <div id="today-banner" style="display:none;margin-bottom:12px;"></div>
   <div id="prog-output"></div>
+</section>
+
+<section class="rank-section" id="rank-section">
+  <div class="rank-card">
+    <div class="rank-eyebrow" id="rank-eyebrow">Svenska rankingen · SSF</div>
+    <h2 class="rank-title" id="rank-title">Var ligger <span>du</span>?</h2>
+    <p class="rank-sub" id="rank-sub">Jämför dina siffror med den officiella svenska årsrankingen i din viktklass – per lyft och totalt, och se exakt vad som krävs för nästa placering.</p>
+    <div class="rank-controls">
+      <select class="rank-select" id="rank-class" onchange="onRankClassChange()">
+        <option value="">…</option>
+      </select>
+      <button class="rank-btn" id="rank-btn" onclick="checkRanking()">🏆 Jämför mina lyft</button>
+    </div>
+    <div class="rank-status" id="rank-status"></div>
+    <div class="rank-meta" id="rank-meta" style="display:none"></div>
+    <div class="rank-grid" id="rank-results"></div>
+    <div class="rank-note" id="rank-note" style="display:none"></div>
+  </div>
 </section>
 
 <footer>
@@ -1218,22 +1335,34 @@ function formatTime(s){
   return Math.floor(s/60).toString().padStart(2,'0')+':'+((s%60).toString().padStart(2,'0'));
 }
 
+let autoTimer = localStorage.getItem('auto_timer') === '1';
+function toggleAutoTimer(v){
+  autoTimer = v;
+  localStorage.setItem('auto_timer', v ? '1' : '0');
+  if(navigator.vibrate) navigator.vibrate(10);
+}
+
+function stopGlobalTimer(){
+  clearInterval(globalTimerInterval);
+  globalTimerInterval = null;
+  document.getElementById('timer-barbell').classList.remove('pumping');
+  document.getElementById('timer-countdown').classList.remove('urgent');
+  document.getElementById('timer-countdown').textContent = formatTime(timerMinutes*60);
+  document.getElementById('timer-sub').textContent = t('timer_set');
+  document.getElementById('timer-action').textContent = t('timer_start');
+  document.getElementById('timer-action').classList.remove('stop');
+  document.getElementById('fab-timer').classList.remove('running');
+  document.getElementById('fab-label').textContent = t('timer_fab');
+}
+
 function globalTimerToggle(){
-  if(globalTimerInterval){
-    // Stop
-    clearInterval(globalTimerInterval);
-    globalTimerInterval = null;
-    document.getElementById('timer-barbell').classList.remove('pumping');
-    document.getElementById('timer-countdown').classList.remove('urgent');
-    document.getElementById('timer-countdown').textContent = formatTime(timerMinutes*60);
-    document.getElementById('timer-sub').textContent = t('timer_set');
-    document.getElementById('timer-action').textContent = t('timer_start');
-    document.getElementById('timer-action').classList.remove('stop');
-    document.getElementById('fab-timer').classList.remove('running');
-    document.getElementById('fab-label').textContent = t('timer_fab');
-    return;
-  }
-  // Start
+  if(globalTimerInterval){ stopGlobalTimer(); return; }
+  startGlobalTimer();
+}
+
+function startGlobalTimer(){
+  if(globalTimerInterval){ clearInterval(globalTimerInterval); globalTimerInterval = null; }
+  document.getElementById('timer-countdown').classList.remove('urgent');
   globalTimerLeft = timerMinutes * 60;
   document.getElementById('timer-barbell').classList.add('pumping');
   document.getElementById('timer-action').textContent = t('timer_stop');
@@ -1361,7 +1490,8 @@ function drawBarbell(kg){
 
 function toggleSetDone(el){
   el.classList.toggle('done');
-  if(el.classList.contains('done')){
+  const nowDone = el.classList.contains('done');
+  if(nowDone){
     const nextKg = parseFloat(el.dataset.nextKg);
     if(!isNaN(nextKg) && nextKg > 0){
       currentBarbellKg = nextKg;
@@ -1372,8 +1502,112 @@ function toggleSetDone(el){
       bb.style.transform = 'scale(1.04)';
       setTimeout(()=>bb.style.transform = 'scale(1)', 120);
     }
+    if(autoTimer) startGlobalTimer();
+    if(navigator.vibrate) navigator.vibrate(15);
+  }
+  const card = el.closest('.day-card');
+  if(card) updateDayProgress(card, nowDone);
+  saveDone();
+}
+
+// ── PROGRESS-SPÅRNING (sparas i localStorage per program) ─────────
+let currentSig = null;
+
+function programSignature(s, b, d){
+  return ['v1', progType, intensity, Math.round(s), Math.round(b), Math.round(d)].join('_');
+}
+
+function saveDone(){
+  if(!currentSig) return;
+  const data = {};
+  document.querySelectorAll('.week-panel').forEach((panel, wi)=>{
+    const arr = [];
+    panel.querySelectorAll('.set-bar').forEach((bar, idx)=>{
+      if(bar.classList.contains('done')) arr.push(idx);
+    });
+    if(arr.length) data[wi] = arr;
+  });
+  try { localStorage.setItem('done_' + currentSig, JSON.stringify(data)); } catch(e){}
+}
+
+function initDoneTracking(sig){
+  currentSig = sig;
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem('done_' + sig) || '{}'); } catch(e){}
+  document.querySelectorAll('.week-panel').forEach((panel, wi)=>{
+    const bars = panel.querySelectorAll('.set-bar');
+    (saved[wi] || []).forEach(idx=>{ if(bars[idx]) bars[idx].classList.add('done'); });
+  });
+  document.querySelectorAll('.day-card').forEach(c=>{
+    if(c.querySelectorAll('.set-bar.done').length === c.querySelectorAll('.set-bar').length){
+      c.dataset.celebrated = '1'; // fira inte redan klara pass vid omladdning
+    }
+    updateDayProgress(c, false);
+  });
+}
+
+function updateDayProgress(card, celebrate){
+  const bars = card.querySelectorAll('.set-bar');
+  const prog = card.querySelector('.dc-progress');
+  if(!prog || bars.length === 0) return;
+  const done = card.querySelectorAll('.set-bar.done').length;
+  const pct = Math.round(done / bars.length * 100);
+  prog.querySelector('.dc-progress-fill').style.width = pct + '%';
+  const txt = prog.querySelector('.dc-progress-txt');
+  if(done === bars.length){
+    txt.textContent = t('day_done');
+    prog.classList.add('complete');
+    card.classList.add('day-complete');
+    if(celebrate && !card.dataset.celebrated){
+      card.dataset.celebrated = '1';
+      confettiBurst(card);
+      if(navigator.vibrate) navigator.vibrate([100,60,100,60,200]);
+    }
+  } else {
+    txt.textContent = done + '/' + bars.length;
+    prog.classList.remove('complete');
+    card.classList.remove('day-complete');
+    delete card.dataset.celebrated;
   }
 }
+
+function resetDone(){
+  if(!confirm(t('reset_confirm'))) return;
+  document.querySelectorAll('.set-bar.done').forEach(b=>b.classList.remove('done'));
+  document.querySelectorAll('.day-card').forEach(c=>{ delete c.dataset.celebrated; updateDayProgress(c, false); });
+  if(currentSig) localStorage.removeItem('done_' + currentSig);
+}
+
+function confettiBurst(card){
+  const colors = ['#CBFF4D', '#ff6b35', '#7eb8f7', '#F0EDE6', '#ffcc00'];
+  const rect = card.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = Math.max(rect.top + 50, 60);
+  for(let i = 0; i < 28; i++){
+    const el = document.createElement('div');
+    el.className = 'confetti';
+    el.style.left = cx + 'px';
+    el.style.top = cy + 'px';
+    el.style.background = colors[i % colors.length];
+    const ang = Math.random() * Math.PI * 2;
+    const dist = 60 + Math.random() * 150;
+    el.style.setProperty('--dx', (Math.cos(ang) * dist) + 'px');
+    el.style.setProperty('--dy', (Math.sin(ang) * dist - 90) + 'px');
+    el.style.setProperty('--rot', (Math.random() * 720 - 360) + 'deg');
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(), 1100);
+  }
+}
+
+// ── VOLYMBERÄKNING ────────────────────────────────────────────────
+function calcDayVolume(day){
+  if(day.rest || !day.exercises) return 0;
+  return day.exercises.reduce((sum, ex)=>
+    sum + (ex.sets ? ex.sets.reduce((s2, st)=> s2 + st.reps * st.kg, 0) : 0), 0);
+}
+function calcWeekVolume(days){ return days.reduce((s, d)=> s + calcDayVolume(d), 0); }
+function fmtNum(n){ return Math.round(n).toLocaleString(currentLang === 'sv' ? 'sv-SE' : 'en-US'); }
+function dispVol(volKg){ return currentUnit === 'lbs' ? Math.round(volKg * LBS_PER_KG) : Math.round(volKg); }
 
 function maxKg(sets){ return Math.max(...sets.map(s=>s.kg)); }
 
@@ -1421,10 +1655,14 @@ function renderGrid(days, showToday){
   days.forEach((day,i)=>{
     const dayDisplayName = dayMap[day.day] || day.day;
     const isToday = showToday && day.day === DAY_NAMES[DAY_NAMES.indexOf(todayDayName())] ;
-    h += `<div class="${day.rest?'day-card-rest':'day-card'}" style="animation-delay:${i*0.06}s${isToday?';border-color:var(--lime)':''}">`;
-    h += `<div class="dc-eyebrow">${day.tag}</div><div class="dc-title">${dayDisplayName}${isToday?`<span class="today-badge">${t('today_badge')}</span>`:''}</div>`;
+    const vol = calcDayVolume(day);
+    h += `<div class="${day.rest?'day-card-rest':'day-card'}"${isToday?' data-today="1"':''} style="animation-delay:${i*0.06}s${isToday?';border-color:var(--lime)':''}">`;
+    h += `<div class="dc-eyebrow-row"><span class="dc-eyebrow">${day.tag}</span>${vol>0?`<span class="dc-volume">${t('volume_label', fmtNum(dispVol(vol)), unitLabel())}</span>`:''}</div><div class="dc-title">${dayDisplayName}${isToday?`<span class="today-badge">${t('today_badge')}</span>`:''}</div>`;
     if(day.rest) h += `<div class="dc-rest">${t('rest_day')}</div>`;
-    else day.exercises.forEach(ex=>{ h += renderEx(ex); });
+    else {
+      h += `<div class="dc-progress"><div class="dc-progress-track"><div class="dc-progress-fill"></div></div><span class="dc-progress-txt"></span></div>`;
+      day.exercises.forEach(ex=>{ h += renderEx(ex); });
+    }
     h += `</div>`;
   });
   return h + `</div>`;
@@ -1481,34 +1719,41 @@ function generate(){
   const topRepsLabel = t('top_reps');
 
   if(progType === '2veckor'){
-    let html = `<div class="week-tabs-bar">
+    let html = `<div class="week-tabs-wrap"><div class="week-tabs-bar">
       <button class="wtab active" onclick="switchTab(0,this)">${t('week_a')}</button>
       <button class="wtab" onclick="switchTab(1,this)">${t('week_b')}</button>
-    </div>`;
+    </div></div>`;
     [{label:t('week_a'),isA:true},{label:t('week_b'),isA:false}].forEach((w,i)=>{
+      const days = builder(s,b,d,w.isA,null);
+      const wVol = calcWeekVolume(days);
       html += `<div class="week-panel${i===0?' active':''}" id="wpanel-${i}">
-        <div class="week-meta">${w.label}${lightLabel}<div class="week-legend"><div class="week-legend-dot"></div>${legendText}</div></div>${renderGrid(builder(s,b,d,w.isA,null), true)}</div>`;
+        <div class="week-meta">${w.label}${lightLabel} · ${t('week_volume', fmtNum(dispVol(wVol)), ul)}<div class="week-legend"><div class="week-legend-dot"></div>${legendText}</div></div>${renderGrid(days, true)}</div>`;
     });
     out.innerHTML = html;
   } else {
     const variants = [true,false,true,false,true];
-    let html = `<div class="week-tabs-bar">`;
+    let html = `<div class="week-tabs-wrap"><div class="week-tabs-bar">`;
     variants.forEach((_,i)=>{ html+=`<button class="wtab${i===0?' active':''}" onclick="switchTab(${i},this)">${t('week_label',i+1)}</button>`; });
-    html += `</div>`;
+    html += `</div></div>`;
     variants.forEach((isA,i)=>{
+      const days = builder(s,b,d,isA,i+1);
+      const wVol = calcWeekVolume(days);
       html += `<div class="week-panel${i===0?' active':''}" id="wpanel-${i}">
-        <div class="week-meta">${t('week_label',i+1)} · Toppset: ${topRepsLabel[i]}${lightLabel}<div class="week-legend"><div class="week-legend-dot"></div>${legendText}</div></div>
-        ${renderGrid(builder(s,b,d,isA,i+1), true)}</div>`;
+        <div class="week-meta">${t('week_label',i+1)} · Toppset: ${topRepsLabel[i]}${lightLabel} · ${t('week_volume', fmtNum(dispVol(wVol)), ul)}<div class="week-legend"><div class="week-legend-dot"></div>${legendText}</div></div>
+        ${renderGrid(days, true)}</div>`;
     });
     out.innerHTML = html;
   }
+
+  // Återställ avbockade set för just det här programmet
+  initDoneTracking(programSignature(s, b, d));
 
   // Today banner
   const todayIdx = new Date().getDay();
   const todaySv = DAY_NAMES[todayIdx===0?6:todayIdx-1];
   const todayDisplay = T[currentLang].days[DAY_NAMES.indexOf(todaySv)];
   const banner = document.getElementById('today-banner');
-  banner.innerHTML = `<div style="background:var(--lime-dim);border:1px solid rgba(203,255,77,0.2);border-radius:10px;padding:10px 16px;font-family:var(--mono);font-size:11px;color:var(--dust);">${t('today_banner', todayDisplay)}</div>`;
+  banner.innerHTML = `<div onclick="scrollToToday()" style="background:var(--lime-dim);border:1px solid rgba(203,255,77,0.2);border-radius:10px;padding:10px 16px;font-family:var(--mono);font-size:11px;color:var(--dust);">${t('today_banner', todayDisplay)}</div>`;
   banner.style.display = 'block';
 
   sec.style.display = 'block';
@@ -1523,12 +1768,21 @@ function switchTab(idx, btn){
   document.querySelectorAll('.week-panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
 }
 
+function scrollToToday(){
+  const el = document.querySelector('.week-panel.active [data-today]') || document.querySelector('[data-today]');
+  if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
 function shareProgram(){
   const s = document.getElementById('squat').value || (e1rmValues.s||'');
   const b = document.getElementById('bench').value || (e1rmValues.b||'');
   const d = document.getElementById('dead').value || (e1rmValues.d||'');
   if(!s||!b||!d){ alert(t('share_error')); return; }
   const url = `${location.origin}${location.pathname}?s=${s}&b=${b}&d=${d}&p=${progType}&i=${intensity}`;
+  if(navigator.share){
+    navigator.share({title: document.title, url}).catch(()=>{});
+    return;
+  }
   navigator.clipboard.writeText(url).then(()=>{
     alert(t('share_copied'));
   }).catch(()=>{
@@ -1573,6 +1827,29 @@ window.addEventListener('DOMContentLoaded', ()=>{
 ['squat','bench','dead'].forEach(id=>{
   document.getElementById(id)?.addEventListener('change', e=>{
     localStorage.setItem('pb_'+id[0], e.target.value);
+  });
+});
+
+// Spara & återställ toppset-läget (E1RM) i localStorage
+window.addEventListener('DOMContentLoaded', ()=>{
+  ['s','b','d'].forEach(l=>{
+    ['kg','reps','rit'].forEach(f=>{
+      const el = document.getElementById(l+'-'+f);
+      if(!el) return;
+      const saved = localStorage.getItem('e1rm_'+l+f);
+      if(saved) el.value = saved;
+      el.addEventListener('change', e=> localStorage.setItem('e1rm_'+l+f, e.target.value));
+    });
+    calcE1RM(l);
+  });
+  // Auto-timer-inställning
+  const chk = document.getElementById('auto-timer-check');
+  if(chk) chk.checked = autoTimer;
+  // Enter genererar programmet
+  document.querySelectorAll('.lift-num, .e1rm-input').forEach(el=>{
+    el.addEventListener('keydown', e=>{
+      if(e.key === 'Enter'){ e.target.blur(); generate(); }
+    });
   });
 });
 
@@ -1811,6 +2088,35 @@ const T = {
     share_error: 'Generera ett program först.',
     fill_error: 'Fyll i dina personbästan i alla tre lyfter.',
     fill_error_e1rm: 'Fyll i vikt, reps och reps i tanken för alla tre lyfter.',
+    volume_label: (v,u) => `volym ≈ ${v} ${u}`,
+    week_volume: (v,u) => `Total volym ≈ ${v} ${u}`,
+    day_done: 'Klart 💪',
+    reset_label: '↺ Nollställ set',
+    reset_confirm: 'Nollställ alla avbockade set?',
+    auto_timer_label: 'Starta timern automatiskt när ett set bockas av',
+    rank_eyebrow: 'Svenska rankingen · SSF',
+    rank_title: 'Var ligger <span>du</span>?',
+    rank_sub: 'Jämför dina siffror med den officiella svenska årsrankingen i din viktklass – per lyft och totalt, och se exakt vad som krävs för nästa placering.',
+    rank_btn: '🏆 Jämför mina lyft',
+    rank_pick_class: 'Välj viktklass…',
+    rank_men: 'Herrar',
+    rank_women: 'Damer',
+    rank_loading_classes: 'Hämtar viktklasser…',
+    rank_classes_error: 'Kunde inte hämta viktklasser',
+    rank_loading: 'Hämtar rankingen…',
+    rank_error: 'Kunde inte hämta rankingdata just nu. Försök igen om en stund.',
+    rank_setup: 'Ranking-funktionen är inte aktiverad ännu – deploya worker.js på Cloudflare och klistra in URL:en i RANKING_API_URL.',
+    rank_no_class: 'Välj din viktklass först.',
+    rank_place: (p,n) => `Plats <strong>${p}</strong> av ${n}`,
+    rank_top: (pct) => `· topp ${pct} %`,
+    rank_meta_line: (cls,n,y,d) => `${cls} · Klassiskt styrkelyft · ${n} lyftare · ${y} · uppdaterad ${d}`,
+    rank_goal: (kg,u,pos,name,val) => `<strong>+${kg} ${u}</strong> till topp ${pos} — där ligger ${name} på ${val} ${u}`,
+    rank_first: '🥇 Du toppar listan i Sverige!',
+    rank_goal_first: (kg,u,name,val) => `<strong>+${kg} ${u}</strong> till förstaplatsen — där ligger ${name} på ${val} ${u}`,
+    rank_outside: (val,u) => `Sist på listan har ${val} ${u} – du är med så fort du tävlar!`,
+    rank_weak: '💡 störst potential',
+    rank_lift_names: ['Knäböj','Bänkpress','Marklyft','Totalt'],
+    rank_note: 'Baserat på tävlingsresultat registrerade hos Svenska Styrkelyftförbundet i år (via data.styrkelyft.se). Placeringen visar var dina siffror skulle hamna om du tävlade in dem. Data cachas i 12 timmar.',
     glossary: {
       'TNG': 'Touch and go – stången nuddar bröstet men stannar inte',
       'AMRAP': 'As Many Reps As Possible – kör så många reps du kan',
@@ -1869,6 +2175,35 @@ const T = {
     share_error: 'Generate a program first.',
     fill_error: 'Please enter your personal bests for all three lifts.',
     fill_error_e1rm: 'Please enter weight, reps and reps in tank for all three lifts.',
+    volume_label: (v,u) => `volume ≈ ${v} ${u}`,
+    week_volume: (v,u) => `Total volume ≈ ${v} ${u}`,
+    day_done: 'Done 💪',
+    reset_label: '↺ Reset sets',
+    reset_confirm: 'Reset all checked sets?',
+    auto_timer_label: 'Auto-start timer when a set is checked',
+    rank_eyebrow: 'Swedish rankings · SSF',
+    rank_title: 'Where do <span>you</span> rank?',
+    rank_sub: 'Compare your numbers against the official Swedish yearly rankings in your weight class – per lift and total, and see exactly what it takes to climb.',
+    rank_btn: '🏆 Compare my lifts',
+    rank_pick_class: 'Pick weight class…',
+    rank_men: 'Men',
+    rank_women: 'Women',
+    rank_loading_classes: 'Loading weight classes…',
+    rank_classes_error: 'Could not load weight classes',
+    rank_loading: 'Fetching rankings…',
+    rank_error: 'Could not fetch ranking data right now. Try again in a moment.',
+    rank_setup: 'The ranking feature is not activated yet – deploy worker.js on Cloudflare and paste the URL into RANKING_API_URL.',
+    rank_no_class: 'Pick your weight class first.',
+    rank_place: (p,n) => `Rank <strong>${p}</strong> of ${n}`,
+    rank_top: (pct) => `· top ${pct}%`,
+    rank_meta_line: (cls,n,y,d) => `${cls} · Classic powerlifting · ${n} lifters · ${y} · updated ${d}`,
+    rank_goal: (kg,u,pos,name,val) => `<strong>+${kg} ${u}</strong> to reach top ${pos} — ${name} holds it at ${val} ${u}`,
+    rank_first: '🥇 You top the Swedish list!',
+    rank_goal_first: (kg,u,name,val) => `<strong>+${kg} ${u}</strong> to take first place — ${name} holds it at ${val} ${u}`,
+    rank_outside: (val,u) => `Last on the list has ${val} ${u} – you are on it as soon as you compete!`,
+    rank_weak: '💡 biggest upside',
+    rank_lift_names: ['Squat','Bench press','Deadlift','Total'],
+    rank_note: 'Based on competition results registered with the Swedish Powerlifting Federation this year (via data.styrkelyft.se). Your position shows where your numbers would land if you competed them. Data is cached for 12 hours.',
     glossary: {
       'TNG': 'Touch and go – the bar touches the chest but doesn\'t stop',
       'AMRAP': 'As Many Reps As Possible – do as many reps as you can',
@@ -1919,6 +2254,16 @@ function applyLang(){
   const dlBtns = document.querySelectorAll('.dl-btn');
   if(dlBtns[0]) dlBtns[0].textContent = L.dl_pdf;
   if(dlBtns[1]) dlBtns[1].textContent = L.dl_excel;
+  if(dlBtns[2]) dlBtns[2].textContent = L.reset_label;
+  const autoLbl = document.getElementById('auto-timer-label');
+  if(autoLbl) autoLbl.textContent = L.auto_timer_label;
+  document.getElementById('rank-eyebrow').textContent = L.rank_eyebrow;
+  document.getElementById('rank-title').innerHTML = L.rank_title;
+  document.getElementById('rank-sub').textContent = L.rank_sub;
+  document.getElementById('rank-btn').textContent = L.rank_btn;
+  document.getElementById('rank-note').textContent = L.rank_note;
+  populateRankClasses();
+  if(lastRankRender) renderRanking(lastRankRender);
   // PB labels
   const pbLabels = document.querySelectorAll('.lift-cell-label');
   if(pbLabels[0]) pbLabels[0].textContent = L.pb_label_s;
@@ -1977,6 +2322,219 @@ window.addEventListener('DOMContentLoaded', ()=>{
     applyLang();
   }
 });
+
+// ══════════════════════════════════════════════════════════════════
+// SSF-RANKING – jämför dina lyft med svenska årsrankingen
+// ══════════════════════════════════════════════════════════════════
+// 1. Deploya worker.js som Cloudflare Worker (gratis)
+// 2. Klistra in worker-URL:en här nedanför, t.ex. 'https://ssf-ranking.jonathan.workers.dev'
+const RANKING_API_URL = 'https://ssf-ranking.jonathan-soderling.workers.dev';
+const RANKING_CT = 1; // 1 = Klassiskt styrkelyft
+const RANK_YEAR = new Date().getFullYear();
+
+let rankClasses = [];
+let lastRankRender = null;
+
+function rankCacheGet(key, maxAgeMs){
+  try {
+    const raw = localStorage.getItem(key);
+    if(!raw) return null;
+    const obj = JSON.parse(raw);
+    if(Date.now() - obj.ts > maxAgeMs) return null;
+    return obj.data;
+  } catch(e){ return null; }
+}
+function rankCacheSet(key, data){
+  try { localStorage.setItem(key, JSON.stringify({ts: Date.now(), data})); } catch(e){}
+}
+
+async function loadRankClasses(){
+  const sel = document.getElementById('rank-class');
+  if(!RANKING_API_URL){
+    sel.innerHTML = `<option value="">–</option>`;
+    document.getElementById('rank-status').textContent = t('rank_setup');
+    return;
+  }
+  const cached = rankCacheGet('rank_classes_' + RANKING_CT + '_' + RANK_YEAR, 7*24*3600e3);
+  if(cached){ rankClasses = cached; populateRankClasses(); return; }
+  sel.innerHTML = `<option value="">${t('rank_loading_classes')}</option>`;
+  try {
+    const res = await fetch(`${RANKING_API_URL}/classes?ct=${RANKING_CT}&year=${RANK_YEAR}`);
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    rankClasses = data.classes || [];
+    rankCacheSet('rank_classes_' + RANKING_CT + '_' + RANK_YEAR, rankClasses);
+    populateRankClasses();
+  } catch(e){
+    sel.innerHTML = `<option value="">${t('rank_classes_error')}</option>`;
+  }
+}
+
+function populateRankClasses(){
+  const sel = document.getElementById('rank-class');
+  if(!sel || rankClasses.length === 0) return;
+  const saved = localStorage.getItem('rank_class_sel') || '';
+  const opt = c => `<option value="${c.id}"${String(c.id)===saved?' selected':''}>${c.name} kg</option>`;
+  const men = rankClasses.filter(c=>c.gender==='M');
+  const women = rankClasses.filter(c=>c.gender==='K');
+  let html = `<option value="">${t('rank_pick_class')}</option>`;
+  // Om workern levererar kön: dela upp i Herrar/Damer. Annars platt lista.
+  if(men.length && women.length){
+    html += `<optgroup label="${t('rank_men')}">${men.map(opt).join('')}</optgroup>`;
+    html += `<optgroup label="${t('rank_women')}">${women.map(opt).join('')}</optgroup>`;
+  } else {
+    html += rankClasses.map(opt).join('');
+  }
+  sel.innerHTML = html;
+}
+
+function onRankClassChange(){
+  localStorage.setItem('rank_class_sel', document.getElementById('rank-class').value);
+}
+
+function getUserLiftsKg(){
+  let s, b, d;
+  if(inputMode === 'pb'){
+    s = parseFloat(document.getElementById('squat').value);
+    b = parseFloat(document.getElementById('bench').value);
+    d = parseFloat(document.getElementById('dead').value);
+    if(currentUnit === 'lbs'){ s/=LBS_PER_KG; b/=LBS_PER_KG; d/=LBS_PER_KG; }
+  } else {
+    s = e1rmValues.s; b = e1rmValues.b; d = e1rmValues.d;
+  }
+  if(!s || !b || !d) return null;
+  return { s, b, d, total: s + b + d };
+}
+
+async function checkRanking(){
+  const status = document.getElementById('rank-status');
+  if(!RANKING_API_URL){ status.textContent = t('rank_setup'); return; }
+  const wc = document.getElementById('rank-class').value;
+  if(!wc){ status.textContent = t('rank_no_class'); return; }
+  const lifts = getUserLiftsKg();
+  if(!lifts){ alert(t(inputMode === 'pb' ? 'fill_error' : 'fill_error_e1rm')); return; }
+
+  const btn = document.getElementById('rank-btn');
+  btn.disabled = true;
+  status.textContent = t('rank_loading');
+
+  try {
+    const cacheKey = `rank_${RANKING_CT}_${wc}_${RANK_YEAR}`;
+    let data = rankCacheGet(cacheKey, 12*3600e3);
+    if(!data){
+      const res = await fetch(`${RANKING_API_URL}/ranking?wc=${wc}&ct=${RANKING_CT}&year=${RANK_YEAR}`);
+      if(!res.ok) throw new Error('HTTP ' + res.status);
+      data = await res.json();
+      rankCacheSet(cacheKey, data);
+    }
+    status.textContent = '';
+    lastRankRender = { data, lifts, wc };
+    renderRanking(lastRankRender);
+    if(typeof gtag === 'function') gtag('event', 'ranking_check', { weight_class: wc });
+  } catch(e){
+    status.textContent = t('rank_error');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function rankOf(sortedDesc, userVal){
+  let above = 0;
+  while(above < sortedDesc.length && sortedDesc[above] > userVal) above++;
+  return above + 1;
+}
+
+function rkg(v){
+  const n = currentUnit === 'lbs' ? rndLbs(v * LBS_PER_KG) : Math.round(v*10)/10;
+  return n.toLocaleString(currentLang === 'sv' ? 'sv-SE' : 'en-US');
+}
+
+function renderRanking(ctx){
+  const { data, lifts, wc } = ctx;
+  const out = document.getElementById('rank-results');
+  const results = data.results || [];
+  const n = results.length;
+  if(n === 0){ document.getElementById('rank-status').textContent = t('rank_error'); return; }
+
+  const ul = unitLabel();
+  const clsObj = rankClasses.find(c=>String(c.id)===String(wc));
+  const clsName = clsObj ? clsObj.name : ('#'+wc);
+  const updated = new Date(data.updated || Date.now());
+  const dateStr = updated.toLocaleDateString(currentLang==='sv'?'sv-SE':'en-US',{day:'numeric',month:'short'});
+  const meta = document.getElementById('rank-meta');
+  meta.style.display = 'block';
+  meta.textContent = t('rank_meta_line', clsName, n, data.year || RANK_YEAR, dateStr);
+
+  const liftDefs = [
+    { key:'squat', user: lifts.s },
+    { key:'bench', user: lifts.b },
+    { key:'dead',  user: lifts.d },
+    { key:'total', user: lifts.total },
+  ];
+  const names = t('rank_lift_names');
+
+  // Beräkna rank + percentil per lyft
+  const computed = liftDefs.map((def, i)=>{
+    const vals = results.map(r=>r[def.key]).filter(v=>v>0).sort((a,b)=>b-a);
+    const rank = rankOf(vals, def.user);
+    return { ...def, name: names[i], vals, rank, nn: vals.length, ratio: rank / Math.max(vals.length,1) };
+  });
+
+  // Svagaste länken (av de tre lyften, inte totalen)
+  let weakIdx = -1, worst = -1;
+  computed.slice(0,3).forEach((c,i)=>{ if(c.ratio > worst){ worst = c.ratio; weakIdx = i; } });
+  const spread = Math.max(...computed.slice(0,3).map(c=>c.ratio)) - Math.min(...computed.slice(0,3).map(c=>c.ratio));
+  if(spread < 0.08) weakIdx = -1; // jämna lyft – ingen badge
+
+  let html = '';
+  computed.forEach((c, i)=>{
+    const isTotal = c.key === 'total';
+    const pctTop = Math.max(0.1, Math.round(c.rank / Math.max(c.nn,1) * 1000) / 10).toLocaleString(currentLang === 'sv' ? 'sv-SE' : 'en-US');
+    let goal = '', fill = 100;
+
+    if(c.rank === 1){
+      goal = t('rank_first');
+    } else if(c.rank > c.nn){
+      const lastVal = c.vals[c.nn-1];
+      goal = t('rank_outside', rkg(lastVal), ul);
+      fill = Math.min(96, c.user / (lastVal || 1) * 100);
+    } else {
+      let targetPos = c.rank <= 10 ? 1 : Math.floor((c.rank - 1) / 10) * 10;
+      if(targetPos < 1) targetPos = 1;
+      const targetVal = c.vals[targetPos - 1];
+      const need = Math.max(2.5, Math.ceil(((targetVal + 2.5) - c.user) / 2.5) * 2.5);
+      const holder = results
+        .slice()
+        .sort((a,b)=>b[c.key]-a[c.key])
+        .filter(r=>r[c.key]>0)[targetPos - 1];
+      goal = targetPos === 1
+        ? t('rank_goal_first', rkg(need), ul, holder ? holder.name : '–', rkg(targetVal))
+        : t('rank_goal', rkg(need), ul, targetPos, holder ? holder.name : '–', rkg(targetVal));
+      const floorPos = Math.min(targetPos + 10, c.nn);
+      const floorVal = c.vals[floorPos - 1] || 0;
+      const range = (targetVal + 2.5) - floorVal;
+      fill = range > 0 ? Math.min(96, Math.max(6, (c.user - floorVal) / range * 100)) : 50;
+    }
+
+    html += `<div class="rank-lift-card${isTotal?' total':''}" style="animation-delay:${i*0.07}s">
+      ${i===weakIdx?`<div class="rlc-weak">${t('rank_weak')}</div>`:''}
+      <div class="rlc-head"><span class="rlc-name">${c.name}</span><span class="rlc-val">${rkg(c.user)} ${ul}</span></div>
+      <div class="rlc-place">${t('rank_place', c.rank, c.nn)} <span class="rlc-pct">${t('rank_top', pctTop)}</span></div>
+      <div class="rlc-bar"><div class="rlc-fill" data-fill="${fill}"></div></div>
+      <div class="rlc-goal">${goal}</div>
+    </div>`;
+  });
+
+  out.innerHTML = html;
+  document.getElementById('rank-note').style.display = 'block';
+  requestAnimationFrame(()=>{
+    out.querySelectorAll('.rlc-fill').forEach(f=>{ f.style.width = f.dataset.fill + '%'; });
+  });
+  document.getElementById('rank-section').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+window.addEventListener('DOMContentLoaded', loadRankClasses);
+
 </script>
 
 
