@@ -697,6 +697,109 @@ footer{
 }
 
 
+
+/* ── TRÄNINGSLOGG ── */
+.log-section{max-width:1200px;margin:0 auto;padding:0 40px 100px;}
+@media(max-width:640px){.log-section{padding:0 16px 70px;}}
+.log-card{background:var(--ink2);border:1px solid var(--ink4);border-radius:20px;padding:40px;}
+@media(max-width:640px){.log-card{padding:24px 16px;border-radius:16px;}}
+.log-tabs{display:inline-flex;gap:2px;background:var(--ink3);border-radius:100px;padding:3px;border:1px solid var(--ink4);margin-bottom:24px;flex-wrap:wrap;}
+.log-tab{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;color:var(--dust);background:none;border:none;border-radius:100px;padding:9px 18px;cursor:pointer;transition:all 0.2s;}
+.log-tab.active{background:var(--lime);color:var(--ink);font-weight:500;}
+.log-panel{display:none;}
+.log-panel.active{display:block;animation:cardIn 0.35s cubic-bezier(0.22,1,0.36,1) both;}
+.log-empty{font-family:var(--mono);font-size:12px;color:var(--dust2);line-height:1.7;padding:26px 0;letter-spacing:0.03em;max-width:520px;}
+.log-big-btn{font-family:var(--bb);font-size:18px;letter-spacing:0.08em;background:var(--lime);color:var(--ink);border:none;border-radius:12px;padding:16px 30px;cursor:pointer;transition:all 0.2s;}
+.log-big-btn:hover{background:#D6FF5C;box-shadow:0 0 24px var(--lime-glow);transform:translateY(-1px);}
+
+/* Aktivt pass */
+.ls-head{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:22px;}
+.ls-name{flex:1;min-width:200px;font-family:var(--bb);font-size:26px;letter-spacing:0.03em;color:var(--cream);background:var(--ink3);border:1px solid var(--ink4);border-radius:10px;padding:10px 16px;outline:none;}
+.ls-name:focus{border-color:var(--lime);}
+.ls-elapsed{font-family:var(--mono);font-size:14px;color:var(--lime);letter-spacing:0.1em;background:var(--lime-dim);border:1px solid rgba(203,255,77,0.2);border-radius:10px;padding:11px 16px;}
+.ls-ex{background:var(--ink3);border:1px solid var(--ink4);border-radius:14px;padding:18px;margin-bottom:14px;}
+.ls-ex-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;}
+.ls-ex-name{font-family:var(--sg);font-weight:600;font-size:15px;color:var(--cream);letter-spacing:0.02em;}
+.ls-ex-del{background:none;border:none;color:var(--dust2);font-size:15px;cursor:pointer;padding:6px 10px;border-radius:8px;}
+.ls-ex-del:hover{color:#ff6b6b;background:rgba(255,80,80,0.08);}
+.ls-row{display:flex;align-items:center;gap:10px;padding:5px 0;}
+.ls-row.done .ls-kg,.ls-row.done .ls-reps{border-color:rgba(203,255,77,0.4);}
+.ls-num{font-family:var(--mono);font-size:11px;color:var(--dust2);min-width:22px;}
+.ls-kg,.ls-reps{width:86px;font-family:var(--mono);font-size:16px;color:var(--cream);background:var(--ink2);border:1px solid var(--ink4);border-radius:9px;padding:11px 10px;outline:none;text-align:center;-moz-appearance:textfield;}
+.ls-kg::-webkit-outer-spin-button,.ls-kg::-webkit-inner-spin-button,.ls-reps::-webkit-outer-spin-button,.ls-reps::-webkit-inner-spin-button{-webkit-appearance:none;}
+.ls-kg:focus,.ls-reps:focus{border-color:var(--lime);}
+.ls-x{font-family:var(--mono);color:var(--dust2);font-size:12px;}
+.ls-done{width:44px;height:44px;border-radius:10px;border:1px solid var(--ink4);background:var(--ink2);color:var(--dust2);font-size:17px;cursor:pointer;transition:all 0.15s;flex-shrink:0;}
+.ls-row.done .ls-done{background:var(--lime);color:var(--ink);border-color:var(--lime);}
+.ls-del{width:34px;height:44px;background:none;border:none;color:var(--ink4);font-size:13px;cursor:pointer;flex-shrink:0;}
+.ls-del:hover{color:#ff6b6b;}
+.ls-addset{font-family:var(--mono);font-size:11px;letter-spacing:0.06em;color:var(--dust);background:none;border:1px dashed var(--ink4);border-radius:9px;padding:9px 16px;cursor:pointer;margin-top:8px;transition:all 0.2s;}
+.ls-addset:hover{color:var(--lime);border-color:rgba(203,255,77,0.4);}
+.ls-addex-row{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 24px;}
+.ls-addex-row select,.ls-addex-row input{font-family:var(--mono);font-size:13px;color:var(--cream);background:var(--ink3);border:1px solid var(--ink4);border-radius:10px;padding:12px 14px;outline:none;flex:1;min-width:170px;}
+.ls-addex-row select:focus,.ls-addex-row input:focus{border-color:var(--lime);}
+.ls-addex-btn{font-family:var(--mono);font-size:12px;letter-spacing:0.06em;background:var(--ink4);color:var(--cream);border:none;border-radius:10px;padding:12px 20px;cursor:pointer;transition:all 0.2s;}
+.ls-addex-btn:hover{background:var(--lime);color:var(--ink);}
+.ls-footer{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
+.ls-finish{font-family:var(--bb);font-size:17px;letter-spacing:0.08em;background:var(--lime);color:var(--ink);border:none;border-radius:11px;padding:14px 28px;cursor:pointer;transition:all 0.2s;}
+.ls-finish:hover{background:#D6FF5C;box-shadow:0 0 24px var(--lime-glow);}
+.ls-cancel{font-family:var(--mono);font-size:12px;color:var(--dust);background:none;border:1px solid var(--ink4);border-radius:11px;padding:14px 22px;cursor:pointer;}
+.ls-cancel:hover{color:#ff6b6b;border-color:rgba(255,80,80,0.4);}
+.dc-log-btn{font-family:var(--mono);font-size:10px;letter-spacing:0.08em;color:var(--dust);background:none;border:1px dashed var(--ink4);border-radius:9px;padding:9px 14px;cursor:pointer;margin-top:14px;width:100%;transition:all 0.2s;}
+.dc-log-btn:hover{color:var(--lime);border-color:rgba(203,255,77,0.4);}
+
+/* Historik */
+.lh-item{background:var(--ink3);border:1px solid var(--ink4);border-radius:14px;padding:18px;margin-bottom:12px;cursor:pointer;transition:border-color 0.2s;}
+.lh-item:hover{border-color:rgba(203,255,77,0.25);}
+.lh-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;}
+.lh-name{font-family:var(--sg);font-weight:600;font-size:15px;color:var(--cream);}
+.lh-date{font-family:var(--mono);font-size:10px;color:var(--dust2);letter-spacing:0.06em;}
+.lh-meta{font-family:var(--mono);font-size:10.5px;color:var(--dust);margin-top:7px;letter-spacing:0.04em;}
+.lh-detail{display:none;margin-top:14px;border-top:1px solid var(--ink4);padding-top:14px;}
+.lh-item.open .lh-detail{display:block;}
+.lh-ex{margin-bottom:10px;}
+.lh-ex-name{font-family:var(--mono);font-size:11px;color:var(--cream);letter-spacing:0.04em;margin-bottom:3px;}
+.lh-sets{font-family:var(--mono);font-size:10.5px;color:var(--dust);letter-spacing:0.03em;line-height:1.6;}
+.lh-del{font-family:var(--mono);font-size:10px;color:var(--dust2);background:none;border:1px solid var(--ink4);border-radius:8px;padding:7px 14px;cursor:pointer;margin-top:10px;}
+.lh-del:hover{color:#ff6b6b;border-color:rgba(255,80,80,0.4);}
+.log-io-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
+.log-io-btn{font-family:var(--mono);font-size:10.5px;letter-spacing:0.06em;color:var(--dust);background:none;border:1px solid var(--ink4);border-radius:9px;padding:10px 16px;cursor:pointer;}
+.log-io-btn:hover{color:var(--lime);border-color:rgba(203,255,77,0.35);}
+
+/* Statistik */
+.st-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px;}
+.st-card{background:var(--ink3);border:1px solid var(--ink4);border-radius:13px;padding:16px;}
+.st-val{font-family:var(--bb);font-size:30px;color:var(--lime);letter-spacing:0.02em;line-height:1;}
+.st-label{font-family:var(--mono);font-size:9px;color:var(--dust2);letter-spacing:0.12em;text-transform:uppercase;margin-top:6px;}
+.st-controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
+.st-controls select{font-family:var(--mono);font-size:13px;color:var(--cream);background:var(--ink3);border:1px solid var(--ink4);border-radius:10px;padding:11px 14px;outline:none;}
+.st-metric{display:inline-flex;gap:2px;background:var(--ink3);border-radius:100px;padding:3px;border:1px solid var(--ink4);}
+.st-metric button{font-family:var(--mono);font-size:10px;letter-spacing:0.06em;color:var(--dust);background:none;border:none;border-radius:100px;padding:8px 14px;cursor:pointer;}
+.st-metric button.active{background:var(--lime);color:var(--ink);}
+#st-chart{width:100%;height:230px;background:var(--ink3);border:1px solid var(--ink4);border-radius:14px;}
+.st-best{display:flex;gap:20px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--dust);margin-top:14px;letter-spacing:0.04em;}
+.st-best strong{color:var(--lime);font-weight:500;}
+@media print{.log-section{display:none!important;}.dc-log-btn{display:none!important;}}
+
+/* ── MOBIL ── */
+@media(max-width:640px){
+  .week-tabs-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .week-tabs-wrap::-webkit-scrollbar{display:none;}
+  .week-tabs-bar{flex-wrap:nowrap;}
+  .rank-controls{flex-direction:column;}
+  .rank-select{max-width:100%!important;}
+  .rank-btn{width:100%;}
+  .ls-kg,.ls-reps{width:74px;font-size:16px;}
+  .ls-name{font-size:22px;min-width:150px;}
+  .timer-sheet{max-height:92vh;overflow-y:auto;padding-bottom:calc(20px + env(safe-area-inset-bottom));}
+  .lift-num,.e1rm-input,.rank-select{font-size:16px;}
+}
+
+/* ── SKIVSTÅNG ── */
+#barbell-svg{width:100%;max-width:480px;height:auto;aspect-ratio:700/120;display:block;margin:0 auto;}
+#bb-weight-label{fill:var(--dust);}
+#plates-left rect,#plates-right rect{stroke:rgba(0,0,0,0.35);stroke-width:0.5;}
+
 /* ── RANKING (SSF) ── */
 .rank-section{max-width:1200px;margin:0 auto;padding:0 40px 100px;}
 @media(max-width:640px){.rank-section{padding:0 20px 80px;}}
@@ -818,7 +921,7 @@ footer{
   <div class="timer-drag-handle"></div>
 
   <div class="timer-barbell" id="timer-barbell">
-    <svg id="barbell-svg" viewBox="0 0 700 80" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px;height:80px;">
+    <svg id="barbell-svg" viewBox="0 0 700 120" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <lineargradient id="barGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#888"></stop><stop offset="50%" stop-color="#ccc"></stop><stop offset="100%" stop-color="#666"></stop></lineargradient>
         <lineargradient id="sleeveGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#777"></stop><stop offset="50%" stop-color="#aaa"></stop><stop offset="100%" stop-color="#555"></stop></lineargradient>
@@ -831,24 +934,19 @@ footer{
         <lineargradient id="p25sGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#111111"></stop><stop offset="50%" stop-color="#333333"></stop><stop offset="100%" stop-color="#111111"></stop></lineargradient>
         <lineargradient id="p125Grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#888"></stop><stop offset="50%" stop-color="#ddd"></stop><stop offset="100%" stop-color="#888"></stop></lineargradient>
       </defs>
-      <!-- Bar -->
-      <rect x="140" y="37" width="420" height="7" rx="3" fill="url(#barGrad)"></rect>
-      <!-- Left sleeve (short ~50px where plates sit) -->
-      <rect x="90" y="33" width="50" height="15" rx="3" fill="url(#sleeveGrad)"></rect>
-      <!-- Right sleeve -->
-      <rect x="560" y="33" width="50" height="15" rx="3" fill="url(#sleeveGrad)"></rect>
-      <!-- Left collar (narrow ring at inner edge of sleeve) -->
-      <rect x="138" y="31" width="6" height="19" rx="2" fill="#ccc"></rect>
-      <!-- Right collar -->
-      <rect x="556" y="31" width="6" height="19" rx="2" fill="#ccc"></rect>
-      <!-- End caps -->
-      <rect x="62" y="30" width="28" height="21" rx="4" fill="url(#capGrad)"></rect>
-      <rect x="610" y="30" width="28" height="21" rx="4" fill="url(#capGrad)"></rect>
-      <!-- Dynamic plates -->
+      <!-- Stång -->
+      <rect x="150" y="56" width="400" height="8" rx="4" fill="url(#barGrad)"></rect>
+      <!-- Hylsor (plats för 7 klovar per sida) -->
+      <rect x="28" y="51" width="114" height="18" rx="4" fill="url(#sleeveGrad)"></rect>
+      <rect x="558" y="51" width="114" height="18" rx="4" fill="url(#sleeveGrad)"></rect>
+      <!-- Innerflänsar (klovarna vilar mot dessa) -->
+      <rect x="142" y="44" width="8" height="32" rx="2" fill="url(#capGrad)"></rect>
+      <rect x="550" y="44" width="8" height="32" rx="2" fill="url(#capGrad)"></rect>
+      <!-- Dynamiska klovar + lås -->
       <g id="plates-left"></g>
       <g id="plates-right"></g>
-      <!-- Weight label -->
-      <text id="bb-weight-label" x="350" y="76" text-anchor="middle" font-family="&#39;DM Mono&#39;,monospace" font-size="10" fill="#555" letter-spacing="0.05em"></text>
+      <!-- Viktetikett -->
+      <text id="bb-weight-label" x="350" y="114" text-anchor="middle" font-family="&#39;DM Mono&#39;,monospace" font-size="12" letter-spacing="0.05em"></text>
     </svg>
   </div>
 
@@ -1039,6 +1137,36 @@ footer{
   </div>
   <div id="today-banner" style="display:none;margin-bottom:12px;"></div>
   <div id="prog-output"></div>
+</section>
+
+
+<section class="log-section" id="log-section">
+  <div class="log-card" id="log-card">
+    <div class="rank-eyebrow" id="log-eyebrow">Träningslogg</div>
+    <h2 class="rank-title" id="log-title">Logga <span>järnet</span></h2>
+    <p class="rank-sub" id="log-sub">Kör dina pass direkt i appen – egna övningar, set för set – och följ utvecklingen över tid. Allt sparas lokalt i din webbläsare.</p>
+    <div class="log-tabs">
+      <button class="log-tab active" id="log-tab-0" onclick="switchLogTab(0,this)">Logga pass</button>
+      <button class="log-tab" id="log-tab-1" onclick="switchLogTab(1,this)">Historik</button>
+      <button class="log-tab" id="log-tab-2" onclick="switchLogTab(2,this)">Statistik</button>
+    </div>
+    <div class="log-panel active" id="log-panel-0"></div>
+    <div class="log-panel" id="log-panel-1"></div>
+    <div class="log-panel" id="log-panel-2">
+      <div class="st-cards" id="st-cards"></div>
+      <div class="st-controls">
+        <select id="st-ex" onchange="renderStatChart()"></select>
+        <div class="st-metric" id="st-metric">
+          <button class="active" data-m="e1rm" onclick="setStatMetric('e1rm',this)">E1RM</button>
+          <button data-m="top" onclick="setStatMetric('top',this)">Toppvikt</button>
+          <button data-m="vol" onclick="setStatMetric('vol',this)">Volym</button>
+        </div>
+      </div>
+      <canvas id="st-chart"></canvas>
+      <div class="st-best" id="st-best"></div>
+      <div class="log-empty" id="st-empty" style="display:none"></div>
+    </div>
+  </div>
 </section>
 
 <section class="rank-section" id="rank-section">
@@ -1435,13 +1563,13 @@ let timerIdCounter = 0;
 const BAR_WEIGHT = 20;
 const COLLAR_WEIGHT = 5; // 2 × 2.5kg klover
 const PLATE_DEFS = [
-  {kg:25,  grad:'p25Grad',  w:14, h:54, r:4},  // röd, störst
-  {kg:20,  grad:'p20Grad',  w:14, h:54, r:4},  // blå, lika stor som 25
-  {kg:15,  grad:'p15Grad',  w:12, h:46, r:3},  // gul, lite mindre
-  {kg:10,  grad:'p10Grad',  w:10, h:38, r:3},  // grön, lite mindre
-  {kg:5,   grad:'p5Grad',   w:8,  h:30, r:2},  // vit, lite mindre
-  {kg:2.5, grad:'p25sGrad', w:6,  h:22, r:2},  // svart, lite mindre
-  {kg:1.25,grad:'p125Grad', w:4,  h:16, r:1},  // silver, minst
+  {kg:25,  grad:'p25Grad',  w:15, h:92, r:5},  // röd – fullstor tävlingsklove
+  {kg:20,  grad:'p20Grad',  w:15, h:92, r:5},  // blå – samma diameter som 25
+  {kg:15,  grad:'p15Grad',  w:13, h:78, r:4},  // gul
+  {kg:10,  grad:'p10Grad',  w:12, h:62, r:4},  // grön
+  {kg:5,   grad:'p5Grad',   w:10, h:44, r:3},  // vit
+  {kg:2.5, grad:'p25sGrad', w:8,  h:32, r:3},  // svart – alltid tydligt synlig
+  {kg:1.25,grad:'p125Grad', w:7,  h:24, r:2},  // silver – alltid tydligt synlig
 ];
 
 function calcPlates(totalKg){
@@ -1459,28 +1587,32 @@ function calcPlates(totalKg){
 
 function drawBarbell(kg){
   const plates = calcPlates(kg);
-  const CY = 40;
-  const LEFT_COLLAR_X  = 138;  // left edge of left collar
-  const RIGHT_COLLAR_X = 562;  // right edge of right collar (556 + 6)
+  const CY = 60;
+  const LEFT_FLANGE_X  = 142; // klovarna staplas utåt (vänster) härifrån
+  const RIGHT_FLANGE_X = 558; // klovarna staplas utåt (höger) härifrån
+  const GAP = 1;
 
-  // Left side: stack outward (going left) from collar
+  // Vänster sida
   let leftSVG = '';
-  let lx = LEFT_COLLAR_X - 1;
+  let lx = LEFT_FLANGE_X - GAP;
   plates.forEach((p, i) => {
     const x = lx - p.w;
     const y = Math.round(CY - p.h/2);
     leftSVG += `<rect x="${x}" y="${y}" width="${p.w}" height="${p.h}" rx="${p.r}" fill="url(#${p.grad})" style="transition-delay:${i*0.07}s"/>`;
-    lx = x;
+    lx = x - GAP;
   });
+  // Låsklämma utanför stapeln
+  if(plates.length) leftSVG += `<rect x="${lx-6}" y="${CY-15}" width="6" height="30" rx="2" fill="#c9c9c9"/>`;
 
-  // Right side: stack outward (going right) from collar
+  // Höger sida
   let rightSVG = '';
-  let rx = RIGHT_COLLAR_X + 1; // start just outside right collar
+  let rx = RIGHT_FLANGE_X + GAP;
   plates.forEach((p, i) => {
     const y = Math.round(CY - p.h/2);
     rightSVG += `<rect x="${rx}" y="${y}" width="${p.w}" height="${p.h}" rx="${p.r}" fill="url(#${p.grad})" style="transition-delay:${i*0.07}s"/>`;
-    rx += p.w;
+    rx += p.w + GAP;
   });
+  if(plates.length) rightSVG += `<rect x="${rx}" y="${CY-15}" width="6" height="30" rx="2" fill="#c9c9c9"/>`;
 
   document.getElementById('plates-left').innerHTML  = leftSVG;
   document.getElementById('plates-right').innerHTML = rightSVG;
@@ -1651,7 +1783,7 @@ function renderEx(ex){
   return h + `</div>`;
 }
 
-function renderGrid(days, showToday){
+function renderGrid(days, showToday, weekIdx){
   const todayName = t('days')[DAY_NAMES.indexOf(todayDayName())];
   const dayMap = Object.fromEntries(DAY_NAMES.map((sv,i)=>[sv, T[currentLang].days[i]]));
   let h = `<div class="days-grid">`;
@@ -1665,6 +1797,7 @@ function renderGrid(days, showToday){
     else {
       h += `<div class="dc-progress"><div class="dc-progress-track"><div class="dc-progress-fill"></div></div><span class="dc-progress-txt"></span></div>`;
       day.exercises.forEach(ex=>{ h += renderEx(ex); });
+      if(weekIdx !== undefined) h += `<button class="dc-log-btn" onclick="logFromProgram(${weekIdx},${i})">${t('log_from_program')}</button>`;
     }
     h += `</div>`;
   });
@@ -1728,9 +1861,10 @@ function generate(){
     </div></div>`;
     [{label:t('week_a'),isA:true},{label:t('week_b'),isA:false}].forEach((w,i)=>{
       const days = builder(s,b,d,w.isA,null);
+      progDays[i] = days;
       const wVol = calcWeekVolume(days);
       html += `<div class="week-panel${i===0?' active':''}" id="wpanel-${i}">
-        <div class="week-meta">${w.label}${lightLabel} · ${t('week_volume', fmtNum(dispVol(wVol)), ul)}<div class="week-legend"><div class="week-legend-dot"></div>${legendText}</div></div>${renderGrid(days, true)}</div>`;
+        <div class="week-meta">${w.label}${lightLabel} · ${t('week_volume', fmtNum(dispVol(wVol)), ul)}<div class="week-legend"><div class="week-legend-dot"></div>${legendText}</div></div>${renderGrid(days, true, i)}</div>`;
     });
     out.innerHTML = html;
   } else {
@@ -1740,10 +1874,11 @@ function generate(){
     html += `</div></div>`;
     variants.forEach((isA,i)=>{
       const days = builder(s,b,d,isA,i+1);
+      progDays[i] = days;
       const wVol = calcWeekVolume(days);
       html += `<div class="week-panel${i===0?' active':''}" id="wpanel-${i}">
         <div class="week-meta">${t('week_label',i+1)} · Toppset: ${topRepsLabel[i]}${lightLabel} · ${t('week_volume', fmtNum(dispVol(wVol)), ul)}<div class="week-legend"><div class="week-legend-dot"></div>${legendText}</div></div>
-        ${renderGrid(days, true)}</div>`;
+        ${renderGrid(days, true, i)}</div>`;
     });
     out.innerHTML = html;
   }
@@ -2120,6 +2255,48 @@ const T = {
     rank_outside: (val,u) => `Sist på listan har ${val} ${u} – du är med så fort du tävlar!`,
     rank_weak: '💡 störst potential',
     rank_lift_names: ['Knäböj','Bänkpress','Marklyft','Totalt'],
+    log_eyebrow: 'Träningslogg',
+    log_title: 'Logga <span>järnet</span>',
+    log_sub: 'Kör dina pass direkt i appen – egna övningar, set för set – och följ utvecklingen över tid. Allt sparas lokalt i din webbläsare.',
+    log_tabs: ['Logga pass','Historik','Statistik'],
+    log_start_empty: '▶ Starta tomt pass',
+    log_start_hint: 'Tips: klicka ”Logga detta pass” på valfri dag i programmet ovan så förifylls övningar och set därifrån.',
+    log_from_program: '📝 Logga detta pass',
+    log_replace_confirm: 'Du har ett pågående pass. Ersätta det?',
+    log_session_name_ph: 'Passets namn',
+    log_pick_ex: 'Välj övning…',
+    log_new_ex_ph: 'eller skriv en ny övning…',
+    log_add: 'Lägg till',
+    log_add_set: '+ set',
+    log_finish: '✔ Avsluta & spara',
+    log_cancel: 'Avbryt pass',
+    log_cancel_confirm: 'Avbryta passet utan att spara?',
+    log_need_sets: 'Fyll i minst ett set med vikt och reps innan du sparar.',
+    log_saved: 'Pass sparat! 💪',
+    log_delete_confirm: 'Ta bort passet ur historiken?',
+    log_empty_history: 'Inga sparade pass ännu. Kör ett pass i fliken ”Logga pass” så dyker det upp här!',
+    log_meta: (ex,sets,vol,u) => `${ex} övningar · ${sets} set · ${vol} ${u} volym`,
+    log_dur: (m) => `${m} min`,
+    log_export: '⬇ Exportera data',
+    log_import: '⬆ Importera data',
+    log_import_confirm: 'Importen ersätter din nuvarande logg på den här enheten. Fortsätta?',
+    log_import_done: 'Logg importerad!',
+    log_import_err: 'Kunde inte läsa filen – är det en export från Mirakelprogrammet?',
+    log_csv_confirm: (n,from,to) => `Hittade ${n} pass (${from} – ${to}) i filen. Importera och slå ihop med din logg?`,
+    log_csv_done: (n,skipped) => `${n} pass importerade!` + (skipped>0 ? ` (${skipped} hoppades över – fanns redan.)` : ''),
+    log_csv_none: 'Hittade inga pass i filen.',
+    log_csv_err: 'Kunde inte tolka CSV-filen automatiskt. Öppna filen, kopiera de första fem raderna och klistra in dem i en chatt med Claude, så anpassas importen efter just ditt format.',
+    log_import_hint: 'Importera din backup (JSON) eller hela historiken från StrengthLog, Strong eller Hevy (CSV-export).',
+    log_stats_empty: 'Statistiken vaknar när du sparat ditt första pass.',
+    log_stat_workouts: 'Pass totalt',
+    log_stat_volume: 'Total volym',
+    log_stat_30d: 'Pass 30 dagar',
+    log_stat_streak: 'Veckor i rad',
+    log_metric_top: 'Toppvikt',
+    log_metric_vol: 'Volym',
+    log_best_set: 'Bästa set',
+    log_best_e1rm: 'Bästa E1RM',
+    log_exlib: ['Knäböj','Bänkpress','Marklyft','Pausböj','Pausbänk','Stoppmark','Frontböj','Böjrodd','Militärpress','Hantelpress','Chins','Dips','Rumänsk marklyft','Benpress','Latsdrag'],
     rank_note: 'Baserat på tävlingsresultat registrerade hos Svenska Styrkelyftförbundet i år (via data.styrkelyft.se). Kom ihåg att rankingens lyft är gjorda under betydligt tuffare betingelser än på gymmet: godkänt djup i böjen, paus på bröstet i bänken, domarbedömning, invägning och nio bedömda försök under en och samma dag. Ett tränings-PB brukar därför motsvara något mindre på tävlingsflaket – jämförelsen visar var dina siffror skulle hamna om du tävlade in dem. Data cachas i 12 timmar.',
     glossary: {
       'TNG': 'Touch and go – stången nuddar bröstet men stannar inte',
@@ -2208,6 +2385,48 @@ const T = {
     rank_outside: (val,u) => `Last on the list has ${val} ${u} – you are on it as soon as you compete!`,
     rank_weak: '💡 biggest upside',
     rank_lift_names: ['Squat','Bench press','Deadlift','Total'],
+    log_eyebrow: 'Training log',
+    log_title: 'Log the <span>iron</span>',
+    log_sub: 'Run your workouts right in the app – custom exercises, set by set – and track your progress over time. Everything is stored locally in your browser.',
+    log_tabs: ['Log workout','History','Statistics'],
+    log_start_empty: '▶ Start empty workout',
+    log_start_hint: 'Tip: hit ”Log this session” on any day in the program above to prefill exercises and sets.',
+    log_from_program: '📝 Log this session',
+    log_replace_confirm: 'You have a workout in progress. Replace it?',
+    log_session_name_ph: 'Workout name',
+    log_pick_ex: 'Pick exercise…',
+    log_new_ex_ph: 'or type a new exercise…',
+    log_add: 'Add',
+    log_add_set: '+ set',
+    log_finish: '✔ Finish & save',
+    log_cancel: 'Discard workout',
+    log_cancel_confirm: 'Discard this workout without saving?',
+    log_need_sets: 'Fill in at least one set with weight and reps before saving.',
+    log_saved: 'Workout saved! 💪',
+    log_delete_confirm: 'Delete this workout from history?',
+    log_empty_history: 'No saved workouts yet. Log one in the ”Log workout” tab and it shows up here!',
+    log_meta: (ex,sets,vol,u) => `${ex} exercises · ${sets} sets · ${vol} ${u} volume`,
+    log_dur: (m) => `${m} min`,
+    log_export: '⬇ Export data',
+    log_import: '⬆ Import data',
+    log_import_confirm: 'Importing replaces your current log on this device. Continue?',
+    log_import_done: 'Log imported!',
+    log_import_err: 'Could not read the file – is it an export from Mirakelprogrammet?',
+    log_csv_confirm: (n,from,to) => `Found ${n} workouts (${from} – ${to}) in the file. Import and merge with your log?`,
+    log_csv_done: (n,skipped) => `${n} workouts imported!` + (skipped>0 ? ` (${skipped} skipped – already in your log.)` : ''),
+    log_csv_none: 'No workouts found in the file.',
+    log_csv_err: 'Could not parse the CSV automatically. Open the file, copy the first five rows and paste them into a chat with Claude to adapt the importer to your format.',
+    log_import_hint: 'Import your backup (JSON) or your full history from StrengthLog, Strong or Hevy (CSV export).',
+    log_stats_empty: 'Statistics wake up once you have saved your first workout.',
+    log_stat_workouts: 'Workouts',
+    log_stat_volume: 'Total volume',
+    log_stat_30d: 'Last 30 days',
+    log_stat_streak: 'Week streak',
+    log_metric_top: 'Top weight',
+    log_metric_vol: 'Volume',
+    log_best_set: 'Best set',
+    log_best_e1rm: 'Best E1RM',
+    log_exlib: ['Squat','Bench press','Deadlift','Pause squat','Pause bench','Deficit deadlift','Front squat','Barbell row','Overhead press','DB press','Chin-ups','Dips','Romanian deadlift','Leg press','Lat pulldown'],
     rank_note: 'Based on competition results registered with the Swedish Powerlifting Federation this year (via data.styrkelyft.se). Keep in mind that ranking lifts are performed under far tougher conditions than in the gym: judged depth in the squat, a pause on the chest in the bench, weigh-ins and nine judged attempts in a single day. A gym PB usually translates to a bit less on the platform – the comparison shows where your numbers would land if you competed them. Data is cached for 12 hours.',
     glossary: {
       'TNG': 'Touch and go – the bar touches the chest but doesn\'t stop',
@@ -2270,6 +2489,14 @@ function applyLang(){
   populateRankClasses();
   populateRankAges();
   if(lastRankRender) renderRanking(lastRankRender);
+  document.getElementById('log-eyebrow').textContent = L.log_eyebrow;
+  document.getElementById('log-title').innerHTML = L.log_title;
+  document.getElementById('log-sub').textContent = L.log_sub;
+  L.log_tabs.forEach((txt,i)=>{ const el=document.getElementById('log-tab-'+i); if(el) el.textContent=txt; });
+  const mB=document.querySelectorAll('#st-metric button');
+  if(mB[1]) mB[1].textContent = L.log_metric_top;
+  if(mB[2]) mB[2].textContent = L.log_metric_vol;
+  renderLogUI();
   // PB labels
   const pbLabels = document.querySelectorAll('.lift-cell-label');
   if(pbLabels[0]) pbLabels[0].textContent = L.pb_label_s;
@@ -2579,6 +2806,535 @@ function renderRanking(ctx){
 }
 
 window.addEventListener('DOMContentLoaded', loadRankClasses);
+
+
+// ══════════════════════════════════════════════════════════════════
+// TRÄNINGSLOGG – logga pass, egna övningar, historik & statistik
+// Allt sparas i localStorage på enheten.
+// ══════════════════════════════════════════════════════════════════
+const LOG_KEY = 'mp_log_v1', ACTIVE_KEY = 'mp_active_v1';
+function loadJSON(k, def){ try{ const v = JSON.parse(localStorage.getItem(k)); return v ?? def; }catch(e){ return def; } }
+let logData = loadJSON(LOG_KEY, {customEx:[], workouts:[]});
+if(!logData.customEx) logData.customEx = [];
+if(!logData.workouts) logData.workouts = [];
+let activeSession = loadJSON(ACTIVE_KEY, null);
+let progDays = {};
+let currentLogTab = 0;
+let statMetric = 'e1rm';
+let sessionTicker = null;
+
+function saveLogData(){ try{ localStorage.setItem(LOG_KEY, JSON.stringify(logData)); }catch(e){} }
+function saveActive(){
+  try{
+    if(activeSession) localStorage.setItem(ACTIVE_KEY, JSON.stringify(activeSession));
+    else localStorage.removeItem(ACTIVE_KEY);
+  }catch(e){}
+}
+function epley(kg, reps){ return reps <= 1 ? kg : kg * (1 + reps/30); }
+function workoutVolume(w){
+  return w.ex.reduce((s,e)=> s + e.sets.reduce((s2,st)=> s2 + (st.kg>0 && st.reps>0 ? st.kg*st.reps : 0), 0), 0);
+}
+function setsCount(w){ return w.ex.reduce((s,e)=> s + e.sets.filter(st=>st.reps>0).length, 0); }
+
+// ── Flikar ──
+function switchLogTab(i, btn){
+  currentLogTab = i;
+  document.querySelectorAll('.log-tab').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active'); else document.getElementById('log-tab-'+i).classList.add('active');
+  document.querySelectorAll('.log-panel').forEach((p,pi)=>p.classList.toggle('active', pi===i));
+  renderLogUI();
+}
+
+function renderLogUI(){
+  if(currentLogTab === 0) renderSessionPanel();
+  else if(currentLogTab === 1) renderHistory();
+  else renderStats();
+}
+
+// ── Starta pass ──
+function newSession(name, exList){
+  activeSession = { start: Date.now(), name, ex: exList };
+  saveActive();
+  switchLogTab(0, null);
+  document.getElementById('log-section').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function startEmptySession(){
+  if(activeSession && !confirm(t('log_replace_confirm'))) return;
+  const d = new Date();
+  newSession(t('days')[ (d.getDay()+6)%7 ] + ' ' + d.toLocaleDateString(currentLang==='sv'?'sv-SE':'en-US',{day:'numeric',month:'short'}), []);
+}
+
+function logFromProgram(wi, di){
+  if(activeSession && !confirm(t('log_replace_confirm'))) return;
+  const day = (progDays[wi]||[])[di];
+  if(!day || !day.exercises) return;
+  const exList = day.exercises.map(e=>{
+    let sets;
+    if(e.sets && e.sets.length) sets = e.sets.map(s=>({kg:s.kg, reps:s.reps, done:false}));
+    else if(e.amrap) sets = [{kg:e.kg, reps:'', done:false}];
+    else sets = [{kg:'',reps:'',done:false},{kg:'',reps:'',done:false},{kg:'',reps:'',done:false}];
+    return { name: glossaryName(e.name), sets };
+  });
+  const dayMap = Object.fromEntries(DAY_NAMES.map((sv,i)=>[sv, T[currentLang].days[i]]));
+  newSession((dayMap[day.day]||day.day) + ' · ' + day.tag, exList);
+}
+
+// ── Aktivt pass: rendering ──
+function elapsedStr(){
+  const s = Math.floor((Date.now() - activeSession.start)/1000);
+  const m = Math.floor(s/60);
+  return (m<10?'0':'')+m+':'+String(s%60).padStart(2,'0');
+}
+
+function renderSessionPanel(){
+  const panel = document.getElementById('log-panel-0');
+  clearInterval(sessionTicker);
+  if(!activeSession){
+    panel.innerHTML = `<button class="log-big-btn" onclick="startEmptySession()">${t('log_start_empty')}</button>
+      <div class="log-empty">${t('log_start_hint')}</div>`;
+    return;
+  }
+  let h = `<div class="ls-head">
+    <input class="ls-name" value="${escapeHtml(activeSession.name)}" placeholder="${t('log_session_name_ph')}" oninput="activeSession.name=this.value;saveActive()">
+    <div class="ls-elapsed" id="ls-elapsed">⏱ ${elapsedStr()}</div>
+  </div>`;
+  activeSession.ex.forEach((e, ei)=>{
+    h += `<div class="ls-ex"><div class="ls-ex-head"><span class="ls-ex-name">${escapeHtml(e.name)}</span>
+      <button class="ls-ex-del" onclick="removeLogEx(${ei})">✕</button></div>`;
+    e.sets.forEach((s, si)=>{
+      h += `<div class="ls-row${s.done?' done':''}" id="lsr-${ei}-${si}">
+        <span class="ls-num">${si+1}</span>
+        <input class="ls-kg" type="number" inputmode="decimal" step="0.5" min="0" value="${s.kg===''?'':s.kg}" placeholder="kg" oninput="onLogSetInput(${ei},${si},'kg',this.value)">
+        <span class="ls-x">×</span>
+        <input class="ls-reps" type="number" inputmode="numeric" min="0" value="${s.reps===''?'':s.reps}" placeholder="reps" oninput="onLogSetInput(${ei},${si},'reps',this.value)">
+        <button class="ls-done" onclick="toggleLogSet(${ei},${si})">✓</button>
+        <button class="ls-del" onclick="removeLogSet(${ei},${si})">✕</button>
+      </div>`;
+    });
+    h += `<button class="ls-addset" onclick="addLogSet(${ei})">${t('log_add_set')}</button></div>`;
+  });
+  const lib = [...t('log_exlib'), ...logData.customEx.map(c=>c.name)]
+    .filter((v,i,a)=>a.indexOf(v)===i)
+    .sort((a,b)=>a.localeCompare(b, currentLang==='sv'?'sv':'en'));
+  h += `<div class="ls-addex-row">
+    <select id="ls-ex-select"><option value="">${t('log_pick_ex')}</option>${lib.map(n=>`<option>${escapeHtml(n)}</option>`).join('')}</select>
+    <input id="ls-ex-new" placeholder="${t('log_new_ex_ph')}">
+    <button class="ls-addex-btn" onclick="addLogEx()">${t('log_add')}</button>
+  </div>
+  <div class="ls-footer">
+    <button class="ls-finish" onclick="finishSession()">${t('log_finish')}</button>
+    <button class="ls-cancel" onclick="cancelSession()">${t('log_cancel')}</button>
+  </div>`;
+  panel.innerHTML = h;
+  sessionTicker = setInterval(()=>{
+    const el = document.getElementById('ls-elapsed');
+    if(el && activeSession) el.textContent = '⏱ ' + elapsedStr();
+  }, 1000);
+}
+
+function escapeHtml(s){ return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ── Aktivt pass: interaktion ──
+function onLogSetInput(ei, si, field, val){
+  const s = activeSession.ex[ei].sets[si];
+  s[field] = val === '' ? '' : parseFloat(val);
+  saveActive();
+}
+function toggleLogSet(ei, si){
+  const s = activeSession.ex[ei].sets[si];
+  s.done = !s.done;
+  const row = document.getElementById(`lsr-${ei}-${si}`);
+  if(row) row.classList.toggle('done', s.done);
+  if(s.done){
+    if(s.kg > 0){ currentBarbellKg = s.kg; drawBarbell(s.kg); }
+    if(autoTimer) startGlobalTimer();
+    if(navigator.vibrate) navigator.vibrate(15);
+  }
+  saveActive();
+}
+function addLogSet(ei){
+  const sets = activeSession.ex[ei].sets;
+  const last = sets[sets.length-1];
+  sets.push({kg: last ? last.kg : '', reps: last ? last.reps : '', done:false});
+  saveActive(); renderSessionPanel();
+}
+function removeLogSet(ei, si){
+  activeSession.ex[ei].sets.splice(si,1);
+  saveActive(); renderSessionPanel();
+}
+function removeLogEx(ei){
+  activeSession.ex.splice(ei,1);
+  saveActive(); renderSessionPanel();
+}
+function addLogEx(){
+  const sel = document.getElementById('ls-ex-select');
+  const inp = document.getElementById('ls-ex-new');
+  const name = (inp.value || sel.value || '').trim();
+  if(!name) return;
+  // Ny egen övning? Spara i biblioteket.
+  const known = [...t('log_exlib'), ...logData.customEx.map(c=>c.name)];
+  if(!known.includes(name)){
+    logData.customEx.push({id:'c'+Date.now(), name});
+    saveLogData();
+  }
+  activeSession.ex.push({name, sets:[{kg:'',reps:'',done:false},{kg:'',reps:'',done:false},{kg:'',reps:'',done:false}]});
+  saveActive(); renderSessionPanel();
+}
+
+function finishSession(){
+  const cleaned = activeSession.ex
+    .map(e=>({name:e.name, sets:e.sets.filter(s=>s.kg>0 && s.reps>0).map(s=>({kg:s.kg,reps:s.reps}))}))
+    .filter(e=>e.sets.length);
+  if(!cleaned.length){ alert(t('log_need_sets')); return; }
+  logData.workouts.push({
+    id: Date.now(),
+    date: new Date().toISOString(),
+    name: activeSession.name || 'Pass',
+    dur: Math.round((Date.now()-activeSession.start)/1000),
+    ex: cleaned
+  });
+  saveLogData();
+  activeSession = null; saveActive();
+  clearInterval(sessionTicker);
+  if(typeof gtag==='function') gtag('event','workout_saved');
+  const card = document.getElementById('log-card');
+  confettiBurst(card);
+  if(navigator.vibrate) navigator.vibrate([100,60,200]);
+  switchLogTab(1, null);
+}
+
+function cancelSession(){
+  if(!confirm(t('log_cancel_confirm'))) return;
+  activeSession = null; saveActive();
+  clearInterval(sessionTicker);
+  renderSessionPanel();
+}
+
+// ── Historik ──
+function renderHistory(){
+  const panel = document.getElementById('log-panel-1');
+  const ws = logData.workouts.slice().sort((a,b)=>b.id-a.id);
+  if(!ws.length){
+    panel.innerHTML = `<div class="log-empty">${t('log_empty_history')}</div>` + ioButtons();
+    return;
+  }
+  const loc = currentLang==='sv'?'sv-SE':'en-US';
+  let h = '';
+  ws.forEach(w=>{
+    const d = new Date(w.date);
+    const vol = workoutVolume(w);
+    h += `<div class="lh-item" id="lh-${w.id}" onclick="toggleHist(${w.id},event)">
+      <div class="lh-top"><span class="lh-name">${escapeHtml(w.name)}</span>
+        <span class="lh-date">${d.toLocaleDateString(loc,{weekday:'short',day:'numeric',month:'short',year:'numeric'})}${w.dur>0?' · '+t('log_dur', Math.max(1,Math.round(w.dur/60))):''}</span></div>
+      <div class="lh-meta">${t('log_meta', w.ex.length, setsCount(w), fmtNum(dispVol(vol)), unitLabel())}</div>
+      <div class="lh-detail">
+        ${w.ex.map(e=>`<div class="lh-ex"><div class="lh-ex-name">${escapeHtml(e.name)}</div>
+          <div class="lh-sets">${e.sets.map(s=>`${rkg(s.kg)}×${s.reps}`).join('&nbsp;&nbsp;')}</div></div>`).join('')}
+        <button class="lh-del" onclick="deleteWorkout(${w.id},event)">✕ ${currentLang==='sv'?'Ta bort':'Delete'}</button>
+      </div>
+    </div>`;
+  });
+  panel.innerHTML = h + ioButtons();
+}
+function ioButtons(){
+  return `<div class="log-io-row">
+    <button class="log-io-btn" onclick="exportLog()">${t('log_export')}</button>
+    <button class="log-io-btn" onclick="document.getElementById('log-import-file').click()">${t('log_import')}</button>
+    <input type="file" id="log-import-file" accept=".json,.csv,application/json,text/csv" style="display:none" onchange="importLog(this.files[0]);this.value='';">
+  </div>
+  <div class="log-empty" style="padding:10px 0 0;font-size:10px;">${t('log_import_hint')}</div>`;
+}
+function toggleHist(id, ev){
+  if(ev && (ev.target.closest('.lh-del'))) return;
+  document.getElementById('lh-'+id).classList.toggle('open');
+}
+function deleteWorkout(id, ev){
+  if(ev) ev.stopPropagation();
+  if(!confirm(t('log_delete_confirm'))) return;
+  logData.workouts = logData.workouts.filter(w=>w.id!==id);
+  saveLogData(); renderHistory();
+}
+
+// ── Export / import ──
+function exportLog(){
+  const blob = new Blob([JSON.stringify({app:'mirakelprogrammet', v:1, exported:new Date().toISOString(), ...logData}, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'mirakelprogrammet-logg-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 5000);
+}
+function importLog(file){
+  if(!file) return;
+  const r = new FileReader();
+  r.onload = ()=>{
+    const txt = String(r.result || '');
+    const trimmed = txt.trim();
+    if(/\.csv$/i.test(file.name) || (!trimmed.startsWith('{') && !trimmed.startsWith('['))){
+      importCSV(txt);
+    } else {
+      try{
+        const data = JSON.parse(txt);
+        if(!Array.isArray(data.workouts)) throw new Error('bad');
+        if(!confirm(t('log_import_confirm'))) return;
+        logData = { customEx: data.customEx||[], workouts: data.workouts };
+        saveLogData(); renderLogUI();
+        alert(t('log_import_done'));
+      }catch(e){ alert(t('log_import_err')); }
+    }
+  };
+  r.readAsText(file);
+}
+
+// ── CSV-import (StrengthLog, Strong, Hevy m.fl.) ──────────────────
+function parseCSV(text, delim){
+  const rows = []; let row = [], field = '', inQ = false;
+  for(let i=0; i<text.length; i++){
+    const ch = text[i];
+    if(inQ){
+      if(ch === '"'){ if(text[i+1] === '"'){ field += '"'; i++; } else inQ = false; }
+      else field += ch;
+    } else if(ch === '"') inQ = true;
+    else if(ch === delim){ row.push(field); field=''; }
+    else if(ch === '\n' || ch === '\r'){
+      if(ch === '\r' && text[i+1] === '\n') i++;
+      row.push(field); field='';
+      if(row.some(f=>f.trim() !== '')) rows.push(row);
+      row = [];
+    } else field += ch;
+  }
+  row.push(field);
+  if(row.some(f=>f.trim() !== '')) rows.push(row);
+  return rows;
+}
+
+const CSV_ALIASES = {
+  date:     ['date','datum','workout date','start time','time','startdatum'],
+  workout:  ['workout name','workout','name','pass','träningspass','routine','title','workoutname'],
+  exercise: ['exercise name','exercise','övning','exercise_name','exercisename','lift'],
+  weight:   ['weight (kg)','weight(kg)','weight','kg','vikt','vikt (kg)','load','weight (lbs)','weight(lbs)','lbs'],
+  reps:     ['reps','repetitions','rep','reps.','antal reps'],
+};
+
+function findCol(headers, keys){
+  const H = headers.map(h=>String(h).trim().toLowerCase());
+  for(const k of keys){ const i = H.indexOf(k); if(i !== -1) return i; }
+  for(const k of keys){ const i = H.findIndex(h=>h.includes(k)); if(i !== -1) return i; }
+  return -1;
+}
+
+function csvNum(v){
+  const n = parseFloat(String(v ?? '').replace(/\s/g,'').replace(',','.'));
+  return isNaN(n) ? 0 : n;
+}
+
+function importCSV(text){
+  // 1. Hitta avgränsare
+  const firstLines = text.split(/\r?\n/).filter(l=>l.trim()).slice(0,3).join('\n');
+  let delim = ';', best = 0;
+  for(const d of [';', ',', '\t']){
+    const cnt = (firstLines.split(d).length);
+    if(cnt > best){ best = cnt; delim = d; }
+  }
+  const rows = parseCSV(text, delim);
+  if(rows.length < 2){ alert(t('log_csv_err')); return; }
+
+  // 2. Hitta rubrikraden (kan ligga några rader ner)
+  let headIdx = -1, cols = null;
+  for(let i=0; i<Math.min(rows.length, 8); i++){
+    const c = {
+      date: findCol(rows[i], CSV_ALIASES.date),
+      workout: findCol(rows[i], CSV_ALIASES.workout),
+      exercise: findCol(rows[i], CSV_ALIASES.exercise),
+      weight: findCol(rows[i], CSV_ALIASES.weight),
+      reps: findCol(rows[i], CSV_ALIASES.reps),
+    };
+    if(c.date !== -1 && c.exercise !== -1 && c.reps !== -1){ headIdx = i; cols = c; break; }
+  }
+  if(headIdx === -1){ alert(t('log_csv_err')); return; }
+  const isLbs = cols.weight !== -1 && /lb/i.test(String(rows[headIdx][cols.weight]));
+
+  // 3. Gruppera rader → pass
+  const map = new Map();
+  for(let i = headIdx+1; i < rows.length; i++){
+    const r = rows[i];
+    const exName = String(r[cols.exercise] ?? '').trim();
+    const reps = csvNum(r[cols.reps]);
+    if(!exName || reps <= 0) continue;
+    let kg = cols.weight !== -1 ? csvNum(r[cols.weight]) : 0;
+    if(isLbs && kg > 0) kg = Math.round(kg / LBS_PER_KG * 100) / 100;
+    const rawDate = String(r[cols.date] ?? '').trim();
+    let d = new Date(rawDate.replace(' ', 'T'));
+    if(isNaN(d)) d = new Date(rawDate.slice(0,10));
+    if(isNaN(d)) continue;
+    const wName = cols.workout !== -1 ? String(r[cols.workout] ?? '').trim() : '';
+    const key = d.toISOString().slice(0,10) + '|' + wName;
+    if(!map.has(key)) map.set(key, { date: d, name: wName || d.toLocaleDateString('sv-SE'), ex: new Map() });
+    const w = map.get(key);
+    if(!w.ex.has(exName)) w.ex.set(exName, []);
+    w.ex.get(exName).push({ kg, reps });
+  }
+  if(map.size === 0){ alert(t('log_csv_none')); return; }
+
+  // 4. Bygg pass-objekt, sortera på datum
+  const imported = [...map.values()]
+    .sort((a,b)=>a.date-b.date)
+    .map((w,i)=>({
+      id: w.date.getTime() + i,
+      date: w.date.toISOString(),
+      name: w.name,
+      dur: 0,
+      ex: [...w.ex.entries()].map(([name, sets])=>({name, sets})),
+    }));
+
+  // 5. Bekräfta + slå ihop (dubbletter på datum+namn hoppas över)
+  const loc = currentLang==='sv'?'sv-SE':'en-US';
+  const from = new Date(imported[0].date).toLocaleDateString(loc);
+  const to = new Date(imported[imported.length-1].date).toLocaleDateString(loc);
+  if(!confirm(t('log_csv_confirm', imported.length, from, to))) return;
+
+  const existing = new Set(logData.workouts.map(w=>w.date.slice(0,10)+'|'+w.name));
+  let added = 0, skipped = 0;
+  imported.forEach(w=>{
+    if(existing.has(w.date.slice(0,10)+'|'+w.name)){ skipped++; return; }
+    logData.workouts.push(w); added++;
+  });
+  saveLogData(); renderLogUI();
+  alert(t('log_csv_done', added, skipped));
+  if(typeof gtag==='function') gtag('event','csv_import',{workouts:added});
+}
+
+// ── Statistik ──
+function isoWeek(d){
+  const dt = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const dayNum = (dt.getUTCDay()+6)%7;
+  dt.setUTCDate(dt.getUTCDate() - dayNum + 3);
+  const firstThu = new Date(Date.UTC(dt.getUTCFullYear(),0,4));
+  return dt.getUTCFullYear()*100 + Math.round(((dt-firstThu)/86400000 + ((firstThu.getUTCDay()+6)%7) )/7) + 1;
+}
+function weekKey(d){ const dt=new Date(d); const day=(dt.getDay()+6)%7; dt.setDate(dt.getDate()-day); dt.setHours(0,0,0,0); return dt.getTime(); }
+function weekStreak(ws){
+  if(!ws.length) return 0;
+  const weeks = new Set(ws.map(w=>weekKey(w.date)));
+  let streak = 0, cur = weekKey(Date.now());
+  const MS_W = 7*86400000;
+  if(!weeks.has(cur)) cur -= MS_W; // veckan har börjat men inget pass ännu – räkna från förra
+  while(weeks.has(cur)){ streak++; cur -= MS_W; }
+  return streak;
+}
+
+function renderStats(){
+  const ws = logData.workouts;
+  const empty = document.getElementById('st-empty');
+  const hasData = ws.length > 0;
+  empty.style.display = hasData ? 'none' : 'block';
+  empty.textContent = t('log_stats_empty');
+  document.getElementById('st-cards').style.display = hasData ? 'grid' : 'none';
+  document.querySelector('.st-controls').style.display = hasData ? 'flex' : 'none';
+  document.getElementById('st-chart').style.display = hasData ? 'block' : 'none';
+  document.getElementById('st-best').style.display = hasData ? 'flex' : 'none';
+  if(!hasData) return;
+
+  const totVol = ws.reduce((s,w)=>s+workoutVolume(w),0);
+  const last30 = ws.filter(w=>Date.now()-new Date(w.date).getTime() < 30*86400000).length;
+  document.getElementById('st-cards').innerHTML = [
+    [ws.length, t('log_stat_workouts')],
+    [fmtNum(dispVol(totVol)), t('log_stat_volume')],
+    [last30, t('log_stat_30d')],
+    [weekStreak(ws), t('log_stat_streak')],
+  ].map(([v,l])=>`<div class="st-card"><div class="st-val">${v}</div><div class="st-label">${l}</div></div>`).join('');
+
+  // Övningsval
+  const sel = document.getElementById('st-ex');
+  const names = [...new Set(ws.flatMap(w=>w.ex.map(e=>e.name)))].sort((a,b)=>a.localeCompare(b,'sv'));
+  const prev = sel.value;
+  sel.innerHTML = names.map(n=>`<option${n===prev?' selected':''}>${escapeHtml(n)}</option>`).join('');
+  if(!sel.value && names.length) sel.value = names[0];
+  renderStatChart();
+}
+
+function setStatMetric(m, btn){
+  statMetric = m;
+  document.querySelectorAll('#st-metric button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderStatChart();
+}
+
+function renderStatChart(){
+  const name = document.getElementById('st-ex').value;
+  const ws = logData.workouts.slice().sort((a,b)=>a.id-b.id);
+  const pts = [];
+  let bestSet = null, bestE1 = 0, bestE1Set = null;
+  ws.forEach(w=>{
+    const e = w.ex.find(x=>x.name===name);
+    if(!e || !e.sets.length) return;
+    let v = 0;
+    e.sets.forEach(s=>{
+      const e1 = epley(s.kg, s.reps);
+      if(!bestSet || s.kg > bestSet.kg || (s.kg===bestSet.kg && s.reps>bestSet.reps)) bestSet = s;
+      if(e1 > bestE1){ bestE1 = e1; bestE1Set = s; }
+    });
+    if(statMetric==='e1rm') v = Math.max(...e.sets.map(s=>epley(s.kg,s.reps)));
+    else if(statMetric==='top') v = Math.max(...e.sets.map(s=>s.kg));
+    else v = e.sets.reduce((s2,s)=>s2+s.kg*s.reps,0);
+    pts.push({ tm: new Date(w.date).getTime(), v });
+  });
+  drawStatChart(document.getElementById('st-chart'), pts);
+  const ul = unitLabel();
+  document.getElementById('st-best').innerHTML = bestSet
+    ? `<span>${t('log_best_set')}: <strong>${rkg(bestSet.kg)} ${ul} × ${bestSet.reps}</strong></span>
+       <span>${t('log_best_e1rm')}: <strong>${rkg(Math.round(bestE1*2)/2)} ${ul}</strong></span>`
+    : '';
+}
+
+function drawStatChart(canvas, pts){
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.clientWidth || 600, H = canvas.clientHeight || 230;
+  canvas.width = W*dpr; canvas.height = H*dpr;
+  const c = canvas.getContext('2d');
+  c.setTransform(dpr,0,0,dpr,0,0);
+  c.clearRect(0,0,W,H);
+  const css = getComputedStyle(document.documentElement);
+  const lime = css.getPropertyValue('--lime').trim() || '#CBFF4D';
+  const dust = css.getPropertyValue('--dust2').trim() || '#666';
+  const grid = css.getPropertyValue('--ink4').trim() || '#2a2a2e';
+  if(pts.length === 0) return;
+  const padL=52, padR=18, padT=18, padB=30;
+  let vMin = Math.min(...pts.map(p=>p.v)), vMax = Math.max(...pts.map(p=>p.v));
+  if(vMin===vMax){ vMin-=5; vMax+=5; }
+  const range = vMax-vMin; vMin -= range*0.12; vMax += range*0.12;
+  const X = i => pts.length===1 ? W/2 : padL + (W-padL-padR) * (i/(pts.length-1));
+  const Y = v => padT + (H-padT-padB) * (1-(v-vMin)/(vMax-vMin));
+  // Rutnät + y-etiketter
+  c.font = '9px "DM Mono",monospace'; c.fillStyle = dust; c.strokeStyle = grid; c.lineWidth = 1;
+  for(let g=0; g<=4; g++){
+    const v = vMin + (vMax-vMin)*g/4, y = Y(v);
+    c.beginPath(); c.moveTo(padL, y); c.lineTo(W-padR, y); c.stroke();
+    c.fillText(fmtNum(Math.round(v)), 8, y+3);
+  }
+  // Datumetiketter (första & sista)
+  const loc = currentLang==='sv'?'sv-SE':'en-US';
+  const dstr = tm => new Date(tm).toLocaleDateString(loc,{day:'numeric',month:'short'});
+  c.textAlign='left';  c.fillText(dstr(pts[0].tm), padL, H-10);
+  if(pts.length>1){ c.textAlign='right'; c.fillText(dstr(pts[pts.length-1].tm), W-padR, H-10); }
+  c.textAlign='left';
+  // Linje
+  c.strokeStyle = lime; c.lineWidth = 2; c.lineJoin='round'; c.lineCap='round';
+  c.beginPath();
+  pts.forEach((p,i)=>{ const x=X(i), y=Y(p.v); i===0?c.moveTo(x,y):c.lineTo(x,y); });
+  c.stroke();
+  // Punkter + sista värdet
+  c.fillStyle = lime;
+  pts.forEach((p,i)=>{ c.beginPath(); c.arc(X(i), Y(p.v), 3.2, 0, Math.PI*2); c.fill(); });
+  const lp = pts[pts.length-1];
+  c.font = '11px "DM Mono",monospace';
+  c.fillText(fmtNum(Math.round(lp.v)), Math.min(X(pts.length-1)+8, W-44), Y(lp.v)-8);
+}
+
+// ── Init ──
+window.addEventListener('DOMContentLoaded', ()=>{ renderLogUI(); });
+window.addEventListener('resize', ()=>{ if(currentLogTab===2) renderStatChart(); });
 
 </script>
 
