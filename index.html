@@ -692,8 +692,13 @@ footer{
   .e1rm-input.small{font-size:28px;}
   .input-mode-toggle{width:100%;justify-content:center;}
   .imt{flex:1;text-align:center;}
-  .prog-type-tabs{width:100%;justify-content:center;}
-  .ptt{flex:1;text-align:center;}
+  .prog-type-tabs{
+    display:flex;width:100%;max-width:100%;
+    overflow-x:auto;-webkit-overflow-scrolling:touch;
+    scrollbar-width:none;justify-content:flex-start;
+  }
+  .prog-type-tabs::-webkit-scrollbar{display:none;}
+  .ptt{flex:0 0 auto;padding:8px 16px;font-size:12px;}
 }
 
 
@@ -747,6 +752,20 @@ footer{
 .ls-cancel:hover{color:#ff6b6b;border-color:rgba(255,80,80,0.4);}
 .dc-log-btn{font-family:var(--mono);font-size:10px;letter-spacing:0.08em;color:var(--dust);background:none;border:1px dashed var(--ink4);border-radius:9px;padding:9px 14px;cursor:pointer;margin-top:14px;width:100%;transition:all 0.2s;}
 .dc-log-btn:hover{color:var(--lime);border-color:rgba(203,255,77,0.4);}
+.dc-btn-row{display:flex;gap:8px;}
+.dc-btn-row .dc-log-btn{flex:1;}
+.dc-btn-row .dc-edit-btn{flex:0 0 auto;width:auto;padding:9px 16px;}
+.dc-edited{font-family:var(--mono);font-size:9px;color:#ff9b6b;letter-spacing:0.06em;margin-left:6px;}
+.dc-editor .ls-row{padding:3px 0;}
+.dc-editor .ls-kg,.dc-editor .ls-reps{width:72px;padding:9px 8px;font-size:14px;}
+.dc-editor .ls-done{display:none;}
+.dc-editor-ex{font-family:var(--mono);font-size:11px;color:var(--cream);letter-spacing:0.04em;margin:14px 0 4px;}
+.dc-editor-ex .locked{color:var(--dust2);font-size:9px;margin-left:8px;}
+.dc-editor-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;}
+.dc-editor-btns button{font-family:var(--mono);font-size:10px;letter-spacing:0.06em;border-radius:9px;padding:10px 14px;cursor:pointer;border:1px solid var(--ink4);background:none;color:var(--dust);}
+.dc-editor-btns .save{background:var(--lime);color:var(--ink);border-color:var(--lime);font-weight:500;}
+.dc-editor-btns button:hover{border-color:rgba(203,255,77,0.4);}
+.dc-editor-btns .save:hover{background:#D6FF5C;}
 
 /* Historik */
 .lh-item{background:var(--ink3);border:1px solid var(--ink4);border-radius:14px;padding:18px;margin-bottom:12px;cursor:pointer;transition:border-color 0.2s;}
@@ -762,6 +781,23 @@ footer{
 .lh-sets{font-family:var(--mono);font-size:10.5px;color:var(--dust);letter-spacing:0.03em;line-height:1.6;}
 .lh-del{font-family:var(--mono);font-size:10px;color:var(--dust2);background:none;border:1px solid var(--ink4);border-radius:8px;padding:7px 14px;cursor:pointer;margin-top:10px;}
 .lh-del:hover{color:#ff6b6b;border-color:rgba(255,80,80,0.4);}
+.lh-detail-btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+.lh-detail-btns .lh-del,.lh-rerun{margin-top:0;}
+.lh-rerun{font-family:var(--mono);font-size:10px;color:var(--lime);background:var(--lime-dim);border:1px solid rgba(203,255,77,0.3);border-radius:8px;padding:7px 14px;cursor:pointer;}
+.lh-rerun:hover{background:rgba(203,255,77,0.18);}
+.lh-ex-sum{font-size:9px;color:var(--dust2);margin-left:8px;font-weight:400;}
+.lh-set{display:inline-block;margin:2px 10px 2px 0;white-space:nowrap;}
+.lh-e1{color:var(--dust2);}
+.ls-e1rm{font-family:var(--mono);font-size:9.5px;color:var(--dust2);letter-spacing:0.03em;white-space:nowrap;}
+@media(max-width:480px){.ls-e1rm{display:none;}}
+.sync-key-box{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--ink3);border:1px solid var(--ink4);border-radius:12px;padding:16px;margin:14px 0;}
+.sync-key-val{font-family:var(--mono);font-size:15px;letter-spacing:0.1em;color:var(--lime);word-break:break-all;flex:1;min-width:200px;}
+.sync-small-btn{font-family:var(--mono);font-size:10px;letter-spacing:0.06em;color:var(--dust);background:none;border:1px solid var(--ink4);border-radius:8px;padding:8px 14px;cursor:pointer;}
+.sync-small-btn:hover{color:var(--lime);border-color:rgba(203,255,77,0.4);}
+.sync-status{font-family:var(--mono);font-size:11px;color:var(--dust);letter-spacing:0.04em;margin:10px 0 18px;min-height:15px;}
+.sync-connect-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+.sync-connect-row input{font-family:var(--mono);font-size:14px;letter-spacing:0.08em;color:var(--cream);background:var(--ink3);border:1px solid var(--ink4);border-radius:10px;padding:12px 14px;outline:none;flex:1;min-width:230px;text-transform:uppercase;}
+.sync-connect-row input:focus{border-color:var(--lime);}
 .log-io-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
 .log-io-btn{font-family:var(--mono);font-size:10.5px;letter-spacing:0.06em;color:var(--dust);background:none;border:1px solid var(--ink4);border-radius:9px;padding:10px 16px;cursor:pointer;}
 .log-io-btn:hover{color:var(--lime);border-color:rgba(203,255,77,0.35);}
@@ -1149,6 +1185,7 @@ footer{
       <button class="log-tab active" id="log-tab-0" onclick="switchLogTab(0,this)">Logga pass</button>
       <button class="log-tab" id="log-tab-1" onclick="switchLogTab(1,this)">Historik</button>
       <button class="log-tab" id="log-tab-2" onclick="switchLogTab(2,this)">Statistik</button>
+      <button class="log-tab" id="log-tab-3" onclick="switchLogTab(3,this)">☁ Synk</button>
     </div>
     <div class="log-panel active" id="log-panel-0"></div>
     <div class="log-panel" id="log-panel-1"></div>
@@ -1166,6 +1203,7 @@ footer{
       <div class="st-best" id="st-best"></div>
       <div class="log-empty" id="st-empty" style="display:none"></div>
     </div>
+    <div class="log-panel" id="log-panel-3"></div>
   </div>
 </section>
 
@@ -1774,7 +1812,7 @@ function renderEx(ex){
         <span class="sb-reps">${s.reps}r</span>
         <div class="sb-bar-track"><div class="sb-bar-fill" style="width:${pct_bar}%${isHighlight?';background:var(--lime)':''}"></div></div>
         <span class="sb-kg">${dispKg}</span>
-        <span class="sb-pct">${s.pct.toFixed(1)}%</span>
+        <span class="sb-pct">${s.pct !== undefined ? s.pct.toFixed(1)+'%' : '✎'}</span>
         <span class="sb-e1rm"><span class="tt" data-tip="${T[currentLang].glossary['E1RM']||''}">≈ ${dispE1rm} ${unitLabel()}</span></span>
       </div>`;
     });
@@ -1792,12 +1830,15 @@ function renderGrid(days, showToday, weekIdx){
     const isToday = showToday && day.day === DAY_NAMES[DAY_NAMES.indexOf(todayDayName())] ;
     const vol = calcDayVolume(day);
     h += `<div class="${day.rest?'day-card-rest':'day-card'}"${isToday?' data-today="1"':''} style="animation-delay:${i*0.06}s${isToday?';border-color:var(--lime)':''}">`;
-    h += `<div class="dc-eyebrow-row"><span class="dc-eyebrow">${day.tag}</span>${vol>0?`<span class="dc-volume">${t('volume_label', fmtNum(dispVol(vol)), unitLabel())}</span>`:''}</div><div class="dc-title">${dayDisplayName}${isToday?`<span class="today-badge">${t('today_badge')}</span>`:''}</div>`;
+    h += `<div class="dc-eyebrow-row"><span class="dc-eyebrow">${day.tag}${day.edited?` <span class="dc-edited">${t('prog_edited_badge')}</span>`:''}</span>${vol>0?`<span class="dc-volume">${t('volume_label', fmtNum(dispVol(vol)), unitLabel())}</span>`:''}</div><div class="dc-title">${dayDisplayName}${isToday?`<span class="today-badge">${t('today_badge')}</span>`:''}</div>`;
     if(day.rest) h += `<div class="dc-rest">${t('rest_day')}</div>`;
     else {
       h += `<div class="dc-progress"><div class="dc-progress-track"><div class="dc-progress-fill"></div></div><span class="dc-progress-txt"></span></div>`;
       day.exercises.forEach(ex=>{ h += renderEx(ex); });
-      if(weekIdx !== undefined) h += `<button class="dc-log-btn" onclick="logFromProgram(${weekIdx},${i})">${t('log_from_program')}</button>`;
+      if(weekIdx !== undefined) h += `<div class="dc-btn-row">
+        <button class="dc-log-btn" onclick="logFromProgram(${weekIdx},${i})">${t('log_from_program')}</button>
+        <button class="dc-log-btn dc-edit-btn" onclick="openProgramEditor(${weekIdx},${i},this)">${t('prog_edit_btn')}</button>
+      </div>`;
     }
     h += `</div>`;
   });
@@ -1861,6 +1902,7 @@ function generate(){
     </div></div>`;
     [{label:t('week_a'),isA:true},{label:t('week_b'),isA:false}].forEach((w,i)=>{
       const days = builder(s,b,d,w.isA,null);
+      applyProgramEdits(days, i, programSignature(s,b,d));
       progDays[i] = days;
       const wVol = calcWeekVolume(days);
       html += `<div class="week-panel${i===0?' active':''}" id="wpanel-${i}">
@@ -1874,6 +1916,7 @@ function generate(){
     html += `</div></div>`;
     variants.forEach((isA,i)=>{
       const days = builder(s,b,d,isA,i+1);
+      applyProgramEdits(days, i, programSignature(s,b,d));
       progDays[i] = days;
       const wVol = calcWeekVolume(days);
       html += `<div class="week-panel${i===0?' active':''}" id="wpanel-${i}">
@@ -1885,6 +1928,8 @@ function generate(){
 
   // Återställ avbockade set för just det här programmet
   initDoneTracking(programSignature(s, b, d));
+  // Uppdatera loggens kopiera-från-program-lista
+  if(typeof renderLogUI === 'function') renderLogUI();
 
   // Today banner
   const todayIdx = new Date().getDay();
@@ -2296,6 +2341,41 @@ const T = {
     log_metric_vol: 'Volym',
     log_best_set: 'Bästa set',
     log_best_e1rm: 'Bästa E1RM',
+    log_or_copy: '…eller kopiera ett pass:',
+    log_rerun: '⟳ Kör igen',
+    log_tabs4: 'Synk',
+    sync_intro: 'Synka loggen mellan dina enheter – utan konto. Skapa en synk-nyckel här, skriv in samma nyckel på mobilen, och loggen hålls automatiskt uppdaterad överallt. Nyckeln ÄR din inloggning: spara den säkert och dela den inte.',
+    sync_create: '🔑 Skapa synk-nyckel',
+    sync_have: 'Har du redan en nyckel från en annan enhet?',
+    sync_key_ph: 'MP-XXXX-XXXX-XXXX-XXXX',
+    sync_connect: 'Koppla',
+    sync_bad_key: 'Ogiltig nyckel – formatet är MP-XXXX-XXXX-XXXX-XXXX.',
+    sync_your_key: 'Din synk-nyckel',
+    sync_show: 'Visa',
+    sync_hide: 'Dölj',
+    sync_copy: '⧉ Kopiera',
+    sync_copied: 'Kopierad!',
+    sync_now: '↻ Synka nu',
+    sync_disconnect: 'Koppla från den här enheten',
+    sync_disconnect_confirm: 'Koppla från synk på den här enheten? Din lokala logg finns kvar, och molnkopian rörs inte – du kan koppla igen med samma nyckel.',
+    sync_status_never: 'Aldrig synkad ännu',
+    sync_status_ok: (d) => `Senast synkad ${d}`,
+    sync_status_syncing: 'Synkar…',
+    sync_status_err: 'Kunde inte nå synk-servern. Ändringar sparas lokalt och synkas vid nästa försök.',
+    sync_status_setup: 'Synk-servern är inte igång ännu. Deploya sync-worker.js (instruktioner i filen) – workern ska heta mp-sync.',
+    sync_merged: (n) => `Synkad! ${n} pass i loggen.`,
+    sync_warning_note: 'Tappar du nyckeln kan molnkopian inte återfås – men din lokala logg finns kvar och kan synkas upp med en ny nyckel. Den som känner till nyckeln kan läsa loggen, så håll den för dig själv.',
+    log_ex_sum: (vol,u,e1) => `volym ${vol} ${u} · bästa e1rm ${e1} ${u}`,
+    log_copy_prev_ph: 'Välj tidigare pass…',
+    log_copy_prog_ph: 'Välj dag ur programmet…',
+    log_copy_btn: '⟳ Kopiera',
+    prog_edit_btn: '✎ Redigera',
+    prog_edit_warning: '⚠️  VARNING  ⚠️\n\nDu är på väg att mixtra med Mirakelprogrammet.\n\nVetenskapen(?) bakom programmets mirakulösa krafter kan INTE garantera fortsatta mirakel om du intervenerar i processen på egen hand. Styrkelyftsgudarna ser allt.\n\n(Dina ändringar sparas för just det här programmet, och avbockade set nollställs.)\n\nFortsätt på egen risk?',
+    prog_edited_badge: '✎ redigerad',
+    prog_edit_save: '💾 Spara ändringar',
+    prog_edit_reset: '↩ Återställ original',
+    prog_edit_cancel: 'Avbryt',
+    prog_edit_locked: 'redigeras ej',
     log_exlib: ['Knäböj','Bänkpress','Marklyft','Pausböj','Pausbänk','Stoppmark','Frontböj','Böjrodd','Militärpress','Hantelpress','Chins','Dips','Rumänsk marklyft','Benpress','Latsdrag'],
     rank_note: 'Baserat på tävlingsresultat registrerade hos Svenska Styrkelyftförbundet i år (via data.styrkelyft.se). Kom ihåg att rankingens lyft är gjorda under betydligt tuffare betingelser än på gymmet: godkänt djup i böjen, paus på bröstet i bänken, domarbedömning, invägning och nio bedömda försök under en och samma dag. Ett tränings-PB brukar därför motsvara något mindre på tävlingsflaket – jämförelsen visar var dina siffror skulle hamna om du tävlade in dem. Data cachas i 12 timmar.',
     glossary: {
@@ -2426,6 +2506,41 @@ const T = {
     log_metric_vol: 'Volume',
     log_best_set: 'Best set',
     log_best_e1rm: 'Best E1RM',
+    log_or_copy: '…or copy a workout:',
+    log_rerun: '⟳ Run again',
+    log_tabs4: 'Sync',
+    sync_intro: 'Sync your log between devices – no account needed. Create a sync key here, enter the same key on your phone, and the log stays up to date everywhere. The key IS your login: store it safely and do not share it.',
+    sync_create: '🔑 Create sync key',
+    sync_have: 'Already have a key from another device?',
+    sync_key_ph: 'MP-XXXX-XXXX-XXXX-XXXX',
+    sync_connect: 'Connect',
+    sync_bad_key: 'Invalid key – the format is MP-XXXX-XXXX-XXXX-XXXX.',
+    sync_your_key: 'Your sync key',
+    sync_show: 'Show',
+    sync_hide: 'Hide',
+    sync_copy: '⧉ Copy',
+    sync_copied: 'Copied!',
+    sync_now: '↻ Sync now',
+    sync_disconnect: 'Disconnect this device',
+    sync_disconnect_confirm: 'Disconnect sync on this device? Your local log stays, and the cloud copy is untouched – you can reconnect with the same key.',
+    sync_status_never: 'Never synced yet',
+    sync_status_ok: (d) => `Last synced ${d}`,
+    sync_status_syncing: 'Syncing…',
+    sync_status_err: 'Could not reach the sync server. Changes are saved locally and synced on the next attempt.',
+    sync_status_setup: 'The sync server is not running yet. Deploy sync-worker.js (instructions inside the file) – the worker must be named mp-sync.',
+    sync_merged: (n) => `Synced! ${n} workouts in the log.`,
+    sync_warning_note: 'If you lose the key the cloud copy cannot be recovered – but your local log remains and can be uploaded with a new key. Anyone who knows the key can read the log, so keep it to yourself.',
+    log_ex_sum: (vol,u,e1) => `volume ${vol} ${u} · best e1rm ${e1} ${u}`,
+    log_copy_prev_ph: 'Pick a previous workout…',
+    log_copy_prog_ph: 'Pick a day from the program…',
+    log_copy_btn: '⟳ Copy',
+    prog_edit_btn: '✎ Edit',
+    prog_edit_warning: '⚠️  WARNING  ⚠️\n\nYou are about to tamper with the Miracle Program.\n\nThe science(?) behind its miraculous powers can NOT guarantee continued miracles if you intervene in the process on your own. The powerlifting gods see everything.\n\n(Your changes are saved for this exact program, and checked sets are reset.)\n\nProceed at your own risk?',
+    prog_edited_badge: '✎ edited',
+    prog_edit_save: '💾 Save changes',
+    prog_edit_reset: '↩ Restore original',
+    prog_edit_cancel: 'Cancel',
+    prog_edit_locked: 'not editable',
     log_exlib: ['Squat','Bench press','Deadlift','Pause squat','Pause bench','Deficit deadlift','Front squat','Barbell row','Overhead press','DB press','Chin-ups','Dips','Romanian deadlift','Leg press','Lat pulldown'],
     rank_note: 'Based on competition results registered with the Swedish Powerlifting Federation this year (via data.styrkelyft.se). Keep in mind that ranking lifts are performed under far tougher conditions than in the gym: judged depth in the squat, a pause on the chest in the bench, weigh-ins and nine judged attempts in a single day. A gym PB usually translates to a bit less on the platform – the comparison shows where your numbers would land if you competed them. Data is cached for 12 hours.',
     glossary: {
@@ -2493,6 +2608,7 @@ function applyLang(){
   document.getElementById('log-title').innerHTML = L.log_title;
   document.getElementById('log-sub').textContent = L.log_sub;
   L.log_tabs.forEach((txt,i)=>{ const el=document.getElementById('log-tab-'+i); if(el) el.textContent=txt; });
+  const tab3=document.getElementById('log-tab-3'); if(tab3) tab3.textContent='☁ '+L.log_tabs4;
   const mB=document.querySelectorAll('#st-metric button');
   if(mB[1]) mB[1].textContent = L.log_metric_top;
   if(mB[2]) mB[2].textContent = L.log_metric_vol;
@@ -2818,12 +2934,27 @@ let logData = loadJSON(LOG_KEY, {customEx:[], workouts:[]});
 if(!logData.customEx) logData.customEx = [];
 if(!logData.workouts) logData.workouts = [];
 let activeSession = loadJSON(ACTIVE_KEY, null);
+function stripTags(s){ return String(s ?? '').replace(/<[^>]*>/g,''); }
+// Engångsstädning: äldre versioner kunde spara övningsnamn med HTML-markup
+(function sanitizeLog(){
+  let dirty = false;
+  const clean = o => { const c = stripTags(o.name); if(c !== o.name){ o.name = c; dirty = true; } };
+  (logData.workouts||[]).forEach(w => (w.ex||[]).forEach(clean));
+  (logData.customEx||[]).forEach(clean);
+  if(dirty) saveLogData();
+  if(activeSession){
+    let aDirty = false;
+    (activeSession.ex||[]).forEach(e => { const c = stripTags(e.name); if(c !== e.name){ e.name = c; aDirty = true; } });
+    if(aDirty) saveActive();
+  }
+})();
 let progDays = {};
 let currentLogTab = 0;
 let statMetric = 'e1rm';
 let sessionTicker = null;
 
-function saveLogData(){ try{ localStorage.setItem(LOG_KEY, JSON.stringify(logData)); }catch(e){} }
+function writeLogLocal(){ try{ localStorage.setItem(LOG_KEY, JSON.stringify(logData)); }catch(e){} }
+function saveLogData(){ writeLogLocal(); scheduleSync(); }
 function saveActive(){
   try{
     if(activeSession) localStorage.setItem(ACTIVE_KEY, JSON.stringify(activeSession));
@@ -2848,7 +2979,8 @@ function switchLogTab(i, btn){
 function renderLogUI(){
   if(currentLogTab === 0) renderSessionPanel();
   else if(currentLogTab === 1) renderHistory();
-  else renderStats();
+  else if(currentLogTab === 2) renderStats();
+  else renderSyncPanel();
 }
 
 // ── Starta pass ──
@@ -2857,6 +2989,23 @@ function newSession(name, exList){
   saveActive();
   switchLogTab(0, null);
   document.getElementById('log-section').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function copySelectedWorkout(){
+  const prog = document.getElementById('log-copy-prog');
+  const prev = document.getElementById('log-copy-prev');
+  if(prog && prog.value){
+    const [wi, di] = prog.value.split('|').map(Number);
+    logFromProgram(wi, di);
+    return;
+  }
+  if(prev && prev.value){
+    const w = logData.workouts.find(x=>x.id === +prev.value);
+    if(!w) return;
+    if(activeSession && !confirm(t('log_replace_confirm'))) return;
+    const exList = w.ex.map(e=>({name:e.name, sets:e.sets.map(s=>({kg:s.kg, reps:s.reps, done:false}))}));
+    newSession(w.name, exList);
+  }
 }
 
 function startEmptySession(){
@@ -2874,7 +3023,7 @@ function logFromProgram(wi, di){
     if(e.sets && e.sets.length) sets = e.sets.map(s=>({kg:s.kg, reps:s.reps, done:false}));
     else if(e.amrap) sets = [{kg:e.kg, reps:'', done:false}];
     else sets = [{kg:'',reps:'',done:false},{kg:'',reps:'',done:false},{kg:'',reps:'',done:false}];
-    return { name: glossaryName(e.name), sets };
+    return { name: e.name, sets };
   });
   const dayMap = Object.fromEntries(DAY_NAMES.map((sv,i)=>[sv, T[currentLang].days[i]]));
   newSession((dayMap[day.day]||day.day) + ' · ' + day.tag, exList);
@@ -2891,8 +3040,32 @@ function renderSessionPanel(){
   const panel = document.getElementById('log-panel-0');
   clearInterval(sessionTicker);
   if(!activeSession){
-    panel.innerHTML = `<button class="log-big-btn" onclick="startEmptySession()">${t('log_start_empty')}</button>
-      <div class="log-empty">${t('log_start_hint')}</div>`;
+    let h = `<button class="log-big-btn" onclick="startEmptySession()">${t('log_start_empty')}</button>`;
+    const ws = logData.workouts.slice().sort((a,b)=>b.id-a.id).slice(0,30);
+    const hasProg = Object.keys(progDays).length > 0;
+    if(ws.length || hasProg){
+      const loc = currentLang==='sv'?'sv-SE':'en-US';
+      h += `<div class="log-empty" style="padding:20px 0 8px;">${t('log_or_copy')}</div><div class="ls-addex-row" style="margin-top:0;">`;
+      if(ws.length){
+        h += `<select id="log-copy-prev"><option value="">${t('log_copy_prev_ph')}</option>${ws.map(w=>
+          `<option value="${w.id}">${new Date(w.date).toLocaleDateString(loc,{day:'numeric',month:'short'})} · ${escapeHtml(w.name)}</option>`).join('')}</select>`;
+      }
+      if(hasProg){
+        const dayMap = Object.fromEntries(DAY_NAMES.map((sv,i)=>[sv, T[currentLang].days[i]]));
+        let opts = '';
+        Object.keys(progDays).sort().forEach(wi=>{
+          const wLabel = progType==='2veckor' ? (wi==='0'?t('week_a'):t('week_b')) : t('week_label', +wi+1);
+          progDays[wi].forEach((day,di)=>{
+            if(day.rest || !day.exercises) return;
+            opts += `<option value="${wi}|${di}">${wLabel} · ${dayMap[day.day]||day.day} · ${day.tag}</option>`;
+          });
+        });
+        h += `<select id="log-copy-prog"><option value="">${t('log_copy_prog_ph')}</option>${opts}</select>`;
+      }
+      h += `<button class="ls-addex-btn" onclick="copySelectedWorkout()">${t('log_copy_btn')}</button></div>`;
+    }
+    h += `<div class="log-empty">${t('log_start_hint')}</div>`;
+    panel.innerHTML = h;
     return;
   }
   let h = `<div class="ls-head">
@@ -2910,6 +3083,7 @@ function renderSessionPanel(){
         <input class="ls-reps" type="number" inputmode="numeric" min="0" value="${s.reps===''?'':s.reps}" placeholder="reps" oninput="onLogSetInput(${ei},${si},'reps',this.value)">
         <button class="ls-done" onclick="toggleLogSet(${ei},${si})">✓</button>
         <button class="ls-del" onclick="removeLogSet(${ei},${si})">✕</button>
+        <span class="ls-e1rm" id="lse-${ei}-${si}">${s.kg>0&&s.reps>0?'e1rm '+rkg(Math.round(epley(s.kg,s.reps)*2)/2):''}</span>
       </div>`;
     });
     h += `<button class="ls-addset" onclick="addLogSet(${ei})">${t('log_add_set')}</button></div>`;
@@ -2939,15 +3113,30 @@ function escapeHtml(s){ return String(s??'').replace(/&/g,'&amp;').replace(/</g,
 function onLogSetInput(ei, si, field, val){
   const s = activeSession.ex[ei].sets[si];
   s[field] = val === '' ? '' : parseFloat(val);
+  const e1 = document.getElementById(`lse-${ei}-${si}`);
+  if(e1) e1.textContent = (s.kg>0 && s.reps>0) ? 'e1rm ' + rkg(Math.round(epley(s.kg,s.reps)*2)/2) : '';
   saveActive();
 }
+function nextPlannedKg(ei, si){
+  // Nästa oavklarade set med vikt – först i samma övning, sedan i följande
+  for(let e = ei; e < activeSession.ex.length; e++){
+    const sets = activeSession.ex[e].sets;
+    for(let s = (e === ei ? si + 1 : 0); s < sets.length; s++){
+      if(!sets[s].done && sets[s].kg > 0) return sets[s].kg;
+    }
+  }
+  return null;
+}
+
 function toggleLogSet(ei, si){
   const s = activeSession.ex[ei].sets[si];
   s.done = !s.done;
   const row = document.getElementById(`lsr-${ei}-${si}`);
   if(row) row.classList.toggle('done', s.done);
   if(s.done){
-    if(s.kg > 0){ currentBarbellKg = s.kg; drawBarbell(s.kg); }
+    const nextKg = nextPlannedKg(ei, si);
+    const bbKg = nextKg ?? (s.kg > 0 ? s.kg : 0);
+    if(bbKg > 0){ currentBarbellKg = bbKg; drawBarbell(bbKg); }
     if(autoTimer) startGlobalTimer();
     if(navigator.vibrate) navigator.vibrate(15);
   }
@@ -3029,9 +3218,19 @@ function renderHistory(){
         <span class="lh-date">${d.toLocaleDateString(loc,{weekday:'short',day:'numeric',month:'short',year:'numeric'})}${w.dur>0?' · '+t('log_dur', Math.max(1,Math.round(w.dur/60))):''}</span></div>
       <div class="lh-meta">${t('log_meta', w.ex.length, setsCount(w), fmtNum(dispVol(vol)), unitLabel())}</div>
       <div class="lh-detail">
-        ${w.ex.map(e=>`<div class="lh-ex"><div class="lh-ex-name">${escapeHtml(e.name)}</div>
-          <div class="lh-sets">${e.sets.map(s=>`${rkg(s.kg)}×${s.reps}`).join('&nbsp;&nbsp;')}</div></div>`).join('')}
-        <button class="lh-del" onclick="deleteWorkout(${w.id},event)">✕ ${currentLang==='sv'?'Ta bort':'Delete'}</button>
+        ${w.ex.map(e=>{
+          const exVol = e.sets.reduce((s2,s)=>s2+(s.kg>0&&s.reps>0?s.kg*s.reps:0),0);
+          const bestE1 = Math.max(...e.sets.map(s=>epley(s.kg,s.reps)), 0);
+          return `<div class="lh-ex"><div class="lh-ex-name">${escapeHtml(e.name)}
+            <span class="lh-ex-sum">${t('log_ex_sum', fmtNum(dispVol(exVol)), unitLabel(), rkg(Math.round(bestE1*2)/2))}</span></div>
+          <div class="lh-sets">${e.sets.map((s,si)=>
+            `<span class="lh-set">#${si+1} ${rkg(s.kg)}×${s.reps}<span class="lh-e1"> · ${rkg(Math.round(epley(s.kg,s.reps)*2)/2)}</span></span>`
+          ).join('')}</div></div>`;
+        }).join('')}
+        <div class="lh-detail-btns">
+          <button class="lh-rerun" onclick="rerunWorkout(${w.id},event)">${t('log_rerun')}</button>
+          <button class="lh-del" onclick="deleteWorkout(${w.id},event)">✕ ${currentLang==='sv'?'Ta bort':'Delete'}</button>
+        </div>
       </div>
     </div>`;
   });
@@ -3046,13 +3245,24 @@ function ioButtons(){
   <div class="log-empty" style="padding:10px 0 0;font-size:10px;">${t('log_import_hint')}</div>`;
 }
 function toggleHist(id, ev){
-  if(ev && (ev.target.closest('.lh-del'))) return;
+  if(ev && ev.target.closest('button')) return;
   document.getElementById('lh-'+id).classList.toggle('open');
+}
+
+function rerunWorkout(id, ev){
+  if(ev) ev.stopPropagation();
+  const w = logData.workouts.find(x=>x.id === id);
+  if(!w) return;
+  if(activeSession && !confirm(t('log_replace_confirm'))) return;
+  const exList = w.ex.map(e=>({name:e.name, sets:e.sets.map(s=>({kg:s.kg, reps:s.reps, done:false}))}));
+  newSession(w.name, exList);
 }
 function deleteWorkout(id, ev){
   if(ev) ev.stopPropagation();
   if(!confirm(t('log_delete_confirm'))) return;
   logData.workouts = logData.workouts.filter(w=>w.id!==id);
+  logData.deleted = logData.deleted || [];
+  if(!logData.deleted.includes(id)) logData.deleted.push(id);
   saveLogData(); renderHistory();
 }
 
@@ -3332,8 +3542,277 @@ function drawStatChart(canvas, pts){
   c.fillText(fmtNum(Math.round(lp.v)), Math.min(X(pts.length-1)+8, W-44), Y(lp.v)-8);
 }
 
+// ── PROGRAM-REDIGERING (sparas per programsignatur) ──────────────
+let editDraft = null;
+let editWarned = false;
+
+function applyProgramEdits(days, weekIdx, sig){
+  const all = loadJSON('edits_' + sig, {});
+  days.forEach((day, di)=>{
+    const ed = all[weekIdx + '|' + di];
+    if(!ed || !day.exercises) return;
+    day.exercises.forEach((ex, xi)=>{
+      if(ed[xi] && ex.sets){
+        const orig = ex.sets;
+        ex.sets = ed[xi].map((s, si)=>{
+          const o = orig[si];
+          // Behåll procentetiketten om vikten är orörd, annars markeras setet som redigerat
+          return (o && o.kg === s.kg) ? {...o, reps: s.reps} : {kg: s.kg, reps: s.reps};
+        });
+      }
+    });
+    day.edited = true;
+  });
+}
+
+function openProgramEditor(wi, di, btn){
+  if(!editWarned){
+    if(!confirm(t('prog_edit_warning'))) return;
+    editWarned = true;
+  }
+  const day = (progDays[wi]||[])[di];
+  if(!day || !day.exercises) return;
+  editDraft = {
+    wi, di,
+    ex: day.exercises.map(e=>({
+      name: e.name,
+      editable: !!(e.sets && e.sets.length),
+      sets: (e.sets||[]).map(s=>({kg:s.kg, reps:s.reps})),
+    })),
+  };
+  const card = btn.closest('.day-card');
+  let h = `<div class="dc-editor">`;
+  editDraft.ex.forEach((e, xi)=>{
+    h += `<div class="dc-editor-ex">${escapeHtml(e.name)}${e.editable?'':`<span class="locked">(${t('prog_edit_locked')})</span>`}</div>`;
+    if(!e.editable) return;
+    e.sets.forEach((s, si)=>{
+      h += `<div class="ls-row">
+        <span class="ls-num">${si+1}</span>
+        <input class="ls-kg" type="number" inputmode="decimal" step="0.5" min="0" value="${s.kg}" oninput="editDraftInput(${xi},${si},'kg',this.value)">
+        <span class="ls-x">×</span>
+        <input class="ls-reps" type="number" inputmode="numeric" min="1" value="${s.reps}" oninput="editDraftInput(${xi},${si},'reps',this.value)">
+        <button class="ls-del" onclick="editRemoveSet(${xi},${si},this)">✕</button>
+      </div>`;
+    });
+    h += `<button class="ls-addset" onclick="editAddSet(${xi},this)">${t('log_add_set')}</button>`;
+  });
+  h += `</div><div class="dc-editor-btns">
+    <button class="save" onclick="saveProgramEdits()">${t('prog_edit_save')}</button>
+    <button onclick="resetProgramEdits(${wi},${di})">${t('prog_edit_reset')}</button>
+    <button onclick="generate()">${t('prog_edit_cancel')}</button>
+  </div>`;
+  // Ersätt kortets innehåll under titeln med editorn
+  const title = card.querySelector('.dc-title');
+  while(title.nextSibling) title.nextSibling.remove();
+  title.insertAdjacentHTML('afterend', h);
+}
+
+function editDraftInput(xi, si, f, v){
+  const s = editDraft.ex[xi].sets[si];
+  s[f] = v === '' ? 0 : parseFloat(v);
+}
+function editAddSet(xi, btn){
+  const sets = editDraft.ex[xi].sets;
+  const last = sets[sets.length-1] || {kg:0, reps:5};
+  sets.push({kg:last.kg, reps:last.reps});
+  const si = sets.length - 1;
+  btn.insertAdjacentHTML('beforebegin', `<div class="ls-row">
+    <span class="ls-num">${si+1}</span>
+    <input class="ls-kg" type="number" inputmode="decimal" step="0.5" min="0" value="${last.kg}" oninput="editDraftInput(${xi},${si},'kg',this.value)">
+    <span class="ls-x">×</span>
+    <input class="ls-reps" type="number" inputmode="numeric" min="1" value="${last.reps}" oninput="editDraftInput(${xi},${si},'reps',this.value)">
+    <button class="ls-del" onclick="editRemoveSet(${xi},${si},this)">✕</button>
+  </div>`);
+}
+function editRemoveSet(xi, si, btn){
+  editDraft.ex[xi].sets[si] = null; // markera borttagen (index bevaras för övriga rader)
+  btn.closest('.ls-row').remove();
+}
+
+function saveProgramEdits(){
+  if(!editDraft || !currentSig) return;
+  const key = 'edits_' + currentSig;
+  const all = loadJSON(key, {});
+  const ed = {};
+  editDraft.ex.forEach((e, xi)=>{
+    if(!e.editable) return;
+    const sets = e.sets.filter(s=>s && s.kg > 0 && s.reps > 0);
+    if(sets.length) ed[xi] = sets;
+  });
+  if(Object.keys(ed).length) all[editDraft.wi + '|' + editDraft.di] = ed;
+  else delete all[editDraft.wi + '|' + editDraft.di];
+  try{ localStorage.setItem(key, JSON.stringify(all)); }catch(e){}
+  localStorage.removeItem('done_' + currentSig); // set-index förskjuts – nollställ avbockningar
+  editDraft = null;
+  generate();
+}
+
+function resetProgramEdits(wi, di){
+  if(!currentSig) return;
+  const key = 'edits_' + currentSig;
+  const all = loadJSON(key, {});
+  delete all[wi + '|' + di];
+  try{ localStorage.setItem(key, JSON.stringify(all)); }catch(e){}
+  localStorage.removeItem('done_' + currentSig);
+  editDraft = null;
+  generate();
+}
+
+// ── SYNK-NYCKEL (moln via Cloudflare KV, utan konto) ──────────────
+const SYNC_API_URL = 'https://mp-sync.jonathan-soderling.workers.dev';
+let syncState = loadJSON('mp_sync_v1', {key:null, lastSync:0});
+let syncTimer = null;
+let syncBusy = false;
+let syncKeyVisible = false;
+
+function saveSyncState(){ try{ localStorage.setItem('mp_sync_v1', JSON.stringify(syncState)); }catch(e){} }
+
+function genSyncKey(){
+  const A = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+  const buf = new Uint8Array(16);
+  (window.crypto || {getRandomValues:a=>{for(let i=0;i<a.length;i++)a[i]=Math.floor(Math.random()*256);}}).getRandomValues(buf);
+  const chars = [...buf].map(b=>A[b % A.length]);
+  return 'MP-' + [0,4,8,12].map(i=>chars.slice(i,i+4).join('')).join('-');
+}
+const SYNC_KEY_RE = /^MP(-[A-HJ-NP-Z2-9]{4}){4}$/;
+
+function scheduleSync(){
+  if(!syncState.key) return;
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(()=>syncNow(false), 2500);
+}
+
+function mergeLogs(local, remote){
+  const del = new Set([...(local.deleted||[]), ...(remote.deleted||[])]);
+  const byId = new Map();
+  [...(remote.workouts||[]), ...(local.workouts||[])].forEach(w=>{ if(!del.has(w.id)) byId.set(w.id, w); });
+  const exNames = new Set();
+  const customEx = [];
+  [...(local.customEx||[]), ...(remote.customEx||[])].forEach(c=>{
+    if(!exNames.has(c.name)){ exNames.add(c.name); customEx.push(c); }
+  });
+  return {
+    customEx,
+    workouts: [...byId.values()].sort((a,b)=>a.id-b.id),
+    deleted: [...del],
+  };
+}
+function logFingerprint(d){
+  return (d.workouts||[]).map(w=>w.id).sort().join(',') + '#' + (d.deleted||[]).slice().sort().join(',') + '#' + (d.customEx||[]).map(c=>c.name).sort().join(',');
+}
+
+async function syncNow(interactive){
+  if(!syncState.key || syncBusy) return;
+  syncBusy = true;
+  setSyncStatus(t('sync_status_syncing'));
+  try{
+    const res = await fetch(`${SYNC_API_URL}/sync?key=${syncState.key}`);
+    if(!res.ok && res.status !== 404) throw new Error('HTTP ' + res.status);
+    const cloud = res.ok ? (await res.json()).data : null;
+    const remote = cloud && Array.isArray(cloud.workouts) ? cloud : {customEx:[], workouts:[], deleted:[]};
+    const merged = mergeLogs(logData, remote);
+    // Uppdatera lokalt om molnet hade något nytt
+    if(logFingerprint(merged) !== logFingerprint(logData)){
+      logData = merged; writeLogLocal();
+      if(currentLogTab !== 3) renderLogUI();
+    } else {
+      logData = merged; writeLogLocal();
+    }
+    // Pusha om molnet saknar något
+    if(logFingerprint(merged) !== logFingerprint(remote)){
+      const push = await fetch(`${SYNC_API_URL}/sync?key=${syncState.key}`, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(merged),
+      });
+      if(!push.ok) throw new Error('HTTP ' + push.status);
+    }
+    syncState.lastSync = Date.now(); saveSyncState();
+    setSyncStatus(t('sync_merged', logData.workouts.length));
+    if(typeof gtag==='function' && interactive) gtag('event','sync_manual');
+  }catch(e){
+    setSyncStatus(SYNC_API_URL ? t('sync_status_err') : t('sync_status_setup'));
+  }finally{
+    syncBusy = false;
+    if(currentLogTab === 3) refreshSyncMeta();
+  }
+}
+
+function setSyncStatus(txt){
+  const el = document.getElementById('sync-status');
+  if(el) el.textContent = txt;
+}
+function refreshSyncMeta(){
+  const el = document.getElementById('sync-status');
+  if(!el || el.textContent) return;
+  el.textContent = syncState.lastSync
+    ? t('sync_status_ok', new Date(syncState.lastSync).toLocaleString(currentLang==='sv'?'sv-SE':'en-US',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}))
+    : t('sync_status_never');
+}
+
+function renderSyncPanel(){
+  const panel = document.getElementById('log-panel-3');
+  if(!syncState.key){
+    panel.innerHTML = `
+      <div class="log-empty" style="padding-top:0;">${t('sync_intro')}</div>
+      <button class="log-big-btn" onclick="createSyncKey()">${t('sync_create')}</button>
+      <div class="log-empty" style="padding-bottom:6px;">${t('sync_have')}</div>
+      <div class="sync-connect-row">
+        <input id="sync-key-input" placeholder="${t('sync_key_ph')}" autocapitalize="characters" autocomplete="off" spellcheck="false">
+        <button class="ls-addex-btn" onclick="connectSyncKey()">${t('sync_connect')}</button>
+      </div>
+      <div class="sync-status" id="sync-status"></div>`;
+    return;
+  }
+  const masked = syncState.key.slice(0,3) + '••••-••••-••••-' + syncState.key.slice(-4);
+  panel.innerHTML = `
+    <div class="log-empty" style="padding:0 0 6px;">${t('sync_your_key')}:</div>
+    <div class="sync-key-box">
+      <span class="sync-key-val" id="sync-key-val">${syncKeyVisible ? syncState.key : masked}</span>
+      <button class="sync-small-btn" onclick="toggleSyncKey()">${syncKeyVisible ? t('sync_hide') : t('sync_show')}</button>
+      <button class="sync-small-btn" onclick="copySyncKey(this)">${t('sync_copy')}</button>
+    </div>
+    <div class="sync-status" id="sync-status"></div>
+    <div class="ls-footer">
+      <button class="ls-finish" onclick="syncNow(true)">${t('sync_now')}</button>
+      <button class="ls-cancel" onclick="disconnectSync()">${t('sync_disconnect')}</button>
+    </div>
+    <div class="log-empty" style="font-size:10px;">${t('sync_warning_note')}</div>`;
+  refreshSyncMeta();
+}
+
+function createSyncKey(){
+  syncState.key = genSyncKey();
+  syncState.lastSync = 0;
+  saveSyncState();
+  syncKeyVisible = true;
+  renderSyncPanel();
+  syncNow(true);
+}
+function connectSyncKey(){
+  const inp = document.getElementById('sync-key-input');
+  const key = (inp.value || '').trim().toUpperCase();
+  if(!SYNC_KEY_RE.test(key)){ setSyncStatus(t('sync_bad_key')); return; }
+  syncState.key = key; syncState.lastSync = 0; saveSyncState();
+  syncKeyVisible = false;
+  renderSyncPanel();
+  syncNow(true);
+}
+function toggleSyncKey(){ syncKeyVisible = !syncKeyVisible; renderSyncPanel(); }
+function copySyncKey(btn){
+  const done = ()=>{ btn.textContent = t('sync_copied'); setTimeout(()=>{ btn.textContent = t('sync_copy'); }, 1500); };
+  if(navigator.clipboard) navigator.clipboard.writeText(syncState.key).then(done).catch(done);
+  else done();
+}
+function disconnectSync(){
+  if(!confirm(t('sync_disconnect_confirm'))) return;
+  syncState = {key:null, lastSync:0}; saveSyncState();
+  syncKeyVisible = false;
+  renderSyncPanel();
+}
+
 // ── Init ──
-window.addEventListener('DOMContentLoaded', ()=>{ renderLogUI(); });
+window.addEventListener('DOMContentLoaded', ()=>{ renderLogUI(); if(syncState.key) syncNow(false); });
 window.addEventListener('resize', ()=>{ if(currentLogTab===2) renderStatChart(); });
 
 </script>
