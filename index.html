@@ -692,13 +692,36 @@ footer{
   .e1rm-input.small{font-size:28px;}
   .input-mode-toggle{width:100%;justify-content:center;}
   .imt{flex:1;text-align:center;}
-  .prog-type-tabs{
-    display:flex;width:100%;max-width:100%;
+  /* Pill-rader (program-typ + Full/Light/Chilla) blir horisontellt
+     scrollbara och bryter ut ur hero-sektionens sidopadding så att
+     sista pillen aldrig kapas mot skärmkanten. */
+  .prog-type-tabs,
+  .variant-row{
+    display:flex;flex-wrap:nowrap;
+    width:auto;max-width:none;
+    margin-left:-20px;margin-right:-20px;
+    padding:3px 20px;
     overflow-x:auto;-webkit-overflow-scrolling:touch;
-    scrollbar-width:none;justify-content:flex-start;
+    scrollbar-width:none;
+    border-radius:0;border:none;background:none;
+    justify-content:flex-start;
   }
-  .prog-type-tabs::-webkit-scrollbar{display:none;}
-  .ptt{flex:0 0 auto;padding:8px 16px;font-size:12px;}
+  .prog-type-tabs::-webkit-scrollbar,
+  .variant-row::-webkit-scrollbar{display:none;}
+  /* Pill-utseendet flyttas till knapparna i stället för raden */
+  .prog-type-tabs .ptt,
+  .variant-row .imt{
+    flex:0 0 auto;font-size:12px;padding:9px 15px;
+    background:var(--ink3);border:1px solid var(--ink4);
+    border-radius:100px;white-space:nowrap;
+  }
+  .prog-type-tabs .ptt.active,
+  .variant-row .imt.active{
+    background:var(--lime);color:var(--ink);border-color:var(--lime);
+  }
+  /* Spacer i slutet ger luft efter sista knappen */
+  .prog-type-tabs::after,
+  .variant-row::after{content:"";flex:0 0 4px;}
 }
 
 
@@ -1034,7 +1057,7 @@ footer{
   </div>
 
   <!-- INTENSITY TOGGLE -->
-  <div class="input-mode-toggle" style="margin-bottom:8px;">
+  <div class="input-mode-toggle variant-row" style="margin-bottom:8px;">
     <button class="imt active" id="int-full" onclick="setIntensity(&#39;full&#39;)" data-i18n="int_full">🏋️ Full</button>
     <button class="imt" id="int-light" onclick="setIntensity(&#39;light&#39;)" data-i18n="int_light">🥂 Light – för latmaskar &amp; glaslyftare</button>
     <button class="imt" id="int-bb" onclick="setProgType(&#39;breakingbad&#39;)"><span id="bb-tab-label">📺 Chilla galet</span></button>
