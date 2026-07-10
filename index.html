@@ -565,6 +565,25 @@ footer{
 }
 @media(max-width:640px){footer{padding:24px 20px;}}
 .footer-logo{font-family:var(--bb);font-size:15px;color:var(--lime);letter-spacing:0.06em;}
+.ls-step{
+  width:26px;height:32px;flex-shrink:0;
+  background:var(--ink3);border:1px solid var(--ink4);
+  border-radius:7px;color:var(--dust);
+  font-size:15px;font-weight:600;line-height:1;
+  cursor:pointer;transition:all 0.12s;
+  display:flex;align-items:center;justify-content:center;
+  user-select:none;
+}
+.ls-step:active{background:var(--lime);color:var(--ink);transform:scale(0.94);}
+.qual-card{border-color:rgba(203,255,77,0.25);}
+.qual-row{padding:8px 0 2px;border-top:1px solid var(--ink3);margin-top:8px;}
+.qual-row:first-of-type{border-top:none;margin-top:4px;}
+.qual-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;}
+.qual-name{font-size:12px;font-weight:600;color:var(--cream);}
+.qual-lim{font-family:var(--bb);font-size:17px;color:var(--cream);}
+.qual-status{font-family:var(--mono);font-size:9px;color:var(--dust);margin-top:4px;letter-spacing:0.04em;}
+.qual-status.ok{color:var(--lime);}
+.qual-note{font-family:var(--mono);font-size:9px;color:var(--dust2);margin-top:12px;padding-top:8px;border-top:1px solid var(--ink3);line-height:1.6;}
 .bb-ep-row{
   display:flex;align-items:center;justify-content:space-between;
   padding:7px 0;border-top:1px solid var(--ink3);gap:8px;
@@ -2321,7 +2340,7 @@ const T = {
     rank_first: '🥇 Du toppar listan i Sverige!',
     rank_goal_first: (kg,u,val) => `<strong>+${kg} ${u}</strong> till förstaplatsen — där krävs ${val} ${u}`,
     rank_outside: (val,u) => `Sist på listan har ${val} ${u} – du är med så fort du tävlar!`,
-    rank_weak: '💡 störst potential',
+    rank_weak: '📉 lägst rankad av dina lyft',
     rank_lift_names: ['Knäböj','Bänkpress','Marklyft','Totalt'],
     log_eyebrow: 'Träningslogg',
     log_title: 'Logga <span>järnet</span>',
@@ -2401,6 +2420,10 @@ const T = {
     prog_edit_locked: 'redigeras ej',
     log_exlib: ['Knäböj','Bänkpress','Marklyft','Pausböj','Pausbänk','Stoppmark','Frontböj','Böjrodd','Militärpress','Hantelpress','Chins','Dips','Rumänsk marklyft','Benpress','Latsdrag'],
     rank_note: 'Baserat på tävlingsresultat registrerade hos Svenska Styrkelyftförbundet i år (via data.styrkelyft.se). Kom ihåg att rankingens lyft är gjorda under betydligt tuffare betingelser än på gymmet: godkänt djup i böjen, paus på bröstet i bänken, domarbedömning, invägning och nio bedömda försök under en och samma dag. Ett tränings-PB brukar därför motsvara något mindre på tävlingsflaket – jämförelsen visar var dina siffror skulle hamna om du tävlade in dem. Data cachas i 12 timmar.',
+    qual_title: (season) => `Kvalgränser ${season}`,
+    qual_cleared: (d, u) => `Klarad – med ${d} ${u} marginal`,
+    qual_left: (d, u) => `${d} ${u} kvar till gränsen`,
+    qual_note: 'Kvalgränser gäller totalresultat på sanktionerad tävling (klassiskt). Gränserna revideras årligen – dubbelkolla alltid mot styrkelyft.se och ditt distrikt.',
     glossary: {
       'TNG': 'Touch and go – stången nuddar bröstet men stannar inte',
       'AMRAP': 'As Many Reps As Possible – kör så många reps du kan',
@@ -2486,7 +2509,7 @@ const T = {
     rank_first: '🥇 You top the Swedish list!',
     rank_goal_first: (kg,u,val) => `<strong>+${kg} ${u}</strong> to take first place — it requires ${val} ${u}`,
     rank_outside: (val,u) => `Last on the list has ${val} ${u} – you are on it as soon as you compete!`,
-    rank_weak: '💡 biggest upside',
+    rank_weak: '📉 lowest ranked of your lifts',
     rank_lift_names: ['Squat','Bench press','Deadlift','Total'],
     log_eyebrow: 'Training log',
     log_title: 'Log the <span>iron</span>',
@@ -2566,6 +2589,10 @@ const T = {
     prog_edit_locked: 'not editable',
     log_exlib: ['Squat','Bench press','Deadlift','Pause squat','Pause bench','Deficit deadlift','Front squat','Barbell row','Overhead press','DB press','Chin-ups','Dips','Romanian deadlift','Leg press','Lat pulldown'],
     rank_note: 'Based on competition results registered with the Swedish Powerlifting Federation this year (via data.styrkelyft.se). Keep in mind that ranking lifts are performed under far tougher conditions than in the gym: judged depth in the squat, a pause on the chest in the bench, weigh-ins and nine judged attempts in a single day. A gym PB usually translates to a bit less on the platform – the comparison shows where your numbers would land if you competed them. Data is cached for 12 hours.',
+    qual_title: (season) => `Qualification totals ${season}`,
+    qual_cleared: (d, u) => `Qualified – by ${d} ${u}`,
+    qual_left: (d, u) => `${d} ${u} to go`,
+    qual_note: 'Qualification totals apply to sanctioned competition results (classic). Limits are revised yearly – always double-check styrkelyft.se and your district.',
     glossary: {
       'TNG': 'Touch and go – the bar touches the chest but doesn\'t stop',
       'AMRAP': 'As Many Reps As Possible – do as many reps as you can',
@@ -2853,6 +2880,80 @@ function rkg(v){
   return n.toLocaleString(currentLang === 'sv' ? 'sv-SE' : 'en-US');
 }
 
+// ══════════════════════════════════════════════════════════════════
+// KVALGRÄNSER – SM Klassisk Styrkelyft (TOTALT i kg)
+// ─────────────────────────────────────────────────────────────────
+// Källa: SSF:s officiella kvaltabell "Klassisk Styrkelyft 2026".
+// 2027 års gränser för U/J/V är identiska; senior 2027 ej fastställd.
+// Ålderskoder matchar SSF-databasen: SJ=Ungdom, J=Junior, S=Senior,
+// M1=Vet 40+, M2=Vet 50+, M3=Vet 60+, M4=Vet 70+.
+// Framtida nivåer (DM, Svealandsmästerskapen, Bänk-SM) läggs till som
+// nya event i listan nedan när tabellerna finns.
+// ══════════════════════════════════════════════════════════════════
+const QUAL_LIMITS = {
+  season: '2026',
+  events: [
+    {
+      id:'sm', sv:'SM · Klassisk SL', en:'Swedish Nationals · Classic PL',
+      data: {
+        M: {
+          SJ: { '-53':270, '-59':340, '-66':420, '-74':492.5, '-83':520, '-93':545, '-105':550, '-120':555, '+120':560 },
+          J:  { '-53':320, '-59':360, '-66':440, '-74':540, '-83':625, '-93':660, '-105':665, '-120':670, '+120':675 },
+          S:  { '-59':400, '-66':485, '-74':570, '-83':675, '-93':712.5, '-105':730, '-120':750, '+120':760 },
+          M1: { '-59':300, '-66':335, '-74':365, '-83':470, '-93':550, '-105':560, '-120':570, '+120':580 },
+          M2: { '-59':295, '-66':330, '-74':360, '-83':405, '-93':455, '-105':465, '-120':470, '+120':480 },
+          M3: { '-59':272.5, '-66':300, '-74':327.5, '-83':355, '-93':377.5, '-105':395, '-120':407.5, '+120':417.5 },
+          M4: { '-59':262.5, '-66':290, '-74':320, '-83':340, '-93':360, '-105':380, '-120':400, '+120':410 },
+        },
+        K: {
+          SJ: { '-43':150, '-47':170, '-52':200, '-57':240, '-63':290, '-69':305, '-76':310, '-84':315, '+84':320 },
+          J:  { '-43':180, '-47':200, '-52':250, '-57':295, '-63':335, '-69':360, '-76':365, '-84':375, '+84':385 },
+          S:  { '-47':260, '-52':300, '-57':350, '-63':390, '-69':415, '-76':425, '-84':440, '+84':445 },
+          M1: { '-47':200, '-52':225, '-57':250, '-63':275, '-69':300, '-76':305, '-84':320, '+84':325 },
+          M2: { '-47':190, '-52':200, '-57':225, '-63':250, '-69':275, '-76':290, '-84':300, '+84':310 },
+          M3: { '-47':170, '-52':185, '-57':200, '-63':215, '-69':230, '-76':245, '-84':260, '+84':270 },
+          M4: { '-47':160, '-52':175, '-57':190, '-63':205, '-69':220, '-76':235, '-84':250, '+84':260 },
+        },
+      },
+    },
+  ],
+};
+const QUAL_AGE_LABELS = {
+  sv: { SJ:'Ungdom', J:'Junior', S:'Senior', M1:'Vet 40+', M2:'Vet 50+', M3:'Vet 60+', M4:'Vet 70+' },
+  en: { SJ:'Sub-junior', J:'Junior', S:'Senior', M1:'Masters 40+', M2:'Masters 50+', M3:'Masters 60+', M4:'Masters 70+' },
+};
+
+function renderQualLimits(clsObj, totalKg, ageCode){
+  if(!clsObj || !totalKg) return '';
+  const clsKey = String(clsObj.name).replace(/\s|kg/gi,'');
+  // Utan vald ålderskategori jämförs mot senior (öppna SM)
+  const age = ageCode || 'S';
+  const ageLabel = (QUAL_AGE_LABELS[currentLang] || QUAL_AGE_LABELS.sv)[age] || age;
+  const rows = [];
+  QUAL_LIMITS.events.forEach(ev => {
+    const lim = ev.data?.[clsObj.gender]?.[age]?.[clsKey];
+    if(lim == null) return;
+    const cleared = totalKg >= lim;
+    const diff = Math.abs(totalKg - lim);
+    const fill = Math.min(100, Math.max(4, totalKg / lim * 100));
+    const label = (currentLang === 'sv' ? ev.sv : ev.en) + ' · ' + ageLabel;
+    const status = cleared
+      ? t('qual_cleared', rkg(diff), unitLabel())
+      : t('qual_left', rkg(diff), unitLabel());
+    rows.push(`<div class="qual-row">
+      <div class="qual-head"><span class="qual-name">${label}</span><span class="qual-lim">${rkg(lim)} ${unitLabel()}</span></div>
+      <div class="rlc-bar"><div class="rlc-fill" data-fill="${fill}" style="${cleared?'background:var(--lime)':''}"></div></div>
+      <div class="qual-status${cleared?' ok':''}">${cleared?'✓ ':''}${status}</div>
+    </div>`);
+  });
+  if(rows.length === 0) return '';
+  return `<div class="rank-lift-card qual-card" style="animation-delay:0.3s">
+    <div class="rlc-head"><span class="rlc-name">🎯 ${t('qual_title', QUAL_LIMITS.season)}</span></div>
+    ${rows.join('')}
+    <div class="qual-note">${t('qual_note')}</div>
+  </div>`;
+}
+
 function renderRanking(ctx){
   const { data, lifts, wc, ageCode } = ctx;
   const out = document.getElementById('rank-results');
@@ -2934,6 +3035,8 @@ function renderRanking(ctx){
     </div>`;
   });
 
+  html += renderQualLimits(clsObj, lifts.total, ageCode);
+
   out.innerHTML = html;
   const rankNote = document.getElementById('rank-note');
   rankNote.textContent = t('rank_note');
@@ -3011,8 +3114,22 @@ function newSession(name, exList){
   activeSession = { start: Date.now(), name, ex: exList };
   saveActive();
   switchLogTab(0, null);
+  showTimerFab();
   document.getElementById('log-section').scrollIntoView({behavior:'smooth', block:'start'});
 }
+
+// Visa vilotimern (FAB) – används både av program och logg
+function showTimerFab(){
+  const fab = document.getElementById('fab-timer');
+  if(fab && fab.style.display !== 'flex'){
+    fab.style.display = 'flex';
+    const cd = document.getElementById('timer-countdown');
+    if(cd && !globalTimerInterval) cd.textContent = formatTime(timerMinutes*60);
+  }
+}
+// Om ett aktivt pass fanns sparat sedan tidigare: visa timern direkt
+window.addEventListener('DOMContentLoaded', ()=>{ if(activeSession) showTimerFab(); });
+
 
 function copySelectedWorkout(){
   const prog = document.getElementById('log-copy-prog');
@@ -3101,9 +3218,9 @@ function renderSessionPanel(){
     e.sets.forEach((s, si)=>{
       h += `<div class="ls-row${s.done?' done':''}" id="lsr-${ei}-${si}">
         <span class="ls-num">${si+1}</span>
-        <input class="ls-kg" type="number" inputmode="decimal" step="0.5" min="0" value="${s.kg===''?'':s.kg}" placeholder="kg" oninput="onLogSetInput(${ei},${si},'kg',this.value)">
+        <button class="ls-step" onclick="stepLogKg(${ei},${si},-2.5)">−</button><input class="ls-kg" type="number" inputmode="decimal" step="0.5" min="0" value="${s.kg===''?'':s.kg}" placeholder="kg" oninput="onLogSetInput(${ei},${si},'kg',this.value)"><button class="ls-step" onclick="stepLogKg(${ei},${si},2.5)">+</button>
         <span class="ls-x">×</span>
-        <input class="ls-reps" type="number" inputmode="numeric" min="0" value="${s.reps===''?'':s.reps}" placeholder="reps" oninput="onLogSetInput(${ei},${si},'reps',this.value)">
+        <button class="ls-step" onclick="stepLogReps(${ei},${si},-1)">−</button><input class="ls-reps" type="number" inputmode="numeric" min="0" value="${s.reps===''?'':s.reps}" placeholder="reps" oninput="onLogSetInput(${ei},${si},'reps',this.value)"><button class="ls-step" onclick="stepLogReps(${ei},${si},1)">+</button>
         <button class="ls-done" onclick="toggleLogSet(${ei},${si})">✓</button>
         <button class="ls-del" onclick="removeLogSet(${ei},${si})">✕</button>
         <span class="ls-e1rm" id="lse-${ei}-${si}">${s.kg>0&&s.reps>0?'e1rm '+rkg(Math.round(epley(s.kg,s.reps)*2)/2):''}</span>
@@ -3149,6 +3266,34 @@ function nextPlannedKg(ei, si){
     }
   }
   return null;
+}
+
+function stepLogKg(ei, si, delta){
+  const s = activeSession.ex[ei].sets[si];
+  const cur = parseFloat(s.kg) || 0;
+  const next = Math.max(0, Math.round((cur + delta) * 4) / 4);
+  s.kg = next;
+  const row = document.getElementById(`lsr-${ei}-${si}`);
+  const inp = row ? row.querySelector('.ls-kg') : null;
+  if(inp) inp.value = next;
+  const e1 = document.getElementById(`lse-${ei}-${si}`);
+  if(e1) e1.textContent = (s.kg>0 && s.reps>0) ? 'e1rm '+rkg(Math.round(epley(s.kg,s.reps)*2)/2) : '';
+  saveActive();
+  if(navigator.vibrate) navigator.vibrate(8);
+}
+
+function stepLogReps(ei, si, delta){
+  const s = activeSession.ex[ei].sets[si];
+  const cur = parseInt(s.reps) || 0;
+  const next = Math.max(0, cur + delta);
+  s.reps = next;
+  const row = document.getElementById(`lsr-${ei}-${si}`);
+  const inp = row ? row.querySelector('.ls-reps') : null;
+  if(inp) inp.value = next;
+  const e1 = document.getElementById(`lse-${ei}-${si}`);
+  if(e1) e1.textContent = (s.kg>0 && s.reps>0) ? 'e1rm '+rkg(Math.round(epley(s.kg,s.reps)*2)/2) : '';
+  saveActive();
+  if(navigator.vibrate) navigator.vibrate(8);
 }
 
 function toggleLogSet(ei, si){
@@ -3343,7 +3488,7 @@ function parseCSV(text, delim){
 }
 
 const CSV_ALIASES = {
-  date:     ['date','datum','workout date','start time','time','startdatum'],
+  date:     ['date','datum','workout date','start time','start','time','startdatum'],
   workout:  ['workout name','workout','name','pass','träningspass','routine','title','workoutname'],
   exercise: ['exercise name','exercise','övning','exercise_name','exercisename','lift'],
   weight:   ['weight (kg)','weight(kg)','weight','kg','vikt','vikt (kg)','load','weight (lbs)','weight(lbs)','lbs'],
@@ -3398,8 +3543,13 @@ function importCSV(text){
     let kg = cols.weight !== -1 ? csvNum(r[cols.weight]) : 0;
     if(isLbs && kg > 0) kg = Math.round(kg / LBS_PER_KG * 100) / 100;
     const rawDate = String(r[cols.date] ?? '').trim();
-    let d = new Date(rawDate.replace(' ', 'T'));
-    if(isNaN(d)) d = new Date(rawDate.slice(0,10));
+    let d;
+    if(/^\d{12,}$/.test(rawDate)){ d = new Date(Number(rawDate)); }        // epoch ms (StrengthLog)
+    else if(/^\d{9,11}$/.test(rawDate)){ d = new Date(Number(rawDate)*1000); } // epoch s
+    else {
+      d = new Date(rawDate.replace(' ', 'T'));
+      if(isNaN(d)) d = new Date(rawDate.slice(0,10));
+    }
     if(isNaN(d)) continue;
     const wName = cols.workout !== -1 ? String(r[cols.workout] ?? '').trim() : '';
     const key = d.toISOString().slice(0,10) + '|' + wName;
