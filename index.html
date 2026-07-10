@@ -575,6 +575,108 @@ footer{
   user-select:none;
 }
 .ls-step:active{background:var(--lime);color:var(--ink);transform:scale(0.94);}
+/* ── BOTTENNAV ── */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:250;
+  display:flex;justify-content:space-around;align-items:stretch;
+  background:rgba(16,16,14,0.92);backdrop-filter:blur(14px);
+  border-top:1px solid var(--ink3);
+  padding:6px 8px calc(6px + env(safe-area-inset-bottom));
+}
+body.light-mode .bottom-nav{background:rgba(248,246,240,0.92);border-top-color:rgba(0,0,0,0.08);}
+.bn-btn{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+  background:none;border:none;cursor:pointer;padding:6px 4px;
+  border-radius:12px;position:relative;transition:all 0.15s;
+}
+.bn-ico{font-size:19px;line-height:1;filter:grayscale(1) opacity(0.55);transition:filter 0.15s;}
+.bn-label{font-family:var(--mono);font-size:9px;letter-spacing:0.08em;color:var(--dust2);text-transform:uppercase;transition:color 0.15s;}
+.bn-btn.active .bn-ico{filter:none;}
+.bn-btn.active .bn-label{color:var(--lime);}
+.bn-dot{
+  position:absolute;top:4px;right:calc(50% - 16px);
+  width:7px;height:7px;border-radius:50%;background:var(--lime);
+  display:none;box-shadow:0 0 6px rgba(203,255,77,0.8);
+}
+.bn-dot.on{display:block;}
+body{padding-bottom:74px;}
+.fab-timer{bottom:86px!important;}
+
+/* ── MÅLVY ── */
+.goals-section{display:none;padding:32px 24px 60px;max-width:820px;margin:0 auto;}
+.goal-card{
+  background:var(--ink2);border:1px solid var(--ink3);border-radius:16px;
+  padding:18px;margin-bottom:12px;
+}
+.goal-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:4px;}
+.goal-name{font-family:var(--bb);font-size:20px;color:var(--cream);letter-spacing:0.03em;}
+.goal-target-lbl{font-family:var(--bb);font-size:20px;color:var(--lime);}
+.goal-del{background:none;border:none;color:var(--dust2);cursor:pointer;font-size:14px;padding:2px 6px;transition:color 0.15s;}
+.goal-del:hover{color:#ff6b6b;}
+.goal-bar{height:10px;border-radius:99px;background:var(--ink3);overflow:hidden;margin:10px 0 8px;}
+.goal-bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,rgba(203,255,77,0.5),var(--lime));transition:width 0.6s ease;min-width:4px;}
+.goal-bar-fill.done{background:var(--lime);}
+.goal-stats{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:8px;}
+.goal-stat{display:flex;flex-direction:column;gap:1px;}
+.goal-stat-v{font-family:var(--bb);font-size:16px;color:var(--cream);}
+.goal-stat-v.lime{color:var(--lime);}
+.goal-stat-v.warn{color:#ffaa44;}
+.goal-stat-l{font-family:var(--mono);font-size:8px;color:var(--dust2);letter-spacing:0.08em;text-transform:uppercase;}
+.goal-deadline-chip{
+  font-family:var(--mono);font-size:9px;padding:3px 9px;border-radius:99px;
+  border:1px solid var(--ink4);color:var(--dust);letter-spacing:0.05em;
+}
+.goal-deadline-chip.ok{border-color:rgba(203,255,77,0.4);color:var(--lime);}
+.goal-deadline-chip.late{border-color:rgba(255,170,68,0.4);color:#ffaa44;}
+.goal-empty{font-family:var(--mono);font-size:11px;color:var(--dust2);text-align:center;padding:28px 12px;letter-spacing:0.05em;}
+.goal-add-card{
+  background:var(--ink2);border:1px dashed var(--ink4);border-radius:16px;
+  padding:18px;margin-top:18px;
+}
+.goal-add-title{font-family:var(--bb);font-size:17px;color:var(--cream);margin-bottom:12px;letter-spacing:0.04em;}
+.goal-add-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+.goal-add-row select,.goal-add-row input{
+  flex:1;min-width:110px;background:var(--ink3);border:1px solid var(--ink4);
+  border-radius:9px;color:var(--cream);font-family:var(--sg);font-size:13px;
+  padding:9px 10px;outline:none;
+}
+.goal-add-btn,.goal-sm-btn{
+  width:100%;font-family:var(--bb);font-size:16px;letter-spacing:0.05em;
+  background:var(--lime);color:var(--ink);border:none;border-radius:10px;
+  padding:11px;cursor:pointer;transition:opacity 0.15s;
+}
+.goal-sm-btn{background:var(--ink3);color:var(--cream);border:1px solid var(--ink4);}
+.goal-add-btn:hover,.goal-sm-btn:hover{opacity:0.88;}
+.goal-sm-divider{
+  text-align:center;font-family:var(--mono);font-size:9px;color:var(--dust2);
+  letter-spacing:0.15em;text-transform:uppercase;margin:12px 0;
+}
+.goal-trend-note{font-family:var(--mono);font-size:9px;color:var(--dust2);margin-top:10px;letter-spacing:0.04em;line-height:1.6;}
+#rec-toast{
+  position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--lime);color:var(--ink);
+  font-family:var(--sg);font-size:13px;font-weight:700;
+  padding:12px 22px;border-radius:100px;
+  box-shadow:0 8px 32px rgba(203,255,77,0.45);
+  opacity:0;pointer-events:none;z-index:500;
+  transition:opacity 0.25s, transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis;
+}
+#rec-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.ls-rec{font-size:13px;flex-shrink:0;min-width:18px;text-align:center;}
+.rlc-best{
+  display:inline-block;font-family:var(--mono);font-size:9px;
+  color:var(--lime);border:1px solid rgba(203,255,77,0.4);
+  border-radius:99px;padding:2px 8px;margin-top:6px;letter-spacing:0.05em;
+}
+.st-records{margin-top:14px;}
+.st-rec-title{font-family:var(--bb);font-size:16px;color:var(--cream);letter-spacing:0.04em;margin-bottom:8px;}
+.st-rec-table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11px;}
+.st-rec-table th{color:var(--dust2);font-weight:500;text-align:right;padding:4px 8px;border-bottom:1px solid var(--ink3);letter-spacing:0.06em;font-size:9px;text-transform:uppercase;}
+.st-rec-table th:first-child, .st-rec-table td:first-child{text-align:left;}
+.st-rec-table td{color:var(--cream);text-align:right;padding:5px 8px;border-bottom:1px solid var(--ink3);}
+.st-rec-table td.rec-hl{color:var(--lime);font-weight:700;}
+.st-rec-table tr:last-child td{border-bottom:none;}
 .qual-card{border-color:rgba(203,255,77,0.25);}
 .qual-row{padding:8px 0 2px;border-top:1px solid var(--ink3);margin-top:8px;}
 .qual-row:first-of-type{border-top:none;margin-top:4px;}
@@ -606,7 +708,7 @@ footer{
 .print-title{display:none;font-family:sans-serif;font-size:28px;font-weight:700;padding:16px 0 4px;color:#111;}
 @media print{
   body{background:#fff!important;color:#111!important;}
-  .topbar,.hero,footer,.dl-btn,.week-tabs-bar,.input-mode-toggle,.prog-type-tabs,.fab-timer,.timer-sheet,.timer-overlay,.share-btn,#unit-toggle-wrap{display:none!important;}
+  .topbar,.hero,footer,.dl-btn,.week-tabs-bar,.input-mode-toggle,.prog-type-tabs,.fab-timer,.timer-sheet,.timer-overlay,.share-btn,#unit-toggle-wrap,.bottom-nav,.goals-section{display:none!important;}
   .prog-section{display:block!important;padding:0 16px;}
   .prog-top{padding:16px 0 10px;border-top:none;}
   .prog-heading{font-size:24px;color:#111;}
@@ -1243,6 +1345,7 @@ footer{
       </div>
       <canvas id="st-chart"></canvas>
       <div class="st-best" id="st-best"></div>
+      <div class="st-records" id="st-records"></div>
       <div class="log-empty" id="st-empty" style="display:none"></div>
     </div>
     <div class="log-panel" id="log-panel-3"></div>
@@ -1268,6 +1371,48 @@ footer{
     <div class="rank-note" id="rank-note" style="display:none"></div>
   </div>
 </section>
+
+<section class="goals-section" id="goals-section">
+  <div class="rank-card">
+    <div class="rank-eyebrow" id="goals-eyebrow">Mål · Takt · Prognos</div>
+    <h2 class="rank-title" id="goals-title">Dina <span>mål</span></h2>
+    <p class="rank-sub" id="goals-sub">Sätt mål per lyft eller total – appen räknar ut din form (bästa e1RM senaste 90 dagarna), hur du taktar och när du beräknas vara framme.</p>
+
+    <div id="goals-list"></div>
+
+    <div class="goal-add-card" id="goal-add-card">
+      <div class="goal-add-title" id="goal-add-title">＋ Nytt mål</div>
+      <div class="goal-add-row">
+        <select id="goal-lift">
+          <option value="s">Knäböj</option>
+          <option value="b">Bänkpress</option>
+          <option value="d">Marklyft</option>
+          <option value="t">Total</option>
+        </select>
+        <input type="number" id="goal-target" placeholder="Mål (kg)" inputmode="decimal" min="1"/>
+        <input type="date" id="goal-deadline" title="Deadline (valfritt)"/>
+      </div>
+      <button class="goal-add-btn" id="goal-add-btn" onclick="addGoal()">Lägg till mål</button>
+      <div class="goal-sm-divider" id="goal-sm-divider">eller</div>
+      <div class="goal-add-row">
+        <select id="goal-sm-event" onchange="populateSmGoalSelects()"></select>
+        <select id="goal-sm-gender" onchange="populateSmGoalSelects()"><option value="M">Herr</option><option value="K">Dam</option></select>
+      </div>
+      <div class="goal-add-row">
+        <select id="goal-sm-age" onchange="populateSmGoalSelects()"></select>
+        <select id="goal-sm-class"></select>
+      </div>
+      <button class="goal-sm-btn" id="goal-sm-btn" onclick="addSmGoal()">🎯 Skapa kvalmål</button>
+    </div>
+  </div>
+</section>
+
+<nav class="bottom-nav" id="bottom-nav">
+  <button class="bn-btn active" id="bn-program" onclick="switchView('program')"><span class="bn-ico">🏋️</span><span class="bn-label">Program</span></button>
+  <button class="bn-btn" id="bn-log" onclick="switchView('log')"><span class="bn-ico">📓</span><span class="bn-label">Logg</span><span class="bn-dot" id="bn-log-dot"></span></button>
+  <button class="bn-btn" id="bn-goals" onclick="switchView('goals')"><span class="bn-ico">🎯</span><span class="bn-label">Mål</span></button>
+  <button class="bn-btn" id="bn-rank" onclick="switchView('rank')"><span class="bn-ico">🏆</span><span class="bn-label">Ranking</span></button>
+</nav>
 
 <footer>
   <div class="footer-logo">Mirakelprogrammet</div>
@@ -1894,7 +2039,7 @@ function generate(){
     const out = document.getElementById('prog-output');
     document.getElementById('prog-summary').innerHTML = t('bb_summary');
     out.innerHTML = renderBBProgram();
-    sec.style.display = 'block';
+    sec.dataset.generated = '1'; sec.style.display = 'block';
     sec.scrollIntoView({behavior:'smooth', block:'start'});
     document.getElementById('fab-timer').style.display = 'flex';
     document.getElementById('timer-countdown').textContent = formatTime(timerMinutes*60);
@@ -1981,7 +2126,7 @@ function generate(){
   banner.innerHTML = `<div onclick="scrollToToday()" style="background:var(--lime-dim);border:1px solid rgba(203,255,77,0.2);border-radius:10px;padding:10px 16px;font-family:var(--mono);font-size:11px;color:var(--dust);">${t('today_banner', todayDisplay)}</div>`;
   banner.style.display = 'block';
 
-  sec.style.display = 'block';
+  sec.dataset.generated = '1'; sec.style.display = 'block';
   sec.scrollIntoView({behavior:'smooth', block:'start'});
   document.getElementById('fab-timer').style.display = 'flex';
   // Init timer display
@@ -2341,6 +2486,34 @@ const T = {
     rank_goal_first: (kg,u,val) => `<strong>+${kg} ${u}</strong> till förstaplatsen — där krävs ${val} ${u}`,
     rank_outside: (val,u) => `Sist på listan har ${val} ${u} – du är med så fort du tävlar!`,
     rank_weak: '📉 lägst rankad av dina lyft',
+    rank_best: '🏆 högst rankad av dina lyft',
+    nav_program: 'Program', nav_log: 'Logg', nav_goals: 'Mål', nav_rank: 'Ranking',
+    goals_eyebrow: 'Mål · Takt · Prognos',
+    goals_title: 'Dina <span>mål</span>',
+    goals_sub: 'Sätt mål per lyft eller total – appen räknar ut din form (bästa e1RM senaste 90 dagarna), hur du taktar och när du beräknas vara framme.',
+    goal_add_title: '＋ Nytt mål',
+    goal_add_btn: 'Lägg till mål',
+    goal_sm_btn: '🎯 Skapa kvalmål',
+    goal_sm_divider: 'eller',
+    goal_target_ph: 'Mål (kg)',
+    goal_fill_error: 'Fyll i en målvikt först!',
+    goal_sm_missing: 'Ingen kvalgräns hittades för det valet.',
+    goal_del_confirm: 'Ta bort målet?',
+    goal_empty: 'Inga mål ännu. Sätt ditt första nedan – t.ex. ett drömlyft eller SM-kval. 🎯',
+    goal_no_data: 'Ingen loggdata för det här lyftet ännu – logga några pass så börjar spårningen.',
+    goal_now: 'Nu (form)', goal_target: 'Mål', goal_left: 'Kvar',
+    goal_pace: 'Takt / 90 dgr', goal_eta: 'Prognos',
+    goal_trend_none: 'för lite data',
+    goal_reached: 'Uppnått! 🎉',
+    goal_no_positive: 'ingen ökning ännu',
+    goal_note: 'Form = bästa estimerade 1RM (Epley) senaste 90 dagarna ur loggen. Takt = förändring jämfört med förra 90-dagarsperioden. Prognosen antar samma takt framåt – lyft mer så går det fortare. 📈',
+    rec_pb_toast: (ex, kg, u, r) => `🏆 Nytt PB! ${ex} ${kg} ${u} × ${r}`,
+    rec_yb_toast: (ex, kg, u, r) => `📅 Nytt årsbästa! ${ex} ${kg} ${u} × ${r}`,
+    rec_title: '🏆 Rep-rekord',
+    rec_col_reps: 'Reps',
+    rec_col_pb: 'PB',
+    rec_col_yb: (y) => `ÅB ${y}`,
+    rec_empty: 'Inga rekord ännu för den här övningen.',
     rank_lift_names: ['Knäböj','Bänkpress','Marklyft','Totalt'],
     log_eyebrow: 'Träningslogg',
     log_title: 'Logga <span>järnet</span>',
@@ -2510,6 +2683,34 @@ const T = {
     rank_goal_first: (kg,u,val) => `<strong>+${kg} ${u}</strong> to take first place — it requires ${val} ${u}`,
     rank_outside: (val,u) => `Last on the list has ${val} ${u} – you are on it as soon as you compete!`,
     rank_weak: '📉 lowest ranked of your lifts',
+    rank_best: '🏆 highest ranked of your lifts',
+    nav_program: 'Program', nav_log: 'Log', nav_goals: 'Goals', nav_rank: 'Ranking',
+    goals_eyebrow: 'Goals · Pace · Projection',
+    goals_title: 'Your <span>goals</span>',
+    goals_sub: 'Set goals per lift or total – the app tracks your form (best e1RM last 90 days), your pace, and when you are projected to get there.',
+    goal_add_title: '＋ New goal',
+    goal_add_btn: 'Add goal',
+    goal_sm_btn: '🎯 Create qualification goal',
+    goal_sm_divider: 'or',
+    goal_target_ph: 'Target (kg)',
+    goal_fill_error: 'Enter a target weight first!',
+    goal_sm_missing: 'No qualification total found for that selection.',
+    goal_del_confirm: 'Delete this goal?',
+    goal_empty: 'No goals yet. Set your first one below – a dream lift or a Nationals qualification. 🎯',
+    goal_no_data: 'No log data for this lift yet – log some sessions to start tracking.',
+    goal_now: 'Now (form)', goal_target: 'Target', goal_left: 'To go',
+    goal_pace: 'Pace / 90 days', goal_eta: 'Projection',
+    goal_trend_none: 'not enough data',
+    goal_reached: 'Reached! 🎉',
+    goal_no_positive: 'no gain yet',
+    goal_note: 'Form = best estimated 1RM (Epley) from the last 90 days of your log. Pace = change vs the previous 90-day window. The projection assumes the same pace going forward – lift more and it moves closer. 📈',
+    rec_pb_toast: (ex, kg, u, r) => `🏆 New PB! ${ex} ${kg} ${u} × ${r}`,
+    rec_yb_toast: (ex, kg, u, r) => `📅 New year best! ${ex} ${kg} ${u} × ${r}`,
+    rec_title: '🏆 Rep records',
+    rec_col_reps: 'Reps',
+    rec_col_pb: 'PB',
+    rec_col_yb: (y) => `YB ${y}`,
+    rec_empty: 'No records yet for this exercise.',
     rank_lift_names: ['Squat','Bench press','Deadlift','Total'],
     log_eyebrow: 'Training log',
     log_title: 'Log the <span>iron</span>',
@@ -2621,7 +2822,28 @@ function toggleLang(){
   localStorage.setItem('lang', currentLang);
 }
 
+function applyLangGoalsNav(L){
+  const set = (id, key, html) => { const el = document.getElementById(id); if(el){ if(html) el.innerHTML = L[key]; else el.textContent = L[key]; } };
+  document.querySelector('#bn-program .bn-label').textContent = L.nav_program;
+  document.querySelector('#bn-log .bn-label').textContent = L.nav_log;
+  document.querySelector('#bn-goals .bn-label').textContent = L.nav_goals;
+  document.querySelector('#bn-rank .bn-label').textContent = L.nav_rank;
+  set('goals-eyebrow','goals_eyebrow'); set('goals-title','goals_title',true); set('goals-sub','goals_sub');
+  set('goal-add-title','goal_add_title'); set('goal-add-btn','goal_add_btn');
+  set('goal-sm-btn','goal_sm_btn'); set('goal-sm-divider','goal_sm_divider');
+  const tgt = document.getElementById('goal-target'); if(tgt) tgt.placeholder = L.goal_target_ph;
+  const liftSel = document.getElementById('goal-lift');
+  if(liftSel){
+    const names = currentLang==='sv' ? ['Knäböj','Bänkpress','Marklyft','Total'] : ['Squat','Bench press','Deadlift','Total'];
+    [...liftSel.options].forEach((o,i)=>o.textContent = names[i]);
+  }
+  const gSel = document.getElementById('goal-sm-gender');
+  if(gSel){ gSel.options[0].textContent = currentLang==='sv'?'Herr':'Men'; gSel.options[1].textContent = currentLang==='sv'?'Dam':'Women'; }
+  if(currentView === 'goals') renderGoals();
+}
+
 function applyLang(){
+  applyLangGoalsNav(T[currentLang]);
   const L = T[currentLang];
   // Static elements with data-i18n
   document.querySelectorAll('[data-i18n]').forEach(el=>{
@@ -2894,6 +3116,30 @@ const QUAL_LIMITS = {
   season: '2026',
   events: [
     {
+      // DM Östra Svealand 2027 – endast senior (klassiskt SL)
+      id:'dm', sv:'DM Ö. Svealand · Klassisk SL', en:'District Champs E. Svealand · Classic PL',
+      data: {
+        M: {
+          S: { '-59':300, '-66':365, '-74':442.5, '-83':495, '-93':560, '-105':562.5, '-120':565, '+120':570 },
+        },
+        K: {
+          S: { '-47':182.5, '-52':210, '-57':235, '-63':262.5, '-69':280, '-76':287.5, '-84':305, '+84':307.5 },
+        },
+      },
+    },
+    {
+      // Svealandsmästerskapen 2026 – endast senior (klassiskt SL)
+      id:'svealand', sv:'Svealandsmästerskapen · Klassisk SL', en:'Svealand Championships · Classic PL',
+      data: {
+        M: {
+          S: { '-59':315, '-66':365, '-74':450, '-83':565, '-93':610, '-105':635, '-120':637.5, '+120':645 },
+        },
+        K: {
+          S: { '-47':220, '-52':230, '-57':260, '-63':300, '-69':320, '-76':335, '-84':350, '+84':355 },
+        },
+      },
+    },
+    {
       id:'sm', sv:'SM · Klassisk SL', en:'Swedish Nationals · Classic PL',
       data: {
         M: {
@@ -3000,6 +3246,10 @@ function renderRanking(ctx){
   const spread = Math.max(...computed.slice(0,3).map(c=>c.ratio)) - Math.min(...computed.slice(0,3).map(c=>c.ratio));
   if(spread < 0.08) weakIdx = -1; // jämna lyft – ingen badge
 
+  // Högst rankade lyftet (inklusive totalen)
+  let bestIdx = -1, bestRatio = Infinity;
+  computed.forEach((c,i)=>{ if(c.rank <= c.nn && c.ratio < bestRatio){ bestRatio = c.ratio; bestIdx = i; } });
+
   let html = '';
   computed.forEach((c, i)=>{
     const isTotal = c.key === 'total';
@@ -3028,6 +3278,7 @@ function renderRanking(ctx){
 
     html += `<div class="rank-lift-card${isTotal?' total':''}" style="animation-delay:${i*0.07}s">
       ${i===weakIdx?`<div><span class="rlc-weak">${t('rank_weak')}</span></div>`:''}
+      ${i===bestIdx?`<div><span class="rlc-best">${t('rank_best')}</span></div>`:''}
       <div class="rlc-head"><span class="rlc-name">${c.name}</span><span class="rlc-val">${rkg(c.user)} ${ul}</span></div>
       <div class="rlc-place">${t('rank_place', c.rank, c.nn)} <span class="rlc-pct">${t('rank_top', pctTop)}</span></div>
       <div class="rlc-bar"><div class="rlc-fill" data-fill="${fill}"></div></div>
@@ -3080,8 +3331,10 @@ let statMetric = 'e1rm';
 let sessionTicker = null;
 
 function writeLogLocal(){ try{ localStorage.setItem(LOG_KEY, JSON.stringify(logData)); }catch(e){} }
-function saveLogData(){ writeLogLocal(); scheduleSync(); }
+function saveLogData(){ repRecordsCache = null; writeLogLocal(); scheduleSync(); }
 function saveActive(){
+  if(typeof updateLogDot === 'function') updateLogDot();
+
   try{
     if(activeSession) localStorage.setItem(ACTIVE_KEY, JSON.stringify(activeSession));
     else localStorage.removeItem(ACTIVE_KEY);
@@ -3115,7 +3368,7 @@ function newSession(name, exList){
   saveActive();
   switchLogTab(0, null);
   showTimerFab();
-  document.getElementById('log-section').scrollIntoView({behavior:'smooth', block:'start'});
+  switchView('log');
 }
 
 // Visa vilotimern (FAB) – används både av program och logg
@@ -3223,7 +3476,7 @@ function renderSessionPanel(){
         <button class="ls-step" onclick="stepLogReps(${ei},${si},-1)">−</button><input class="ls-reps" type="number" inputmode="numeric" min="0" value="${s.reps===''?'':s.reps}" placeholder="reps" oninput="onLogSetInput(${ei},${si},'reps',this.value)"><button class="ls-step" onclick="stepLogReps(${ei},${si},1)">+</button>
         <button class="ls-done" onclick="toggleLogSet(${ei},${si})">✓</button>
         <button class="ls-del" onclick="removeLogSet(${ei},${si})">✕</button>
-        <span class="ls-e1rm" id="lse-${ei}-${si}">${s.kg>0&&s.reps>0?'e1rm '+rkg(Math.round(epley(s.kg,s.reps)*2)/2):''}</span>
+        <span class="ls-e1rm" id="lse-${ei}-${si}">${s.kg>0&&s.reps>0?'e1rm '+rkg(Math.round(epley(s.kg,s.reps)*2)/2):''}</span><span class="ls-rec" id="lrec-${ei}-${si}">${s.rec==='pb'?'🏆':s.rec==='yb'?'📅':''}</span>
       </div>`;
     });
     h += `<button class="ls-addset" onclick="addLogSet(${ei})">${t('log_add_set')}</button></div>`;
@@ -3268,6 +3521,300 @@ function nextPlannedKg(ei, si){
   return null;
 }
 
+// ── VYVÄXLING (bottennav) ─────────────────────────────────────────
+let currentView = 'program';
+const VIEW_SECTIONS = {
+  program: ['.hero', '#prog-section'],
+  log:     ['#log-section'],
+  goals:   ['#goals-section'],
+  rank:    ['#rank-section'],
+};
+function switchView(v){
+  currentView = v;
+  Object.entries(VIEW_SECTIONS).forEach(([key, sels])=>{
+    sels.forEach(sel=>{
+      const el = document.querySelector(sel);
+      if(!el) return;
+      if(key === v){
+        // prog-section visas bara om ett program genererats
+        if(sel === '#prog-section' && !el.dataset.generated) el.style.display = 'none';
+        else el.style.display = 'block';
+      } else {
+        el.style.display = 'none';
+      }
+    });
+  });
+  document.querySelectorAll('.bn-btn').forEach(b=>b.classList.remove('active'));
+  const btn = document.getElementById('bn-' + v);
+  if(btn) btn.classList.add('active');
+  if(v === 'log') renderLogUI();
+  if(v === 'goals') renderGoals();
+  updateLogDot();
+  try{ localStorage.setItem('mp_view', v); }catch(e){}
+  window.scrollTo({top:0, behavior:'instant'});
+}
+function updateLogDot(){
+  const dot = document.getElementById('bn-log-dot');
+  if(dot) dot.classList.toggle('on', !!activeSession && currentView !== 'log');
+}
+window.addEventListener('DOMContentLoaded', ()=>{
+  let v = 'program';
+  try{ v = localStorage.getItem('mp_view') || 'program'; }catch(e){}
+  if(!VIEW_SECTIONS[v]) v = 'program';
+  switchView(v);
+});
+
+// ── MÅLSYSTEM ─────────────────────────────────────────────────────
+const GOALS_KEY = 'mp_goals_v1';
+let goals = [];
+try{ goals = JSON.parse(localStorage.getItem(GOALS_KEY) || '[]'); }catch(e){ goals = []; }
+function saveGoals(){ try{ localStorage.setItem(GOALS_KEY, JSON.stringify(goals)); }catch(e){} }
+
+const GOAL_LIFT_PATTERNS = {
+  s: /kn.böj|squat/i,
+  b: /bänk|bench/i,
+  d: /marklyft|deadlift/i,
+};
+function goalLiftName(k){
+  const L = { sv:{s:'Knäböj',b:'Bänkpress',d:'Marklyft',t:'Total'}, en:{s:'Squat',b:'Bench press',d:'Deadlift',t:'Total'} };
+  return (L[currentLang]||L.sv)[k];
+}
+
+// Bästa e1RM för ett lyft inom [from, to] (ms-epoch); null om ingen data
+function bestE1RMIn(liftKey, fromTs, toTs){
+  const pat = GOAL_LIFT_PATTERNS[liftKey];
+  let best = null;
+  logData.workouts.forEach(w=>{
+    const tm = new Date(w.date).getTime();
+    if(tm < fromTs || tm > toTs) return;
+    w.ex.forEach(e=>{
+      if(!pat.test(e.name)) return;
+      e.sets.forEach(s=>{
+        if(!(s.kg>0 && s.reps>0)) return;
+        const v = epley(s.kg, s.reps);
+        if(best === null || v > best) best = v;
+      });
+    });
+  });
+  return best;
+}
+// Nuvarande form: bästa e1RM senaste 90 dgr → fallback 365 → allt → PB-fältet
+function currentFormE1RM(liftKey){
+  const now = Date.now();
+  if(liftKey === 't'){
+    const parts = ['s','b','d'].map(k=>currentFormE1RM(k));
+    if(parts.some(p=>p==null)) return null;
+    return parts.reduce((a,b)=>a+b,0);
+  }
+  let v = bestE1RMIn(liftKey, now-90*86400000, now);
+  if(v == null) v = bestE1RMIn(liftKey, now-365*86400000, now);
+  if(v == null) v = bestE1RMIn(liftKey, 0, now);
+  if(v == null){
+    const inp = document.getElementById({s:'squat',b:'bench',d:'dead'}[liftKey]);
+    const pbv = inp ? parseFloat(inp.value) : NaN;
+    if(!isNaN(pbv) && pbv > 0) v = currentUnit==='lbs' ? pbv/LBS_PER_KG : pbv;
+  }
+  return v;
+}
+// Takt: jämför fönstret [180..90] dgr sedan med [90..0] → kg per 90 dgr
+function goalTrend(liftKey){
+  const now = Date.now();
+  const calc = (k) => {
+    const prev = bestE1RMIn(k, now-180*86400000, now-90*86400000);
+    const cur  = bestE1RMIn(k, now-90*86400000, now);
+    return (prev==null || cur==null) ? null : cur - prev;
+  };
+  if(liftKey === 't'){
+    const parts = ['s','b','d'].map(calc);
+    if(parts.some(p=>p==null)) return null;
+    return parts.reduce((a,b)=>a+b,0);
+  }
+  return calc(liftKey);
+}
+
+function addGoal(){
+  const lift = document.getElementById('goal-lift').value;
+  const target = parseFloat(document.getElementById('goal-target').value);
+  const deadline = document.getElementById('goal-deadline').value || null;
+  if(!target || target <= 0){ alert(t('goal_fill_error')); return; }
+  const targetKg = currentUnit==='lbs' ? target/LBS_PER_KG : target;
+  const start = currentFormE1RM(lift);
+  goals.push({ id: Date.now(), lift, target: targetKg, deadline, start, created: new Date().toISOString().slice(0,10) });
+  saveGoals();
+  document.getElementById('goal-target').value = '';
+  document.getElementById('goal-deadline').value = '';
+  renderGoals();
+  if(navigator.vibrate) navigator.vibrate(20);
+}
+
+function addSmGoal(){
+  const evId = document.getElementById('goal-sm-event').value;
+  const ev = QUAL_LIMITS.events.find(e=>e.id === evId);
+  const g = document.getElementById('goal-sm-gender').value;
+  const age = document.getElementById('goal-sm-age').value;
+  const cls = document.getElementById('goal-sm-class').value;
+  const lim = ev?.data?.[g]?.[age]?.[cls];
+  if(lim == null){ alert(t('goal_sm_missing')); return; }
+  const ageLabel = (QUAL_AGE_LABELS[currentLang]||QUAL_AGE_LABELS.sv)[age];
+  const evShort = (currentLang==='sv'?ev.sv:ev.en).split('·')[0].trim();
+  goals.push({ id: Date.now(), lift:'t', target: lim, deadline: null,
+    start: currentFormE1RM('t'),
+    label: `${evShort} ${cls} · ${ageLabel}`,
+    created: new Date().toISOString().slice(0,10) });
+  saveGoals();
+  renderGoals();
+  if(navigator.vibrate) navigator.vibrate(20);
+}
+
+function deleteGoal(id){
+  if(!confirm(t('goal_del_confirm'))) return;
+  goals = goals.filter(g=>g.id !== id);
+  saveGoals();
+  renderGoals();
+}
+
+function populateSmGoalSelects(){
+  const evSel = document.getElementById('goal-sm-event');
+  const prevEv = evSel.value;
+  evSel.innerHTML = QUAL_LIMITS.events.map(ev=>
+    `<option value="${ev.id}"${ev.id===prevEv?' selected':''}>${currentLang==='sv'?ev.sv:ev.en}</option>`).join('');
+  const ev = QUAL_LIMITS.events.find(e=>e.id === evSel.value) || QUAL_LIMITS.events[0];
+  const g = document.getElementById('goal-sm-gender').value;
+  const ageSel = document.getElementById('goal-sm-age');
+  const clsSel = document.getElementById('goal-sm-class');
+  const labels = QUAL_AGE_LABELS[currentLang] || QUAL_AGE_LABELS.sv;
+  const data = ev?.data?.[g] || {};
+  const prevAge = ageSel.value;
+  ageSel.innerHTML = Object.keys(data).map(a=>`<option value="${a}"${a===prevAge?' selected':''}>${labels[a]||a}</option>`).join('');
+  const age = ageSel.value || Object.keys(data)[0];
+  const prevCls = clsSel.value;
+  clsSel.innerHTML = Object.keys(data[age]||{}).map(k=>`<option value="${k}"${k===prevCls?' selected':''}>${k} kg</option>`).join('');
+}
+
+function renderGoals(){
+  populateSmGoalSelects();
+  const list = document.getElementById('goals-list');
+  if(!list) return;
+  if(goals.length === 0){
+    list.innerHTML = `<div class="goal-empty">${t('goal_empty')}</div>`;
+    return;
+  }
+  const ul = unitLabel();
+  const disp = kg => currentUnit==='lbs' ? rndLbs(kg*LBS_PER_KG) : Math.round(kg*2)/2;
+  list.innerHTML = goals.map(g=>{
+    const cur = currentFormE1RM(g.lift);
+    const name = g.label || `${goalLiftName(g.lift)} ${disp(g.target)} ${ul}`;
+    if(cur == null){
+      return `<div class="goal-card">
+        <div class="goal-head"><span class="goal-name">${escapeHtml(name)}</span>
+          <span style="display:flex;align-items:center;gap:6px;"><span class="goal-target-lbl">${disp(g.target)} ${ul}</span>
+          <button class="goal-del" onclick="deleteGoal(${g.id})">✕</button></span></div>
+        <div class="goal-empty" style="padding:10px 0;">${t('goal_no_data')}</div>
+      </div>`;
+    }
+    const done = cur >= g.target;
+    const start = (g.start != null && g.start < g.target) ? g.start : Math.min(cur, g.target*0.5);
+    const pct = done ? 100 : Math.max(2, Math.min(100, (cur-start)/(g.target-start)*100));
+    const left = Math.max(0, g.target - cur);
+    const trend = goalTrend(g.lift);
+    let trendTxt = t('goal_trend_none'), projTxt = '–', projClass = '';
+    if(trend != null){
+      const perMonth = trend / 3;
+      trendTxt = `${trend>=0?'+':''}${Math.round(trend*2)/2} ${ul}`;
+      if(done){ projTxt = t('goal_reached'); projClass = 'lime'; }
+      else if(perMonth > 0.1){
+        const months = left / perMonth;
+        const d = new Date(); d.setMonth(d.getMonth() + Math.ceil(months));
+        projTxt = '≈ ' + d.toLocaleDateString(currentLang==='sv'?'sv-SE':'en-US', {month:'short', year:'numeric'});
+        if(g.deadline){ projClass = (d <= new Date(g.deadline)) ? 'lime' : 'warn'; }
+      } else { projTxt = t('goal_no_positive'); projClass = 'warn'; }
+    }
+    let deadlineChip = '';
+    if(g.deadline){
+      const dl = new Date(g.deadline);
+      const late = !done && projClass === 'warn';
+      deadlineChip = `<span class="goal-deadline-chip${done||projClass==='lime'?' ok':late?' late':''}">📅 ${dl.toLocaleDateString(currentLang==='sv'?'sv-SE':'en-US',{day:'numeric',month:'short',year:'numeric'})}</span>`;
+    }
+    return `<div class="goal-card">
+      <div class="goal-head">
+        <span class="goal-name">${done?'✓ ':''}${escapeHtml(name)}</span>
+        <span style="display:flex;align-items:center;gap:6px;">${deadlineChip}
+        <button class="goal-del" onclick="deleteGoal(${g.id})">✕</button></span>
+      </div>
+      <div class="goal-bar"><div class="goal-bar-fill${done?' done':''}" style="width:${pct}%"></div></div>
+      <div class="goal-stats">
+        <div class="goal-stat"><span class="goal-stat-v${done?' lime':''}">${disp(cur)} ${ul}</span><span class="goal-stat-l">${t('goal_now')}</span></div>
+        <div class="goal-stat"><span class="goal-stat-v">${disp(g.target)} ${ul}</span><span class="goal-stat-l">${t('goal_target')}</span></div>
+        <div class="goal-stat"><span class="goal-stat-v${done?' lime':''}">${done?'0':disp(left)} ${ul}</span><span class="goal-stat-l">${t('goal_left')}</span></div>
+        <div class="goal-stat"><span class="goal-stat-v">${trendTxt}</span><span class="goal-stat-l">${t('goal_pace')}</span></div>
+        <div class="goal-stat"><span class="goal-stat-v${projClass?' '+projClass:''}">${projTxt}</span><span class="goal-stat-l">${t('goal_eta')}</span></div>
+      </div>
+    </div>`;
+  }).join('');
+  list.innerHTML += `<div class="goal-trend-note">${t('goal_note')}</div>`;
+}
+
+// ── REP-REKORD (PB & ÅB per övning + repsantal) ───────────────────
+// Bygger på hela historiken inkl. importerad data. PB = tyngsta vikten
+// någonsin på exakt N reps; ÅB = tyngsta i år.
+let repRecordsCache = null;
+function buildRepRecords(){
+  if(repRecordsCache) return repRecordsCache;
+  const year = new Date().getFullYear();
+  const rec = {};
+  logData.workouts.forEach(w => {
+    const wy = new Date(w.date).getFullYear();
+    w.ex.forEach(e => {
+      if(!rec[e.name]) rec[e.name] = {};
+      e.sets.forEach(s => {
+        if(!(s.kg > 0 && s.reps > 0)) return;
+        const r = rec[e.name][s.reps] || (rec[e.name][s.reps] = { pb:0, pbDate:null, yb:0, ybDate:null });
+        if(s.kg > r.pb){ r.pb = s.kg; r.pbDate = w.date; }
+        if(wy === year && s.kg > r.yb){ r.yb = s.kg; r.ybDate = w.date; }
+      });
+    });
+  });
+  repRecordsCache = rec;
+  return rec;
+}
+
+function checkSetRecord(exName, kg, reps, ei, si){
+  if(!(kg > 0 && reps > 0)) return null;
+  const rec = buildRepRecords();
+  let pb = rec[exName]?.[reps]?.pb ?? 0;
+  let yb = rec[exName]?.[reps]?.yb ?? 0;
+  // Räkna även in tidigare avbockade set i pågående pass
+  activeSession.ex.forEach((e, i) => {
+    if(e.name !== exName) return;
+    e.sets.forEach((s, j) => {
+      if(i === ei && j === si) return;
+      if(s.done && s.reps === reps && s.kg > 0){
+        if(s.kg > pb) pb = s.kg;
+        if(s.kg > yb) yb = s.kg;
+      }
+    });
+  });
+  if(kg > pb) return 'pb';
+  if(kg > yb) return 'yb';
+  return null;
+}
+
+let recToastTimer = null;
+function showRecordToast(type, exName, kg, reps){
+  let el = document.getElementById('rec-toast');
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'rec-toast';
+    document.body.appendChild(el);
+  }
+  el.textContent = type === 'pb'
+    ? t('rec_pb_toast', exName, rkg(kg), unitLabel(), reps)
+    : t('rec_yb_toast', exName, rkg(kg), unitLabel(), reps);
+  el.classList.add('show');
+  clearTimeout(recToastTimer);
+  recToastTimer = setTimeout(()=>el.classList.remove('show'), 3200);
+}
+
 function stepLogKg(ei, si, delta){
   const s = activeSession.ex[ei].sets[si];
   const cur = parseFloat(s.kg) || 0;
@@ -3307,6 +3854,20 @@ function toggleLogSet(ei, si){
     if(bbKg > 0){ currentBarbellKg = bbKg; drawBarbell(bbKg); }
     if(autoTimer) startGlobalTimer();
     if(navigator.vibrate) navigator.vibrate(15);
+    // PB/ÅB-detektion
+    const recType = checkSetRecord(activeSession.ex[ei].name, parseFloat(s.kg), parseInt(s.reps), ei, si);
+    if(recType){
+      s.rec = recType;
+      showRecordToast(recType, activeSession.ex[ei].name, parseFloat(s.kg), parseInt(s.reps));
+      const badge = document.getElementById(`lrec-${ei}-${si}`);
+      if(badge) badge.textContent = recType === 'pb' ? '🏆' : '📅';
+      if(recType === 'pb' && row) confettiBurst(row);
+      if(navigator.vibrate) navigator.vibrate([50,40,80]);
+    }
+  } else {
+    delete s.rec;
+    const badge = document.getElementById(`lrec-${ei}-${si}`);
+    if(badge) badge.textContent = '';
   }
   saveActive();
 }
@@ -3669,6 +4230,33 @@ function renderStatChart(){
     ? `<span>${t('log_best_set')}: <strong>${rkg(bestSet.kg)} ${ul} × ${bestSet.reps}</strong></span>
        <span>${t('log_best_e1rm')}: <strong>${rkg(Math.round(bestE1*2)/2)} ${ul}</strong></span>`
     : '';
+  renderRepRecords(name);
+}
+
+function renderRepRecords(exName){
+  const box = document.getElementById('st-records');
+  if(!box) return;
+  const rec = buildRepRecords()[exName];
+  if(!rec || Object.keys(rec).length === 0){ box.innerHTML = ''; return; }
+  const year = new Date().getFullYear();
+  const ul = unitLabel();
+  const repsList = Object.keys(rec).map(Number).sort((a,b)=>a-b).filter(r=>r>=1 && r<=15);
+  if(repsList.length === 0){ box.innerHTML = ''; return; }
+  const rows = repsList.map(r=>{
+    const e = rec[r];
+    const ybCell = e.yb > 0 ? `${rkg(e.yb)} ${ul}` : '–';
+    const ybIsPb = e.yb > 0 && e.yb === e.pb;
+    return `<tr>
+      <td>${r}</td>
+      <td class="rec-hl">${rkg(e.pb)} ${ul}</td>
+      <td${ybIsPb?' class="rec-hl"':''}>${ybCell}</td>
+    </tr>`;
+  }).join('');
+  box.innerHTML = `<div class="st-rec-title">${t('rec_title')}</div>
+    <table class="st-rec-table">
+      <thead><tr><th>${t('rec_col_reps')}</th><th>${t('rec_col_pb')}</th><th>${t('rec_col_yb', year)}</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
 }
 
 function drawStatChart(canvas, pts){
