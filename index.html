@@ -4,6 +4,13 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 100 100&#39;&gt;&lt;text y=&#39;.9em&#39; font-size=&#39;90&#39;&gt;%F0%9F%8F%8B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;">
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#09090A">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mirakel">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <title>Mirakelprogrammet</title>
 <meta name="description" content="Mirakelprogrammet – styrkelyftsprogram baserat på magkänsla. Generera ditt periodiserade program för knäböj, bänkpress och marklyft.">
 <meta name="theme-color" content="#09090A">
@@ -4731,6 +4738,13 @@ function disconnectSync(){
 window.addEventListener('DOMContentLoaded', ()=>{ renderLogUI(); if(syncState.key) syncNow(false); });
 window.addEventListener('resize', ()=>{ if(currentLogTab===2) renderStatChart(); });
 
+
+// ── PWA: registrera service worker ────────────────────────────────
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('./sw.js').catch(()=>{});
+  });
+}
 </script>
 
 
