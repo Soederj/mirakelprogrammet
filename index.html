@@ -575,6 +575,12 @@ footer{
   user-select:none;
 }
 .ls-step:active{background:var(--lime);color:var(--ink);transform:scale(0.94);}
+/* ── REKORDMÅL ── */
+.rgoal-preview{
+  font-family:var(--mono);font-size:10px;color:var(--dust);
+  letter-spacing:0.04em;padding:2px 2px 10px;min-height:16px;line-height:1.6;
+}
+.rgoal-preview strong{color:var(--lime);font-size:12px;}
 /* ── BOTTENNAV ── */
 .bottom-nav{
   position:fixed;bottom:0;left:0;right:0;z-index:250;
@@ -1403,6 +1409,18 @@ body{padding-bottom:74px;}
         <select id="goal-sm-class"></select>
       </div>
       <button class="goal-sm-btn" id="goal-sm-btn" onclick="addSmGoal()">🎯 Skapa kvalmål</button>
+      <div class="goal-sm-divider" id="goal-rec-divider">eller</div>
+      <div class="goal-add-row">
+        <select id="rgoal-ct" onchange="onRGoalFilterChange()"></select>
+        <select id="rgoal-ac" onchange="onRGoalFilterChange()"></select>
+      </div>
+      <div class="goal-add-row">
+        <select id="rgoal-gender" onchange="onRGoalLocalChange()"><option value="M">Herr</option><option value="K">Dam</option></select>
+        <select id="rgoal-class" onchange="onRGoalLocalChange()"></select>
+        <select id="rgoal-disc" onchange="onRGoalLocalChange()"></select>
+      </div>
+      <div class="rgoal-preview" id="rgoal-preview"></div>
+      <button class="goal-sm-btn" id="goal-rec-btn" onclick="addRecordGoal()">🇸🇪 Skapa rekordmål</button>
     </div>
   </div>
 </section>
@@ -2488,6 +2506,11 @@ const T = {
     rank_weak: '📉 lägst rankad av dina lyft',
     rank_best: '🏆 högst rankad av dina lyft',
     nav_program: 'Program', nav_log: 'Logg', nav_goals: 'Mål', nav_rank: 'Ranking',
+    rgoal_loading: 'Hämtar svenska rekord…',
+    rgoal_error: 'Kunde inte hämta rekorden. Kontrollera att workern är uppdaterad med /records-routen.',
+    rgoal_none: 'Inget rekord hittades för det valet.',
+    rgoal_current: 'Nuvarande svenskt rekord',
+    rgoal_label: 'Sv. rekord',
     goals_eyebrow: 'Mål · Takt · Prognos',
     goals_title: 'Dina <span>mål</span>',
     goals_sub: 'Sätt mål per lyft eller total – appen räknar ut din form (bästa e1RM senaste 90 dagarna), hur du taktar och när du beräknas vara framme.',
@@ -2685,6 +2708,11 @@ const T = {
     rank_weak: '📉 lowest ranked of your lifts',
     rank_best: '🏆 highest ranked of your lifts',
     nav_program: 'Program', nav_log: 'Log', nav_goals: 'Goals', nav_rank: 'Ranking',
+    rgoal_loading: 'Loading Swedish records…',
+    rgoal_error: 'Could not load records. Check that the worker has the /records route.',
+    rgoal_none: 'No record found for that selection.',
+    rgoal_current: 'Current Swedish record',
+    rgoal_label: 'Swedish record',
     goals_eyebrow: 'Goals · Pace · Projection',
     goals_title: 'Your <span>goals</span>',
     goals_sub: 'Set goals per lift or total – the app tracks your form (best e1RM last 90 days), your pace, and when you are projected to get there.',
@@ -2828,6 +2856,7 @@ function applyLangGoalsNav(L){
   document.querySelector('#bn-log .bn-label').textContent = L.nav_log;
   document.querySelector('#bn-goals .bn-label').textContent = L.nav_goals;
   document.querySelector('#bn-rank .bn-label').textContent = L.nav_rank;
+  if(rgoalInit){ rgoalInit = false; if(currentView === 'goals') initRGoal(); }
   set('goals-eyebrow','goals_eyebrow'); set('goals-title','goals_title',true); set('goals-sub','goals_sub');
   set('goal-add-title','goal_add_title'); set('goal-add-btn','goal_add_btn');
   set('goal-sm-btn','goal_sm_btn'); set('goal-sm-divider','goal_sm_divider');
@@ -3564,6 +3593,131 @@ window.addEventListener('DOMContentLoaded', ()=>{
   switchView(v);
 });
 
+// ── SVENSKA REKORD → REKORDMÅL ────────────────────────────────────
+// Hämtas via workern: /records?ct=<typ>&ac=<ålderskategori>
+const REC_TYPES = [
+  { id:1, sv:'Klassisk styrkelyft', en:'Classic powerlifting' },
+  { id:2, sv:'Klassisk bänkpress',  en:'Classic bench press' },
+];
+const REC_AGES = [
+  { id:2, sv:'Ungdom', en:'Sub-junior' },
+  { id:3, sv:'Junior', en:'Junior' },
+  { id:4, sv:'Senior', en:'Senior' },
+  { id:5, sv:'Veteran 40+', en:'Masters 40+' },
+  { id:6, sv:'Veteran 50+', en:'Masters 50+' },
+  { id:7, sv:'Veteran 60+', en:'Masters 60+' },
+  { id:8, sv:'Veteran 70+', en:'Masters 70+' },
+];
+const REC_DISC_LIFT = { sq:'s', bp:'b', dl:'d', total:'t' };
+let rgoalData = null, rgoalInit = false;
+
+function initRGoal(){
+  const ctSel = document.getElementById('rgoal-ct');
+  const acSel = document.getElementById('rgoal-ac');
+  if(!ctSel) return;
+  const prevCt = ctSel.value, prevAc = acSel.value;
+  ctSel.innerHTML = REC_TYPES.map(x=>`<option value="${x.id}"${String(x.id)===prevCt?' selected':''}>${currentLang==='sv'?x.sv:x.en}</option>`).join('');
+  acSel.innerHTML = REC_AGES.map(x=>`<option value="${x.id}"${String(x.id)===prevAc || (!prevAc && x.id===4)?' selected':''}>${currentLang==='sv'?x.sv:x.en}</option>`).join('');
+  rgoalInit = true;
+  onRGoalFilterChange();
+}
+
+async function onRGoalFilterChange(){
+  const prev = document.getElementById('rgoal-preview');
+  if(!RANKING_API_URL){ prev.textContent = t('rank_setup'); return; }
+  const ct = document.getElementById('rgoal-ct').value;
+  const ac = document.getElementById('rgoal-ac').value;
+  const cacheKey = `recs_${ct}_${ac}`;
+  const cached = rankCacheGet(cacheKey, 12*3600e3);
+  if(cached){ rgoalData = cached; fillRGoalLocal(); return; }
+  prev.textContent = t('rgoal_loading');
+  try {
+    const res = await fetch(`${RANKING_API_URL}/records?ct=${ct}&ac=${ac}`);
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    rgoalData = await res.json();
+    rankCacheSet(cacheKey, rgoalData);
+    fillRGoalLocal();
+  } catch(e){
+    rgoalData = null;
+    prev.textContent = t('rgoal_error');
+  }
+}
+
+function fillRGoalLocal(){
+  const group = (rgoalData && rgoalData[0]) || null;
+  const discSel = document.getElementById('rgoal-disc');
+  const clsSel = document.getElementById('rgoal-class');
+  if(!group){ discSel.innerHTML=''; clsSel.innerHTML=''; renderRGoalPreview(); return; }
+  const prevD = discSel.value;
+  discSel.innerHTML = (group.records||[]).map(d=>`<option value="${d.name}"${d.name===prevD?' selected':''}>${escapeHtml(d.label||d.name)}</option>`).join('');
+  onRGoalLocalChange();
+}
+
+function rgoalClassList(){
+  const group = (rgoalData && rgoalData[0]) || null;
+  if(!group) return [];
+  const isMale = document.getElementById('rgoal-gender').value === 'M';
+  const names = new Set();
+  (group.records||[]).forEach(d=>(d.records||[]).forEach(r=>{
+    if(r.weight_class && r.weight_class.is_male === isMale) names.add(r.weight_class.name);
+  }));
+  return [...names].sort((a,b)=>{
+    const pa = a.startsWith('+')?1:0, pb = b.startsWith('+')?1:0;
+    return pa - pb || (parseFloat(a.replace('+','')) - parseFloat(b.replace('+','')));
+  });
+}
+
+function onRGoalLocalChange(){
+  const clsSel = document.getElementById('rgoal-class');
+  const prev = clsSel.value;
+  const list = rgoalClassList();
+  clsSel.innerHTML = list.map(n=>`<option value="${n}"${n===prev?' selected':''}>${n} kg</option>`).join('');
+  renderRGoalPreview();
+}
+
+function findRecord(){
+  const group = (rgoalData && rgoalData[0]) || null;
+  if(!group) return null;
+  const disc = document.getElementById('rgoal-disc').value;
+  const cls = document.getElementById('rgoal-class').value;
+  const isMale = document.getElementById('rgoal-gender').value === 'M';
+  const d = (group.records||[]).find(x=>x.name === disc);
+  if(!d) return null;
+  return (d.records||[]).find(r=>r.weight_class && r.weight_class.is_male === isMale && r.weight_class.name === cls) || null;
+}
+
+function renderRGoalPreview(){
+  const prev = document.getElementById('rgoal-preview');
+  const r = findRecord();
+  if(!r){ prev.textContent = rgoalData ? t('rgoal_none') : ''; return; }
+  const ul = unitLabel();
+  const disp = currentUnit==='lbs' ? rndLbs(r.result*LBS_PER_KG) : r.result;
+  const name = r.person ? `${r.person.first_name} ${r.person.last_name}` : '–';
+  const yr = r.date ? String(r.date).slice(0,4) : '';
+  const club = r.club ? r.club.name : '';
+  prev.innerHTML = `${t('rgoal_current')}: <strong>${disp} ${ul}</strong> · ${escapeHtml(name)}${club?' ('+escapeHtml(club)+(yr?', '+yr:'')+')':''}`;
+}
+
+function addRecordGoal(){
+  const r = findRecord();
+  if(!r){ alert(t('rgoal_none')); return; }
+  const disc = document.getElementById('rgoal-disc').value;
+  const lift = REC_DISC_LIFT[disc] || 't';
+  const cls = document.getElementById('rgoal-class').value;
+  const acId = document.getElementById('rgoal-ac').value;
+  const ageObj = REC_AGES.find(a=>String(a.id)===String(acId));
+  const ageLabel = ageObj ? (currentLang==='sv'?ageObj.sv:ageObj.en) : '';
+  const discLabel = document.getElementById('rgoal-disc').selectedOptions[0]?.textContent || disc;
+  const target = Math.round((r.result + 0.5) * 2) / 2; // rekord slås med minst 0,5 kg
+  goals.push({ id: Date.now(), lift, target, deadline: null,
+    start: currentFormE1RM(lift),
+    label: `🇸🇪 ${t('rgoal_label')} ${discLabel} ${cls} · ${ageLabel}`,
+    created: new Date().toISOString().slice(0,10) });
+  saveGoals();
+  renderGoals();
+  if(navigator.vibrate) navigator.vibrate(20);
+}
+
 // ── MÅLSYSTEM ─────────────────────────────────────────────────────
 const GOALS_KEY = 'mp_goals_v1';
 let goals = [];
@@ -3693,6 +3847,7 @@ function populateSmGoalSelects(){
 
 function renderGoals(){
   populateSmGoalSelects();
+  if(!rgoalInit) initRGoal(); else renderRGoalPreview();
   const list = document.getElementById('goals-list');
   if(!list) return;
   if(goals.length === 0){
