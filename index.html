@@ -582,6 +582,106 @@ footer{
   user-select:none;
 }
 .ls-step:active{background:var(--lime);color:var(--ink);transform:scale(0.94);}
+/* ── TEKNIK-SLIDERS ── */
+.lsq-group.full{width:100%;flex-direction:column;align-items:stretch;gap:4px;}
+.lsq-slider{display:flex;align-items:center;gap:10px;width:100%;}
+.lsq-end{font-family:var(--mono);font-size:8px;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap;flex-shrink:0;width:88px;}
+.lsq-end.left{color:#ff6655;text-align:right;}
+.lsq-end.right{color:var(--lime);}
+input.q-range{
+  -webkit-appearance:none;appearance:none;flex:1;height:6px;border-radius:99px;
+  background:linear-gradient(90deg,#ff5544,#ffaa44 45%,#CBFF4D);
+  outline:none;cursor:pointer;opacity:0.45;transition:opacity 0.15s;
+}
+input.q-range.set{opacity:1;}
+input.q-range::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;
+  background:var(--cream);border:3px solid var(--ink);cursor:grab;
+  box-shadow:0 1px 6px rgba(0,0,0,0.5);
+}
+input.q-range.set::-webkit-slider-thumb{background:var(--lime);}
+input.q-range::-moz-range-thumb{
+  width:22px;height:22px;border-radius:50%;background:var(--cream);
+  border:3px solid var(--ink);cursor:grab;
+}
+input.q-range.set::-moz-range-thumb{background:var(--lime);}
+
+/* ── INSTALL-LÄNK & SHEET ── */
+.install-link{
+  display:inline-block;margin-top:16px;background:none;cursor:pointer;
+  border:1px solid var(--ink4);border-radius:99px;padding:8px 18px;
+  font-family:var(--mono);font-size:10px;letter-spacing:0.08em;color:var(--dust);
+  transition:all 0.15s;
+}
+.install-link:hover{border-color:var(--lime);color:var(--lime);}
+.inst-title{font-family:var(--bb);font-size:26px;color:var(--cream);letter-spacing:0.04em;margin-bottom:6px;}
+.inst-sub{font-family:var(--sg);font-size:13px;color:var(--dust);line-height:1.5;margin-bottom:18px;}
+.inst-block{border-top:1px solid var(--ink3);padding:12px 0;}
+.inst-os{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--lime);margin-bottom:5px;}
+.inst-steps{font-family:var(--sg);font-size:13px;color:var(--cream);line-height:1.55;}
+
+/* ── SETKVALITET ── */
+.ls-q{
+  width:36px;height:44px;flex-shrink:0;background:var(--ink2);
+  border:1px solid var(--ink4);border-radius:10px;color:var(--dust2);
+  font-size:15px;cursor:pointer;transition:all 0.12s;
+}
+.ls-q.filled{color:var(--lime);border-color:rgba(203,255,77,0.4);}
+.ls-rec:empty{min-width:0;}
+@media(max-width:480px){
+  .ls-row{gap:6px;}
+  .ls-q{width:32px;}
+  .ls-rec{min-width:0;}
+}
+.lsq{
+  display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;
+  padding:8px 10px 10px 42px;margin-top:-4px;
+}
+.lsq-group{display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+.lsq-lbl{font-family:var(--mono);font-size:9px;color:var(--dust2);letter-spacing:0.08em;text-transform:uppercase;margin-right:2px;}
+.lsq-chip{
+  font-family:var(--mono);font-size:11px;color:var(--dust);
+  background:var(--ink3);border:1px solid var(--ink4);border-radius:99px;
+  padding:5px 11px;cursor:pointer;transition:all 0.12s;
+}
+.lsq-chip.on{background:var(--lime);color:var(--ink);border-color:var(--lime);font-weight:700;}
+.lh-q{font-family:var(--mono);font-size:9px;color:var(--dust2);}
+
+/* ── MÅLSTATUS ── */
+.goal-status{
+  font-family:var(--mono);font-size:10px;letter-spacing:0.04em;
+  margin-top:12px;padding:8px 12px;border-radius:9px;line-height:1.5;
+}
+.goal-status.comp{background:rgba(203,255,77,0.12);color:var(--lime);border:1px solid rgba(203,255,77,0.35);}
+.goal-status.ok{background:rgba(203,255,77,0.07);color:var(--lime);border:1px solid rgba(203,255,77,0.2);}
+.goal-status.test{background:rgba(255,170,68,0.08);color:#ffaa44;border:1px solid rgba(255,170,68,0.25);}
+
+/* ── PASSREDIGERING ── */
+.we-card{background:var(--ink2);border:1px solid var(--ink3);border-radius:16px;padding:18px;}
+.we-title{font-family:var(--bb);font-size:22px;color:var(--cream);letter-spacing:0.04em;margin-bottom:14px;}
+.we-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+.we-name,.we-date{
+  flex:1;min-width:150px;background:var(--ink3);border:1px solid var(--ink4);
+  border-radius:9px;color:var(--cream);font-family:var(--sg);font-size:14px;
+  padding:10px 12px;outline:none;
+}
+.we-comp{
+  display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;
+  color:var(--dust);margin-bottom:14px;cursor:pointer;letter-spacing:0.04em;
+}
+.we-comp input{accent-color:var(--lime);width:17px;height:17px;}
+.we-ex{border-top:1px solid var(--ink3);padding-top:12px;margin-top:12px;}
+.we-ex-head{display:flex;gap:8px;align-items:center;margin-bottom:8px;}
+.we-ex-name{
+  flex:1;background:var(--ink3);border:1px solid var(--ink4);border-radius:8px;
+  color:var(--cream);font-family:var(--sg);font-size:14px;font-weight:600;
+  padding:8px 11px;outline:none;
+}
+.we-set{display:flex;gap:8px;align-items:center;margin-bottom:6px;}
+.we-set input{
+  width:86px;background:var(--ink3);border:1px solid var(--ink4);border-radius:8px;
+  color:var(--cream);font-family:var(--mono);font-size:14px;padding:8px 10px;outline:none;text-align:center;
+}
 /* ── REKORDMÅL ── */
 .rgoal-preview{
   font-family:var(--mono);font-size:10px;color:var(--dust);
@@ -1350,6 +1450,14 @@ body{padding-bottom:74px;}
       <div class="st-cards" id="st-cards"></div>
       <div class="st-controls">
         <select id="st-ex" onchange="renderStatChart()"></select>
+        <select id="st-period" onchange="renderStatChart()">
+          <option value="0">Allt</option>
+          <option value="7">Vecka</option>
+          <option value="30">Månad</option>
+          <option value="90">3 mån</option>
+          <option value="180">6 mån</option>
+          <option value="365">År</option>
+        </select>
         <div class="st-metric" id="st-metric">
           <button class="active" data-m="e1rm" onclick="setStatMetric('e1rm',this)">E1RM</button>
           <button data-m="top" onclick="setStatMetric('top',this)">Toppvikt</button>
@@ -1442,7 +1550,26 @@ body{padding-bottom:74px;}
 <footer>
   <div class="footer-logo">Mirakelprogrammet</div>
   <div class="footer-note">Akta ryggen. Inte vikterna.</div>
+  <button class="install-link" id="install-link" onclick="openInstallSheet()">📲 Lägg till som app</button>
 </footer>
+
+<!-- INSTALL SHEET -->
+<div class="timer-overlay" id="install-overlay" onclick="closeInstallSheet()"></div>
+<div class="timer-sheet" id="install-sheet">
+  <div class="timer-drag-handle"></div>
+  <div class="inst-title" id="inst-title">Lägg till på hemskärmen</div>
+  <div class="inst-sub" id="inst-sub">Mirakelprogrammet funkar som en riktig app – egen ikon, helskärm och offline.</div>
+  <button class="timer-action-btn" id="inst-native-btn" style="display:none;margin-bottom:14px;" onclick="nativeInstall()">Installera direkt</button>
+  <div class="inst-block">
+    <div class="inst-os" id="inst-android-h">Android (Chrome)</div>
+    <div class="inst-steps" id="inst-android-s">Tryck på menyn (⋮) uppe till höger → välj "Lägg till på startskärmen" eller "Installera app".</div>
+  </div>
+  <div class="inst-block">
+    <div class="inst-os" id="inst-ios-h">iPhone (Safari)</div>
+    <div class="inst-steps" id="inst-ios-s">Tryck på dela-knappen (fyrkanten med pil) → scrolla ner → "Lägg till på hemskärmen".</div>
+  </div>
+  <button class="timer-close-btn" id="inst-close" style="width:100%;margin-top:6px;" onclick="closeInstallSheet()">Stäng</button>
+</div>
 
 <script>
 let progType = '2veckor';
@@ -2518,6 +2645,27 @@ const T = {
     rgoal_none: 'Inget rekord hittades för det valet.',
     rgoal_current: 'Nuvarande svenskt rekord',
     rgoal_label: 'Sv. rekord',
+    goal_reached_comp: 'Uppnått på tävling! 🏆',
+    goal_form_ready: 'Dags att testa!',
+    goal_status_comp: (kg,u) => `Bekräftat på tävling: ${kg} ${u}`,
+    goal_status_gym: (kg,u) => `Bekräftat med singel i gymmet: ${kg} ${u}`,
+    goal_status_test: 'Formen (viktat e1RM) är där – men målet bockas av först med ett riktigt lyft.',
+    q_depth: 'Djup', q_pause: 'Stopp', q_butt: 'Rövlyft', q_lockout: 'Ordentliga utlåsningar',
+    q_depth_lo: 'Hockeyböj', q_depth_hi: 'Tävlingsgodkänt',
+    q_pause_lo: 'Inget stopp', q_pause_hi: 'Tävlingsstopp',
+    q_butt_lo: 'Rejält rövlyft', q_butt_hi: 'Limmad rumpa',
+    q_lockout_lo: 'Slarviga', q_lockout_hi: 'Ordentliga',
+    install_link: '📲 Lägg till som app',
+    install_title: 'Lägg till på hemskärmen',
+    install_sub: 'Mirakelprogrammet funkar som en riktig app – egen ikon, helskärm och offline.',
+    install_android: 'Android (Chrome)',
+    install_android_steps: 'Tryck på menyn (⋮) uppe till höger → välj "Lägg till på startskärmen" eller "Installera app".',
+    install_ios: 'iPhone (Safari)',
+    install_ios_steps: 'Tryck på dela-knappen (fyrkanten med pil) → scrolla ner → "Lägg till på hemskärmen".',
+    install_native_btn: 'Installera direkt',
+    install_close: 'Stäng',
+    we_edit: 'Redigera', we_title: 'Redigera pass', we_comp: 'Tävling (räknas som bekräftade lyft)',
+    we_save: 'Spara ändringar', we_add_ex: 'Lägg till övning',
     goals_eyebrow: 'Mål · Takt · Prognos',
     goals_title: 'Dina <span>mål</span>',
     goals_sub: 'Sätt mål per lyft eller total – appen räknar ut din form (bästa e1RM senaste 90 dagarna), hur du taktar och när du beräknas vara framme.',
@@ -2536,7 +2684,7 @@ const T = {
     goal_trend_none: 'för lite data',
     goal_reached: 'Uppnått! 🎉',
     goal_no_positive: 'ingen ökning ännu',
-    goal_note: 'Form = bästa estimerade 1RM (Epley) senaste 90 dagarna ur loggen. Takt = förändring jämfört med förra 90-dagarsperioden. Prognosen antar samma takt framåt – lyft mer så går det fortare. 📈',
+    goal_note: 'Form = bästa VIKTADE e1RM senaste 90 dagarna: färre reps väger tyngre (1 rep = 100%, 15 reps ≈ 85%), RIR räknas in, underkänd teknik räknas bort. Mål bockas av först vid en riktig singel – och 🏆 kräver tävlingsmärkt pass (redigera passet i historiken). 📈',
     rec_pb_toast: (ex, kg, u, r) => `🏆 Nytt PB! ${ex} ${kg} ${u} × ${r}`,
     rec_yb_toast: (ex, kg, u, r) => `📅 Nytt årsbästa! ${ex} ${kg} ${u} × ${r}`,
     rec_title: '🏆 Rep-rekord',
@@ -2720,6 +2868,27 @@ const T = {
     rgoal_none: 'No record found for that selection.',
     rgoal_current: 'Current Swedish record',
     rgoal_label: 'Swedish record',
+    goal_reached_comp: 'Done in competition! 🏆',
+    goal_form_ready: 'Time to test!',
+    goal_status_comp: (kg,u) => `Confirmed in competition: ${kg} ${u}`,
+    goal_status_gym: (kg,u) => `Confirmed with a gym single: ${kg} ${u}`,
+    goal_status_test: 'Your form (weighted e1RM) is there – but the goal is only checked off with a real lift.',
+    q_depth: 'Depth', q_pause: 'Pause', q_butt: 'Butt lift', q_lockout: 'Proper lockouts',
+    q_depth_lo: 'Hockey squat', q_depth_hi: 'Comp depth',
+    q_pause_lo: 'No pause', q_pause_hi: 'Comp pause',
+    q_butt_lo: 'Full butt lift', q_butt_hi: 'Glued down',
+    q_lockout_lo: 'Sloppy', q_lockout_hi: 'Proper',
+    install_link: '📲 Add as app',
+    install_title: 'Add to home screen',
+    install_sub: 'The Miracle Program works like a real app – own icon, full screen and offline.',
+    install_android: 'Android (Chrome)',
+    install_android_steps: 'Tap the menu (⋮) top right → choose "Add to home screen" or "Install app".',
+    install_ios: 'iPhone (Safari)',
+    install_ios_steps: 'Tap the share button (square with arrow) → scroll down → "Add to Home Screen".',
+    install_native_btn: 'Install now',
+    install_close: 'Close',
+    we_edit: 'Edit', we_title: 'Edit workout', we_comp: 'Competition (counts as confirmed lifts)',
+    we_save: 'Save changes', we_add_ex: 'Add exercise',
     goals_eyebrow: 'Goals · Pace · Projection',
     goals_title: 'Your <span>goals</span>',
     goals_sub: 'Set goals per lift or total – the app tracks your form (best e1RM last 90 days), your pace, and when you are projected to get there.',
@@ -2738,7 +2907,7 @@ const T = {
     goal_trend_none: 'not enough data',
     goal_reached: 'Reached! 🎉',
     goal_no_positive: 'no gain yet',
-    goal_note: 'Form = best estimated 1RM (Epley) from the last 90 days of your log. Pace = change vs the previous 90-day window. The projection assumes the same pace going forward – lift more and it moves closer. 📈',
+    goal_note: 'Form = best WEIGHTED e1RM last 90 days: fewer reps count more (1 rep = 100%, 15 reps ≈ 85%), RIR is factored in, failed technique is excluded. Goals are only checked off by a real single – and 🏆 requires a competition-flagged workout (edit the workout in history). 📈',
     rec_pb_toast: (ex, kg, u, r) => `🏆 New PB! ${ex} ${kg} ${u} × ${r}`,
     rec_yb_toast: (ex, kg, u, r) => `📅 New year best! ${ex} ${kg} ${u} × ${r}`,
     rec_title: '🏆 Rep records',
@@ -2864,6 +3033,7 @@ function applyLangGoalsNav(L){
   document.querySelector('#bn-goals .bn-label').textContent = L.nav_goals;
   document.querySelector('#bn-rank .bn-label').textContent = L.nav_rank;
   if(rgoalInit){ rgoalInit = false; if(currentView === 'goals') initRGoal(); }
+  applyInstallLang();
   set('goals-eyebrow','goals_eyebrow'); set('goals-title','goals_title',true); set('goals-sub','goals_sub');
   set('goal-add-title','goal_add_title'); set('goal-add-btn','goal_add_btn');
   set('goal-sm-btn','goal_sm_btn'); set('goal-sm-divider','goal_sm_divider');
@@ -3511,9 +3681,11 @@ function renderSessionPanel(){
         <span class="ls-x">×</span>
         <button class="ls-step" onclick="stepLogReps(${ei},${si},-1)">−</button><input class="ls-reps" type="number" inputmode="numeric" min="0" value="${s.reps===''?'':s.reps}" placeholder="reps" oninput="onLogSetInput(${ei},${si},'reps',this.value)"><button class="ls-step" onclick="stepLogReps(${ei},${si},1)">+</button>
         <button class="ls-done" onclick="toggleLogSet(${ei},${si})">✓</button>
+        <button class="ls-q${s.q?' filled':''}" id="lsqbtn-${ei}-${si}" onclick="toggleQPanel(${ei},${si})">${s.q?'★':'☆'}</button>
         <button class="ls-del" onclick="removeLogSet(${ei},${si})">✕</button>
         <span class="ls-e1rm" id="lse-${ei}-${si}">${s.kg>0&&s.reps>0?'e1rm '+rkg(Math.round(epley(s.kg,s.reps)*2)/2):''}</span><span class="ls-rec" id="lrec-${ei}-${si}">${s.rec==='pb'?'🏆':s.rec==='yb'?'📅':''}</span>
-      </div>`;
+      </div>
+      <div class="lsq" id="lsq-${ei}-${si}" style="display:none">${qPanelHtml(e.name, ei, si, s.q)}</div>`;
     });
     h += `<button class="ls-addset" onclick="addLogSet(${ei})">${t('log_add_set')}</button></div>`;
   });
@@ -3741,7 +3913,27 @@ function goalLiftName(k){
   return (L[currentLang]||L.sv)[k];
 }
 
-// Bästa e1RM för ett lyft inom [from, to] (ms-epoch); null om ingen data
+// ── Viktat e1RM: reps-avdrag + RIR + teknikunderkännande ──────────
+// Ju fler reps, desto osäkrare skattning. RIR höjer (5×5@RIR2 ≈ 5×7).
+// Underkänd teknik (djup/stopp/rövlyft/utlåsning) → räknas inte alls.
+function repFactor(reps){
+  if(reps <= 1) return 1.0;
+  if(reps <= 3) return 0.99;
+  if(reps <= 5) return 0.97;
+  if(reps <= 8) return 0.94;
+  if(reps <= 12) return 0.90;
+  return 0.85;
+}
+function qBad(v){ return v === 'fail' || (Number.isFinite(v) && v <= 2); }
+function qFail(q){ return !!q && (qBad(q.t1) || qBad(q.t2)); }
+function adjE1RM(s){
+  if(!(s.kg>0 && s.reps>0)) return null;
+  if(qFail(s.q)) return null;
+  const rir = (s.q && Number.isFinite(s.q.rir)) ? s.q.rir : 0;
+  return epley(s.kg, s.reps + rir) * repFactor(s.reps);
+}
+
+// Bästa VIKTADE e1RM för ett lyft inom [from, to]; null om ingen data
 function bestE1RMIn(liftKey, fromTs, toTs){
   const pat = GOAL_LIFT_PATTERNS[liftKey];
   let best = null;
@@ -3751,9 +3943,30 @@ function bestE1RMIn(liftKey, fromTs, toTs){
     w.ex.forEach(e=>{
       if(!pat.test(e.name)) return;
       e.sets.forEach(s=>{
-        if(!(s.kg>0 && s.reps>0)) return;
-        const v = epley(s.kg, s.reps);
-        if(best === null || v > best) best = v;
+        const v = adjE1RM(s);
+        if(v !== null && (best === null || v > best)) best = v;
+      });
+    });
+  });
+  return best;
+}
+
+// Bästa RIKTIGA singel (reps=1, godkänd teknik). comp=true → endast tävlingsmärkta pass
+function bestSingle(liftKey, compOnly){
+  if(liftKey === 't'){
+    const parts = ['s','b','d'].map(k=>bestSingle(k, compOnly));
+    if(parts.some(p=>p==null)) return null;
+    return parts.reduce((a,b)=>a+b,0);
+  }
+  const pat = GOAL_LIFT_PATTERNS[liftKey];
+  let best = null;
+  logData.workouts.forEach(w=>{
+    if(compOnly && !w.comp) return;
+    w.ex.forEach(e=>{
+      if(!pat.test(e.name)) return;
+      e.sets.forEach(s=>{
+        if(!(s.kg>0 && s.reps===1) || qFail(s.q)) return;
+        if(best === null || s.kg > best) best = s.kg;
       });
     });
   });
@@ -3874,16 +4087,23 @@ function renderGoals(){
         <div class="goal-empty" style="padding:10px 0;">${t('goal_no_data')}</div>
       </div>`;
     }
-    const done = cur >= g.target;
+    const single = bestSingle(g.lift, false);
+    const compSingle = bestSingle(g.lift, true);
+    const confirmedComp = compSingle != null && compSingle >= g.target;
+    const confirmed = single != null && single >= g.target;
+    const formDone = cur >= g.target;
+    const done = confirmed || confirmedComp;
     const start = (g.start != null && g.start < g.target) ? g.start : Math.min(cur, g.target*0.5);
-    const pct = done ? 100 : Math.max(2, Math.min(100, (cur-start)/(g.target-start)*100));
+    const pct = (done || formDone) ? 100 : Math.max(2, Math.min(100, (cur-start)/(g.target-start)*100));
     const left = Math.max(0, g.target - cur);
     const trend = goalTrend(g.lift);
     let trendTxt = t('goal_trend_none'), projTxt = '–', projClass = '';
     if(trend != null){
       const perMonth = trend / 3;
       trendTxt = `${trend>=0?'+':''}${Math.round(trend*2)/2} ${ul}`;
-      if(done){ projTxt = t('goal_reached'); projClass = 'lime'; }
+      if(confirmedComp){ projTxt = t('goal_reached_comp'); projClass = 'lime'; }
+      else if(confirmed){ projTxt = t('goal_reached'); projClass = 'lime'; }
+      else if(formDone){ projTxt = t('goal_form_ready'); projClass = 'lime'; }
       else if(perMonth > 0.1){
         const months = left / perMonth;
         const d = new Date(); d.setMonth(d.getMonth() + Math.ceil(months));
@@ -3897,6 +4117,13 @@ function renderGoals(){
       const late = !done && projClass === 'warn';
       deadlineChip = `<span class="goal-deadline-chip${done||projClass==='lime'?' ok':late?' late':''}">📅 ${dl.toLocaleDateString(currentLang==='sv'?'sv-SE':'en-US',{day:'numeric',month:'short',year:'numeric'})}</span>`;
     }
+    const statusLine = confirmedComp
+      ? `<div class="goal-status comp">🏆 ${t('goal_status_comp', disp(compSingle), ul)}</div>`
+      : confirmed
+        ? `<div class="goal-status ok">✓ ${t('goal_status_gym', disp(single), ul)}</div>`
+        : formDone
+          ? `<div class="goal-status test">⚡ ${t('goal_status_test')}</div>`
+          : '';
     return `<div class="goal-card">
       <div class="goal-head">
         <span class="goal-name">${done?'✓ ':''}${escapeHtml(name)}</span>
@@ -3911,6 +4138,7 @@ function renderGoals(){
         <div class="goal-stat"><span class="goal-stat-v">${trendTxt}</span><span class="goal-stat-l">${t('goal_pace')}</span></div>
         <div class="goal-stat"><span class="goal-stat-v${projClass?' '+projClass:''}">${projTxt}</span><span class="goal-stat-l">${t('goal_eta')}</span></div>
       </div>
+      ${statusLine}
     </div>`;
   }).join('');
   list.innerHTML += `<div class="goal-trend-note">${t('goal_note')}</div>`;
@@ -3929,7 +4157,7 @@ function buildRepRecords(){
     w.ex.forEach(e => {
       if(!rec[e.name]) rec[e.name] = {};
       e.sets.forEach(s => {
-        if(!(s.kg > 0 && s.reps > 0)) return;
+        if(!(s.kg > 0 && s.reps > 0) || qFail(s.q)) return;
         const r = rec[e.name][s.reps] || (rec[e.name][s.reps] = { pb:0, pbDate:null, yb:0, ybDate:null });
         if(s.kg > r.pb){ r.pb = s.kg; r.pbDate = w.date; }
         if(wy === year && s.kg > r.yb){ r.yb = s.kg; r.ybDate = w.date; }
@@ -4005,6 +4233,84 @@ function stepLogReps(ei, si, delta){
   if(navigator.vibrate) navigator.vibrate(8);
 }
 
+// ── SETKVALITET: RIR + lyftspecifik teknik ─────────────────────────
+function qLiftType(exName){
+  if(/kn.böj|squat/i.test(exName)) return 'squat';
+  if(/bänk|bench/i.test(exName)) return 'bench';
+  if(/marklyft|deadlift/i.test(exName)) return 'dead';
+  return 'other';
+}
+function qChip(ei, si, field, val, label, cur){
+  return `<button class="lsq-chip${cur===val?' on':''}" onclick="setQ(${ei},${si},'${field}',${typeof val==='string'?`'${val}'`:val})">${label}</button>`;
+}
+function qSlider(ei, si, field, cur, leftLbl, rightLbl){
+  const val = Number.isFinite(cur) ? cur : 3;
+  const isSet = Number.isFinite(cur);
+  return `<div class="lsq-slider${isSet?' set':''}">
+    <span class="lsq-end left">${leftLbl}</span>
+    <input type="range" min="1" max="5" step="1" value="${val}"
+      oninput="setQSlider(${ei},${si},'${field}',this.value)"
+      class="q-range${isSet?' set':''}">
+    <span class="lsq-end right">${rightLbl}</span>
+  </div>`;
+}
+function qPanelHtml(exName, ei, si, q){
+  q = q || {};
+  const lt = qLiftType(exName);
+  const isTNG = /tng|touch/i.test(exName);
+  let h = `<div class="lsq-group"><span class="lsq-lbl">RIR</span>`;
+  [0,1,2,3,4].forEach(r=>{ h += qChip(ei,si,'rir',r, r===4?'4+':String(r), q.rir); });
+  h += `</div>`;
+  if(lt === 'squat'){
+    h += `<div class="lsq-group full"><span class="lsq-lbl">${t('q_depth')}</span>`
+      + qSlider(ei,si,'t1',q.t1, t('q_depth_lo'), t('q_depth_hi')) + `</div>`;
+  } else if(lt === 'bench'){
+    if(!isTNG){
+      h += `<div class="lsq-group full"><span class="lsq-lbl">${t('q_pause')}</span>`
+        + qSlider(ei,si,'t1',q.t1, t('q_pause_lo'), t('q_pause_hi')) + `</div>`;
+    }
+    h += `<div class="lsq-group full"><span class="lsq-lbl">${t('q_butt')}</span>`
+      + qSlider(ei,si,'t2',q.t2, t('q_butt_lo'), t('q_butt_hi')) + `</div>`;
+  } else if(lt === 'dead'){
+    h += `<div class="lsq-group full"><span class="lsq-lbl">${t('q_lockout')}</span>`
+      + qSlider(ei,si,'t1',q.t1, t('q_lockout_lo'), t('q_lockout_hi')) + `</div>`;
+  }
+  return h;
+}
+function setQSlider(ei, si, field, val){
+  const s = activeSession.ex[ei].sets[si];
+  if(!s.q) s.q = {};
+  s.q[field] = parseInt(val, 10);
+  saveActive();
+  const btn = document.getElementById(`lsqbtn-${ei}-${si}`);
+  if(btn){ btn.textContent = '★'; btn.classList.add('filled'); }
+  // markera slidern som satt utan att rerendra (behåll drag-fokus)
+  const panel = document.getElementById(`lsq-${ei}-${si}`);
+  if(panel){
+    panel.querySelectorAll('input.q-range').forEach(inp=>{
+      if(inp.getAttribute('oninput').includes(`'${field}'`)){ inp.classList.add('set'); inp.parentElement.classList.add('set'); }
+    });
+  }
+  if(navigator.vibrate) navigator.vibrate(8);
+}
+function toggleQPanel(ei, si){
+  const el = document.getElementById(`lsq-${ei}-${si}`);
+  if(el) el.style.display = el.style.display === 'none' ? 'flex' : 'none';
+}
+function setQ(ei, si, field, val){
+  const s = activeSession.ex[ei].sets[si];
+  if(!s.q) s.q = {};
+  s.q[field] = (s.q[field] === val) ? null : val; // klicka igen = avmarkera
+  if(s.q.rir == null && s.q.t1 == null && s.q.t2 == null) delete s.q;
+  saveActive();
+  // Rerender panel + knapp
+  const el = document.getElementById(`lsq-${ei}-${si}`);
+  if(el) el.innerHTML = qPanelHtml(activeSession.ex[ei].name, ei, si, s.q);
+  const btn = document.getElementById(`lsqbtn-${ei}-${si}`);
+  if(btn){ btn.textContent = s.q ? '★' : '☆'; btn.classList.toggle('filled', !!s.q); }
+  if(navigator.vibrate) navigator.vibrate(8);
+}
+
 function toggleLogSet(ei, si){
   const s = activeSession.ex[ei].sets[si];
   s.done = !s.done;
@@ -4064,7 +4370,7 @@ function addLogEx(){
 
 function finishSession(){
   const cleaned = activeSession.ex
-    .map(e=>({name:e.name, sets:e.sets.filter(s=>s.kg>0 && s.reps>0).map(s=>({kg:s.kg,reps:s.reps}))}))
+    .map(e=>({name:e.name, sets:e.sets.filter(s=>s.kg>0 && s.reps>0).map(s=>({kg:s.kg, reps:s.reps, ...(s.q?{q:s.q}:{})}))}))
     .filter(e=>e.sets.length);
   if(!cleaned.length){ alert(t('log_need_sets')); return; }
   logData.workouts.push({
@@ -4105,7 +4411,7 @@ function renderHistory(){
     const d = new Date(w.date);
     const vol = workoutVolume(w);
     h += `<div class="lh-item" id="lh-${w.id}" onclick="toggleHist(${w.id},event)">
-      <div class="lh-top"><span class="lh-name">${escapeHtml(w.name)}</span>
+      <div class="lh-top"><span class="lh-name">${w.comp?'🏆 ':''}${escapeHtml(w.name)}</span>
         <span class="lh-date">${d.toLocaleDateString(loc,{weekday:'short',day:'numeric',month:'short',year:'numeric'})}${w.dur>0?' · '+t('log_dur', Math.max(1,Math.round(w.dur/60))):''}</span></div>
       <div class="lh-meta">${t('log_meta', w.ex.length, setsCount(w), fmtNum(dispVol(vol)), unitLabel())}</div>
       <div class="lh-detail">
@@ -4114,12 +4420,14 @@ function renderHistory(){
           const bestE1 = Math.max(...e.sets.map(s=>epley(s.kg,s.reps)), 0);
           return `<div class="lh-ex"><div class="lh-ex-name">${escapeHtml(e.name)}
             <span class="lh-ex-sum">${t('log_ex_sum', fmtNum(dispVol(exVol)), unitLabel(), rkg(Math.round(bestE1*2)/2))}</span></div>
-          <div class="lh-sets">${e.sets.map((s,si)=>
-            `<span class="lh-set">#${si+1} ${rkg(s.kg)}×${s.reps}<span class="lh-e1"> · ${rkg(Math.round(epley(s.kg,s.reps)*2)/2)}</span></span>`
-          ).join('')}</div></div>`;
+          <div class="lh-sets">${e.sets.map((s,si)=>{
+            const qTag = s.q ? `<span class="lh-q">${Number.isFinite(s.q.rir)?' RIR'+s.q.rir:''}${qFail(s.q)?' ⚠':''}</span>` : '';
+            return `<span class="lh-set">#${si+1} ${rkg(s.kg)}×${s.reps}<span class="lh-e1"> · ${rkg(Math.round(epley(s.kg,s.reps)*2)/2)}</span>${qTag}</span>`;
+          }).join('')}</div></div>`;
         }).join('')}
         <div class="lh-detail-btns">
           <button class="lh-rerun" onclick="rerunWorkout(${w.id},event)">${t('log_rerun')}</button>
+          <button class="lh-rerun" onclick="editWorkout(${w.id},event)">✎ ${t('we_edit')}</button>
           <button class="lh-del" onclick="deleteWorkout(${w.id},event)">✕ ${currentLang==='sv'?'Ta bort':'Delete'}</button>
         </div>
       </div>
@@ -4127,6 +4435,73 @@ function renderHistory(){
   });
   panel.innerHTML = h + ioButtons();
 }
+// ── REDIGERA GAMMALT PASS ─────────────────────────────────────────
+let editingWorkout = null;
+function editWorkout(id, ev){
+  if(ev) ev.stopPropagation();
+  const w = logData.workouts.find(x=>x.id===id);
+  if(!w) return;
+  editingWorkout = JSON.parse(JSON.stringify(w));
+  renderWorkoutEditor();
+}
+function renderWorkoutEditor(){
+  const panel = document.getElementById('log-panel-1');
+  const w = editingWorkout;
+  const dateVal = new Date(w.date).toISOString().slice(0,10);
+  let h = `<div class="we-card">
+    <div class="we-title">✎ ${t('we_title')}</div>
+    <div class="we-row">
+      <input class="we-name" value="${escapeHtml(w.name)}" oninput="editingWorkout.name=this.value" placeholder="${t('log_session_name_ph')}">
+      <input class="we-date" type="date" value="${dateVal}" onchange="setEditDate(this.value)">
+    </div>
+    <label class="we-comp"><input type="checkbox" ${w.comp?'checked':''} onchange="editingWorkout.comp=this.checked"> 🏆 ${t('we_comp')}</label>`;
+  w.ex.forEach((e, ei)=>{
+    h += `<div class="we-ex">
+      <div class="we-ex-head">
+        <input class="we-ex-name" value="${escapeHtml(e.name)}" oninput="editingWorkout.ex[${ei}].name=this.value">
+        <button class="ls-ex-del" onclick="editingWorkout.ex.splice(${ei},1);renderWorkoutEditor()">✕</button>
+      </div>`;
+    e.sets.forEach((s, si)=>{
+      h += `<div class="we-set">
+        <span class="ls-num">${si+1}</span>
+        <input type="number" inputmode="decimal" step="0.5" min="0" value="${s.kg}" oninput="editingWorkout.ex[${ei}].sets[${si}].kg=parseFloat(this.value)||0">
+        <span class="ls-x">×</span>
+        <input type="number" inputmode="numeric" min="0" value="${s.reps}" oninput="editingWorkout.ex[${ei}].sets[${si}].reps=parseInt(this.value)||0">
+        <button class="ls-del" onclick="editingWorkout.ex[${ei}].sets.splice(${si},1);renderWorkoutEditor()">✕</button>
+      </div>`;
+    });
+    h += `<button class="ls-addset" onclick="editingWorkout.ex[${ei}].sets.push({kg:0,reps:0});renderWorkoutEditor()">${t('log_add_set')}</button>
+    </div>`;
+  });
+  h += `<button class="ls-addset" onclick="editingWorkout.ex.push({name:'',sets:[{kg:0,reps:0}]});renderWorkoutEditor()">＋ ${t('we_add_ex')}</button>
+    <div class="ls-footer">
+      <button class="ls-finish" onclick="saveEditedWorkout()">${t('we_save')}</button>
+      <button class="ls-cancel" onclick="editingWorkout=null;renderHistory()">${t('log_cancel')}</button>
+    </div>
+  </div>`;
+  panel.innerHTML = h;
+}
+function setEditDate(val){
+  if(!val) return;
+  const orig = new Date(editingWorkout.date);
+  const d = new Date(val + 'T12:00:00');
+  if(!isNaN(orig)) { d.setHours(orig.getHours(), orig.getMinutes()); }
+  editingWorkout.date = d.toISOString();
+}
+function saveEditedWorkout(){
+  const w = editingWorkout;
+  w.ex = w.ex
+    .map(e=>({...e, sets: e.sets.filter(s=>s.kg>0 && s.reps>0)}))
+    .filter(e=>e.name.trim() && e.sets.length);
+  if(!w.ex.length){ alert(t('log_need_sets')); return; }
+  const idx = logData.workouts.findIndex(x=>x.id===w.id);
+  if(idx !== -1) logData.workouts[idx] = w;
+  editingWorkout = null;
+  saveLogData();
+  renderHistory();
+  if(navigator.vibrate) navigator.vibrate(20);
+}
+
 function ioButtons(){
   return `<div class="log-io-row">
     <button class="log-io-btn" onclick="exportLog()">${t('log_export')}</button>
@@ -4369,7 +4744,11 @@ function setStatMetric(m, btn){
 
 function renderStatChart(){
   const name = document.getElementById('st-ex').value;
-  const ws = logData.workouts.slice().sort((a,b)=>a.id-b.id);
+  const periodDays = parseInt(document.getElementById('st-period')?.value || '0', 10);
+  const cutoff = periodDays > 0 ? Date.now() - periodDays*86400000 : 0;
+  const ws = logData.workouts.slice()
+    .filter(w => new Date(w.date).getTime() >= cutoff)
+    .sort((a,b)=>a.id-b.id);
   const pts = [];
   let bestSet = null, bestE1 = 0, bestE1Set = null;
   ws.forEach(w=>{
@@ -4743,6 +5122,54 @@ window.addEventListener('resize', ()=>{ if(currentLogTab===2) renderStatChart();
 if('serviceWorker' in navigator){
   window.addEventListener('load', ()=>{
     navigator.serviceWorker.register('./sw.js').catch(()=>{});
+  });
+}
+
+// ── PWA: installationsguide ───────────────────────────────────────
+let deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', (e)=>{
+  e.preventDefault();
+  deferredInstallPrompt = e;
+});
+function isStandalone(){
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+window.addEventListener('DOMContentLoaded', ()=>{
+  // Redan installerad → göm länken helt
+  if(isStandalone()){
+    const l = document.getElementById('install-link');
+    if(l) l.style.display = 'none';
+  }
+});
+function openInstallSheet(){
+  document.getElementById('install-overlay').classList.add('open');
+  document.getElementById('install-sheet').classList.add('open');
+  const nb = document.getElementById('inst-native-btn');
+  if(nb) nb.style.display = deferredInstallPrompt ? 'block' : 'none';
+  applyInstallLang();
+}
+function closeInstallSheet(){
+  document.getElementById('install-overlay').classList.remove('open');
+  document.getElementById('install-sheet').classList.remove('open');
+}
+async function nativeInstall(){
+  if(!deferredInstallPrompt) return;
+  deferredInstallPrompt.prompt();
+  const res = await deferredInstallPrompt.userChoice;
+  if(res && res.outcome === 'accepted'){ closeInstallSheet(); }
+  deferredInstallPrompt = null;
+  const nb = document.getElementById('inst-native-btn');
+  if(nb) nb.style.display = 'none';
+}
+function applyInstallLang(){
+  const L = T[currentLang];
+  const m = { 'install-link':'install_link', 'inst-title':'install_title', 'inst-sub':'install_sub',
+    'inst-android-h':'install_android', 'inst-android-s':'install_android_steps',
+    'inst-ios-h':'install_ios', 'inst-ios-s':'install_ios_steps',
+    'inst-native-btn':'install_native_btn', 'inst-close':'install_close' };
+  Object.entries(m).forEach(([id,key])=>{
+    const el = document.getElementById(id);
+    if(el && L[key]) el.textContent = L[key];
   });
 }
 </script>
