@@ -582,6 +582,50 @@ footer{
   user-select:none;
 }
 .ls-step:active{background:var(--lime);color:var(--ink);transform:scale(0.94);}
+/* ── COMEBACK-BANNER ── */
+.cb-card{
+  background:rgba(255,170,68,0.07);border:1px solid rgba(255,170,68,0.3);
+  border-radius:14px;padding:16px 18px;margin:14px 0 4px;text-align:left;
+}
+.cb-card.active{background:rgba(203,255,77,0.06);border-color:rgba(203,255,77,0.3);}
+.cb-title{font-family:var(--bb);font-size:19px;color:var(--cream);letter-spacing:0.04em;margin-bottom:6px;}
+.cb-card.active .cb-title{color:var(--lime);}
+.cb-text{font-family:var(--sg);font-size:12.5px;color:var(--dust);line-height:1.55;margin-bottom:12px;}
+.cb-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.cb-yes{
+  font-family:var(--sg);font-size:13px;font-weight:700;
+  background:#ffaa44;color:var(--ink);border:none;border-radius:9px;
+  padding:10px 16px;cursor:pointer;transition:opacity 0.15s;
+}
+.cb-yes:hover{opacity:0.88;}
+.cb-no{
+  font-family:var(--sg);font-size:12px;background:none;
+  border:1px solid var(--ink4);color:var(--dust);border-radius:9px;
+  padding:10px 14px;cursor:pointer;transition:all 0.15s;
+}
+.cb-no:hover{border-color:var(--dust);color:var(--cream);}
+
+/* ── HISTORIKFILTER ── */
+.hf-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
+.hf-bar select{
+  flex:1;min-width:calc(33% - 8px);background:var(--ink3);border:1px solid var(--ink4);
+  border-radius:9px;color:var(--cream);font-family:var(--sg);font-size:12px;
+  padding:9px 8px;outline:none;cursor:pointer;
+}
+.hf-search{
+  flex:2;min-width:100%;background:var(--ink3);border:1px solid var(--ink4);
+  border-radius:9px;color:var(--cream);font-family:var(--sg);font-size:13px;
+  padding:10px 12px;outline:none;
+}
+.hf-search:focus{border-color:rgba(203,255,77,0.4);}
+.hf-count{font-family:var(--mono);font-size:9px;color:var(--dust2);letter-spacing:0.06em;margin-bottom:14px;text-transform:uppercase;}
+.hf-more{
+  width:100%;margin-top:10px;background:var(--ink2);border:1px dashed var(--ink4);
+  border-radius:12px;color:var(--dust);font-family:var(--sg);font-size:13px;font-weight:600;
+  padding:13px;cursor:pointer;transition:all 0.15s;
+}
+.hf-more:hover{border-color:var(--lime);color:var(--lime);}
+
 /* ── TEKNIK-SLIDERS ── */
 .lsq-group.full{width:100%;flex-direction:column;align-items:stretch;gap:4px;}
 .lsq-slider{display:flex;align-items:center;gap:10px;width:100%;}
@@ -627,11 +671,61 @@ input.q-range.set::-moz-range-thumb{background:var(--lime);}
   font-size:15px;cursor:pointer;transition:all 0.12s;
 }
 .ls-q.filled{color:var(--lime);border-color:rgba(203,255,77,0.4);}
-.ls-rec:empty{min-width:0;}
-@media(max-width:480px){
-  .ls-row{gap:6px;}
-  .ls-q{width:32px;}
-  .ls-rec{min-width:0;}
+.ls-rec:empty{min-width:0;display:none;}
+.ls-grp{display:flex;align-items:center;gap:4px;flex-shrink:1;min-width:0;}
+.ls-grp .ls-kg,.ls-grp .ls-reps{min-width:0;}
+.ls-actions{display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0;}
+.ls-row{flex-wrap:wrap;}
+
+/* ══ MOBILE FIRST ══ */
+html,body{overflow-x:hidden;max-width:100vw;}
+@media(max-width:520px){
+  .ls-row{gap:4px;row-gap:8px;padding:7px 0;}
+  .ls-num{min-width:14px;font-size:10px;}
+  .ls-grp{gap:3px;}
+  .ls-step{width:22px;height:40px;font-size:14px;border-radius:6px;}
+  .ls-kg,.ls-reps{width:52px;padding:9px 3px;font-size:15px;border-radius:8px;}
+  .ls-x{font-size:9px;}
+  .ls-actions{gap:4px;}
+  .ls-done{width:38px;height:40px;font-size:15px;}
+  .ls-q{width:30px;height:40px;font-size:14px;}
+  .ls-del{width:22px;height:40px;font-size:12px;}
+  .ls-e1rm{
+    display:block;width:100%;order:10;text-align:right;
+    font-size:9px;color:var(--dust2);margin-top:-4px;padding-right:2px;
+  }
+  .ls-e1rm:empty{display:none;}
+  .lsq{padding-left:20px;}
+  .lsq-end{width:72px;font-size:7.5px;}
+  /* redigeraren */
+  .we-set input{width:70px;padding:8px 6px;}
+  /* sektionspadding */
+  .goals-section{padding:24px 14px 60px;}
+  .rank-section{padding:0 14px 70px!important;}
+  .log-section{padding:0 12px 70px!important;}
+  .log-card{padding:18px 12px!important;}
+  .rank-card{padding:22px 16px!important;border-radius:16px;}
+  .goal-card{padding:14px;}
+  .goal-stats{gap:8px 14px;}
+  .goal-stat-v{font-size:14px;}
+  .goal-add-card{padding:14px;}
+  .goal-add-row select,.goal-add-row input{min-width:calc(50% - 8px);font-size:12px;padding:9px 8px;}
+  .rec-filters select{min-width:calc(50% - 8px);}
+  /* timer-sheet */
+  .timer-sheet{padding:12px 18px 32px;}
+  .timer-countdown{font-size:58px;}
+  /* stats */
+  .st-controls select{max-width:46%;font-size:12px;}
+  /* historik-knappar */
+  .lh-detail-btns button{font-size:11px;padding:8px 10px;}
+  /* bottennav något lägre */
+  .bn-ico{font-size:17px;}
+  .bn-label{font-size:8px;}
+}
+@media(max-width:370px){
+  .ls-kg,.ls-reps{width:46px;}
+  .ls-step{width:20px;}
+  .ls-num{display:none;}
 }
 .lsq{
   display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;
@@ -1283,6 +1377,9 @@ body{padding-bottom:74px;}
   </div>
 
   <!-- LBS TOGGLE (only shown in English) -->
+  <!-- COMEBACK-BANNER -->
+  <div id="comeback-banner" style="display:none;"></div>
+
   <div id="unit-toggle-wrap" style="display:none;margin-bottom:0;">
     <div class="input-mode-toggle">
       <button class="imt active" id="unit-kg" onclick="setUnit(&#39;kg&#39;)">kg</button>
@@ -2217,7 +2314,16 @@ function generate(){
   const sec = document.getElementById('prog-section');
   const out = document.getElementById('prog-output');
   const isLight = intensity === 'light';
-  const builder = (s,b,d,isA,wn) => isLight ? buildWeekLight(s,b,d,isA,wn) : buildWeek(s,b,d,isA,wn);
+  // Comeback-läge: sänk arbetsvikterna och ta bort ett set per övning
+  if(comebackMode){
+    s *= comebackMode.factor;
+    b *= comebackMode.factor;
+    d *= comebackMode.factor;
+  }
+  const baseBuilder = (s,b,d,isA,wn) => isLight ? buildWeekLight(s,b,d,isA,wn) : buildWeek(s,b,d,isA,wn);
+  const builder = comebackMode && comebackMode.dropSet
+    ? (s,b,d,isA,wn) => applyComebackDrop(baseBuilder(s,b,d,isA,wn))
+    : baseBuilder;
   document.getElementById('prog-heading').innerHTML = t('prog_heading');
   const lightLabel = isLight ? ` · <span style="color:var(--dust);font-size:9px;">${t('light_label')}</span>` : '';
   const legendText = t('legend_text');
@@ -2227,10 +2333,13 @@ function generate(){
   const sDisp = currentUnit === 'lbs' ? rndLbs(s*LBS_PER_KG) : s;
   const bDisp = currentUnit === 'lbs' ? rndLbs(b*LBS_PER_KG) : b;
   const dDisp = currentUnit === 'lbs' ? rndLbs(d*LBS_PER_KG) : d;
+  const cbNote = comebackMode
+    ? `<br><span style="color:#ffaa44;font-family:var(--mono);font-size:10px;">🔄 ${t('cb_summary', Math.round((1-comebackMode.factor)*100))}</span>`
+    : '';
   document.getElementById('prog-summary').innerHTML =
     `${t('pb_label_s')} <strong style="color:var(--lime)">${sDisp} ${ul}</strong><br>` +
     `${t('pb_label_b')} <strong style="color:var(--lime)">${bDisp} ${ul}</strong><br>` +
-    `${t('pb_label_d')} <strong style="color:var(--lime)">${dDisp} ${ul}</strong>`;
+    `${t('pb_label_d')} <strong style="color:var(--lime)">${dDisp} ${ul}</strong>` + cbNote;
 
   const topRepsLabel = t('top_reps');
 
@@ -2666,6 +2775,21 @@ const T = {
     install_close: 'Stäng',
     we_edit: 'Redigera', we_title: 'Redigera pass', we_comp: 'Tävling (räknas som bekräftade lyft)',
     we_save: 'Spara ändringar', we_add_ex: 'Lägg till övning',
+    hf_all_years: 'Alla år', hf_all_months: 'Alla månader',
+    hf_newest: 'Nyast först', hf_oldest: 'Äldst först',
+    hf_search_ph: 'Sök pass eller övning…',
+    hf_count: (shown, total) => `Visar ${shown} av ${total} pass`,
+    hf_no_match: 'Inga pass matchar filtret.',
+    hf_show_more: (n) => `Visa fler (${n} kvar)`,
+    cb_title: '👋 Välkommen tillbaka!',
+    cb_text: (days, pct) => `Ditt senaste loggade pass var för ${days} dagar sedan. Vill du köra comeback-läge? Programmet genereras då med ${pct} % lättare vikter och ett set mindre per övning – toppseten är kvar, bara uppvärmningsrampen kortas.`,
+    cb_long: 'Efter ett så långt uppehåll: överväg också att börja om cykeln på vecka 1.',
+    cb_yes: '🔄 Aktivera comeback-läge',
+    cb_no: 'Nej tack, kör som vanligt',
+    cb_active_title: (pct) => `🔄 Comeback-läge aktivt · −${pct} %`,
+    cb_active_text: 'Nästa program genereras med sänkta vikter och ett set mindre per övning. Stäng av när du känner dig varm i kläderna igen.',
+    cb_off: 'Stäng av comeback-läge',
+    cb_summary: (pct) => `Comeback-läge: −${pct} % · ett set mindre per övning`,
     goals_eyebrow: 'Mål · Takt · Prognos',
     goals_title: 'Dina <span>mål</span>',
     goals_sub: 'Sätt mål per lyft eller total – appen räknar ut din form (bästa e1RM senaste 90 dagarna), hur du taktar och när du beräknas vara framme.',
@@ -2889,6 +3013,21 @@ const T = {
     install_close: 'Close',
     we_edit: 'Edit', we_title: 'Edit workout', we_comp: 'Competition (counts as confirmed lifts)',
     we_save: 'Save changes', we_add_ex: 'Add exercise',
+    hf_all_years: 'All years', hf_all_months: 'All months',
+    hf_newest: 'Newest first', hf_oldest: 'Oldest first',
+    hf_search_ph: 'Search workout or exercise…',
+    hf_count: (shown, total) => `Showing ${shown} of ${total} workouts`,
+    hf_no_match: 'No workouts match the filter.',
+    hf_show_more: (n) => `Show more (${n} left)`,
+    cb_title: '👋 Welcome back!',
+    cb_text: (days, pct) => `Your last logged workout was ${days} days ago. Want to run comeback mode? The program will be generated with ${pct}% lighter weights and one set fewer per exercise – top sets stay, only the ramp-up is shortened.`,
+    cb_long: 'After a break this long: also consider restarting the cycle at week 1.',
+    cb_yes: '🔄 Activate comeback mode',
+    cb_no: 'No thanks, run as usual',
+    cb_active_title: (pct) => `🔄 Comeback mode active · −${pct}%`,
+    cb_active_text: 'The next program is generated with reduced weights and one set fewer per exercise. Turn it off once you feel warmed up again.',
+    cb_off: 'Turn off comeback mode',
+    cb_summary: (pct) => `Comeback mode: −${pct}% · one set fewer per exercise`,
     goals_eyebrow: 'Goals · Pace · Projection',
     goals_title: 'Your <span>goals</span>',
     goals_sub: 'Set goals per lift or total – the app tracks your form (best e1RM last 90 days), your pace, and when you are projected to get there.',
@@ -3677,13 +3816,16 @@ function renderSessionPanel(){
     e.sets.forEach((s, si)=>{
       h += `<div class="ls-row${s.done?' done':''}" id="lsr-${ei}-${si}">
         <span class="ls-num">${si+1}</span>
-        <button class="ls-step" onclick="stepLogKg(${ei},${si},-2.5)">−</button><input class="ls-kg" type="number" inputmode="decimal" step="0.5" min="0" value="${s.kg===''?'':s.kg}" placeholder="kg" oninput="onLogSetInput(${ei},${si},'kg',this.value)"><button class="ls-step" onclick="stepLogKg(${ei},${si},2.5)">+</button>
+        <div class="ls-grp"><button class="ls-step" onclick="stepLogKg(${ei},${si},-2.5)">−</button><input class="ls-kg" type="number" inputmode="decimal" step="0.5" min="0" value="${s.kg===''?'':s.kg}" placeholder="kg" oninput="onLogSetInput(${ei},${si},'kg',this.value)"><button class="ls-step" onclick="stepLogKg(${ei},${si},2.5)">+</button></div>
         <span class="ls-x">×</span>
-        <button class="ls-step" onclick="stepLogReps(${ei},${si},-1)">−</button><input class="ls-reps" type="number" inputmode="numeric" min="0" value="${s.reps===''?'':s.reps}" placeholder="reps" oninput="onLogSetInput(${ei},${si},'reps',this.value)"><button class="ls-step" onclick="stepLogReps(${ei},${si},1)">+</button>
-        <button class="ls-done" onclick="toggleLogSet(${ei},${si})">✓</button>
-        <button class="ls-q${s.q?' filled':''}" id="lsqbtn-${ei}-${si}" onclick="toggleQPanel(${ei},${si})">${s.q?'★':'☆'}</button>
-        <button class="ls-del" onclick="removeLogSet(${ei},${si})">✕</button>
-        <span class="ls-e1rm" id="lse-${ei}-${si}">${s.kg>0&&s.reps>0?'e1rm '+rkg(Math.round(epley(s.kg,s.reps)*2)/2):''}</span><span class="ls-rec" id="lrec-${ei}-${si}">${s.rec==='pb'?'🏆':s.rec==='yb'?'📅':''}</span>
+        <div class="ls-grp"><button class="ls-step" onclick="stepLogReps(${ei},${si},-1)">−</button><input class="ls-reps" type="number" inputmode="numeric" min="0" value="${s.reps===''?'':s.reps}" placeholder="reps" oninput="onLogSetInput(${ei},${si},'reps',this.value)"><button class="ls-step" onclick="stepLogReps(${ei},${si},1)">+</button></div>
+        <div class="ls-actions">
+          <span class="ls-rec" id="lrec-${ei}-${si}">${s.rec==='pb'?'🏆':s.rec==='yb'?'📅':''}</span>
+          <button class="ls-done" onclick="toggleLogSet(${ei},${si})">✓</button>
+          <button class="ls-q${s.q?' filled':''}" id="lsqbtn-${ei}-${si}" onclick="toggleQPanel(${ei},${si})">${s.q?'★':'☆'}</button>
+          <button class="ls-del" onclick="removeLogSet(${ei},${si})">✕</button>
+        </div>
+        <span class="ls-e1rm" id="lse-${ei}-${si}">${s.kg>0&&s.reps>0?'e1rm '+rkg(Math.round(epley(s.kg,s.reps)*2)/2):''}</span>
       </div>
       <div class="lsq" id="lsq-${ei}-${si}" style="display:none">${qPanelHtml(e.name, ei, si, s.q)}</div>`;
     });
@@ -3728,6 +3870,77 @@ function nextPlannedKg(ei, si){
   }
   return null;
 }
+
+// ── COMEBACK-LÄGE ─────────────────────────────────────────────────
+// Uppehåll i loggen → föreslå lättare återkomst: sänkta vikter + ett
+// set mindre per övning (första/lättaste settet tas bort, aldrig toppsetet).
+let comebackMode = null; // null | { factor, dropSet, days }
+const COMEBACK_DISMISS_KEY = 'mp_comeback_dismiss';
+
+function daysSinceLastWorkout(){
+  if(!logData.workouts.length) return null;
+  const last = Math.max(...logData.workouts.map(w=>new Date(w.date).getTime()));
+  if(!isFinite(last)) return null;
+  return Math.floor((Date.now() - last) / 86400000);
+}
+function lastWorkoutId(){
+  return logData.workouts.length ? Math.max(...logData.workouts.map(w=>w.id)) : null;
+}
+function comebackTier(days){
+  if(days == null || days < 9) return null;
+  if(days < 21) return { factor: 0.90, dropSet: true, days };
+  return { factor: 0.85, dropSet: true, days, longBreak: true };
+}
+function checkComeback(){
+  const el = document.getElementById('comeback-banner');
+  if(!el) return;
+  const days = daysSinceLastWorkout();
+  const tier = comebackTier(days);
+  if(!tier || comebackMode){ if(!comebackMode) el.style.display = 'none'; return; }
+  let dismissed = null;
+  try{ dismissed = localStorage.getItem(COMEBACK_DISMISS_KEY); }catch(e){}
+  if(dismissed && String(dismissed) === String(lastWorkoutId())){ el.style.display = 'none'; return; }
+  el.style.display = 'block';
+  el.innerHTML = `<div class="cb-card">
+    <div class="cb-title">${t('cb_title')}</div>
+    <div class="cb-text">${t('cb_text', tier.days, Math.round((1-tier.factor)*100))}${tier.longBreak ? ' ' + t('cb_long') : ''}</div>
+    <div class="cb-btns">
+      <button class="cb-yes" onclick="activateComeback()">${t('cb_yes')}</button>
+      <button class="cb-no" onclick="dismissComeback()">${t('cb_no')}</button>
+    </div>
+  </div>`;
+}
+function activateComeback(){
+  comebackMode = comebackTier(daysSinceLastWorkout());
+  const el = document.getElementById('comeback-banner');
+  el.innerHTML = `<div class="cb-card active">
+    <div class="cb-title">${t('cb_active_title', Math.round((1-comebackMode.factor)*100))}</div>
+    <div class="cb-text">${t('cb_active_text')}</div>
+    <div class="cb-btns"><button class="cb-no" onclick="deactivateComeback()">${t('cb_off')}</button></div>
+  </div>`;
+  if(navigator.vibrate) navigator.vibrate(15);
+}
+function deactivateComeback(){
+  comebackMode = null;
+  checkComeback();
+  dismissComeback(true);
+}
+function dismissComeback(silent){
+  try{ localStorage.setItem(COMEBACK_DISMISS_KEY, String(lastWorkoutId())); }catch(e){}
+  const el = document.getElementById('comeback-banner');
+  if(el) el.style.display = 'none';
+}
+// Ta bort första settet per övning (aldrig toppsetet) för övningar med 4+ set
+function applyComebackDrop(days){
+  return days.map(day=>{
+    if(!day.exercises) return day;
+    return {...day, exercises: day.exercises.map(ex=>{
+      if(!ex.sets || ex.sets.length < 4) return ex;
+      return {...ex, sets: ex.sets.slice(1)};
+    })};
+  });
+}
+window.addEventListener('DOMContentLoaded', ()=>{ setTimeout(checkComeback, 100); });
 
 // ── VYVÄXLING (bottennav) ─────────────────────────────────────────
 let currentView = 'program';
@@ -4398,15 +4611,66 @@ function cancelSession(){
 }
 
 // ── Historik ──
+let histFilter = { year:'', month:'', q:'', asc:false, limit:30 };
+function setHistFilter(field, val){
+  histFilter[field] = field==='asc' ? (val==='1') : val;
+  histFilter.limit = 30;
+  renderHistory();
+}
+function histShowMore(){ histFilter.limit += 50; renderHistory(); }
+
+function histFilterBar(years, shown, total){
+  const loc = currentLang==='sv'?'sv-SE':'en-US';
+  const monthNames = Array.from({length:12},(_,i)=>new Date(2026,i,1).toLocaleDateString(loc,{month:'short'}));
+  return `<div class="hf-bar">
+    <select onchange="setHistFilter('year',this.value)">
+      <option value="">${t('hf_all_years')}</option>
+      ${years.map(y=>`<option value="${y}"${String(histFilter.year)===String(y)?' selected':''}>${y}</option>`).join('')}
+    </select>
+    <select onchange="setHistFilter('month',this.value)">
+      <option value="">${t('hf_all_months')}</option>
+      ${monthNames.map((m,i)=>`<option value="${i}"${String(histFilter.month)===String(i)?' selected':''}>${m}</option>`).join('')}
+    </select>
+    <select onchange="setHistFilter('asc',this.value)">
+      <option value="0"${!histFilter.asc?' selected':''}>${t('hf_newest')}</option>
+      <option value="1"${histFilter.asc?' selected':''}>${t('hf_oldest')}</option>
+    </select>
+    <input type="search" class="hf-search" placeholder="${t('hf_search_ph')}" value="${escapeHtml(histFilter.q)}"
+      oninput="histFilter.q=this.value;histFilter.limit=30;clearTimeout(window.__hfT);window.__hfT=setTimeout(renderHistory,250)">
+  </div>
+  <div class="hf-count">${t('hf_count', shown, total)}</div>`;
+}
+
 function renderHistory(){
   const panel = document.getElementById('log-panel-1');
-  const ws = logData.workouts.slice().sort((a,b)=>b.id-a.id);
-  if(!ws.length){
+  const all = logData.workouts.slice();
+  if(!all.length){
     panel.innerHTML = `<div class="log-empty">${t('log_empty_history')}</div>` + ioButtons();
     return;
   }
+  const years = [...new Set(all.map(w=>new Date(w.date).getFullYear()))].sort((a,b)=>b-a);
+  const q = histFilter.q.trim().toLowerCase();
+  let ws = all.filter(w=>{
+    const d = new Date(w.date);
+    if(histFilter.year !== '' && d.getFullYear() !== parseInt(histFilter.year)) return false;
+    if(histFilter.month !== '' && d.getMonth() !== parseInt(histFilter.month)) return false;
+    if(q && !(
+      w.name.toLowerCase().includes(q) ||
+      w.ex.some(e=>e.name.toLowerCase().includes(q))
+    )) return false;
+    return true;
+  });
+  ws.sort((a,b)=> histFilter.asc ? a.id-b.id : b.id-a.id);
+  const total = ws.length;
+  const shown = Math.min(histFilter.limit, total);
+  ws = ws.slice(0, histFilter.limit);
+
   const loc = currentLang==='sv'?'sv-SE':'en-US';
-  let h = '';
+  let h = histFilterBar(years, shown, total);
+  if(!total){
+    panel.innerHTML = h + `<div class="log-empty">${t('hf_no_match')}</div>` + ioButtons();
+    return;
+  }
   ws.forEach(w=>{
     const d = new Date(w.date);
     const vol = workoutVolume(w);
@@ -4433,6 +4697,9 @@ function renderHistory(){
       </div>
     </div>`;
   });
+  if(total > histFilter.limit){
+    h += `<button class="hf-more" onclick="histShowMore()">${t('hf_show_more', total - histFilter.limit)}</button>`;
+  }
   panel.innerHTML = h + ioButtons();
 }
 // ── REDIGERA GAMMALT PASS ─────────────────────────────────────────
