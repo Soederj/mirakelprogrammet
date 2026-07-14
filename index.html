@@ -582,6 +582,188 @@ footer{
   user-select:none;
 }
 .ls-step:active{background:var(--lime);color:var(--ink);transform:scale(0.94);}
+/* ══ MIRAKELMÄSTERSKAPEN ══ */
+.game-section{display:none;padding:20px 16px 80px;max-width:560px;margin:0 auto;min-height:70vh;}
+.gm-card{background:var(--ink2);border:1px solid var(--ink3);border-radius:20px;padding:24px 20px;text-align:center;}
+.gm-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;color:var(--lime);text-transform:uppercase;margin-bottom:10px;}
+.gm-title{font-family:var(--bb);font-size:44px;line-height:0.95;color:var(--cream);letter-spacing:0.02em;margin-bottom:4px;}
+.gm-title .lime{color:var(--lime);}
+.gm-sub{font-family:var(--sg);font-size:13.5px;color:var(--dust);line-height:1.6;margin:12px 0 20px;}
+.gm-btn{
+  width:100%;font-family:var(--bb);font-size:22px;letter-spacing:0.06em;
+  background:var(--lime);color:var(--ink);border:none;border-radius:14px;
+  padding:16px;cursor:pointer;transition:transform 0.1s, opacity 0.15s;
+  -webkit-tap-highlight-color:transparent;user-select:none;touch-action:manipulation;
+}
+.gm-btn:active{transform:scale(0.97);}
+.gm-btn.ghost{background:var(--ink3);color:var(--cream);border:1px solid var(--ink4);font-size:16px;}
+.gm-btn+.gm-btn{margin-top:10px;}
+.gm-scene{margin:6px auto 14px;display:flex;justify-content:center;}
+.gm-hud{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-family:var(--mono);font-size:10px;color:var(--dust2);letter-spacing:0.08em;text-transform:uppercase;}
+.gm-hud strong{font-family:var(--bb);font-size:20px;color:var(--cream);letter-spacing:0.04em;}
+.gm-kg-big{font-family:var(--bb);font-size:72px;color:var(--lime);line-height:1;margin:8px 0 2px;}
+.gm-attempts{display:flex;gap:6px;justify-content:center;margin:10px 0;}
+.gm-att{
+  font-family:var(--mono);font-size:10px;padding:5px 11px;border-radius:99px;
+  border:1px solid var(--ink4);color:var(--dust2);
+}
+.gm-att.good{border-color:rgba(203,255,77,0.5);color:var(--lime);}
+.gm-att.bad{border-color:rgba(255,85,68,0.5);color:#ff6655;text-decoration:line-through;}
+.gm-att.cur{border-color:var(--cream);color:var(--cream);}
+.gm-stepper{display:flex;align-items:center;justify-content:center;gap:8px;margin:14px 0 18px;}
+.gm-step{
+  width:56px;height:52px;background:var(--ink3);border:1px solid var(--ink4);border-radius:12px;
+  color:var(--cream);font-family:var(--mono);font-size:13px;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+}
+.gm-step:active{background:var(--lime);color:var(--ink);}
+.gm-track-wrap{position:relative;height:230px;width:74px;margin:0 auto;}
+.gm-track{position:absolute;inset:0;background:var(--ink3);border-radius:99px;border:1px solid var(--ink4);}
+.gm-zone{position:absolute;left:0;right:0;background:rgba(203,255,77,0.22);border-top:2px solid var(--lime);border-bottom:2px solid var(--lime);border-radius:8px;transition:background 0.08s, box-shadow 0.08s;}
+.gm-zone.hot{background:rgba(203,255,77,0.5);box-shadow:0 0 18px rgba(203,255,77,0.55);}
+.gm-marker{
+  position:absolute;left:-8px;right:-8px;height:14px;border-radius:99px;
+  background:var(--cream);box-shadow:0 0 14px rgba(240,237,230,0.5);
+}
+.gm-tapbtn{
+  width:100%;margin-top:16px;font-family:var(--bb);font-size:26px;letter-spacing:0.08em;
+  background:var(--lime);color:var(--ink);border:none;border-radius:16px;padding:20px;
+  cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;
+}
+.gm-tapbtn:active{transform:scale(0.97);}
+.gm-tapbtn.hold{background:#ffaa44;}
+.gm-signal{
+  font-family:var(--bb);font-size:52px;color:var(--lime);letter-spacing:0.1em;
+  min-height:60px;display:flex;align-items:center;justify-content:center;
+}
+.gm-grind{height:26px;border-radius:99px;background:var(--ink3);border:1px solid var(--ink4);overflow:hidden;margin:14px 0 4px;}
+.gm-grind-fill{height:100%;background:linear-gradient(90deg,#ffaa44,var(--lime));width:0%;border-radius:99px;transition:width 0.05s linear;}
+.gm-timer-line{font-family:var(--mono);font-size:10px;color:var(--dust2);letter-spacing:0.08em;}
+.gm-lights{display:flex;gap:18px;justify-content:center;margin:22px 0;}
+.gm-light{
+  width:52px;height:52px;border-radius:50%;background:var(--ink3);border:2px solid var(--ink4);
+  opacity:0;transform:scale(0.5);transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.gm-light.show{opacity:1;transform:scale(1);}
+.gm-light.white{background:var(--cream);box-shadow:0 0 20px rgba(240,237,230,0.6);}
+.gm-light.red{background:#e33;box-shadow:0 0 20px rgba(238,51,51,0.5);}
+.gm-verdict{font-family:var(--bb);font-size:40px;letter-spacing:0.05em;margin-bottom:6px;}
+.gm-verdict.ok{color:var(--lime);}
+.gm-verdict.no{color:#ff6655;}
+.gm-flavor{font-family:var(--mono);font-size:11px;color:var(--dust);line-height:1.6;margin-bottom:18px;}
+.gm-caf{display:flex;flex-direction:column;gap:10px;margin:16px 0 4px;}
+.gm-caf-opt{
+  text-align:left;background:var(--ink3);border:1px solid var(--ink4);border-radius:14px;
+  padding:14px 16px;cursor:pointer;transition:border-color 0.15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.gm-caf-opt:active{border-color:var(--lime);}
+.gm-caf-name{font-family:var(--bb);font-size:19px;color:var(--cream);letter-spacing:0.04em;}
+.gm-caf-desc{font-family:var(--mono);font-size:10px;color:var(--dust);margin-top:3px;line-height:1.5;}
+.gm-res-row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 4px;border-bottom:1px solid var(--ink3);}
+.gm-res-lift{font-family:var(--sg);font-size:14px;font-weight:600;color:var(--cream);}
+.gm-res-kg{font-family:var(--bb);font-size:26px;color:var(--lime);}
+.gm-res-kg.zero{color:#ff6655;font-size:18px;}
+.gm-total{font-family:var(--bb);font-size:76px;color:var(--lime);line-height:1;margin:14px 0 2px;}
+.gm-best{font-family:var(--mono);font-size:10px;color:var(--dust2);letter-spacing:0.08em;margin-bottom:18px;}
+.gm-scale-num{font-family:var(--bb);font-size:84px;color:var(--cream);line-height:1;margin:14px 0;}
+/* topplista */
+.gm-lb-submit{display:flex;gap:8px;margin:16px 0 4px;}
+.gm-lb-submit input{
+  flex:1;min-width:0;background:var(--ink3);border:1px solid var(--ink4);
+  border-radius:12px;color:var(--cream);font-family:var(--sg);font-size:15px;
+  padding:12px 14px;outline:none;
+}
+.gm-lb-submit input:focus{border-color:rgba(203,255,77,0.5);}
+.gm-lb-submit .gm-btn{width:auto;flex-shrink:0;}
+.gm-lb-row{
+  display:flex;align-items:center;gap:12px;padding:10px 12px;
+  border-bottom:1px solid var(--ink3);text-align:left;
+}
+.gm-lb-row:last-child{border-bottom:none;}
+.gm-lb-row.me{
+  background:rgba(203,255,77,0.08);border-radius:10px;
+  border:1px solid rgba(203,255,77,0.35);margin:2px 0;
+}
+.gm-lb-rank{font-family:var(--bb);font-size:20px;color:var(--dust);min-width:32px;text-align:center;}
+.gm-lb-row.me .gm-lb-rank{color:var(--lime);}
+.gm-lb-mid{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;text-align:left;}
+.gm-lb-name{font-family:var(--sg);font-size:14px;font-weight:600;color:var(--cream);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.gm-lb-lifts{font-family:var(--mono);font-size:9px;color:var(--dust2);letter-spacing:0.05em;}
+.gm-lb-total{font-family:var(--bb);font-size:21px;color:var(--lime);}
+.gm-lb-empty{font-family:var(--mono);font-size:11px;color:var(--dust2);padding:20px 0;letter-spacing:0.05em;}
+.gm-lb-yourrank{font-family:var(--bb);font-size:24px;color:var(--lime);margin:14px 0 8px;letter-spacing:0.04em;}
+.gm-shake{animation:gm-shake 0.35s ease;}
+@keyframes gm-shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-7px);}75%{transform:translateX(7px);}}
+.gm-jitter{animation:gm-jitter 0.12s infinite;}
+@keyframes gm-jitter{0%,100%{transform:translate(0,0);}25%{transform:translate(1.5px,-1px);}75%{transform:translate(-1.5px,1px);}}
+/* karaktärens leder */
+.jc-legs,.jc-torso,.jc-bar,.jc-arms,.jc-head{transition:transform 0.08s linear;transform-box:fill-box;}
+.gm-scene svg{filter:drop-shadow(0 8px 16px rgba(0,0,0,0.45));}
+.gm-card.live{
+  touch-action:none;
+  -webkit-user-select:none;user-select:none;
+  -webkit-touch-callout:none;
+  cursor:pointer;
+}
+.gm-card.gm-hit{animation:gm-hitpulse 0.4s ease;}
+@keyframes gm-hitpulse{
+  0%{box-shadow:0 0 0 0 rgba(203,255,77,0.7);border-color:var(--lime);}
+  100%{box-shadow:0 0 0 26px rgba(203,255,77,0);}
+}
+.gm-card.gm-miss{animation:gm-misspulse 0.4s ease;}
+@keyframes gm-misspulse{
+  0%{box-shadow:0 0 0 0 rgba(255,85,68,0.55);border-color:#ff6655;}
+  100%{box-shadow:0 0 0 22px rgba(255,85,68,0);}
+}
+@media(prefers-reduced-motion:reduce){
+  .gm-card.gm-hit,.gm-card.gm-miss{animation:none;}
+}
+.gm-card.live .gm-tapbtn{pointer-events:none;}
+.gm-feedback{
+  font-family:var(--bb);font-size:22px;letter-spacing:0.05em;
+  min-height:28px;margin-top:8px;transition:color 0.1s;
+}
+.gm-help{
+  width:24px;height:24px;border-radius:50%;background:var(--ink3);
+  border:1px solid var(--ink4);color:var(--dust);font-family:var(--mono);
+  font-size:12px;cursor:pointer;vertical-align:middle;margin-left:4px;
+}
+.gm-crash{
+  background:rgba(255,102,85,0.1);border:1px solid rgba(255,102,85,0.35);
+  border-radius:12px;padding:11px 14px;margin-bottom:12px;
+  font-family:var(--mono);font-size:10.5px;color:#ff8877;line-height:1.55;letter-spacing:0.03em;
+}
+.gm-wi-bar{
+  position:relative;height:30px;border-radius:99px;background:var(--ink3);
+  border:1px solid var(--ink4);margin:16px 6px 4px;overflow:visible;
+}
+.gm-wi-over{
+  position:absolute;top:0;bottom:0;right:0;background:rgba(255,85,68,0.18);
+  border-radius:0 99px 99px 0;
+}
+.gm-wi-limit{
+  position:absolute;top:-7px;bottom:-7px;width:3px;background:#ff6655;z-index:2;border-radius:2px;
+}
+.gm-wi-marker{
+  position:absolute;top:-5px;bottom:-5px;width:14px;border-radius:99px;
+  background:var(--cream);box-shadow:0 0 12px rgba(240,237,230,0.5);
+  transform:translateX(-50%);z-index:3;
+}
+.gm-light{position:relative;display:flex;align-items:center;justify-content:center;}
+.gm-light-sym{font-size:20px;font-weight:900;opacity:0;color:transparent;}
+.gm-light.show.white .gm-light-sym{opacity:1;color:#333;}
+.gm-light.show.red .gm-light-sym{opacity:1;color:#fff;}
+.gm-sofar{
+  font-family:var(--mono);font-size:9.5px;color:var(--dust2);letter-spacing:0.06em;
+  padding:9px;border-top:1px solid var(--ink3);margin-bottom:14px;text-transform:uppercase;
+}
+@media(prefers-reduced-motion:reduce){
+  .gm-jitter,.gm-shake{animation:none;}
+  .gm-light{transition:opacity 0.2s;}
+}
+
 /* ── COMEBACK-BANNER ── */
 .cb-card{
   background:rgba(255,170,68,0.07);border:1px solid rgba(255,170,68,0.3);
@@ -915,7 +1097,7 @@ body{padding-bottom:74px;}
 .print-title{display:none;font-family:sans-serif;font-size:28px;font-weight:700;padding:16px 0 4px;color:#111;}
 @media print{
   body{background:#fff!important;color:#111!important;}
-  .topbar,.hero,footer,.dl-btn,.week-tabs-bar,.input-mode-toggle,.prog-type-tabs,.fab-timer,.timer-sheet,.timer-overlay,.share-btn,#unit-toggle-wrap,.bottom-nav,.goals-section{display:none!important;}
+  .topbar,.hero,footer,.dl-btn,.week-tabs-bar,.input-mode-toggle,.prog-type-tabs,.fab-timer,.timer-sheet,.timer-overlay,.share-btn,#unit-toggle-wrap,.bottom-nav,.goals-section,.game-section{display:none!important;}
   .prog-section{display:block!important;padding:0 16px;}
   .prog-top{padding:16px 0 10px;border-top:none;}
   .prog-heading{font-size:24px;color:#111;}
@@ -1637,11 +1819,16 @@ body{padding-bottom:74px;}
   </div>
 </section>
 
+<section class="game-section" id="game-section">
+  <div id="game-stage"></div>
+</section>
+
 <nav class="bottom-nav" id="bottom-nav">
   <button class="bn-btn active" id="bn-program" onclick="switchView('program')"><span class="bn-ico">🏋️</span><span class="bn-label">Program</span></button>
   <button class="bn-btn" id="bn-log" onclick="switchView('log')"><span class="bn-ico">📓</span><span class="bn-label">Logg</span><span class="bn-dot" id="bn-log-dot"></span></button>
   <button class="bn-btn" id="bn-goals" onclick="switchView('goals')"><span class="bn-ico">🎯</span><span class="bn-label">Mål</span></button>
   <button class="bn-btn" id="bn-rank" onclick="switchView('rank')"><span class="bn-ico">🏆</span><span class="bn-label">Ranking</span></button>
+  <button class="bn-btn" id="bn-game" onclick="switchView('game')"><span class="bn-ico">🎮</span><span class="bn-label">Spel</span></button>
 </nav>
 
 <footer>
@@ -2790,6 +2977,130 @@ const T = {
     cb_active_text: 'Nästa program genereras med sänkta vikter och ett set mindre per övning. Stäng av när du känner dig varm i kläderna igen.',
     cb_off: 'Stäng av comeback-läge',
     cb_summary: (pct) => `Comeback-läge: −${pct} % · ett set mindre per övning`,
+    nav_game: 'Spel',
+    gm_eyebrow: 'Nio försök · Noll rädsla',
+    gm_intro: 'Du tävlar som Jonathan i Mirakelmästerskapen. Välj vikter, sätt nio lyft och jaga en stor total. Tyngre vikt = högre total men svårare mekanik. Bommar du alla tre i en gren är du utbombad – precis som på riktigt.',
+    gm_start: 'Till invägningen',
+    gm_weighin_eyebrow: 'Steg 1 av 3 · Invägning',
+    gm_weighin_title: 'INVÄGNING',
+    gm_wi_sub: 'Klassen är -83 och vågen är obeveklig: max 83,00 kg. Välj strategi – nära gränsen ger formbonus, över gränsen ger omvägning.',
+    gm_wi_s1n: '🛡️ Spela säkert',
+    gm_wi_s1d: 'Garanterat godkänd – markören kan inte hamna över gränsen. Men bonusen är utom räckhåll.',
+    gm_wi_s2n: '🎯 Finjustera vikten',
+    gm_wi_s2d: 'Ligg precis under gränsen för chans till formbonus. Snabb markör och stor risk att väga över.',
+    gm_wi_s3n: '🔥 Aggressiv viktminskning',
+    gm_wi_s3d: 'Brett tryggt spann OCH bonusen inom räckhåll. Men bantningen kostar: tröttheten byggs snabbare hela tävlingen – stark i böjen, tyngre i marken.',
+    gm_wi_live: 'STANNA VÅGEN',
+    gm_wi_hint: 'Så nära 83,00 som möjligt – men UNDER. Röd zon = över gränsen.',
+    gm_wi_stop: 'STANNA',
+    gm_wi_ok: 'Godkänd invägning. Dags att tanka koffein. ✓',
+    gm_wi_perfect: 'Perfekt invägning! Precis under gränsen – liten formbonus. 💪',
+    gm_wi_over: 'ÖVER GRÄNSEN! Bastu, spott och böner – du får en omvägning.',
+    gm_wi_again: 'OMVÄGNING – STANNA',
+    gm_wi_fail_title: 'Missad invägning ✗',
+    gm_wi_fail_text: 'Två försök över gränsen. Domarna skakar på huvudet – tävlingen startas om.',
+    gm_wi_restart: 'Starta om tävlingen',
+    gm_caf_eyebrow: 'Steg 2 av 3 · Koffein',
+    gm_caf_title: 'KOFFEINVAL',
+    gm_caf_sub: 'Kraft eller kontroll? Mer koffein ger mer styrka – och mer kaos. Det finns inget facit.',
+    gm_caf1_n: '🚫 Ingen koffein',
+    gm_caf1_d: 'Ingen styrkebonus, men allt går långsammare och är lättare att pricka. Zen.',
+    gm_caf2_n: '☕ En kaffe',
+    gm_caf2_d: 'Liten styrkebonus, noll nackdelar. Det pålitliga valet när totalen måste i hamn.',
+    gm_caf3_n: '☕☕ Dubbel espresso',
+    gm_caf3_d: 'Tydlig styrkebonus – men markörerna blir snabbare och träffzonerna mindre.',
+    gm_caf4_n: '⚡ Mirakelboosten',
+    gm_caf4_d: 'Störst styrkebonus – men skakigt, oförutsägbara banor, falska signaler, och drygt 50 % risk för en krasch som gör marklyften TYNGRE än en kaffe hade gjort den. Hjälte eller haveri.',
+    gm_crash_notice: '⚡ KOFFEINKRASCHEN ÄR HÄR. Mirakelboosten har övergett dig – marklyften känns tyngre än den borde.',
+    gm_risk_1: '🟢 Säkert',
+    gm_risk_2: '⚪ Rimligt',
+    gm_risk_3: '🟠 Aggressivt',
+    gm_risk_4: '🔴 Extremt',
+    gm_form_1: 'Stark dagsform',
+    gm_form_2: 'Stabil',
+    gm_form_3: 'Lite sliten',
+    gm_form_4: 'Trött',
+    gm_form_5: 'På gränsen',
+    gm_instr_title: 'SÅ FUNKAR DET',
+    gm_instr_s: '<strong>1.</strong> Markören åker NER längs banan – tryck när den är i den gröna <strong>djupzonen</strong> (längst ner).<br><strong>2.</strong> Markören vänder och åker UPP – tryck igen i <strong>låszonen</strong> (högst upp).<br><br>Trycker du för tidigt är böjen för grund. Tyngre vikt = snabbare markör och smalare zoner.',
+    gm_instr_b: '<strong>Två domarsignaler – två reaktioner:</strong><br><br><strong>1.</strong> Vänta med fingret i luften. När <strong>START!</strong> blinkar: tryck och HÅLL så snabbt du kan.<br><strong>2.</strong> Stången sänks. När <strong>PRESS!</strong> blinkar: SLÄPP exakt då.<br><br>Trycker du före START är det tjuvstart. Släpper du före PRESS är lyftet dött. Båda reaktionerna räknas – och på hög koffein dyker falska signaler upp.',
+    gm_instr_d: '<strong>Tryck-tryck-tryck!</strong> Bygg kraft snabbare än den rinner ur mätaren och fyll den innan greppet släpper (4 sekunder).<br><br>Tyngre vikt kräver mer kraft och dränerar snabbare. Full mätare = utlåst. Tar tiden slut stannar stången på vägen.',
+    gm_instr_go: 'Uppfattat – kör!',
+    gm_tap_anywhere: '(tryck var som helst på kortet)',
+    gm_go: 'KÖR!',
+    gm_arm_s: 'STARTA LYFTET',
+    gm_arm_b: 'TA UT STÅNGEN',
+    gm_arm_d: 'GREPPA STÅNGEN',
+    gm_dl_ready_hint: 'Timern startar när du greppar',
+    gm_fb_perfect: 'Perfekt djup!',
+    gm_fb_edge: 'På gränsen – godkänt djup',
+    gm_fb_shallow: 'FÖR GRUNT!',
+    gm_fb_late: 'För sent – balansen sviktar',
+    gm_fb_lock: 'Stabil utlåsning!',
+    gm_fb_lockmiss: 'Missad låsning!',
+    gm_sofar_best: 'Bästa i grenen',
+    gm_sofar_total: 'Total hittills',
+    gm_attempt: (n) => `Försök ${n} av 3`,
+    gm_pick_sub: 'Välj vikt – högre = svårare mekanik',
+    gm_lift_btn: 'LYFT',
+    gm_sq_tap1: 'TRYCK I DJUPZONEN',
+    gm_sq_tap2: 'TRYCK I LÅSZONEN',
+    gm_bp_ready: 'GÖR DIG REDO…',
+    gm_bp_start: 'START!',
+    gm_bp_false: 'TJUVSTART!',
+    gm_bp_slowstart: 'FÖR SEN START – STÅNGEN RANN IVÄG!',
+    gm_bp_hold: 'HÅLL FÖR ATT SÄNKA',
+    gm_bp_wait: 'SÄNKER… INVÄNTA PRESS!',
+    gm_bp_press: 'PRESS!',
+    gm_bp_early: 'SLÄPPTE FÖR TIDIGT!',
+    gm_bp_fake: 'stilla…',
+    gm_bp_hint: 'Två signaler: tryck & håll på START! – släpp på PRESS!',
+    gm_dl_mash: 'DRA! (tryck-tryck-tryck)',
+    gm_dl_time: (s) => `${s} s kvar innan greppet släpper`,
+    gm_good: 'GODKÄNT!',
+    gm_no: 'UNDERKÄNT',
+    gm_next: 'Nästa',
+    gm_fl_bad: [
+      'Domarna var inte imponerade.',
+      'Vi pratar inte mer om det där.',
+      'Det där såg dyrt ut för totalen.',
+      'Stången vann den ronden.',
+      'Magkänslan sa ja. Verkligheten sa nej.',
+    ],
+    gm_fl_2: [
+      'Två vita räcker – i protokollet står det godkänt.',
+      'Inte snyggt, men poäng är poäng.',
+      'En domare hade något i ögat. Godkänt!',
+      'Grind city. Men det räknas.',
+    ],
+    gm_fl_3: [
+      'Tre vita! Rent som en visselpipa.',
+      'Domarna älskade det. Publiken också.',
+      'Tävlingsgodkänt med råge. Mirakel!',
+      'Det där såg ut som uppvärmning.',
+    ],
+    gm_res_eyebrow: 'Mirakelmästerskapen · Resultat',
+    gm_res_title: 'SLUTRESULTAT',
+    gm_res_bomb_title: 'UTBOMBAD 💥',
+    gm_res_bomb_text: 'Ingen godkänd i alla grenar – ingen total. Det händer de bästa. Nya försök, nya mirakel.',
+    gm_res_zero: 'bombad',
+    gm_res_newbest: '🏆 NYTT PERSONBÄSTA I SPELET!',
+    gm_res_best: (kg) => `Ditt bästa: ${kg} kg`,
+    gm_replay: 'Spela igen',
+    lb_title: 'TOPPLISTA',
+    lb_title_btn: '🏆 Topplista',
+    lb_note: 'Topp 10 bästa totaler. En lyftare – en plats: bara ditt bästa resultat räknas.',
+    lb_name_ph: 'Ditt namn…',
+    lb_submit: 'Skicka in',
+    lb_sending: 'Skickar…',
+    lb_loading: 'Hämtar topplistan…',
+    lb_your_rank: (n) => `Du ligger på plats ${n}! 🎉`,
+    lb_outside: 'Inrapporterat! Du är utanför topp 10 – än. 💪',
+    lb_empty: 'Tomt än så länge – bli först på tavlan!',
+    lb_error: 'Kunde inte nå topplistan. Kontrollera att mp-game-workern är deployad.',
+    lb_back: 'Tillbaka',
+    share_btn: 'Dela ditt resultat',
+    share_rank: (n) => `PLATS ${n} PÅ TOPPLISTAN`,
     goals_eyebrow: 'Mål · Takt · Prognos',
     goals_title: 'Dina <span>mål</span>',
     goals_sub: 'Sätt mål per lyft eller total – appen räknar ut din form (bästa e1RM senaste 90 dagarna), hur du taktar och när du beräknas vara framme.',
@@ -3028,6 +3339,130 @@ const T = {
     cb_active_text: 'The next program is generated with reduced weights and one set fewer per exercise. Turn it off once you feel warmed up again.',
     cb_off: 'Turn off comeback mode',
     cb_summary: (pct) => `Comeback mode: −${pct}% · one set fewer per exercise`,
+    nav_game: 'Game',
+    gm_eyebrow: 'Nine attempts · Zero fear',
+    gm_intro: 'You compete as Jonathan in the Miracle Championships. Pick weights, make nine lifts, chase a big total. Heavier weight = bigger total but harder mechanics. Miss all three in one lift and you bomb out – just like the real thing.',
+    gm_start: 'To the weigh-in',
+    gm_weighin_eyebrow: 'Step 1 of 3 · Weigh-in',
+    gm_weighin_title: 'WEIGH-IN',
+    gm_wi_sub: 'The class is -83 and the scale is merciless: 83.00 kg max. Pick a strategy – close to the limit earns a form bonus, over the limit means a re-weigh.',
+    gm_wi_s1n: '🛡️ Play it safe',
+    gm_wi_s1d: 'Guaranteed pass – the marker cannot land over the limit. But the bonus is out of reach.',
+    gm_wi_s2n: '🎯 Fine-tune the weight',
+    gm_wi_s2d: 'Sit right under the limit for a shot at the form bonus. Fast marker and a real risk of weighing over.',
+    gm_wi_s3n: '🔥 Aggressive weight cut',
+    gm_wi_s3d: 'Wide safe range AND the bonus within reach. But the cut costs you: fatigue builds faster all meet – strong in the squat, heavier in the deadlift.',
+    gm_wi_live: 'STOP THE SCALE',
+    gm_wi_hint: 'As close to 83.00 as possible – but UNDER. Red zone = over the limit.',
+    gm_wi_stop: 'STOP',
+    gm_wi_ok: 'Weigh-in approved. Time for caffeine. ✓',
+    gm_wi_perfect: 'Perfect weigh-in! Just under the limit – small form bonus. 💪',
+    gm_wi_over: 'OVER THE LIMIT! Sauna, spit and prayers – you get one re-weigh.',
+    gm_wi_again: 'RE-WEIGH – STOP',
+    gm_wi_fail_title: 'Missed weigh-in ✗',
+    gm_wi_fail_text: 'Two attempts over the limit. The judges shake their heads – the meet restarts.',
+    gm_wi_restart: 'Restart the meet',
+    gm_caf_eyebrow: 'Step 2 of 3 · Caffeine',
+    gm_caf_title: 'CAFFEINE CHOICE',
+    gm_caf_sub: 'Power or control? More caffeine means more strength – and more chaos. There is no right answer.',
+    gm_caf1_n: '🚫 No caffeine',
+    gm_caf1_d: 'No strength bonus, but everything moves slower and is easier to hit. Zen.',
+    gm_caf2_n: '☕ One coffee',
+    gm_caf2_d: 'Small strength bonus, zero downsides. The reliable choice when the total must land.',
+    gm_caf3_n: '☕☕ Double espresso',
+    gm_caf3_d: 'Clear strength bonus – but markers get faster and hit zones smaller.',
+    gm_caf4_n: '⚡ The Miracle Boost',
+    gm_caf4_d: 'Biggest strength bonus – but shaky, unpredictable bar paths, fake signals, and a 50%+ risk of a crash that makes deadlifts HEAVIER than one coffee would have. Hero or disaster.',
+    gm_crash_notice: '⚡ THE CAFFEINE CRASH IS HERE. The Miracle Boost has abandoned you – the deadlifts feel heavier than they should.',
+    gm_risk_1: '🟢 Safe',
+    gm_risk_2: '⚪ Reasonable',
+    gm_risk_3: '🟠 Aggressive',
+    gm_risk_4: '🔴 Extreme',
+    gm_form_1: 'Strong day',
+    gm_form_2: 'Stable',
+    gm_form_3: 'A bit worn',
+    gm_form_4: 'Tired',
+    gm_form_5: 'On the edge',
+    gm_instr_title: 'HOW IT WORKS',
+    gm_instr_s: '<strong>1.</strong> The marker travels DOWN the track – tap while it\'s in the green <strong>depth zone</strong> (at the bottom).<br><strong>2.</strong> The marker turns and travels UP – tap again in the <strong>lockout zone</strong> (at the top).<br><br>Tap too early and the squat is too shallow. Heavier weight = faster marker and narrower zones.',
+    gm_instr_b: '<strong>Two referee signals – two reactions:</strong><br><br><strong>1.</strong> Wait with your finger in the air. When <strong>START!</strong> flashes: press and HOLD as fast as you can.<br><strong>2.</strong> The bar lowers. When <strong>PRESS!</strong> flashes: RELEASE exactly then.<br><br>Press before START and it\'s a false start. Release before PRESS and the lift is dead. Both reactions count – and on high caffeine, fake signals appear.',
+    gm_instr_d: '<strong>Tap-tap-tap!</strong> Build power faster than it drains and fill the meter before your grip gives out (4 seconds).<br><br>Heavier weight needs more power and drains faster. Full meter = lockout. Run out of time and the bar stalls.',
+    gm_instr_go: 'Got it – let\'s lift!',
+    gm_tap_anywhere: '(tap anywhere on the card)',
+    gm_go: 'GO!',
+    gm_arm_s: 'START THE LIFT',
+    gm_arm_b: 'UNRACK THE BAR',
+    gm_arm_d: 'GRIP THE BAR',
+    gm_dl_ready_hint: 'The clock starts when you grip',
+    gm_fb_perfect: 'Perfect depth!',
+    gm_fb_edge: 'Borderline – depth approved',
+    gm_fb_shallow: 'TOO SHALLOW!',
+    gm_fb_late: 'Too late – balance wobbles',
+    gm_fb_lock: 'Solid lockout!',
+    gm_fb_lockmiss: 'Missed lockout!',
+    gm_sofar_best: 'Best this lift',
+    gm_sofar_total: 'Total so far',
+    gm_attempt: (n) => `Attempt ${n} of 3`,
+    gm_pick_sub: 'Pick a weight – heavier = harder mechanics',
+    gm_lift_btn: 'LIFT',
+    gm_sq_tap1: 'TAP IN THE DEPTH ZONE',
+    gm_sq_tap2: 'TAP IN THE LOCKOUT ZONE',
+    gm_bp_ready: 'GET SET…',
+    gm_bp_start: 'START!',
+    gm_bp_false: 'FALSE START!',
+    gm_bp_slowstart: 'TOO SLOW – THE BAR DRIFTED!',
+    gm_bp_hold: 'HOLD TO LOWER',
+    gm_bp_wait: 'LOWERING… WAIT FOR PRESS!',
+    gm_bp_press: 'PRESS!',
+    gm_bp_early: 'RELEASED TOO EARLY!',
+    gm_bp_fake: 'steady…',
+    gm_bp_hint: 'Two signals: press & hold on START! – release on PRESS!',
+    gm_dl_mash: 'PULL! (tap-tap-tap)',
+    gm_dl_time: (s) => `${s} s until your grip gives out`,
+    gm_good: 'GOOD LIFT!',
+    gm_no: 'NO LIFT',
+    gm_next: 'Next',
+    gm_fl_bad: [
+      'The judges were not impressed.',
+      'We don\'t talk about that one.',
+      'That looked expensive for the total.',
+      'The bar won that round.',
+      'The gut said yes. Reality said no.',
+    ],
+    gm_fl_2: [
+      'Two whites is enough – the scoreboard says good lift.',
+      'Not pretty, but points are points.',
+      'One judge had something in their eye. Good lift!',
+      'Grind city. But it counts.',
+    ],
+    gm_fl_3: [
+      'Three whites! Clean as a whistle.',
+      'The judges loved it. So did the crowd.',
+      'Competition-legal with room to spare. Miracle!',
+      'That looked like a warm-up.',
+    ],
+    gm_res_eyebrow: 'Miracle Championships · Results',
+    gm_res_title: 'FINAL RESULTS',
+    gm_res_bomb_title: 'BOMBED OUT 💥',
+    gm_res_bomb_text: 'No good lift in every event – no total. Happens to the best. New attempts, new miracles.',
+    gm_res_zero: 'bombed',
+    gm_res_newbest: '🏆 NEW GAME PERSONAL BEST!',
+    gm_res_best: (kg) => `Your best: ${kg} kg`,
+    gm_replay: 'Play again',
+    lb_title: 'LEADERBOARD',
+    lb_title_btn: '🏆 Leaderboard',
+    lb_note: 'Top 10 best totals. One lifter – one spot: only your best result counts.',
+    lb_name_ph: 'Your name…',
+    lb_submit: 'Submit',
+    lb_sending: 'Sending…',
+    lb_loading: 'Loading leaderboard…',
+    lb_your_rank: (n) => `You are ranked #${n}! 🎉`,
+    lb_outside: 'Submitted! You are outside the top 10 – for now. 💪',
+    lb_empty: 'Empty so far – be first on the board!',
+    lb_error: 'Could not reach the leaderboard. Check that the mp-game worker is deployed.',
+    lb_back: 'Back',
+    share_btn: 'Share your result',
+    share_rank: (n) => `RANKED #${n} ON THE LEADERBOARD`,
     goals_eyebrow: 'Goals · Pace · Projection',
     goals_title: 'Your <span>goals</span>',
     goals_sub: 'Set goals per lift or total – the app tracks your form (best e1RM last 90 days), your pace, and when you are projected to get there.',
@@ -3172,6 +3607,9 @@ function applyLangGoalsNav(L){
   document.querySelector('#bn-goals .bn-label').textContent = L.nav_goals;
   document.querySelector('#bn-rank .bn-label').textContent = L.nav_rank;
   if(rgoalInit){ rgoalInit = false; if(currentView === 'goals') initRGoal(); }
+  const gameBtn = document.querySelector('#bn-game .bn-label');
+  if(gameBtn) gameBtn.textContent = L.nav_game;
+  if(typeof G !== 'undefined' && G && currentView === 'game') renderGame();
   applyInstallLang();
   set('goals-eyebrow','goals_eyebrow'); set('goals-title','goals_title',true); set('goals-sub','goals_sub');
   set('goal-add-title','goal_add_title'); set('goal-add-btn','goal_add_btn');
@@ -3949,6 +4387,7 @@ const VIEW_SECTIONS = {
   log:     ['#log-section'],
   goals:   ['#goals-section'],
   rank:    ['#rank-section'],
+  game:    ['#game-section'],
 };
 function switchView(v){
   currentView = v;
@@ -3970,6 +4409,7 @@ function switchView(v){
   if(btn) btn.classList.add('active');
   if(v === 'log') renderLogUI();
   if(v === 'goals') renderGoals();
+  if(v === 'game') initGame();
   updateLogDot();
   try{ localStorage.setItem('mp_view', v); }catch(e){}
   window.scrollTo({top:0, behavior:'instant'});
@@ -5384,6 +5824,1112 @@ function disconnectSync(){
 window.addEventListener('DOMContentLoaded', ()=>{ renderLogUI(); if(syncState.key) syncNow(false); });
 window.addEventListener('resize', ()=>{ if(currentLogTab===2) renderStatChart(); });
 
+
+// ══════════════════════════════════════════════════════════════════
+// MIRAKELMÄSTERSKAPEN – styrkelyftsspelet
+// ══════════════════════════════════════════════════════════════════
+// Karaktärens utseende – enkelt att justera:
+const JC = { skin:'#E8B89A', hair:'#5a4030', beard:'#4a3426', singlet:'#141414', accent:'#CBFF4D' };
+// Jonathans tävlingspersonbästan – kalibrerar hela svårigheten
+const GAME_PBS = { s:290, b:160, d:327.5 };      // total 777,5
+const GAME_CLASS = 83.0;                          // viktklass (max kg)
+const GAME_BEST_KEY = 'mp_game_best';
+const GAME_INSTR_KEY = 'mp_game_instr_v1';
+const GAME_NAME_KEY = 'mp_game_name';
+const GAME_API_URL = 'https://mp-game.jonathan-soderling.workers.dev';
+
+let G = null;      // spelstate
+let gRAF = null;   // aktiv animationsloop
+
+function initGame(){
+  if(!G) newGame();
+  renderGame();
+}
+function newGame(){
+  G = {
+    phase:'intro',
+    caffeine:null,
+    bw:null,
+    wiTries:0,
+    wiStrategy:null,
+    formMod:1.0,      // invägningsbonus/-straff
+    fatigue:0,        // ackumulerad trötthet 0..~0.09
+    crashed:false,    // koffeinkrasch (Mirakelboosten)
+    liftOrder:['s','b','d'],
+    liftIdx:0,
+    attempts:{ s:[], b:[], d:[] },   // {kg, good}
+    instrShown:{},
+    pendingKg:null,
+  };
+}
+function gLiftKey(){ return G.liftOrder[G.liftIdx]; }
+function gLiftName(k){
+  const L = { sv:{s:'Knäböj',b:'Bänkpress',d:'Marklyft'}, en:{s:'Squat',b:'Bench press',d:'Deadlift'} };
+  return (L[currentLang]||L.sv)[k];
+}
+function gStopRAF(){ if(gRAF){ cancelAnimationFrame(gRAF); gRAF = null; } }
+
+// ── TOPPLISTA (Cloudflare Worker + KV) ─────────────────────────────
+let lbCache = null, lbCacheAt = 0;
+async function lbFetch(force){
+  if(!force && lbCache && Date.now() - lbCacheAt < 60000) return lbCache;
+  const res = await fetch(GAME_API_URL + '/top');
+  if(!res.ok) throw new Error('HTTP ' + res.status);
+  const j = await res.json();
+  lbCache = j.scores || [];
+  lbCacheAt = Date.now();
+  return lbCache;
+}
+function lbSavedName(){
+  try{ return localStorage.getItem(GAME_NAME_KEY) || ''; }catch(e){ return ''; }
+}
+function lbRows(scores, highlightName){
+  const hn = (highlightName || '').trim().toLowerCase();
+  if(!scores || !scores.length) return `<div class="gm-lb-empty">${t('lb_empty')}</div>`;
+  const fmt = v => String(v).replace('.', ',');
+  return scores.slice(0, 10).map((s, i) => {
+    const hasLifts = Number.isFinite(s.s) && Number.isFinite(s.b) && Number.isFinite(s.d);
+    return `
+    <div class="gm-lb-row${String(s.name).trim().toLowerCase() === hn ? ' me' : ''}">
+      <span class="gm-lb-rank">${i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i + 1)}</span>
+      <div class="gm-lb-mid">
+        <span class="gm-lb-name">${escapeHtml(String(s.name))}</span>
+        ${hasLifts ? `<span class="gm-lb-lifts">${fmt(s.s)} / ${fmt(s.b)} / ${fmt(s.d)}</span>` : ''}
+      </div>
+      <span class="gm-lb-total">${fmt(s.total)} kg</span>
+    </div>`;
+  }).join('');
+}
+function lbShow(){
+  G.boardBack = G.phase;
+  gGo('board');
+}
+async function gBoard(st){
+  st.innerHTML = `<div class="gm-card">
+    <div class="gm-eyebrow">${t('gm_eyebrow')}</div>
+    <div class="gm-title" style="font-size:34px">${t('lb_title')}</div>
+    <div class="gm-sub">${t('lb_note')}</div>
+    <div id="gm-lb-list"><div class="gm-lb-empty">${t('lb_loading')}</div></div>
+    <button class="gm-btn ghost" style="margin-top:16px" onclick="gGo(G.boardBack || 'intro')">${t('lb_back')}</button>
+  </div>`;
+  try{
+    const sc = await lbFetch();
+    const el = document.getElementById('gm-lb-list');
+    if(el) el.innerHTML = lbRows(sc, lbSavedName());
+  }catch(e){
+    const el = document.getElementById('gm-lb-list');
+    if(el) el.innerHTML = `<div class="gm-lb-empty">${t('lb_error')}</div>`;
+  }
+}
+async function lbSubmit(total, s, b, d){
+  const inp = document.getElementById('gm-lb-name');
+  const name = (inp.value || '').trim().slice(0, 20);
+  if(!name){ inp.focus(); return; }
+  try{ localStorage.setItem(GAME_NAME_KEY, name); }catch(e){}
+  const wrap = document.getElementById('gm-lb-submit');
+  const area = document.getElementById('gm-lb-area');
+  wrap.style.display = 'none';
+  area.innerHTML = `<div class="gm-lb-empty">${t('lb_sending')}</div>`;
+  try{
+    const res = await fetch(GAME_API_URL + '/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, total, s, b, d }),
+    });
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    const j = await res.json();
+    lbCache = j.scores || [];
+    lbCacheAt = Date.now();
+    G.submitted = true;
+    G.lastRank = j.rank || null;
+    area.innerHTML = `<div class="gm-lb-yourrank">${j.rank && j.rank <= 10 ? t('lb_your_rank', j.rank) : t('lb_outside')}</div>`
+      + lbRows(lbCache, name);
+    if(j.rank === 1 && typeof confettiBurst === 'function') confettiBurst(area);
+    if(navigator.vibrate) navigator.vibrate([30, 40, 60]);
+  }catch(e){
+    wrap.style.display = '';
+    area.innerHTML = `<div class="gm-lb-empty">${t('lb_error')}</div>`;
+  }
+}
+
+// ── DELA RESULTAT: story-bild via Canvas + Web Share ───────────────
+async function gShareResult(total, bs, bb, bd){
+  const W = 1080, H = 1920;
+  const cv = document.createElement('canvas');
+  cv.width = W; cv.height = H;
+  const ctx = cv.getContext('2d');
+  try{
+    await Promise.all([
+      document.fonts.load('100px "Bebas Neue"'),
+      document.fonts.load('40px "Space Grotesk"'),
+      document.fonts.load('30px "DM Mono"'),
+    ]);
+  }catch(e){}
+
+  // Bakgrund + ram
+  ctx.fillStyle = '#09090A';
+  ctx.fillRect(0, 0, W, H);
+  ctx.strokeStyle = 'rgba(203,255,77,0.3)';
+  ctx.lineWidth = 3;
+  ctx.strokeRect(48, 48, W - 96, H - 96);
+
+  // Eyebrow + titel
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#CBFF4D';
+  ctx.font = '500 34px "DM Mono", monospace';
+  ctx.fillText(t('gm_eyebrow').toUpperCase(), W/2, 215);
+  ctx.fillStyle = '#F0EDE6';
+  ctx.font = '150px "Bebas Neue", sans-serif';
+  ctx.fillText('MIRAKEL-', W/2, 385);
+  ctx.fillStyle = '#CBFF4D';
+  ctx.fillText('MÄSTERSKAPEN', W/2, 520);
+
+  // Tre vita domarlampor
+  for(let i = 0; i < 3; i++){
+    const x = W/2 + (i - 1) * 110;
+    ctx.beginPath();
+    ctx.arc(x, 640, 34, 0, Math.PI * 2);
+    ctx.fillStyle = '#F0EDE6';
+    ctx.shadowColor = 'rgba(240,237,230,0.8)';
+    ctx.shadowBlur = 30;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+
+  // Lyftrader
+  const rows = [[gLiftName('s'), bs], [gLiftName('b'), bb], [gLiftName('d'), bd]];
+  const fmt = v => String(v).replace('.', ',');
+  let y = 830;
+  rows.forEach(([name, kg])=>{
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#F0EDE6';
+    ctx.font = '600 42px "Space Grotesk", sans-serif';
+    ctx.fillText(name, 150, y);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#CBFF4D';
+    ctx.font = '76px "Bebas Neue", sans-serif';
+    ctx.fillText(fmt(kg) + ' KG', W - 150, y + 8);
+    ctx.strokeStyle = 'rgba(240,237,230,0.12)';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(150, y + 42); ctx.lineTo(W - 150, y + 42); ctx.stroke();
+    y += 130;
+  });
+
+  // TOTAL
+  ctx.textAlign = 'center';
+  ctx.fillStyle = 'rgba(240,237,230,0.55)';
+  ctx.font = '500 36px "DM Mono", monospace';
+  ctx.fillText('TOTAL', W/2, y + 90);
+  ctx.fillStyle = '#CBFF4D';
+  ctx.shadowColor = 'rgba(203,255,77,0.55)';
+  ctx.shadowBlur = 60;
+  ctx.font = '300px "Bebas Neue", sans-serif';
+  ctx.fillText(fmt(total), W/2, y + 380);
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = 'rgba(240,237,230,0.55)';
+  ctx.font = '60px "Bebas Neue", sans-serif';
+  ctx.fillText('KG', W/2, y + 460);
+
+  // Placering på topplistan
+  let by = y + 560;
+  if(G.lastRank){
+    const txt = '🏆 ' + t('share_rank', G.lastRank);
+    ctx.font = '600 44px "Space Grotesk", sans-serif';
+    const tw = ctx.measureText(txt).width;
+    const pad = 44, bw = tw + pad * 2, bh = 96;
+    ctx.fillStyle = '#CBFF4D';
+    ctx.beginPath();
+    ctx.roundRect((W - bw)/2, by - bh + 30, bw, bh, 48);
+    ctx.fill();
+    ctx.fillStyle = '#09090A';
+    ctx.fillText(txt, W/2, by - 3);
+    by += 130;
+  }
+
+  // Namn + datum
+  const nm = lbSavedName();
+  ctx.fillStyle = '#F0EDE6';
+  ctx.font = '600 46px "Space Grotesk", sans-serif';
+  ctx.fillText(nm ? nm : '', W/2, by + 20);
+  ctx.fillStyle = 'rgba(240,237,230,0.4)';
+  ctx.font = '500 30px "DM Mono", monospace';
+  const loc = currentLang === 'sv' ? 'sv-SE' : 'en-US';
+  ctx.fillText(new Date().toLocaleDateString(loc, {day:'numeric', month:'long', year:'numeric'}), W/2, by + 75);
+
+  // Footer
+  ctx.fillStyle = 'rgba(203,255,77,0.6)';
+  ctx.font = '500 30px "DM Mono", monospace';
+  ctx.fillText('soederj.github.io/mirakelprogrammet', W/2, H - 110);
+
+  // Dela eller ladda ner
+  cv.toBlob(async (blob)=>{
+    if(!blob) return;
+    const file = new File([blob], 'mirakelmasterskapen.png', { type: 'image/png' });
+    if(navigator.canShare && navigator.canShare({ files: [file] })){
+      try{
+        await navigator.share({ files: [file], title: 'Mirakelmästerskapen' });
+        return;
+      }catch(e){ if(e && e.name === 'AbortError') return; }
+    }
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'mirakelmasterskapen.png';
+    a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href), 5000);
+  }, 'image/png');
+}
+
+// ── Dagskapacitet: PB × dagsform × koffein × trötthet (× krasch) ───
+function gCap(k){
+  let cap = GAME_PBS[k];                           // PB = 100 % av rå kapacitet
+  if(G.caffeine) cap *= G.caffeine.power;
+  cap *= (G.formMod || 1);
+  cap *= (1 - (G.fatigue || 0));
+  if(k === 'd' && G.crashed) cap *= 0.90;          // kraschen gör marken SÄMRE än en kaffe
+  return cap;
+}
+function gDifficulty(kg){
+  return kg / gCap(gLiftKey()); // ~0.88 säkert, 1.0 extremt, >1.0 brant värre
+}
+// zonbredd 0..1 av banan – brantare kurva + koffeinets zonstraff
+function gZoneFrac(kg){
+  const r = gDifficulty(kg);
+  const zm = (G.caffeine && G.caffeine.zone) ? G.caffeine.zone : 1;
+  return Math.max(0.045, Math.min(0.30, 0.30 - (r - 0.85) * 1.9)) * zm;
+}
+function gSpeed(){ return (G.caffeine ? G.caffeine.speed : 1); }
+// Ungefärlig dagsform-signal (aldrig exakta siffror)
+function gFormLabel(){
+  const f = G.fatigue || 0;
+  if(f < 0.008) return t('gm_form_1');
+  if(f < 0.018) return t('gm_form_2');
+  if(f < 0.032) return t('gm_form_3');
+  if(f < 0.048) return t('gm_form_4');
+  return t('gm_form_5');
+}
+
+// ── Domarlampor: kvalitet 0..1 → 3 domare ──────────────────────────
+function judgeLights(success, quality){
+  // Deterministisk kärna: träffar du mekaniken är lyftet godkänt.
+  // Slumpen avgör bara 2 eller 3 vita. Endast kantträffar (yttersta
+  // zonkanten) kan fällas – och missar fälls alltid.
+  let good, whites;
+  if(!success){
+    good = false;
+    whites = Math.random() < 0.12 ? 1 : 0;   // nån domare är snäll ibland
+  } else if(quality >= 0.30){
+    good = true;
+    const p3 = Math.min(0.97, 0.25 + quality * 0.85);
+    whites = Math.random() < p3 ? 3 : 2;
+  } else {
+    good = Math.random() < 0.55;             // yttersta kanten – domarna oense
+    whites = good ? 2 : 1;
+  }
+  const lights = [0,1,2].map(i => i < whites);
+  for(let i = lights.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [lights[i], lights[j]] = [lights[j], lights[i]];
+  }
+  return { lights, good };
+}
+
+// ── Viktregler mellan försök ────────────────────────────────────────
+function gMinKg(){
+  const arr = G.attempts[gLiftKey()];
+  if(!arr.length) return 20;
+  const last = arr[arr.length-1];
+  return last.good ? last.kg + 2.5 : last.kg;
+}
+function gSuggestKg(){
+  const k = gLiftKey();
+  const arr = G.attempts[k];
+  const cap = gCap(k);
+  if(!arr.length) return Math.round(cap * 0.88 / 2.5) * 2.5;
+  const last = arr[arr.length-1];
+  return last.good ? Math.round((last.kg + Math.max(2.5, cap*0.03)) / 2.5) * 2.5 : last.kg;
+}
+function gStep(delta){
+  G.pendingKg = Math.max(gMinKg(), Math.round((G.pendingKg + delta) * 2) / 2);
+  document.getElementById('gm-kg').textContent = G.pendingKg;
+  const risk = document.getElementById('gm-risk');
+  if(risk) risk.innerHTML = gRiskLabel(G.pendingKg);
+  if(navigator.vibrate) navigator.vibrate(8);
+}
+
+// ── KARAKTÄREN ──────────────────────────────────────────────────────
+// Delade gradienter – anropas med unikt prefix per SVG
+function gDefs(p){
+  return `<defs>
+    <linearGradient id="${p}-pr" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff6a55"/><stop offset="1" stop-color="#bd1f1f"/>
+    </linearGradient>
+    <linearGradient id="${p}-pl" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e4ff8e"/><stop offset="1" stop-color="#a3d337"/>
+    </linearGradient>
+    <linearGradient id="${p}-bar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#dcdce1"/><stop offset="1" stop-color="#88888f"/>
+    </linearGradient>
+    <linearGradient id="${p}-sg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#26262a"/><stop offset="1" stop-color="#0d0d0f"/>
+    </linearGradient>
+  </defs>`;
+}
+function jHead(x, y, s){
+  return `<g transform="translate(${x},${y}) scale(${s})">
+    <circle cx="0" cy="0" r="16" fill="${JC.skin}"/>
+    <path d="M -16 -4 A 16 16 0 0 1 16 -4 L 14 -10 Q 0 -22 -14 -10 Z" fill="${JC.hair}"/>
+    <path d="M -12 6 Q 0 20 12 6 L 12 12 Q 0 24 -12 12 Z" fill="${JC.beard}"/>
+    <path d="M -9.5 -5 Q -6 -7 -2.5 -5.5" stroke="#33241a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <path d="M 2.5 -5.5 Q 6 -7 9.5 -5" stroke="#33241a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <circle cx="-6" cy="-1" r="1.8" fill="#222"/><circle cx="6" cy="-1" r="1.8" fill="#222"/>
+    <path d="M -3.5 9.5 Q 0 11.5 3.5 9.5" stroke="#2b1d13" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  </g>`;
+}
+function gPlates(cx, cy, p){
+  p = p || 'g';
+  return `<rect x="${cx-9}" y="${cy-26}" width="9" height="52" rx="3" fill="url(#${p}-pr)" stroke="rgba(0,0,0,0.35)" stroke-width="0.8"/>
+          <rect x="${cx}" y="${cy-26}" width="9" height="52" rx="3" fill="url(#${p}-pl)" stroke="rgba(0,0,0,0.35)" stroke-width="0.8"/>`;
+}
+// Böj: frontvy – ben & kropp följer djupet via CSS-transform i JS
+function charSquat(){
+  return `<svg viewBox="0 0 220 240" width="190" height="208">
+    ${gDefs('sq')}
+    <rect x="10" y="222" width="200" height="4" rx="2" fill="#26262a"/>
+    <ellipse cx="110" cy="224" rx="60" ry="5" fill="#000" opacity="0.32"/>
+    <g class="jc-legs">
+      <rect x="86" y="150" width="16" height="66" rx="8" fill="${JC.skin}"/>
+      <rect x="118" y="150" width="16" height="66" rx="8" fill="${JC.skin}"/>
+      <rect x="84" y="150" width="20" height="26" rx="8" fill="${JC.accent}"/>
+      <rect x="116" y="150" width="20" height="26" rx="8" fill="${JC.accent}"/>
+    </g>
+    <g class="jc-torso">
+      <!-- stången ritas FÖRST = ligger bakom nacke och axlar -->
+      <g class="jc-bar">
+        <rect x="18" y="82" width="184" height="7" rx="3" fill="url(#sq-bar)"/>
+        ${gPlates(30, 85, 'sq')}${gPlates(190, 85, 'sq')}
+      </g>
+      <rect x="80" y="86" width="60" height="72" rx="18" fill="url(#sq-sg)"/>
+      <text x="110" y="130" text-anchor="middle" font-family="'Bebas Neue'" font-size="20" fill="${JC.accent}">M</text>
+      <rect x="62" y="90" width="14" height="46" rx="7" fill="${JC.skin}"/>
+      <rect x="144" y="90" width="14" height="46" rx="7" fill="${JC.skin}"/>
+      <!-- händer greppar stången utanför axlarna -->
+      <rect x="58" y="74" width="12" height="22" rx="6" fill="${JC.skin}"/>
+      <rect x="150" y="74" width="12" height="22" rx="6" fill="${JC.skin}"/>
+      <g class="jc-head" style="transform-box:fill-box;transform-origin:50% 75%;">${jHead(110, 66, 1)}</g>
+    </g>
+  </svg>`;
+}
+// Bänk: äkta sidovy – på rygg med ansiktet uppåt, plattan sedd från sidan
+function charBench(){
+  return `<svg viewBox="0 0 240 180" width="230" height="172">
+    ${gDefs('bp')}
+    <radialGradient id="bp-disc" cx="0.35" cy="0.3" r="0.95">
+      <stop offset="0" stop-color="#ff7565"/><stop offset="1" stop-color="#b31d1d"/>
+    </radialGradient>
+    <rect x="8" y="170" width="224" height="4" rx="2" fill="#26262a"/>
+    <ellipse cx="112" cy="172" rx="80" ry="5" fill="#000" opacity="0.32"/>
+    <!-- bänk -->
+    <rect x="42" y="120" width="126" height="13" rx="6" fill="#3a3a40"/>
+    <rect x="56" y="133" width="9" height="37" fill="#2a2a2e"/>
+    <rect x="144" y="133" width="9" height="37" fill="#2a2a2e"/>
+    <!-- kropp på rygg -->
+    <rect x="66" y="104" width="92" height="18" rx="9" fill="url(#bp-sg)"/>
+    <!-- ben: lår ut från höften, underben ner till golv -->
+    <rect x="150" y="106" width="38" height="13" rx="6" fill="${JC.skin}"/>
+    <rect x="178" y="112" width="12" height="58" rx="6" fill="${JC.skin}"/>
+    <rect x="176" y="164" width="24" height="8" rx="4" fill="#222"/>
+    <!-- huvud på rygg: bakhuvudet mot bänken, ansiktet uppåt -->
+    <g transform="translate(54,104)">
+      <circle cx="0" cy="0" r="15" fill="${JC.skin}"/>
+      <path d="M -15 3 A 15 15 0 0 0 15 3 L 12 9 Q 0 17 -12 9 Z" fill="${JC.hair}"/>
+      <ellipse cx="11" cy="-1" rx="6.5" ry="11" fill="${JC.beard}"/>
+      <path d="M -8.5 -6.5 Q -5 -8.5 -1.5 -7.5" stroke="#33241a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <circle cx="-3" cy="-8" r="1.8" fill="#222"/>
+      <circle cx="4" cy="-13.5" r="2.6" fill="${JC.skin}"/>
+    </g>
+    <!-- armar upp mot stången – viks vid axeln när stången sänks -->
+    <g class="jc-arms" style="transform-box:fill-box;transform-origin:50% 100%;">
+      <rect x="86" y="62" width="11" height="46" rx="5" fill="${JC.skin}" transform="rotate(-8 91 85)"/>
+      <rect x="112" y="62" width="11" height="46" rx="5" fill="${JC.skin}" transform="rotate(6 117 85)"/>
+    </g>
+    <!-- stång i sidovy: stångstump + plattstack rakt ovanför bröstet -->
+    <g class="jc-bar">
+      <rect x="72" y="49" width="76" height="6" rx="3" fill="url(#bp-bar)"/>
+      <circle cx="110" cy="52" r="27" fill="url(#bp-disc)" stroke="rgba(0,0,0,0.35)" stroke-width="1"/>
+      <circle cx="110" cy="52" r="27" fill="none" stroke="${JC.accent}" stroke-width="5"/>
+      <circle cx="110" cy="52" r="6.5" fill="url(#bp-bar)" stroke="rgba(0,0,0,0.3)" stroke-width="0.8"/>
+    </g>
+  </svg>`;
+}
+// Mark: sidovy – hinge, stången följer grinden
+function charDead(){
+  // Ritad i LÅST position (p=1). Startpose sätts av setDeadPose(0):
+  // bål roterar kring höften, armar kontraroteras (hänger alltid lodrätt),
+  // stången följer händerna från golv till lås.
+  return `<svg viewBox="0 0 220 230" width="190" height="199">
+    ${gDefs('dl')}
+    <rect x="6" y="216" width="208" height="4" rx="2" fill="#26262a"/>
+    <ellipse cx="110" cy="218" rx="64" ry="5" fill="#000" opacity="0.32"/>
+    <g class="jc-legs" style="transform-box:view-box;transform-origin:110px 214px;">
+      <rect x="94" y="142" width="15" height="72" rx="7" fill="${JC.skin}"/>
+      <rect x="116" y="142" width="15" height="72" rx="7" fill="${JC.skin}"/>
+      <rect x="90" y="207" width="25" height="9" rx="4" fill="#222"/>
+      <rect x="113" y="207" width="25" height="9" rx="4" fill="#222"/>
+    </g>
+    <g class="jc-torso" style="transform-box:view-box;transform-origin:108px 146px;">
+      <rect x="88" y="78" width="42" height="74" rx="15" fill="url(#dl-sg)"/>
+      <text x="109" y="122" text-anchor="middle" font-family="'Bebas Neue'" font-size="15" fill="${JC.accent}">M</text>
+      ${jHead(109, 58, 0.92)}
+      <g class="jc-arms" style="transform-box:view-box;transform-origin:109px 94px;">
+        <rect x="96" y="92" width="11" height="60" rx="5" fill="${JC.skin}"/>
+        <rect x="112" y="92" width="11" height="60" rx="5" fill="${JC.skin}"/>
+      </g>
+    </g>
+    <g class="jc-bar">
+      <rect x="14" y="149" width="192" height="7" rx="3" fill="url(#dl-bar)"/>
+      ${gPlates(28, 152, 'dl')}${gPlates(192, 152, 'dl')}
+    </g>
+  </svg>`;
+}
+// Sätter hela marklyftsposen utifrån p (0 = uppställning vid golvet, 1 = utlåst)
+function setDeadPose(el, p){
+  const torso = el.querySelector('.jc-torso');
+  const arms = el.querySelector('.jc-arms');
+  const bar = el.querySelector('.jc-bar');
+  const legs = el.querySelector('.jc-legs');
+  const a = 34 * (1 - p) + 2;                       // höftvinkel
+  if(torso) torso.style.transform = `rotate(${a}deg)`;
+  if(arms) arms.style.transform = `rotate(${-a}deg) scaleY(${1 + (1 - p) * 0.32})`;
+  if(bar) bar.style.transform = `translateY(${(1 - p) * 38}px)`;
+  if(legs) legs.style.transform = `scaleY(${1 - (1 - p) * 0.05})`;
+}
+
+// ── RENDERING ───────────────────────────────────────────────────────
+function renderGame(){
+  gStopRAF();
+  const st = document.getElementById('game-stage');
+  if(!st) return;
+  const P = G.phase;
+  if(P === 'intro') return gIntro(st);
+  if(P === 'weighin') return gWeighin(st);
+  if(P === 'weighin2') return gWeighin2(st);
+  if(P === 'caffeine') return gCaffeine(st);
+  if(P === 'select') return gSelect(st);
+  if(P === 'live') return gLive(st);
+  if(P === 'lights') return gLightsView(st);
+  if(P === 'results') return gResults(st);
+  if(P === 'board') return gBoard(st);
+}
+function gGo(phase){ G.phase = phase; renderGame(); }
+
+function gIntro(st){
+  st.innerHTML = `<div class="gm-card">
+    <div class="gm-eyebrow">${t('gm_eyebrow')}</div>
+    <div class="gm-title">MIRAKEL<br><span class="lime">MÄSTERSKAPEN</span></div>
+    <div class="gm-scene">${charSquat()}</div>
+    <div class="gm-sub">${t('gm_intro')}</div>
+    <button class="gm-btn" onclick="gGo('weighin')">${t('gm_start')}</button>
+    <button class="gm-btn ghost" onclick="lbShow()">${t('lb_title_btn')}</button>
+  </div>`;
+}
+
+// Strategival → timingmoment: stanna markören så nära men UNDER 83,00 kg
+// Tre riskprofiler:
+//  safe = garanterat godkänd, bonusen onåbar (spannet slutar under 82,55)
+//  fine = hela uppsidan: bonuszonen nåbar men ~43 % av spannet är över gränsen
+//  aggr = brett tryggt spann + bonus inom räckhåll, MEN bantningen ger
+//         snabbare trötthetsuppbyggnad hela tävlingen (stark tidigt, viker sent)
+const WI_STRATS = {
+  safe: { lo:80.9, hi:82.5,  speed:0.70, fat:1,   nk:'gm_wi_s1n', dk:'gm_wi_s1d' },
+  fine: { lo:82.2, hi:83.6,  speed:1.05, fat:1,   nk:'gm_wi_s2n', dk:'gm_wi_s2d' },
+  aggr: { lo:81.4, hi:83.2,  speed:0.90, fat:1.6, nk:'gm_wi_s3n', dk:'gm_wi_s3d' },
+};
+function gWeighin(st){
+  st.innerHTML = `<div class="gm-card">
+    <div class="gm-eyebrow">${t('gm_weighin_eyebrow')}</div>
+    <div class="gm-title">${t('gm_weighin_title')}</div>
+    <div class="gm-sub">${t('gm_wi_sub')}</div>
+    <div class="gm-caf">${Object.entries(WI_STRATS).map(([id,s])=>`
+      <div class="gm-caf-opt" onclick="gPickWiStrat('${id}')">
+        <div class="gm-caf-name">${t(s.nk)}</div>
+        <div class="gm-caf-desc">${t(s.dk)}</div>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+function gPickWiStrat(id){
+  G.wiStrategy = id;
+  G.fatigueMult = WI_STRATS[id].fat || 1;
+  gGo('weighin2');
+  if(navigator.vibrate) navigator.vibrate(12);
+}
+function gWeighin2(st){
+  const s = WI_STRATS[G.wiStrategy];
+  st.innerHTML = `<div class="gm-card">
+    <div class="gm-eyebrow">${t('gm_weighin_eyebrow')}</div>
+    <div class="gm-title" style="font-size:32px">${t('gm_wi_live')}</div>
+    <div class="gm-scale-num" id="gm-wi-num">—</div>
+    <div class="gm-wi-bar">
+      <div class="gm-wi-limit" style="left:${(GAME_CLASS - s.lo)/(s.hi - s.lo)*100}%"></div>
+      <div class="gm-wi-over" style="left:${(GAME_CLASS - s.lo)/(s.hi - s.lo)*100}%"></div>
+      <div class="gm-wi-marker" id="gm-wi-marker"></div>
+    </div>
+    <div class="gm-timer-line" style="margin:6px 0 14px">${t('gm_wi_hint')}</div>
+    <button class="gm-tapbtn" id="gm-wi-stop">${t('gm_wi_stop')}</button>
+  </div>`;
+  const num = document.getElementById('gm-wi-num');
+  const marker = document.getElementById('gm-wi-marker');
+  const t0 = performance.now();
+  let stopped = false;
+  function val(now){
+    const p = (Math.sin((now - t0) / 1000 * s.speed * Math.PI * 2 - Math.PI/2) + 1) / 2;
+    return s.lo + p * (s.hi - s.lo);
+  }
+  function frame(now){
+    if(stopped) return;
+    const v = val(now);
+    num.textContent = v.toFixed(2).replace('.', ',');
+    num.style.color = v > GAME_CLASS ? '#ff6655' : 'var(--cream)';
+    marker.style.left = ((v - s.lo) / (s.hi - s.lo) * 100) + '%';
+    gRAF = requestAnimationFrame(frame);
+  }
+  document.getElementById('gm-wi-stop').addEventListener('pointerdown', (e)=>{
+    e.preventDefault();
+    if(stopped) return;
+    stopped = true;
+    gStopRAF();
+    gWiResult(val(performance.now()));
+  });
+  gRAF = requestAnimationFrame(frame);
+}
+function gWiResult(v){
+  G.bw = v;
+  const num = document.getElementById('gm-wi-num');
+  num.textContent = v.toFixed(2).replace('.', ',') + ' kg';
+  const note = document.createElement('div');
+  note.className = 'gm-sub';
+  const btn = document.getElementById('gm-wi-stop');
+  if(v > GAME_CLASS){
+    G.wiTries++;
+    if(G.wiTries >= 2){
+      // Missad andra invägning → tävlingen startas om
+      num.style.color = '#ff6655';
+      btn.style.display = 'none';
+      note.innerHTML = `<strong style="color:#ff6655">${t('gm_wi_fail_title')}</strong><br>${t('gm_wi_fail_text')}`;
+      btn.insertAdjacentElement('afterend', note);
+      const rb = document.createElement('button');
+      rb.className = 'gm-btn'; rb.style.marginTop = '12px';
+      rb.textContent = t('gm_wi_restart');
+      rb.onclick = ()=>{ newGame(); renderGame(); };
+      note.insertAdjacentElement('afterend', rb);
+      if(navigator.vibrate) navigator.vibrate([120,60,120]);
+      return;
+    }
+    num.style.color = '#ff6655';
+    note.textContent = t('gm_wi_over');
+    btn.insertAdjacentElement('afterend', note);
+    btn.textContent = t('gm_wi_again');
+    if(navigator.vibrate) navigator.vibrate([80,50,80]);
+    setTimeout(()=>gGo('weighin2'), 1800);
+    return;
+  }
+  if(v >= GAME_CLASS - 0.45){
+    G.formMod *= 1.03;
+    num.style.color = 'var(--lime)';
+    note.innerHTML = `<strong style="color:var(--lime)">${t('gm_wi_perfect')}</strong>`;
+    if(typeof confettiBurst === 'function') confettiBurst(num);
+  } else {
+    note.textContent = t('gm_wi_ok');
+  }
+  btn.style.display = 'none';
+  btn.insertAdjacentElement('afterend', note);
+  if(navigator.vibrate) navigator.vibrate([30,40,60]);
+  setTimeout(()=>gGo('caffeine'), 1700);
+}
+
+function gCaffeine(st){
+  const opts = [
+    { id:'none',  power:1.00, speed:0.85, jitter:0,    zone:1.0,  nk:'gm_caf1_n', dk:'gm_caf1_d' },
+    { id:'one',   power:1.03, speed:1.00, jitter:0,    zone:1.0,  nk:'gm_caf2_n', dk:'gm_caf2_d' },
+    { id:'espr',  power:1.06, speed:1.10, jitter:0.4,  zone:0.93, nk:'gm_caf3_n', dk:'gm_caf3_d' },
+    { id:'boost', power:1.10, speed:1.22, jitter:1,    zone:0.86, nk:'gm_caf4_n', dk:'gm_caf4_d' },
+  ];
+  st.innerHTML = `<div class="gm-card">
+    <div class="gm-eyebrow">${t('gm_caf_eyebrow')}</div>
+    <div class="gm-title">${t('gm_caf_title')}</div>
+    <div class="gm-sub">${t('gm_caf_sub')}</div>
+    <div class="gm-caf">${opts.map((o,i)=>`
+      <div class="gm-caf-opt" onclick='gPickCaf(${JSON.stringify(o)})'>
+        <div class="gm-caf-name">${t(o.nk)}</div>
+        <div class="gm-caf-desc">${t(o.dk)}</div>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+function gPickCaf(o){
+  G.caffeine = o;
+  G.pendingKg = null;
+  gGo('select');
+  if(navigator.vibrate) navigator.vibrate(15);
+}
+
+function gAttChips(){
+  const arr = G.attempts[gLiftKey()];
+  let h = '';
+  for(let i=0;i<3;i++){
+    const a = arr[i];
+    const cls = a ? (a.good ? 'good':'bad') : (i === arr.length ? 'cur':'');
+    h += `<span class="gm-att ${cls}">${a ? rkg(a.kg) : '·'}</span>`;
+  }
+  return h;
+}
+
+// Koffeinkraschen: avgörs när marklyften börjar (endast Mirakelboosten)
+function gMaybeCrash(){
+  if(G.crashed || !G.caffeine || G.caffeine.id !== 'boost') return false;
+  if(gLiftKey() !== 'd' || G.attempts.d.length > 0) return false;
+  if(Math.random() < 0.55){ G.crashed = true; return true; }
+  G.crashed = false;
+  return false;
+}
+// Grov riskbedömning av vald vikt (aldrig exakta sannolikheter)
+function gRiskLabel(kg){
+  const r = gDifficulty(kg);
+  if(r < 0.90) return `<span style="color:var(--lime)">${t('gm_risk_1')}</span>`;
+  if(r < 0.955) return `<span style="color:var(--cream)">${t('gm_risk_2')}</span>`;
+  if(r < 1.0) return `<span style="color:#ffaa44">${t('gm_risk_3')}</span>`;
+  return `<span style="color:#ff6655">${t('gm_risk_4')}</span>`;
+}
+function gInstrSeen(k){
+  try{ return (localStorage.getItem(GAME_INSTR_KEY)||'').includes(k); }catch(e){ return false; }
+}
+function gInstrMark(k){
+  try{ localStorage.setItem(GAME_INSTR_KEY, (localStorage.getItem(GAME_INSTR_KEY)||'') + k); }catch(e){}
+}
+function gInstr(st, k){
+  const key = k==='s' ? 'gm_instr_s' : k==='b' ? 'gm_instr_b' : 'gm_instr_d';
+  setTimeout(()=>{ const el = document.getElementById('gm-instr-char'); if(el && k==='d') setDeadPose(el, 0); }, 0);
+  st.innerHTML = `<div class="gm-card">
+    <div class="gm-eyebrow">${gLiftName(k)}</div>
+    <div class="gm-title" style="font-size:30px">${t('gm_instr_title')}</div>
+    <div class="gm-scene" id="gm-instr-char">${k==='s'?charSquat():k==='b'?charBench():charDead()}</div>
+    <div class="gm-sub" style="text-align:left">${t(key)}</div>
+    <button class="gm-btn" onclick="gInstrMark('${gLiftKey()}');gGo('select')">${t('gm_instr_go')}</button>
+  </div>`;
+}
+function gSelect(st){
+  const k = gLiftKey();
+  // Instruktion första gången grenen spelas (kan öppnas igen via ?)
+  if(G.attempts[k].length === 0 && !G.instrShown[k]){
+    G.instrShown[k] = true;
+    const crashed = gMaybeCrash();
+    if(!gInstrSeen(k)){ G.pendingCrashNote = crashed; return gInstr(st, k); }
+    if(crashed) G.pendingCrashNote = true;
+  }
+  if(G.pendingKg == null) G.pendingKg = gSuggestKg();
+  G.pendingKg = Math.max(gMinKg(), G.pendingKg);
+  const attNo = G.attempts[k].length + 1;
+  const crashNote = G.pendingCrashNote
+    ? `<div class="gm-crash">${t('gm_crash_notice')}</div>` : '';
+  G.pendingCrashNote = false;
+  st.innerHTML = `<div class="gm-card">
+    <div class="gm-hud">
+      <span>${gLiftName(k)} <button class="gm-help" onclick="gInstr(document.getElementById('game-stage'),'${k}')">?</button></span>
+      <span>${t('gm_attempt', attNo)} · ${gFormLabel()}</span>
+    </div>
+    ${crashNote}
+    <div class="gm-attempts">${gAttChips()}</div>
+    <div class="gm-kg-big" id="gm-kg">${G.pendingKg}</div>
+    <div class="gm-timer-line" id="gm-risk">${gRiskLabel(G.pendingKg)}</div>
+    <div class="gm-stepper">
+      <button class="gm-step" onclick="gStep(-10)">−10</button>
+      <button class="gm-step" onclick="gStep(-2.5)">−2,5</button>
+      <button class="gm-step" onclick="gStep(2.5)">+2,5</button>
+      <button class="gm-step" onclick="gStep(10)">+10</button>
+    </div>
+    <button class="gm-btn" onclick="gStartAttempt()">${t('gm_lift_btn')}</button>
+  </div>`;
+}
+function gStartAttempt(){ gGo('live'); }
+
+// ── LYFTMEKANIKER ───────────────────────────────────────────────────
+function gLive(st){
+  const k = gLiftKey();
+  if(k === 's') return gSquatLive(st);
+  if(k === 'b') return gBenchLive(st);
+  return gDeadLive(st);
+}
+
+// BÖJ: markör ner + upp – tryck i djupzonen på väg ner, i låszonen på väg upp
+function gSquatLive(st){
+  const kg = G.pendingKg;
+  const zone = gZoneFrac(kg);
+  const zoneD = Math.max(0.055, Math.min(0.26, zone));  // liten men ärlig djupzon
+  const zoneU = Math.max(0.09, zone * 0.9);             // låszon
+  const jit = G.caffeine.jitter;
+  st.innerHTML = `<div class="gm-card live" id="gm-live-card">
+    <div class="gm-hud"><span>${gLiftName('s')}</span><strong>${kg} kg</strong></div>
+    <div class="gm-scene${jit>0.6?' gm-jitter':''}" id="gm-char">${charSquat()}</div>
+    <div class="gm-track-wrap">
+      <div class="gm-track"></div>
+      <div class="gm-zone" id="gm-zone1" style="top:${(1-zoneD)*100}%;height:${zoneD*100}%"></div>
+      <div class="gm-zone" id="gm-zone2" style="top:0;height:${zoneU*100}%;opacity:0;"></div>
+      <div class="gm-marker" id="gm-marker" style="top:0%"></div>
+    </div>
+    <div class="gm-feedback" id="gm-fb">&nbsp;</div>
+    <button class="gm-tapbtn" id="gm-tap">${t('gm_arm_s')}</button>
+    <div class="gm-timer-line" style="margin-top:8px">${t('gm_tap_anywhere')}</div>
+  </div>`;
+  const marker = document.getElementById('gm-marker');
+  const charEl = document.getElementById('gm-char');
+  const legs = charEl.querySelector('.jc-legs');
+  const torso = charEl.querySelector('.jc-torso');
+  const tapBtn = document.getElementById('gm-tap');
+  // Tunga vikter rör sig snabbare + slumpvariation per försök så
+  // tajmingen inte går att nöta in. Hög koffein (jitter) gör banans
+  // hastighet MER oförutsägbar – precisionsskatten för styrkebonusen.
+  const wSpd = 1 + Math.max(0, gDifficulty(kg) - 0.88) * 2.2;
+  const T_HALF = (1050 * (0.94 - jit * 0.03 + Math.random() * (0.12 + jit * 0.10))) / (gSpeed() * wSpd);
+  let phase = 'down', tapped = {down:null, up:null}, t0 = 0, armed = false;
+  function pos(now){
+    const p = Math.min(1, (now - t0) / T_HALF);
+    return phase === 'down' ? p : 1 - p;
+  }
+  const headEl = charEl.querySelector('.jc-head');
+  function setChar(depth){
+    if(legs) legs.style.transform = `scaleY(${1 - depth*0.42}) translateY(${depth*46}px)`;
+    if(torso) torso.style.transform = `translateY(${depth*62}px)`;
+    if(headEl) headEl.style.transform = `rotate(${depth*7}deg)`;  // koncentrerad blick ner i hålet
+  }
+  function frame(now){
+    const p = Math.min(1, (now - t0) / T_HALF);
+    const d = pos(now);
+    marker.style.top = (d * 100) + '%';
+    setChar(d);
+    const z1 = document.getElementById('gm-zone1');
+    const z2 = document.getElementById('gm-zone2');
+    if(z1) z1.classList.toggle('hot', phase === 'down' && d >= (1 - zoneD));
+    if(z2) z2.classList.toggle('hot', phase === 'up' && d <= zoneU);
+    if(p >= 1){
+      if(phase === 'down'){
+        if(tapped.down == null) tapped.down = -1; // missade djupet
+        phase = 'up'; t0 = now;
+        document.getElementById('gm-zone2').style.opacity = '1';
+        document.getElementById('gm-zone1').style.opacity = '0.25';
+        tapBtn.textContent = t('gm_sq_tap2');
+      } else {
+        if(tapped.up == null) tapped.up = -1;
+        return gFinishAttempt(tapped.down >= 0 && tapped.up >= 0, ((Math.max(0,tapped.down) + Math.max(0,tapped.up)) / 2));
+      }
+    }
+    gRAF = requestAnimationFrame(frame);
+  }
+  const fb = document.getElementById('gm-fb');
+  const card = document.getElementById('gm-live-card');
+  const flash = (ok, txt, perfect) => {
+    fb.textContent = txt;
+    fb.style.color = ok ? 'var(--lime)' : '#ff6655';
+    marker.style.background = ok ? 'var(--lime)' : '#ff6655';
+    card.classList.remove('gm-hit','gm-miss');
+    void card.offsetWidth; // starta om animationen
+    card.classList.add(ok ? 'gm-hit' : 'gm-miss');
+    if(perfect && typeof confettiBurst === 'function') confettiBurst(marker);
+    setTimeout(()=>{ marker.style.background = ''; }, 300);
+  };
+  // Hela kortet är tryckyta. Bedömningen kompenserar ~55 ms touch-latens,
+  // så "jag tryckte när den var i zonen" faktiskt stämmer.
+  card.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    if(!armed){
+      armed = true;
+      tapBtn.textContent = t('gm_sq_tap1');
+      fb.textContent = t('gm_go');
+      fb.style.color = 'var(--lime)';
+      if(navigator.vibrate) navigator.vibrate(15);
+      setTimeout(()=>{
+        fb.innerHTML = '&nbsp;';
+        t0 = performance.now();
+        gRAF = requestAnimationFrame(frame);
+      }, 500);
+      return;
+    }
+    if(t0 === 0) return; // under KÖR!-pulsen
+    const d = pos(performance.now() - 55);
+    if(phase === 'down' && tapped.down == null){
+      const inZone = d >= (1 - zoneD);
+      tapped.down = inZone ? 1 - Math.abs(d - (1 - zoneD/2)) / (zoneD/2) * 0.75 : -1;
+      const perfect = inZone && tapped.down > 0.78;
+      flash(inZone, inZone ? (perfect ? t('gm_fb_perfect') : t('gm_fb_edge')) : t('gm_fb_shallow'), perfect);
+      if(!inZone){ document.getElementById('gm-char').classList.add('gm-shake'); }
+      if(navigator.vibrate) navigator.vibrate(inZone ? (perfect ? [30,30,50] : 25) : [40,30,40]);
+    } else if(phase === 'up' && tapped.up == null){
+      const inZone = d <= zoneU;
+      tapped.up = inZone ? 1 - Math.abs(d - zoneU/2) / (zoneU/2) * 0.75 : -1;
+      const perfect = inZone && tapped.up > 0.78;
+      flash(inZone, inZone ? t('gm_fb_lock') : t('gm_fb_lockmiss'), perfect);
+      if(navigator.vibrate) navigator.vibrate(inZone ? (perfect ? [30,30,50] : 25) : [40,30,40]);
+    }
+  });
+}
+
+// BÄNK: två signaler – tryck & håll på START!, släpp på PRESS!
+function gBenchLive(st){
+  const kg = G.pendingKg;
+  const diff = gDifficulty(kg);
+  const win1 = Math.max(220, 480 - (diff - 0.85) * 800) / gSpeed();   // startreaktion (generösare)
+  const win2 = Math.max(95, 340 - (diff - 0.82) * 1200) / gSpeed();   // pressreaktion – nära taket krävs blixtreflexer
+  const jit = G.caffeine.jitter;
+  st.innerHTML = `<div class="gm-card live" id="gm-live-card">
+    <div class="gm-hud"><span>${gLiftName('b')}</span><strong>${kg} kg</strong></div>
+    <div class="gm-scene${jit>0.6?' gm-jitter':''}" id="gm-char">${charBench()}</div>
+    <div class="gm-signal" id="gm-signal"></div>
+    <button class="gm-tapbtn hold" id="gm-hold" tabindex="-1">${t('gm_arm_b')}</button>
+    <div class="gm-timer-line" style="margin-top:10px">${t('gm_bp_hint')} ${t('gm_tap_anywhere')}</div>
+  </div>`;
+  const card = document.getElementById('gm-live-card');
+  const btn = document.getElementById('gm-hold');
+  const sig = document.getElementById('gm-signal');
+  const bar = document.querySelector('#gm-char .jc-bar');
+  const arms = document.querySelector('#gm-char .jc-arms');
+  // Mjuk sänkning: långsammare transition än standard-0.08s
+  if(bar) bar.style.transition = 'transform 0.5s ease';
+  if(arms) arms.style.transition = 'transform 0.5s ease';
+  let state = 'rack', t1 = 0, t2 = 0, q1 = 0;
+  let timers = [];
+  const after = (ms, fn) => timers.push(setTimeout(fn, ms));
+  const clearAll = () => { timers.forEach(clearTimeout); timers = []; };
+  const fail = (msgKey) => {
+    const wasLowered = (state === 'lowering' || state === 'press');
+    state = 'done'; clearAll();
+    sig.style.color = '#ff6655';
+    sig.textContent = t(msgKey);
+    if(wasLowered){
+      // Stången stannar på bröstet och sjunker ihop – inget magiskt lyft
+      if(bar){ bar.style.transition = 'transform 0.6s ease-in'; bar.style.transform = 'translateY(47px)'; }
+      if(arms){ arms.style.transition = 'transform 0.6s ease-in'; arms.style.transform = 'scaleY(0.20) scaleX(1.55)'; }
+    } else {
+      if(bar) bar.style.transform = '';
+      if(arms) arms.style.transform = '';
+    }
+    if(navigator.vibrate) navigator.vibrate([90]);
+    setTimeout(()=>gFinishAttempt(false, 0), 1050);
+  };
+  // ── Armering: spelaren tar ut stången själv, sen startar klockan ──
+  const startReady = () => {
+    state = 'ready';
+    btn.textContent = t('gm_bp_ready');
+    const delay1 = 700 + Math.random() * 1500;
+    if(jit > 0.6) after(delay1 * 0.5, ()=>{
+      if(state !== 'ready') return;
+      sig.textContent = t('gm_bp_fake'); sig.style.color = '#ffaa44';
+      setTimeout(()=>{ if(state === 'ready') sig.textContent = ''; }, 280);
+    });
+    after(delay1, ()=>{
+      if(state !== 'ready') return;
+      state = 'start'; t1 = performance.now();
+      sig.style.color = 'var(--lime)';
+      sig.textContent = t('gm_bp_start');
+      if(navigator.vibrate) navigator.vibrate(25);
+      after(win1 * 2.2, ()=>{ if(state === 'start') fail('gm_bp_slowstart'); });
+    });
+  };
+  const down = (e) => {
+    e.preventDefault();
+    if(state === 'rack'){ startReady(); if(navigator.vibrate) navigator.vibrate(12); return; }
+    if(state === 'ready') return fail('gm_bp_false');      // tjuvstart!
+    if(state !== 'start') return;
+    const rt1 = performance.now() - t1;
+    q1 = rt1 <= win1 ? 1 - (rt1 / win1) * 0.55 : Math.max(0, 0.4 - (rt1 - win1) / win1 * 0.4);
+    state = 'lowering'; clearAll();
+    sig.textContent = '';
+    btn.textContent = t('gm_bp_wait');
+    if(bar) bar.style.transform = 'translateY(40px)';
+    if(arms) arms.style.transform = 'scaleY(0.30) scaleX(1.45)';  // armbågarna viks
+    // ── Signal 2: PRESS! ──
+    const delay2 = 900 + Math.random() * 1600;
+    if(jit > 0.6) after(delay2 * 0.55, ()=>{
+      if(state !== 'lowering') return;
+      sig.textContent = t('gm_bp_fake'); sig.style.color = '#ffaa44';
+      setTimeout(()=>{ if(state === 'lowering') sig.textContent = ''; }, 300);
+    });
+    after(delay2, ()=>{
+      if(state !== 'lowering') return;
+      state = 'press'; t2 = performance.now();
+      sig.style.color = 'var(--lime)';
+      sig.textContent = t('gm_bp_press');
+      if(navigator.vibrate) navigator.vibrate(30);
+    });
+  };
+  const up = (e) => {
+    e.preventDefault();
+    if(state === 'lowering') return fail('gm_bp_early');   // släppte före PRESS!
+    if(state !== 'press') return;
+    state = 'done'; clearAll();
+    const rt2 = performance.now() - t2;
+    const q2 = rt2 <= win2 ? 1 - (rt2 / win2) * 0.55 : Math.max(0, 0.4 - (rt2 - win2) / (win2 * 0.7) * 0.4);
+    const ok = rt2 <= win2 * 1.55;
+    if(ok){
+      // Explosiv press upp
+      if(bar){ bar.style.transition = 'transform 0.28s cubic-bezier(0.2,1.4,0.5,1)'; bar.style.transform = 'translateY(-6px)'; }
+      if(arms){ arms.style.transition = 'transform 0.28s cubic-bezier(0.2,1.4,0.5,1)'; arms.style.transform = 'scaleY(1.04)'; }
+    } else {
+      // För sent: stången kommer halvvägs upp, stannar – och åker tillbaka ner
+      if(bar){ bar.style.transition = 'transform 0.4s ease-out'; bar.style.transform = 'translateY(17px)'; }
+      if(arms){ arms.style.transition = 'transform 0.4s ease-out'; arms.style.transform = 'scaleY(0.62) scaleX(1.2)'; }
+      setTimeout(()=>{
+        if(bar){ bar.style.transition = 'transform 0.6s cubic-bezier(0.55,0,0.8,0.4)'; bar.style.transform = 'translateY(47px)'; }
+        if(arms){ arms.style.transition = 'transform 0.6s cubic-bezier(0.55,0,0.8,0.4)'; arms.style.transform = 'scaleY(0.20) scaleX(1.55)'; }
+        if(navigator.vibrate) navigator.vibrate([70]);
+      }, 480);
+    }
+    setTimeout(()=>gFinishAttempt(ok, q1 * 0.4 + q2 * 0.6), ok ? 700 : 1350);
+  };
+  card.addEventListener('pointerdown', down);
+  card.addEventListener('pointerup', up);
+  card.addEventListener('pointercancel', up);
+}
+
+// MARK: mash för att fylla grinden innan orken tar slut
+function gDeadLive(st){
+  const kg = G.pendingKg;
+  const diff = gDifficulty(kg);
+  // Kraftkrav ökar brant nära kapacitet. Tryck snabbare än ~9/s ger
+  // avtagande kraft (greppet hinner inte med) – spam hjälper inte.
+  // Brant vägg från ~94 % av kapaciteten: toppen kräver perfekta förutsättningar
+  // Brantare grundlutning (kampen börjar tidigare) + mjukare slutvägg
+  // – taket ligger kvar men 315-320 kräver riktigt arbete
+  const need = 26 + Math.max(0, diff - 0.86) * 340 + Math.max(0, diff - 0.955) * 400;
+  const perTap = 2.8;
+  const drain = 5 + Math.max(0, diff - 0.84) * 40 + Math.max(0, diff - 0.955) * 60;
+  st.innerHTML = `<div class="gm-card live" id="gm-live-card">
+    <div class="gm-hud"><span>${gLiftName('d')}</span><strong>${kg} kg</strong></div>
+    <div class="gm-scene" id="gm-char">${charDead()}</div>
+    <div class="gm-grind"><div class="gm-grind-fill" id="gm-fill"></div></div>
+    <div class="gm-timer-line" id="gm-time">${t('gm_dl_ready_hint')}</div>
+    <button class="gm-tapbtn" id="gm-mash" tabindex="-1">${t('gm_arm_d')}</button>
+    <div class="gm-timer-line" style="margin-top:8px">${t('gm_tap_anywhere')}</div>
+  </div>`;
+  const fill = document.getElementById('gm-fill');
+  const timeEl = document.getElementById('gm-time');
+  const charEl = document.getElementById('gm-char');
+  setDeadPose(charEl, 0); // startposition: hopfälld vid golvet
+  let power = 0, done = false, lastTap = 0, armed = false;
+  let t0 = 0, last = 0;
+  const LIMIT = 4500;
+  const mashBtn = document.getElementById('gm-mash');
+  document.getElementById('gm-live-card').addEventListener('pointerdown', (e)=>{
+    e.preventDefault();
+    if(done) return;
+    if(!armed){
+      // Greppa stången: timern startar först nu
+      armed = true;
+      mashBtn.textContent = t('gm_dl_mash');
+      t0 = performance.now();
+      last = t0;
+      gRAF = requestAnimationFrame(frame);
+      if(navigator.vibrate) navigator.vibrate(15);
+      return;
+    }
+    const now = performance.now();
+    const dt = lastTap ? now - lastTap : 999;
+    lastTap = now;
+    power += perTap * Math.min(1, dt / 111);  // avtagande över ~9 tryck/s
+    if(navigator.vibrate) navigator.vibrate(6);
+  });
+  function frame(now){
+    if(done) return;
+    const dt = (now - last) / 1000; last = now;
+    power = Math.max(0, power - drain * dt);
+    const p = Math.min(1, power / need);
+    fill.style.width = (p * 100) + '%';
+    setDeadPose(charEl, p);
+    const leftMs = LIMIT - (now - t0);
+    timeEl.textContent = t('gm_dl_time', (Math.max(0,leftMs)/1000).toFixed(1));
+    if(p >= 1){ done = true; return gFinishAttempt(true, Math.min(1, 0.45 + leftMs/LIMIT)); }
+    if(leftMs <= 0){ done = true; return gFinishAttempt(false, 0); }
+    gRAF = requestAnimationFrame(frame);
+  }
+  // Startar först när spelaren greppar stången (armed)
+}
+
+// ── EFTER LYFTET ────────────────────────────────────────────────────
+function gFinishAttempt(success, quality){
+  gStopRAF();
+  const r = gDifficulty(G.pendingKg);
+  const fMult = G.fatigueMult || 1;
+  G.fatigue = Math.min(0.08, (G.fatigue || 0) + (0.002 + Math.max(0, r - 0.85) * 0.018) * fMult);
+  const res = judgeLights(success, Math.max(0, Math.min(1, quality)));
+  G.lastResult = { kg: G.pendingKg, ...res };
+  G.attempts[gLiftKey()].push({ kg: G.pendingKg, good: res.good });
+  gGo('lights');
+}
+function gLightsView(st){
+  const r = G.lastResult;
+  st.innerHTML = `<div class="gm-card">
+    <div class="gm-hud"><span>${gLiftName(gLiftKey())}</span><strong>${r.kg} kg</strong></div>
+    <div class="gm-lights">${r.lights.map(w=>`<div class="gm-light ${w?'white':'red'}"><span class="gm-light-sym">${w?'✓':'✗'}</span></div>`).join('')}</div>
+    <div class="gm-verdict ${r.good?'ok':'no'}">${r.good ? '✓ '+t('gm_good') : '✗ '+t('gm_no')}</div>
+    <div class="gm-flavor">${gFlavor(r)}</div>
+    <div class="gm-sofar">${gSoFar()}</div>
+    <button class="gm-btn" onclick="gNext()">${t('gm_next')}</button>
+  </div>`;
+  document.querySelectorAll('.gm-light').forEach((el,i)=>setTimeout(()=>el.classList.add('show'), 250 + i*300));
+  if(navigator.vibrate) setTimeout(()=>navigator.vibrate(r.good ? [40,50,90] : [120]), 1100);
+  if(r.good && r.lights.every(x=>x)){ const card = st.querySelector('.gm-card'); if(card && typeof confettiBurst==='function') setTimeout(()=>confettiBurst(card), 1200); }
+}
+function gSoFar(){
+  const best = k => { const g = G.attempts[k].filter(a=>a.good); return g.length ? Math.max(...g.map(a=>a.kg)) : 0; };
+  const total = best('s') + best('b') + best('d');
+  return `${t('gm_sofar_best')}: ${best(gLiftKey()) || '–'} kg · ${t('gm_sofar_total')}: ${total} kg · ${gFormLabel()}`;
+}
+function gFlavor(r){
+  const whites = r.lights.filter(x=>x).length;
+  const key = !r.good ? 'gm_fl_bad' : whites === 3 ? 'gm_fl_3' : 'gm_fl_2';
+  const list = t(key);
+  return list[Math.floor(Math.random() * list.length)];
+}
+function gNext(){
+  const arr = G.attempts[gLiftKey()];
+  G.pendingKg = null;
+  if(arr.length >= 3){
+    if(G.liftIdx >= 2) return gGo('results');
+    G.liftIdx++;
+    return gGo('select');
+  }
+  gGo('select');
+}
+
+function gResults(st){
+  const best = k => { const g = G.attempts[k].filter(a=>a.good); return g.length ? Math.max(...g.map(a=>a.kg)) : 0; };
+  const bs = best('s'), bb = best('b'), bd = best('d');
+  const bombed = !bs || !bb || !bd;
+  const total = bombed ? 0 : bs + bb + bd;
+  let prevBest = 0;
+  try{ prevBest = parseFloat(localStorage.getItem(GAME_BEST_KEY)) || 0; }catch(e){}
+  const newBest = total > prevBest;
+  if(newBest){ try{ localStorage.setItem(GAME_BEST_KEY, String(total)); }catch(e){} }
+  st.innerHTML = `<div class="gm-card">
+    <div class="gm-eyebrow">${t('gm_res_eyebrow')}</div>
+    <div class="gm-title" style="font-size:34px">${bombed ? t('gm_res_bomb_title') : t('gm_res_title')}</div>
+    <div class="gm-res-row"><span class="gm-res-lift">${gLiftName('s')}</span><span class="gm-res-kg${bs?'':' zero'}">${bs ? bs+' kg' : t('gm_res_zero')}</span></div>
+    <div class="gm-res-row"><span class="gm-res-lift">${gLiftName('b')}</span><span class="gm-res-kg${bb?'':' zero'}">${bb ? bb+' kg' : t('gm_res_zero')}</span></div>
+    <div class="gm-res-row"><span class="gm-res-lift">${gLiftName('d')}</span><span class="gm-res-kg${bd?'':' zero'}">${bd ? bd+' kg' : t('gm_res_zero')}</span></div>
+    ${bombed
+      ? `<div class="gm-sub" style="margin-top:16px">${t('gm_res_bomb_text')}</div>`
+      : `<div class="gm-total">${total}</div>
+         <div class="gm-best">${newBest ? t('gm_res_newbest') : t('gm_res_best', prevBest)}</div>`}
+    ${!bombed && !G.submitted ? `
+    <div class="gm-lb-submit" id="gm-lb-submit">
+      <input id="gm-lb-name" maxlength="20" placeholder="${t('lb_name_ph')}" value="${escapeHtml(lbSavedName())}">
+      <button class="gm-btn" style="font-size:17px;padding:13px" onclick="lbSubmit(${total},${bs},${bb},${bd})">${t('lb_submit')}</button>
+    </div>` : ''}
+    <div id="gm-lb-area"></div>
+    ${!bombed ? `<button class="gm-btn ghost" style="margin-top:12px" onclick="gShareResult(${total},${bs},${bb},${bd})">📸 ${t('share_btn')}</button>` : ''}
+    <button class="gm-btn${bombed ? '' : ' ghost'}" style="margin-top:${bombed?'12px':'10px'}" onclick="newGame();renderGame();">${t('gm_replay')}</button>
+    <button class="gm-btn ghost" onclick="lbShow()">${t('lb_title_btn')}</button>
+  </div>`;
+  if(!bombed && newBest){ const card = st.querySelector('.gm-card'); if(card && typeof confettiBurst==='function') setTimeout(()=>confettiBurst(card), 500); }
+}
 
 // ── PWA: registrera service worker ────────────────────────────────
 if('serviceWorker' in navigator){
