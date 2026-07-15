@@ -599,9 +599,50 @@ footer{
 .gm-btn.ghost{background:var(--ink3);color:var(--cream);border:1px solid var(--ink4);font-size:16px;}
 .gm-btn+.gm-btn{margin-top:10px;}
 .gm-scene{margin:6px auto 14px;display:flex;justify-content:center;}
+/* introscenens lineup */
+.gm-intro-stage{
+  position:relative;display:flex;align-items:flex-end;justify-content:center;
+  gap:6px;margin:14px 0 4px;min-height:150px;
+}
+.gm-intro-spot{
+  position:absolute;left:0;right:0;bottom:0;height:150px;
+  background:radial-gradient(ellipse 88% 95% at 50% 100%, rgba(203,255,77,0.14), transparent 74%);
+  pointer-events:none;
+}
+.gm-intro-fig{
+  position:relative;z-index:1;
+  animation:gm-hero-breathe 3.4s ease-in-out infinite;
+}
+.gm-intro-fig svg{width:106px;height:auto;filter:drop-shadow(0 8px 14px rgba(0,0,0,0.5));}
+.gm-intro-fig:nth-child(3){animation-delay:0.55s;}
+.gm-intro-fig:nth-child(4){animation-delay:1.1s;}
+@keyframes gm-hero-breathe{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-4px);}
+}
+@media(prefers-reduced-motion:reduce){.gm-intro-fig{animation:none;}}
+.gm-intro-chips{display:flex;gap:8px;justify-content:center;margin:12px 0 2px;flex-wrap:wrap;}
+.gm-intro-chips span{
+  font-family:var(--mono);font-size:9px;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--dust);border:1px solid var(--ink4);border-radius:99px;padding:6px 12px;
+}
+.gm-intro-chips b{color:var(--lime);font-weight:700;margin-right:5px;font-size:11px;}
+.gm-intro-best{
+  font-family:var(--mono);font-size:10px;color:var(--dust);letter-spacing:0.06em;margin-top:10px;
+}
 .gm-hud{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-family:var(--mono);font-size:10px;color:var(--dust2);letter-spacing:0.08em;text-transform:uppercase;}
 .gm-hud strong{font-family:var(--bb);font-size:20px;color:var(--cream);letter-spacing:0.04em;}
 .gm-kg-big{font-family:var(--bb);font-size:72px;color:var(--lime);line-height:1;margin:8px 0 2px;}
+.gm-proj{
+  font-family:var(--mono);font-size:11px;color:var(--cream);letter-spacing:0.06em;
+  margin-top:7px;padding:6px 12px;display:inline-block;
+  background:var(--ink3);border:1px solid var(--ink4);border-radius:99px;
+}
+.gm-rival{
+  font-family:var(--mono);font-size:9.5px;color:var(--dust);letter-spacing:0.05em;
+  margin-top:6px;min-height:14px;
+}
+.gm-rival:empty{display:none;}
 .gm-attempts{display:flex;gap:6px;justify-content:center;margin:10px 0;}
 .gm-att{
   font-family:var(--mono);font-size:10px;padding:5px 11px;border-radius:99px;
@@ -621,6 +662,16 @@ footer{
 .gm-track{position:absolute;inset:0;background:var(--ink3);border-radius:99px;border:1px solid var(--ink4);}
 .gm-zone{position:absolute;left:0;right:0;background:rgba(203,255,77,0.22);border-top:2px solid var(--lime);border-bottom:2px solid var(--lime);border-radius:8px;transition:background 0.08s, box-shadow 0.08s;}
 .gm-zone.hot{background:rgba(203,255,77,0.5);box-shadow:0 0 18px rgba(203,255,77,0.55);}
+.gm-zone.stick{background:rgba(255,170,68,0.2);border-color:#ffaa44;}
+.gm-zone.stick.hot{background:rgba(255,170,68,0.55);box-shadow:0 0 18px rgba(255,170,68,0.6);}
+.gm-scene.grinding{animation:gm-grind 0.13s infinite;}
+@keyframes gm-grind{
+  0%,100%{transform:translate(0,0);}
+  25%{transform:translate(-1.5px,1px);}
+  50%{transform:translate(1px,-1px);}
+  75%{transform:translate(1.5px,1px);}
+}
+@media(prefers-reduced-motion:reduce){.gm-scene.grinding{animation:none;}}
 .gm-marker{
   position:absolute;left:-8px;right:-8px;height:14px;border-radius:99px;
   background:var(--cream);box-shadow:0 0 14px rgba(240,237,230,0.5);
@@ -745,6 +796,7 @@ footer{
 }
 .gm-wi-limit{
   position:absolute;top:-7px;bottom:-7px;width:3px;background:#ff6655;z-index:2;border-radius:2px;
+  transform:translateX(-50%);
 }
 .gm-wi-marker{
   position:absolute;top:-5px;bottom:-5px;width:14px;border-radius:99px;
@@ -2983,7 +3035,7 @@ const T = {
     gm_start: 'Till invägningen',
     gm_weighin_eyebrow: 'Steg 1 av 3 · Invägning',
     gm_weighin_title: 'INVÄGNING',
-    gm_wi_sub: 'Klassen är -83 och vågen är obeveklig: max 83,00 kg. Välj strategi – nära gränsen ger formbonus, över gränsen ger omvägning.',
+    gm_wi_sub: 'Klassen är -83 och vågen är obeveklig: max 83,00 kg. Ju närmare gränsen du stannar (underifrån!), desto större formbonus: +1 % från 82,40 · +2 % från 82,70 · +3 % från 82,90. Över gränsen = omvägning.',
     gm_wi_s1n: '🛡️ Spela säkert',
     gm_wi_s1d: 'Garanterat godkänd – markören kan inte hamna över gränsen. Men bonusen är utom räckhåll.',
     gm_wi_s2n: '🎯 Finjustera vikten',
@@ -2995,6 +3047,7 @@ const T = {
     gm_wi_stop: 'STANNA',
     gm_wi_ok: 'Godkänd invägning. Dags att tanka koffein. ✓',
     gm_wi_perfect: 'Perfekt invägning! Precis under gränsen – liten formbonus. 💪',
+    gm_wi_tier: (n) => n === 3 ? `PERFEKT INVÄGNING! +3 % dagsform 🎯` : n === 2 ? `Riktigt nära gränsen – +2 % dagsform 💪` : `Bra invägning – +1 % dagsform ✓`,
     gm_wi_over: 'ÖVER GRÄNSEN! Bastu, spott och böner – du får en omvägning.',
     gm_wi_again: 'OMVÄGNING – STANNA',
     gm_wi_fail_title: 'Missad invägning ✗',
@@ -3022,7 +3075,7 @@ const T = {
     gm_form_4: 'Trött',
     gm_form_5: 'På gränsen',
     gm_instr_title: 'SÅ FUNKAR DET',
-    gm_instr_s: '<strong>1.</strong> Markören åker NER längs banan – tryck när den är i den gröna <strong>djupzonen</strong> (längst ner).<br><strong>2.</strong> Markören vänder och åker UPP – tryck igen i <strong>låszonen</strong> (högst upp).<br><br>Trycker du för tidigt är böjen för grund. Tyngre vikt = snabbare markör och smalare zoner.',
+    gm_instr_s: '<strong>1.</strong> Markören åker NER längs banan – tryck när den är i den gröna <strong>djupzonen</strong> (längst ner).<br><strong>2.</strong> Markören vänder och åker UPP – tryck igen i <strong>låszonen</strong> (högst upp).<br><br>⚠️ <strong>På riktigt tunga vikter</strong> dyker en orange <strong>sticking point</strong> upp mitt i uppgången – markören grindar långsamt genom den och du måste trycka en tredje gång där för att ta dig ur.<br><br>Trycker du för tidigt är böjen för grund. Tyngre vikt = snabbare markör och smalare zoner.',
     gm_instr_b: '<strong>Två domarsignaler – två reaktioner:</strong><br><br><strong>1.</strong> Vänta med fingret i luften. När <strong>START!</strong> blinkar: tryck och HÅLL så snabbt du kan.<br><strong>2.</strong> Stången sänks. När <strong>PRESS!</strong> blinkar: SLÄPP exakt då.<br><br>Trycker du före START är det tjuvstart. Släpper du före PRESS är lyftet dött. Båda reaktionerna räknas – och på hög koffein dyker falska signaler upp.',
     gm_instr_d: '<strong>Tryck-tryck-tryck!</strong> Bygg kraft snabbare än den rinner ur mätaren och fyll den innan greppet släpper (4 sekunder).<br><br>Tyngre vikt kräver mer kraft och dränerar snabbare. Full mätare = utlåst. Tar tiden slut stannar stången på vägen.',
     gm_instr_go: 'Uppfattat – kör!',
@@ -3042,9 +3095,20 @@ const T = {
     gm_sofar_total: 'Total hittills',
     gm_attempt: (n) => `Försök ${n} av 3`,
     gm_pick_sub: 'Välj vikt – högre = svårare mekanik',
+    gm_proj: (tot) => `Total om godkänt: ${tot} kg`,
+    gm_rival: (gap, place, name, total) => `⚔️ ${gap} kg till plats ${place} · ${name} (${total} kg)`,
+    gm_rival_top: '👑 Före alla på topplistan – plats 1 väntar!',
+    gm_snd_label: 'Ljud på/av',
+    gm_chip1: 'Försök',
+    gm_chip2: 'Grenar',
+    gm_chip3: 'Total',
+    gm_yourbest: (kg) => `Ditt rekord: ${kg} kg`,
     gm_lift_btn: 'LYFT',
     gm_sq_tap1: 'TRYCK I DJUPZONEN',
     gm_sq_tap2: 'TRYCK I LÅSZONEN',
+    gm_sq_tap3: 'GRIND! TRYCK I ORANGEA ZONEN',
+    gm_fb_stick: 'Ur sticking pointen!',
+    gm_fb_stickmiss: 'FASTNADE I STICKING POINTEN!',
     gm_bp_ready: 'GÖR DIG REDO…',
     gm_bp_start: 'START!',
     gm_bp_false: 'TJUVSTART!',
@@ -3345,7 +3409,7 @@ const T = {
     gm_start: 'To the weigh-in',
     gm_weighin_eyebrow: 'Step 1 of 3 · Weigh-in',
     gm_weighin_title: 'WEIGH-IN',
-    gm_wi_sub: 'The class is -83 and the scale is merciless: 83.00 kg max. Pick a strategy – close to the limit earns a form bonus, over the limit means a re-weigh.',
+    gm_wi_sub: 'The class is -83 and the scale is merciless: 83.00 kg max. The closer you stop (from below!), the bigger the form bonus: +1% from 82.40 · +2% from 82.70 · +3% from 82.90. Over the limit = re-weigh.',
     gm_wi_s1n: '🛡️ Play it safe',
     gm_wi_s1d: 'Guaranteed pass – the marker cannot land over the limit. But the bonus is out of reach.',
     gm_wi_s2n: '🎯 Fine-tune the weight',
@@ -3357,6 +3421,7 @@ const T = {
     gm_wi_stop: 'STOP',
     gm_wi_ok: 'Weigh-in approved. Time for caffeine. ✓',
     gm_wi_perfect: 'Perfect weigh-in! Just under the limit – small form bonus. 💪',
+    gm_wi_tier: (n) => n === 3 ? `PERFECT WEIGH-IN! +3% day form 🎯` : n === 2 ? `Really close to the limit – +2% day form 💪` : `Good weigh-in – +1% day form ✓`,
     gm_wi_over: 'OVER THE LIMIT! Sauna, spit and prayers – you get one re-weigh.',
     gm_wi_again: 'RE-WEIGH – STOP',
     gm_wi_fail_title: 'Missed weigh-in ✗',
@@ -3384,7 +3449,7 @@ const T = {
     gm_form_4: 'Tired',
     gm_form_5: 'On the edge',
     gm_instr_title: 'HOW IT WORKS',
-    gm_instr_s: '<strong>1.</strong> The marker travels DOWN the track – tap while it\'s in the green <strong>depth zone</strong> (at the bottom).<br><strong>2.</strong> The marker turns and travels UP – tap again in the <strong>lockout zone</strong> (at the top).<br><br>Tap too early and the squat is too shallow. Heavier weight = faster marker and narrower zones.',
+    gm_instr_s: '<strong>1.</strong> The marker travels DOWN the track – tap while it\'s in the green <strong>depth zone</strong> (at the bottom).<br><strong>2.</strong> The marker turns and travels UP – tap again in the <strong>lockout zone</strong> (at the top).<br><br>⚠️ <strong>On truly heavy weights</strong> an orange <strong>sticking point</strong> appears mid-ascent – the marker grinds slowly through it and you must tap a third time there to fight through.<br><br>Tap too early and the squat is too shallow. Heavier weight = faster marker and narrower zones.',
     gm_instr_b: '<strong>Two referee signals – two reactions:</strong><br><br><strong>1.</strong> Wait with your finger in the air. When <strong>START!</strong> flashes: press and HOLD as fast as you can.<br><strong>2.</strong> The bar lowers. When <strong>PRESS!</strong> flashes: RELEASE exactly then.<br><br>Press before START and it\'s a false start. Release before PRESS and the lift is dead. Both reactions count – and on high caffeine, fake signals appear.',
     gm_instr_d: '<strong>Tap-tap-tap!</strong> Build power faster than it drains and fill the meter before your grip gives out (4 seconds).<br><br>Heavier weight needs more power and drains faster. Full meter = lockout. Run out of time and the bar stalls.',
     gm_instr_go: 'Got it – let\'s lift!',
@@ -3404,9 +3469,20 @@ const T = {
     gm_sofar_total: 'Total so far',
     gm_attempt: (n) => `Attempt ${n} of 3`,
     gm_pick_sub: 'Pick a weight – heavier = harder mechanics',
+    gm_proj: (tot) => `Total if good: ${tot} kg`,
+    gm_rival: (gap, place, name, total) => `⚔️ ${gap} kg to place ${place} · ${name} (${total} kg)`,
+    gm_rival_top: '👑 Ahead of everyone – first place awaits!',
+    gm_snd_label: 'Sound on/off',
+    gm_chip1: 'Attempts',
+    gm_chip2: 'Lifts',
+    gm_chip3: 'Total',
+    gm_yourbest: (kg) => `Your record: ${kg} kg`,
     gm_lift_btn: 'LIFT',
     gm_sq_tap1: 'TAP IN THE DEPTH ZONE',
     gm_sq_tap2: 'TAP IN THE LOCKOUT ZONE',
+    gm_sq_tap3: 'GRIND! TAP THE ORANGE ZONE',
+    gm_fb_stick: 'Through the sticking point!',
+    gm_fb_stickmiss: 'STUCK IN THE STICKING POINT!',
     gm_bp_ready: 'GET SET…',
     gm_bp_start: 'START!',
     gm_bp_false: 'FALSE START!',
@@ -5829,7 +5905,7 @@ window.addEventListener('resize', ()=>{ if(currentLogTab===2) renderStatChart();
 // MIRAKELMÄSTERSKAPEN – styrkelyftsspelet
 // ══════════════════════════════════════════════════════════════════
 // Karaktärens utseende – enkelt att justera:
-const JC = { skin:'#E8B89A', hair:'#5a4030', beard:'#4a3426', singlet:'#141414', accent:'#CBFF4D' };
+const JC = { skin:'#E8B89A', hair:'#6a5140', beard:'#54402f', singlet:'#141414', accent:'#CBFF4D' };
 // Jonathans tävlingspersonbästan – kalibrerar hela svårigheten
 const GAME_PBS = { s:290, b:160, d:327.5 };      // total 777,5
 const GAME_CLASS = 83.0;                          // viktklass (max kg)
@@ -5843,6 +5919,7 @@ let gRAF = null;   // aktiv animationsloop
 
 function initGame(){
   if(!G) newGame();
+  lbFetch().catch(()=>{});   // förladda rivaldata i bakgrunden
   renderGame();
 }
 function newGame(){
@@ -5868,6 +5945,71 @@ function gLiftName(k){
   return (L[currentLang]||L.sv)[k];
 }
 function gStopRAF(){ if(gRAF){ cancelAnimationFrame(gRAF); gRAF = null; } }
+
+// ── LJUD: allt syntetiserat med Web Audio API (inga filer) ─────────
+let AC = null;
+let sndOn = true;
+try{ sndOn = localStorage.getItem('mp_game_sound') !== '0'; }catch(e){}
+function sndCtx(){
+  if(!sndOn) return null;
+  if(!AC){
+    try{ AC = new (window.AudioContext || window.webkitAudioContext)(); }catch(e){ return null; }
+  }
+  if(AC.state === 'suspended') AC.resume();
+  return AC;
+}
+function sndTone(freq, dur, opt){
+  const ac = sndCtx(); if(!ac) return;
+  opt = opt || {};
+  const t0 = ac.currentTime + (opt.delay || 0);
+  const o = ac.createOscillator(), g = ac.createGain();
+  o.type = opt.type || 'sine';
+  o.frequency.setValueAtTime(freq, t0);
+  if(opt.slide) o.frequency.exponentialRampToValueAtTime(Math.max(30, freq + opt.slide), t0 + dur);
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.exponentialRampToValueAtTime(opt.gain || 0.15, t0 + 0.012);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+  o.connect(g); g.connect(ac.destination);
+  o.start(t0); o.stop(t0 + dur + 0.05);
+}
+function sndNoise(dur, opt){
+  const ac = sndCtx(); if(!ac) return;
+  opt = opt || {};
+  const t0 = ac.currentTime + (opt.delay || 0);
+  const len = Math.ceil(ac.sampleRate * dur);
+  const buf = ac.createBuffer(1, len, ac.sampleRate);
+  const d = buf.getChannelData(0);
+  for(let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+  const src = ac.createBufferSource(); src.buffer = buf;
+  const f = ac.createBiquadFilter();
+  f.type = 'bandpass'; f.frequency.value = opt.freq || 1000; f.Q.value = opt.q || 1;
+  const g = ac.createGain();
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.exponentialRampToValueAtTime(opt.gain || 0.12, t0 + dur * 0.3);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+  src.connect(f); f.connect(g); g.connect(ac.destination);
+  src.start(t0); src.stop(t0 + dur);
+}
+const SND = {
+  signal(){ sndTone(950, 0.12, {type:'square', gain:0.11}); },
+  fake(){ sndTone(690, 0.05, {type:'square', gain:0.06}); },
+  hit(){ sndTone(1250, 0.09, {gain:0.15}); sndTone(1660, 0.08, {gain:0.09, delay:0.05}); },
+  miss(){ sndTone(165, 0.17, {type:'sawtooth', gain:0.11, slide:-70}); },
+  thud(){ sndTone(82, 0.3, {type:'sine', gain:0.3, slide:-45}); sndNoise(0.12, {gain:0.07, freq:280, q:0.8}); },
+  tap(){ sndTone(500, 0.03, {type:'triangle', gain:0.045}); },
+  grind(){ sndTone(105, 0.4, {type:'sawtooth', gain:0.08, slide:75}); },
+  bad(){ sndTone(330, 0.18, {gain:0.11}); sndTone(261, 0.32, {gain:0.11, delay:0.16}); },
+  good(){ sndTone(523, 0.12, {gain:0.11}); sndTone(659, 0.2, {gain:0.11, delay:0.1}); },
+  cheer(){ sndNoise(0.95, {gain:0.15, freq:1400, q:0.5}); sndTone(784, 0.15, {gain:0.09, delay:0.1}); sndTone(988, 0.2, {gain:0.09, delay:0.26}); sndTone(1175, 0.32, {gain:0.1, delay:0.42}); },
+  fanfare(){ [523, 659, 784, 1047].forEach((f, i) => sndTone(f, 0.17, {gain:0.12, delay:i * 0.095})); },
+};
+function sndToggle(){
+  sndOn = !sndOn;
+  try{ localStorage.setItem('mp_game_sound', sndOn ? '1' : '0'); }catch(e){}
+  document.querySelectorAll('.gm-sndbtn').forEach(b => b.textContent = sndOn ? '🔊' : '🔇');
+  if(sndOn) SND.hit();
+}
+function sndBtn(){ return `<button class="gm-help gm-sndbtn" onclick="sndToggle()">${sndOn ? '🔊' : '🔇'}</button>`; }
 
 // ── TOPPLISTA (Cloudflare Worker + KV) ─────────────────────────────
 let lbCache = null, lbCacheAt = 0;
@@ -5944,7 +6086,7 @@ async function lbSubmit(total, s, b, d){
     G.lastRank = j.rank || null;
     area.innerHTML = `<div class="gm-lb-yourrank">${j.rank && j.rank <= 10 ? t('lb_your_rank', j.rank) : t('lb_outside')}</div>`
       + lbRows(lbCache, name);
-    if(j.rank === 1 && typeof confettiBurst === 'function') confettiBurst(area);
+    if(j.rank === 1){ SND.fanfare(); if(typeof confettiBurst === 'function') confettiBurst(area); }
     if(navigator.vibrate) navigator.vibrate([30, 40, 60]);
   }catch(e){
     wrap.style.display = '';
@@ -5999,7 +6141,7 @@ async function gShareResult(total, bs, bb, bd){
   // Lyftrader
   const rows = [[gLiftName('s'), bs], [gLiftName('b'), bb], [gLiftName('d'), bd]];
   const fmt = v => String(v).replace('.', ',');
-  let y = 830;
+  let y = 800;
   rows.forEach(([name, kg])=>{
     ctx.textAlign = 'left';
     ctx.fillStyle = '#F0EDE6';
@@ -6007,59 +6149,59 @@ async function gShareResult(total, bs, bb, bd){
     ctx.fillText(name, 150, y);
     ctx.textAlign = 'right';
     ctx.fillStyle = '#CBFF4D';
-    ctx.font = '76px "Bebas Neue", sans-serif';
+    ctx.font = '74px "Bebas Neue", sans-serif';
     ctx.fillText(fmt(kg) + ' KG', W - 150, y + 8);
     ctx.strokeStyle = 'rgba(240,237,230,0.12)';
     ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.moveTo(150, y + 42); ctx.lineTo(W - 150, y + 42); ctx.stroke();
-    y += 130;
+    ctx.beginPath(); ctx.moveTo(150, y + 40); ctx.lineTo(W - 150, y + 40); ctx.stroke();
+    y += 125;
   });
 
   // TOTAL
   ctx.textAlign = 'center';
   ctx.fillStyle = 'rgba(240,237,230,0.55)';
   ctx.font = '500 36px "DM Mono", monospace';
-  ctx.fillText('TOTAL', W/2, y + 90);
+  ctx.fillText('TOTAL', W/2, 1250);
   ctx.fillStyle = '#CBFF4D';
   ctx.shadowColor = 'rgba(203,255,77,0.55)';
   ctx.shadowBlur = 60;
-  ctx.font = '300px "Bebas Neue", sans-serif';
-  ctx.fillText(fmt(total), W/2, y + 380);
+  ctx.font = '240px "Bebas Neue", sans-serif';
+  ctx.fillText(fmt(total), W/2, 1465);
   ctx.shadowBlur = 0;
   ctx.fillStyle = 'rgba(240,237,230,0.55)';
-  ctx.font = '60px "Bebas Neue", sans-serif';
-  ctx.fillText('KG', W/2, y + 460);
+  ctx.font = '56px "Bebas Neue", sans-serif';
+  ctx.fillText('KG', W/2, 1532);
 
   // Placering på topplistan
-  let by = y + 560;
+  let by = 1600;
   if(G.lastRank){
     const txt = '🏆 ' + t('share_rank', G.lastRank);
     ctx.font = '600 44px "Space Grotesk", sans-serif';
     const tw = ctx.measureText(txt).width;
-    const pad = 44, bw = tw + pad * 2, bh = 96;
+    const pad = 44, bw = tw + pad * 2;
     ctx.fillStyle = '#CBFF4D';
     ctx.beginPath();
-    ctx.roundRect((W - bw)/2, by - bh + 30, bw, bh, 48);
+    ctx.roundRect((W - bw)/2, by, bw, 96, 48);
     ctx.fill();
     ctx.fillStyle = '#09090A';
-    ctx.fillText(txt, W/2, by - 3);
-    by += 130;
+    ctx.fillText(txt, W/2, by + 62);
+    by += 150;
   }
 
   // Namn + datum
   const nm = lbSavedName();
   ctx.fillStyle = '#F0EDE6';
   ctx.font = '600 46px "Space Grotesk", sans-serif';
-  ctx.fillText(nm ? nm : '', W/2, by + 20);
+  ctx.fillText(nm ? nm : '', W/2, by + 8);
   ctx.fillStyle = 'rgba(240,237,230,0.4)';
   ctx.font = '500 30px "DM Mono", monospace';
   const loc = currentLang === 'sv' ? 'sv-SE' : 'en-US';
-  ctx.fillText(new Date().toLocaleDateString(loc, {day:'numeric', month:'long', year:'numeric'}), W/2, by + 75);
+  ctx.fillText(new Date().toLocaleDateString(loc, {day:'numeric', month:'long', year:'numeric'}), W/2, by + 58);
 
   // Footer
   ctx.fillStyle = 'rgba(203,255,77,0.6)';
   ctx.font = '500 30px "DM Mono", monospace';
-  ctx.fillText('soederj.github.io/mirakelprogrammet', W/2, H - 110);
+  ctx.fillText('soederj.github.io/mirakelprogrammet', W/2, H - 68);
 
   // Dela eller ladda ner
   cv.toBlob(async (blob)=>{
@@ -6085,7 +6227,7 @@ function gCap(k){
   if(G.caffeine) cap *= G.caffeine.power;
   cap *= (G.formMod || 1);
   cap *= (1 - (G.fatigue || 0));
-  if(k === 'd' && G.crashed) cap *= 0.90;          // kraschen gör marken SÄMRE än en kaffe
+  if(k === 'd' && G.crashed) cap *= 0.93;          // kraschen gör marken sämre än en kaffe
   return cap;
 }
 function gDifficulty(kg){
@@ -6153,6 +6295,10 @@ function gStep(delta){
   document.getElementById('gm-kg').textContent = G.pendingKg;
   const risk = document.getElementById('gm-risk');
   if(risk) risk.innerHTML = gRiskLabel(G.pendingKg);
+  const proj = document.getElementById('gm-proj');
+  if(proj) proj.textContent = 'Σ ' + t('gm_proj', String(gProjTotal(G.pendingKg)).replace('.', ','));
+  const rival = document.getElementById('gm-rival');
+  if(rival) rival.innerHTML = gRivalLine(G.pendingKg);
   if(navigator.vibrate) navigator.vibrate(8);
 }
 
@@ -6175,14 +6321,16 @@ function gDefs(p){
   </defs>`;
 }
 function jHead(x, y, s){
+  // Kort frisyr (tajta sidor, lite volym på toppen) + trimmad skäggstubb
   return `<g transform="translate(${x},${y}) scale(${s})">
     <circle cx="0" cy="0" r="16" fill="${JC.skin}"/>
-    <path d="M -16 -4 A 16 16 0 0 1 16 -4 L 14 -10 Q 0 -22 -14 -10 Z" fill="${JC.hair}"/>
-    <path d="M -12 6 Q 0 20 12 6 L 12 12 Q 0 24 -12 12 Z" fill="${JC.beard}"/>
+    <path d="M -14.5 -7 A 16 16 0 0 1 14.5 -7 L 12.5 -11.5 Q 6 -17.5 0 -17 Q -7 -17.5 -12.5 -11.5 Z" fill="${JC.hair}"/>
+    <path d="M -12.5 -11 Q -6 -19 2 -17.5 L -1 -14 Q -8 -14 -12.5 -11 Z" fill="${JC.hair}"/>
+    <path d="M -10.5 7.5 Q 0 15.5 10.5 7.5 L 10.5 11 Q 0 19 -10.5 11 Z" fill="${JC.beard}"/>
     <path d="M -9.5 -5 Q -6 -7 -2.5 -5.5" stroke="#33241a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
     <path d="M 2.5 -5.5 Q 6 -7 9.5 -5" stroke="#33241a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
     <circle cx="-6" cy="-1" r="1.8" fill="#222"/><circle cx="6" cy="-1" r="1.8" fill="#222"/>
-    <path d="M -3.5 9.5 Q 0 11.5 3.5 9.5" stroke="#2b1d13" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M -3.5 9 Q 0 11 3.5 9" stroke="#2b1d13" stroke-width="1.5" fill="none" stroke-linecap="round"/>
   </g>`;
 }
 function gPlates(cx, cy, p){
@@ -6273,6 +6421,11 @@ function charDead(){
     <g class="jc-legs" style="transform-box:view-box;transform-origin:110px 214px;">
       <rect x="94" y="142" width="15" height="72" rx="7" fill="${JC.skin}"/>
       <rect x="116" y="142" width="15" height="72" rx="7" fill="${JC.skin}"/>
+      <!-- långa marklyftsstrumpor: svarta med röd rand -->
+      <rect x="93" y="172" width="17" height="42" rx="7" fill="#1a1a1d"/>
+      <rect x="115" y="172" width="17" height="42" rx="7" fill="#1a1a1d"/>
+      <rect x="93" y="174" width="17" height="4" rx="2" fill="${JC.accent}"/>
+      <rect x="115" y="174" width="17" height="4" rx="2" fill="${JC.accent}"/>
       <rect x="90" y="207" width="25" height="9" rx="4" fill="#222"/>
       <rect x="113" y="207" width="25" height="9" rx="4" fill="#222"/>
     </g>
@@ -6281,8 +6434,9 @@ function charDead(){
       <text x="109" y="122" text-anchor="middle" font-family="'Bebas Neue'" font-size="15" fill="${JC.accent}">M</text>
       ${jHead(109, 58, 0.92)}
       <g class="jc-arms" style="transform-box:view-box;transform-origin:109px 94px;">
-        <rect x="96" y="92" width="11" height="60" rx="5" fill="${JC.skin}"/>
-        <rect x="112" y="92" width="11" height="60" rx="5" fill="${JC.skin}"/>
+        <!-- greppet utanför benen, lätt utåtvinklade från axlarna -->
+        <rect x="80" y="92" width="11" height="60" rx="5" fill="${JC.skin}" transform="rotate(6 85.5 94)"/>
+        <rect x="133" y="92" width="11" height="60" rx="5" fill="${JC.skin}" transform="rotate(-6 138.5 94)"/>
       </g>
     </g>
     <g class="jc-bar">
@@ -6323,13 +6477,27 @@ function renderGame(){
 function gGo(phase){ G.phase = phase; renderGame(); }
 
 function gIntro(st){
+  let best = 0;
+  try{ best = parseFloat(localStorage.getItem(GAME_BEST_KEY)) || 0; }catch(e){}
   st.innerHTML = `<div class="gm-card">
     <div class="gm-eyebrow">${t('gm_eyebrow')}</div>
     <div class="gm-title">MIRAKEL<br><span class="lime">MÄSTERSKAPEN</span></div>
-    <div class="gm-scene">${charSquat()}</div>
+    <div class="gm-intro-stage">
+      <div class="gm-intro-spot"></div>
+      <div class="gm-intro-fig">${charSquat()}</div>
+      <div class="gm-intro-fig">${charBench()}</div>
+      <div class="gm-intro-fig">${charDead()}</div>
+    </div>
+    <div class="gm-intro-chips">
+      <span><b>9</b>${t('gm_chip1')}</span>
+      <span><b>3</b>${t('gm_chip2')}</span>
+      <span><b>1</b>${t('gm_chip3')}</span>
+    </div>
+    ${best > 0 ? `<div class="gm-intro-best">🏅 ${t('gm_yourbest', String(best).replace('.', ','))}</div>` : ''}
     <div class="gm-sub">${t('gm_intro')}</div>
     <button class="gm-btn" onclick="gGo('weighin')">${t('gm_start')}</button>
     <button class="gm-btn ghost" onclick="lbShow()">${t('lb_title_btn')}</button>
+    <div style="margin-top:12px">${sndBtn()} <span style="font-family:var(--mono);font-size:9px;color:var(--dust2);letter-spacing:0.06em;">${t('gm_snd_label')}</span></div>
   </div>`;
 }
 
@@ -6381,16 +6549,17 @@ function gWeighin2(st){
   const marker = document.getElementById('gm-wi-marker');
   const t0 = performance.now();
   let stopped = false;
+  let shown = s.lo;   // exakt det värde som visas – det som döms
   function val(now){
     const p = (Math.sin((now - t0) / 1000 * s.speed * Math.PI * 2 - Math.PI/2) + 1) / 2;
     return s.lo + p * (s.hi - s.lo);
   }
   function frame(now){
     if(stopped) return;
-    const v = val(now);
-    num.textContent = v.toFixed(2).replace('.', ',');
-    num.style.color = v > GAME_CLASS ? '#ff6655' : 'var(--cream)';
-    marker.style.left = ((v - s.lo) / (s.hi - s.lo) * 100) + '%';
+    shown = Math.round(val(now) * 100) / 100;   // samma avrundning som displayen
+    num.textContent = shown.toFixed(2).replace('.', ',');
+    num.style.color = shown > GAME_CLASS ? '#ff6655' : 'var(--cream)';
+    marker.style.left = ((shown - s.lo) / (s.hi - s.lo) * 100) + '%';
     gRAF = requestAnimationFrame(frame);
   }
   document.getElementById('gm-wi-stop').addEventListener('pointerdown', (e)=>{
@@ -6398,7 +6567,7 @@ function gWeighin2(st){
     if(stopped) return;
     stopped = true;
     gStopRAF();
-    gWiResult(val(performance.now()));
+    gWiResult(shown);   // WYSIWYG: siffran du ser är siffran som gäller
   });
   gRAF = requestAnimationFrame(frame);
 }
@@ -6426,6 +6595,7 @@ function gWiResult(v){
       return;
     }
     num.style.color = '#ff6655';
+    SND.miss();
     note.textContent = t('gm_wi_over');
     btn.insertAdjacentElement('afterend', note);
     btn.textContent = t('gm_wi_again');
@@ -6433,12 +6603,19 @@ function gWiResult(v){
     setTimeout(()=>gGo('weighin2'), 1800);
     return;
   }
-  if(v >= GAME_CLASS - 0.45){
-    G.formMod *= 1.03;
+  // Trappad bonus: ju närmare 83,00 (underifrån), desto större
+  let tier = 0;
+  if(v >= GAME_CLASS - 0.10) tier = 3;        // 82,90–83,00: perfekt
+  else if(v >= GAME_CLASS - 0.30) tier = 2;   // 82,70–82,90
+  else if(v >= GAME_CLASS - 0.60) tier = 1;   // 82,40–82,70
+  if(tier > 0){
+    G.formMod *= 1 + tier / 100;
     num.style.color = 'var(--lime)';
-    note.innerHTML = `<strong style="color:var(--lime)">${t('gm_wi_perfect')}</strong>`;
-    if(typeof confettiBurst === 'function') confettiBurst(num);
+    note.innerHTML = `<strong style="color:var(--lime)">${t('gm_wi_tier', tier)}</strong>`;
+    if(tier === 3){ SND.fanfare(); if(typeof confettiBurst === 'function') confettiBurst(num); }
+    else SND.hit();
   } else {
+    SND.good();
     note.textContent = t('gm_wi_ok');
   }
   btn.style.display = 'none';
@@ -6450,9 +6627,9 @@ function gWiResult(v){
 function gCaffeine(st){
   const opts = [
     { id:'none',  power:1.00, speed:0.85, jitter:0,    zone:1.0,  nk:'gm_caf1_n', dk:'gm_caf1_d' },
-    { id:'one',   power:1.03, speed:1.00, jitter:0,    zone:1.0,  nk:'gm_caf2_n', dk:'gm_caf2_d' },
-    { id:'espr',  power:1.06, speed:1.10, jitter:0.4,  zone:0.93, nk:'gm_caf3_n', dk:'gm_caf3_d' },
-    { id:'boost', power:1.10, speed:1.22, jitter:1,    zone:0.86, nk:'gm_caf4_n', dk:'gm_caf4_d' },
+    { id:'one',   power:1.02, speed:1.00, jitter:0,    zone:1.0,  nk:'gm_caf2_n', dk:'gm_caf2_d' },
+    { id:'espr',  power:1.04, speed:1.10, jitter:0.4,  zone:0.93, nk:'gm_caf3_n', dk:'gm_caf3_d' },
+    { id:'boost', power:1.06, speed:1.22, jitter:1,    zone:0.86, nk:'gm_caf4_n', dk:'gm_caf4_d' },
   ];
   st.innerHTML = `<div class="gm-card">
     <div class="gm-eyebrow">${t('gm_caf_eyebrow')}</div>
@@ -6491,6 +6668,29 @@ function gMaybeCrash(){
   if(Math.random() < 0.55){ G.crashed = true; return true; }
   G.crashed = false;
   return false;
+}
+function gBestOf(k){
+  const g = G.attempts[k].filter(a => a.good);
+  return g.length ? Math.max(...g.map(a => a.kg)) : 0;
+}
+// Närmaste topplisteplacering ovanför den projicerade totalen
+function gRivalLine(kg){
+  if(!lbCache || !lbCache.length) return '';
+  const proj = gProjTotal(kg);
+  const myName = lbSavedName().trim().toLowerCase();
+  const others = lbCache.filter(s => String(s.name).trim().toLowerCase() !== myName);
+  if(!others.length) return '';
+  const above = others.filter(s => s.total >= proj).sort((a, b) => a.total - b.total)[0];
+  if(!above) return `<span style="color:var(--lime)">${t('gm_rival_top')}</span>`;
+  const place = lbCache.indexOf(above) + 1;
+  const gap = Math.round((above.total - proj + 2.5) * 10) / 10;   // det som krävs för att GÅ OM
+  return t('gm_rival', String(gap).replace('.', ','), place, escapeHtml(String(above.name)), String(above.total).replace('.', ','));
+}
+function gProjTotal(kg){
+  const cur = gLiftKey();
+  let sum = 0;
+  ['s','b','d'].forEach(k => { sum += (k === cur) ? Math.max(gBestOf(k), kg) : gBestOf(k); });
+  return sum;
 }
 // Grov riskbedömning av vald vikt (aldrig exakta sannolikheter)
 function gRiskLabel(kg){
@@ -6534,13 +6734,15 @@ function gSelect(st){
   G.pendingCrashNote = false;
   st.innerHTML = `<div class="gm-card">
     <div class="gm-hud">
-      <span>${gLiftName(k)} <button class="gm-help" onclick="gInstr(document.getElementById('game-stage'),'${k}')">?</button></span>
+      <span>${gLiftName(k)} <button class="gm-help" onclick="gInstr(document.getElementById('game-stage'),'${k}')">?</button>${sndBtn()}</span>
       <span>${t('gm_attempt', attNo)} · ${gFormLabel()}</span>
     </div>
     ${crashNote}
     <div class="gm-attempts">${gAttChips()}</div>
     <div class="gm-kg-big" id="gm-kg">${G.pendingKg}</div>
     <div class="gm-timer-line" id="gm-risk">${gRiskLabel(G.pendingKg)}</div>
+    <div class="gm-proj" id="gm-proj">Σ ${t('gm_proj', String(gProjTotal(G.pendingKg)).replace('.', ','))}</div>
+    <div class="gm-rival" id="gm-rival">${gRivalLine(G.pendingKg)}</div>
     <div class="gm-stepper">
       <button class="gm-step" onclick="gStep(-10)">−10</button>
       <button class="gm-step" onclick="gStep(-2.5)">−2,5</button>
@@ -6566,6 +6768,11 @@ function gSquatLive(st){
   const zone = gZoneFrac(kg);
   const zoneD = Math.max(0.055, Math.min(0.26, zone));  // liten men ärlig djupzon
   const zoneU = Math.max(0.09, zone * 0.9);             // låszon
+  // STICKING POINT: tunga vikter (≥93 % av kapacitet) kräver ett tredje
+  // tryck mitt i uppgången. Markören GRINDAR (saktar in 2,2×) genom zonen.
+  const hasStick = gDifficulty(kg) >= 0.93;
+  const ST_TOP = 0.40, ST_BOT = 0.62, SLOW_F = 2.2;
+  const zoneS = Math.max(0.08, zone);
   const jit = G.caffeine.jitter;
   st.innerHTML = `<div class="gm-card live" id="gm-live-card">
     <div class="gm-hud"><span>${gLiftName('s')}</span><strong>${kg} kg</strong></div>
@@ -6574,6 +6781,7 @@ function gSquatLive(st){
       <div class="gm-track"></div>
       <div class="gm-zone" id="gm-zone1" style="top:${(1-zoneD)*100}%;height:${zoneD*100}%"></div>
       <div class="gm-zone" id="gm-zone2" style="top:0;height:${zoneU*100}%;opacity:0;"></div>
+      ${hasStick ? `<div class="gm-zone stick" id="gm-zone3" style="top:${ST_TOP*100}%;height:${(ST_BOT-ST_TOP)*100}%;opacity:0;"></div>` : ''}
       <div class="gm-marker" id="gm-marker" style="top:0%"></div>
     </div>
     <div class="gm-feedback" id="gm-fb">&nbsp;</div>
@@ -6590,10 +6798,24 @@ function gSquatLive(st){
   // hastighet MER oförutsägbar – precisionsskatten för styrkebonusen.
   const wSpd = 1 + Math.max(0, gDifficulty(kg) - 0.88) * 2.2;
   const T_HALF = (1050 * (0.94 - jit * 0.03 + Math.random() * (0.12 + jit * 0.10))) / (gSpeed() * wSpd);
-  let phase = 'down', tapped = {down:null, up:null}, t0 = 0, armed = false;
+  let phase = 'down', tapped = {down:null, up:null, stick:null}, t0 = 0, armed = false;
+  // Uppfasens tidsvikter: normal → grind (SLOW_F× tid) → normal
+  const segA = 1 - ST_BOT, segB = (ST_BOT - ST_TOP) * SLOW_F, segC = ST_TOP;
+  const UP_TOT = hasStick ? (segA + segB + segC) : 1;
+  const T_UP = T_HALF * UP_TOT;
+  function upD(p){
+    if(!hasStick) return 1 - p;
+    let tp = p * UP_TOT;
+    if(tp < segA) return 1 - tp;
+    tp -= segA;
+    if(tp < segB) return ST_BOT - tp / SLOW_F;
+    tp -= segB;
+    return Math.max(0, ST_TOP - tp);
+  }
+  function phaseDur(){ return phase === 'down' ? T_HALF : T_UP; }
   function pos(now){
-    const p = Math.min(1, (now - t0) / T_HALF);
-    return phase === 'down' ? p : 1 - p;
+    const p = Math.min(1, (now - t0) / phaseDur());
+    return phase === 'down' ? p : upD(p);
   }
   const headEl = charEl.querySelector('.jc-head');
   function setChar(depth){
@@ -6602,24 +6824,42 @@ function gSquatLive(st){
     if(headEl) headEl.style.transform = `rotate(${depth*7}deg)`;  // koncentrerad blick ner i hålet
   }
   function frame(now){
-    const p = Math.min(1, (now - t0) / T_HALF);
+    const p = Math.min(1, (now - t0) / phaseDur());
     const d = pos(now);
     marker.style.top = (d * 100) + '%';
     setChar(d);
     const z1 = document.getElementById('gm-zone1');
     const z2 = document.getElementById('gm-zone2');
+    const z3 = document.getElementById('gm-zone3');
+    const inStick = phase === 'up' && d <= ST_BOT && d >= ST_TOP;
     if(z1) z1.classList.toggle('hot', phase === 'down' && d >= (1 - zoneD));
-    if(z2) z2.classList.toggle('hot', phase === 'up' && d <= zoneU);
+    if(z2) z2.classList.toggle('hot', phase === 'up' && d <= zoneU && (!hasStick || tapped.stick != null));
+    if(z3) z3.classList.toggle('hot', inStick && tapped.stick == null);
+    charEl.classList.toggle('grinding', hasStick && inStick);
+    // Missad sticking: markören passerade zonen utan tryck
+    if(hasStick && phase === 'up' && tapped.stick == null && d < ST_TOP){
+      tapped.stick = -1;
+      fb.textContent = t('gm_fb_stickmiss');
+      fb.style.color = '#ff6655';
+      tapBtn.textContent = t('gm_sq_tap2');
+    }
     if(p >= 1){
       if(phase === 'down'){
         if(tapped.down == null) tapped.down = -1; // missade djupet
         phase = 'up'; t0 = now;
         document.getElementById('gm-zone2').style.opacity = '1';
         document.getElementById('gm-zone1').style.opacity = '0.25';
-        tapBtn.textContent = t('gm_sq_tap2');
+        if(z3) z3.style.opacity = '1';
+        tapBtn.textContent = hasStick ? t('gm_sq_tap3') : t('gm_sq_tap2');
       } else {
         if(tapped.up == null) tapped.up = -1;
-        return gFinishAttempt(tapped.down >= 0 && tapped.up >= 0, ((Math.max(0,tapped.down) + Math.max(0,tapped.up)) / 2));
+        charEl.classList.remove('grinding');
+        const parts = hasStick
+          ? [tapped.down, tapped.stick, tapped.up]
+          : [tapped.down, tapped.up];
+        const ok = parts.every(v => v >= 0);
+        const q = parts.reduce((a,v)=>a + Math.max(0, v), 0) / parts.length;
+        return gFinishAttempt(ok, q);
       }
     }
     gRAF = requestAnimationFrame(frame);
@@ -6633,6 +6873,7 @@ function gSquatLive(st){
     card.classList.remove('gm-hit','gm-miss');
     void card.offsetWidth; // starta om animationen
     card.classList.add(ok ? 'gm-hit' : 'gm-miss');
+    if(ok){ SND.hit(); } else { SND.miss(); }
     if(perfect && typeof confettiBurst === 'function') confettiBurst(marker);
     setTimeout(()=>{ marker.style.background = ''; }, 300);
   };
@@ -6645,6 +6886,7 @@ function gSquatLive(st){
       tapBtn.textContent = t('gm_sq_tap1');
       fb.textContent = t('gm_go');
       fb.style.color = 'var(--lime)';
+      SND.signal();
       if(navigator.vibrate) navigator.vibrate(15);
       setTimeout(()=>{
         fb.innerHTML = '&nbsp;';
@@ -6662,6 +6904,14 @@ function gSquatLive(st){
       flash(inZone, inZone ? (perfect ? t('gm_fb_perfect') : t('gm_fb_edge')) : t('gm_fb_shallow'), perfect);
       if(!inZone){ document.getElementById('gm-char').classList.add('gm-shake'); }
       if(navigator.vibrate) navigator.vibrate(inZone ? (perfect ? [30,30,50] : 25) : [40,30,40]);
+    } else if(phase === 'up' && hasStick && tapped.stick == null){
+      const inZone = d <= ST_BOT && d >= ST_TOP;
+      const mid = (ST_TOP + ST_BOT) / 2;
+      tapped.stick = inZone ? 1 - Math.abs(d - mid) / ((ST_BOT - ST_TOP)/2) * 0.7 : -1;
+      const perfect = inZone && tapped.stick > 0.78;
+      flash(inZone, inZone ? t('gm_fb_stick') : t('gm_fb_stickmiss'), perfect);
+      if(inZone){ SND.grind(); tapBtn.textContent = t('gm_sq_tap2'); }
+      if(navigator.vibrate) navigator.vibrate(inZone ? (perfect ? [30,30,50] : 25) : [50,30,50]);
     } else if(phase === 'up' && tapped.up == null){
       const inZone = d <= zoneU;
       tapped.up = inZone ? 1 - Math.abs(d - zoneU/2) / (zoneU/2) * 0.75 : -1;
@@ -6677,7 +6927,7 @@ function gBenchLive(st){
   const kg = G.pendingKg;
   const diff = gDifficulty(kg);
   const win1 = Math.max(220, 480 - (diff - 0.85) * 800) / gSpeed();   // startreaktion (generösare)
-  const win2 = Math.max(95, 340 - (diff - 0.82) * 1200) / gSpeed();   // pressreaktion – nära taket krävs blixtreflexer
+  const win2 = Math.max(95, 340 - (diff - 0.82) * 1130) / gSpeed();   // pressreaktion – nära taket krävs blixtreflexer
   const jit = G.caffeine.jitter;
   st.innerHTML = `<div class="gm-card live" id="gm-live-card">
     <div class="gm-hud"><span>${gLiftName('b')}</span><strong>${kg} kg</strong></div>
@@ -6703,6 +6953,7 @@ function gBenchLive(st){
     state = 'done'; clearAll();
     sig.style.color = '#ff6655';
     sig.textContent = t(msgKey);
+    if(wasLowered) SND.thud(); else SND.miss();
     if(wasLowered){
       // Stången stannar på bröstet och sjunker ihop – inget magiskt lyft
       if(bar){ bar.style.transition = 'transform 0.6s ease-in'; bar.style.transform = 'translateY(47px)'; }
@@ -6722,6 +6973,7 @@ function gBenchLive(st){
     if(jit > 0.6) after(delay1 * 0.5, ()=>{
       if(state !== 'ready') return;
       sig.textContent = t('gm_bp_fake'); sig.style.color = '#ffaa44';
+      SND.fake();
       setTimeout(()=>{ if(state === 'ready') sig.textContent = ''; }, 280);
     });
     after(delay1, ()=>{
@@ -6729,6 +6981,7 @@ function gBenchLive(st){
       state = 'start'; t1 = performance.now();
       sig.style.color = 'var(--lime)';
       sig.textContent = t('gm_bp_start');
+      SND.signal();
       if(navigator.vibrate) navigator.vibrate(25);
       after(win1 * 2.2, ()=>{ if(state === 'start') fail('gm_bp_slowstart'); });
     });
@@ -6750,6 +7003,7 @@ function gBenchLive(st){
     if(jit > 0.6) after(delay2 * 0.55, ()=>{
       if(state !== 'lowering') return;
       sig.textContent = t('gm_bp_fake'); sig.style.color = '#ffaa44';
+      SND.fake();
       setTimeout(()=>{ if(state === 'lowering') sig.textContent = ''; }, 300);
     });
     after(delay2, ()=>{
@@ -6757,6 +7011,7 @@ function gBenchLive(st){
       state = 'press'; t2 = performance.now();
       sig.style.color = 'var(--lime)';
       sig.textContent = t('gm_bp_press');
+      SND.signal();
       if(navigator.vibrate) navigator.vibrate(30);
     });
   };
@@ -6770,6 +7025,7 @@ function gBenchLive(st){
     const ok = rt2 <= win2 * 1.55;
     if(ok){
       // Explosiv press upp
+      SND.hit();
       if(bar){ bar.style.transition = 'transform 0.28s cubic-bezier(0.2,1.4,0.5,1)'; bar.style.transform = 'translateY(-6px)'; }
       if(arms){ arms.style.transition = 'transform 0.28s cubic-bezier(0.2,1.4,0.5,1)'; arms.style.transform = 'scaleY(1.04)'; }
     } else {
@@ -6779,6 +7035,7 @@ function gBenchLive(st){
       setTimeout(()=>{
         if(bar){ bar.style.transition = 'transform 0.6s cubic-bezier(0.55,0,0.8,0.4)'; bar.style.transform = 'translateY(47px)'; }
         if(arms){ arms.style.transition = 'transform 0.6s cubic-bezier(0.55,0,0.8,0.4)'; arms.style.transform = 'scaleY(0.20) scaleX(1.55)'; }
+        SND.thud();
         if(navigator.vibrate) navigator.vibrate([70]);
       }, 480);
     }
@@ -6834,6 +7091,7 @@ function gDeadLive(st){
     const dt = lastTap ? now - lastTap : 999;
     lastTap = now;
     power += perTap * Math.min(1, dt / 111);  // avtagande över ~9 tryck/s
+    SND.tap();
     if(navigator.vibrate) navigator.vibrate(6);
   });
   function frame(now){
@@ -6845,8 +7103,8 @@ function gDeadLive(st){
     setDeadPose(charEl, p);
     const leftMs = LIMIT - (now - t0);
     timeEl.textContent = t('gm_dl_time', (Math.max(0,leftMs)/1000).toFixed(1));
-    if(p >= 1){ done = true; return gFinishAttempt(true, Math.min(1, 0.45 + leftMs/LIMIT)); }
-    if(leftMs <= 0){ done = true; return gFinishAttempt(false, 0); }
+    if(p >= 1){ done = true; SND.grind(); return gFinishAttempt(true, Math.min(1, 0.45 + leftMs/LIMIT)); }
+    if(leftMs <= 0){ done = true; SND.thud(); return gFinishAttempt(false, 0); }
     gRAF = requestAnimationFrame(frame);
   }
   // Startar först när spelaren greppar stången (armed)
@@ -6874,6 +7132,11 @@ function gLightsView(st){
     <button class="gm-btn" onclick="gNext()">${t('gm_next')}</button>
   </div>`;
   document.querySelectorAll('.gm-light').forEach((el,i)=>setTimeout(()=>el.classList.add('show'), 250 + i*300));
+  setTimeout(()=>{
+    if(!r.good) SND.bad();
+    else if(r.lights.every(x=>x)) SND.cheer();
+    else SND.good();
+  }, 1150);
   if(navigator.vibrate) setTimeout(()=>navigator.vibrate(r.good ? [40,50,90] : [120]), 1100);
   if(r.good && r.lights.every(x=>x)){ const card = st.querySelector('.gm-card'); if(card && typeof confettiBurst==='function') setTimeout(()=>confettiBurst(card), 1200); }
 }
@@ -6928,7 +7191,11 @@ function gResults(st){
     <button class="gm-btn${bombed ? '' : ' ghost'}" style="margin-top:${bombed?'12px':'10px'}" onclick="newGame();renderGame();">${t('gm_replay')}</button>
     <button class="gm-btn ghost" onclick="lbShow()">${t('lb_title_btn')}</button>
   </div>`;
-  if(!bombed && newBest){ const card = st.querySelector('.gm-card'); if(card && typeof confettiBurst==='function') setTimeout(()=>confettiBurst(card), 500); }
+  if(!bombed && newBest){
+    setTimeout(()=>SND.fanfare(), 500);
+    const card = st.querySelector('.gm-card');
+    if(card && typeof confettiBurst==='function') setTimeout(()=>confettiBurst(card), 500);
+  }
 }
 
 // ── PWA: registrera service worker ────────────────────────────────
