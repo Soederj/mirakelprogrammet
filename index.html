@@ -750,7 +750,7 @@ footer{
 .gm-jitter{animation:gm-jitter 0.12s infinite;}
 @keyframes gm-jitter{0%,100%{transform:translate(0,0);}25%{transform:translate(1.5px,-1px);}75%{transform:translate(-1.5px,1px);}}
 /* karaktärens leder */
-.jc-legs,.jc-torso,.jc-bar,.jc-arms,.jc-head{transition:transform 0.08s linear;transform-box:fill-box;}
+.jc-legs,.jc-torso,.jc-bar,.jc-arms,.jc-head,.jc-headD{transition:transform 0.08s linear;transform-box:fill-box;}
 .gm-scene svg{filter:drop-shadow(0 8px 16px rgba(0,0,0,0.45));}
 .gm-card.live{
   touch-action:none;
@@ -6355,22 +6355,25 @@ function charSquat(){
     <g class="jc-legs">
       <rect x="86" y="150" width="16" height="66" rx="8" fill="${JC.skin}"/>
       <rect x="118" y="150" width="16" height="66" rx="8" fill="${JC.skin}"/>
-      <rect x="84" y="150" width="20" height="26" rx="8" fill="${JC.accent}"/>
-      <rect x="116" y="150" width="20" height="26" rx="8" fill="${JC.accent}"/>
+      <!-- knävärmare i neongrönt – på knäna, inte höfterna -->
+      <rect x="84" y="172" width="20" height="26" rx="8" fill="${JC.accent}"/>
+      <rect x="116" y="172" width="20" height="26" rx="8" fill="${JC.accent}"/>
+      <rect x="84" y="176" width="20" height="2.5" rx="1" fill="rgba(0,0,0,0.25)"/>
+      <rect x="116" y="176" width="20" height="2.5" rx="1" fill="rgba(0,0,0,0.25)"/>
     </g>
     <g class="jc-torso">
-      <!-- stången ritas FÖRST = ligger bakom nacke och axlar -->
+      <!-- armar + händer ritas FÖRST = greppar stången BAKIFRÅN -->
+      <rect x="74" y="76" width="12" height="32" rx="6" fill="${JC.skin}" transform="rotate(-40 80 106)"/>
+      <rect x="134" y="76" width="12" height="32" rx="6" fill="${JC.skin}" transform="rotate(40 140 106)"/>
+      <rect x="55" y="76" width="13" height="15" rx="6" fill="${JC.skin}"/>
+      <rect x="152" y="76" width="13" height="15" rx="6" fill="${JC.skin}"/>
+      <!-- stången ligger framför armarna, bakom nacke och bål -->
       <g class="jc-bar">
         <rect x="18" y="82" width="184" height="7" rx="3" fill="url(#sq-bar)"/>
         ${gPlates(30, 85, 'sq')}${gPlates(190, 85, 'sq')}
       </g>
       <rect x="80" y="86" width="60" height="72" rx="18" fill="url(#sq-sg)"/>
       <text x="110" y="130" text-anchor="middle" font-family="'Bebas Neue'" font-size="20" fill="${JC.accent}">M</text>
-      <rect x="62" y="90" width="14" height="46" rx="7" fill="${JC.skin}"/>
-      <rect x="144" y="90" width="14" height="46" rx="7" fill="${JC.skin}"/>
-      <!-- händer greppar stången utanför axlarna -->
-      <rect x="58" y="74" width="12" height="22" rx="6" fill="${JC.skin}"/>
-      <rect x="150" y="74" width="12" height="22" rx="6" fill="${JC.skin}"/>
       <g class="jc-head" style="transform-box:fill-box;transform-origin:50% 75%;">${jHead(110, 66, 1)}</g>
     </g>
   </svg>`;
@@ -6388,8 +6391,8 @@ function charBench(){
     <rect x="42" y="120" width="126" height="13" rx="6" fill="#3a3a40"/>
     <rect x="56" y="133" width="9" height="37" fill="#2a2a2e"/>
     <rect x="144" y="133" width="9" height="37" fill="#2a2a2e"/>
-    <!-- kropp på rygg -->
-    <rect x="66" y="104" width="92" height="18" rx="9" fill="url(#bp-sg)"/>
+    <!-- kropp med styrkelyftsbrygga: axlar + höft i bänken, bröstet högt -->
+    <path d="M 64 121 Q 70 99 96 93 Q 122 90 144 110 Q 152 115 157 118 L 157 121 Z" fill="url(#bp-sg)"/>
     <!-- ben: lår ut från höften, underben ner till golv -->
     <rect x="150" y="106" width="38" height="13" rx="6" fill="${JC.skin}"/>
     <rect x="178" y="112" width="12" height="58" rx="6" fill="${JC.skin}"/>
@@ -6438,9 +6441,11 @@ function charDead(){
       <rect x="113" y="207" width="25" height="9" rx="4" fill="#222"/>
     </g>
     <g class="jc-torso" style="transform-box:view-box;transform-origin:108px 146px;">
-      <rect x="88" y="78" width="42" height="74" rx="15" fill="url(#dl-sg)"/>
+      <!-- böjd rygg: siluetten buktar utåt på ryggsidan (höger, som blir
+           ovansidan när bålen fälls framåt) -->
+      <path d="M 92 152 Q 86 112 92 88 Q 96 74 110 74 Q 128 74 134 94 Q 140 122 126 152 Z" fill="url(#dl-sg)"/>
       <text x="109" y="122" text-anchor="middle" font-family="'Bebas Neue'" font-size="15" fill="${JC.accent}">M</text>
-      ${jHead(109, 58, 0.92)}
+      <g class="jc-headD" style="transform-box:view-box;transform-origin:109px 70px;">${jHead(109, 58, 0.92)}</g>
       <g class="jc-arms" style="transform-box:view-box;transform-origin:109px 94px;">
         <!-- greppet utanför benen, lätt utåtvinklade från axlarna -->
         <rect x="80" y="92" width="11" height="60" rx="5" fill="${JC.skin}" transform="rotate(6 85.5 94)"/>
@@ -6457,11 +6462,13 @@ function charDead(){
 function setDeadPose(el, p){
   const torso = el.querySelector('.jc-torso');
   const arms = el.querySelector('.jc-arms');
+  const head = el.querySelector('.jc-headD');
   const bar = el.querySelector('.jc-bar');
   const legs = el.querySelector('.jc-legs');
   const a = 34 * (1 - p) + 2;                       // höftvinkel
   if(torso) torso.style.transform = `rotate(${a}deg)`;
   if(arms) arms.style.transform = `rotate(${-a}deg) scaleY(${1 + (1 - p) * 0.32})`;
+  if(head) head.style.transform = `rotate(${-a * 0.6}deg)`;  // blicken hålls framåt/uppåt
   if(bar) bar.style.transform = `translateY(${(1 - p) * 38}px)`;
   if(legs) legs.style.transform = `scaleY(${1 - (1 - p) * 0.05})`;
 }
