@@ -270,6 +270,23 @@ body{background:var(--ink);color:var(--cream);font-family:var(--sg);min-height:1
   text-stroke:2px var(--lime);
 }
 
+.hero-pitch{
+  font-family:var(--sg);font-size:13.5px;line-height:1.65;color:var(--dust);
+  max-width:480px;margin:14px auto 12px;
+}
+.demo-btn{
+  font-family:var(--mono);font-size:11px;letter-spacing:0.06em;
+  color:var(--lime);background:rgba(203,255,77,0.07);
+  border:1px solid rgba(203,255,77,0.4);border-radius:99px;
+  padding:10px 20px;cursor:pointer;margin-bottom:14px;
+  transition:background 0.15s, transform 0.1s;
+}
+.demo-btn:active{transform:scale(0.97);background:rgba(203,255,77,0.15);}
+.demo-note{
+  font-family:var(--mono);font-size:10.5px;color:var(--dust);letter-spacing:0.04em;
+  background:rgba(203,255,77,0.06);border:1px dashed rgba(203,255,77,0.35);
+  border-radius:12px;padding:10px 14px;margin:10px 0 4px;line-height:1.5;
+}
 .hero-slogan{
   font-family:var(--mono);font-size:13px;color:var(--dust);
   letter-spacing:0.14em;margin-bottom:36px;
@@ -1298,6 +1315,22 @@ body{padding-bottom:74px;}
 @media(max-width:640px){.log-section{padding:0 16px 70px;}}
 .log-card{background:var(--ink2);border:1px solid var(--ink4);border-radius:20px;padding:40px;}
 @media(max-width:640px){.log-card{padding:24px 16px;border-radius:16px;}}
+.dg-banner{
+  background:rgba(255,170,68,0.07);border:1px solid rgba(255,170,68,0.4);
+  border-radius:14px;padding:13px 15px;margin:0 0 20px;text-align:left;
+}
+.dg-txt{font-family:var(--sg);font-size:12.5px;line-height:1.55;color:var(--cream);margin-bottom:10px;}
+.dg-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.dg-btn{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:0.05em;
+  background:var(--lime);color:var(--ink);border:none;border-radius:99px;
+  padding:8px 15px;cursor:pointer;font-weight:600;
+}
+.dg-btn.ghost{background:none;color:var(--lime);border:1px solid rgba(203,255,77,0.45);}
+.dg-x{
+  margin-left:auto;background:none;border:none;color:var(--dust2);
+  font-size:14px;cursor:pointer;padding:6px 8px;
+}
 .log-tabs{display:inline-flex;gap:2px;background:var(--ink3);border-radius:100px;padding:3px;border:1px solid var(--ink4);margin-bottom:24px;flex-wrap:wrap;}
 .log-tab{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;color:var(--dust);background:none;border:none;border-radius:100px;padding:9px 18px;cursor:pointer;transition:all 0.2s;}
 .log-tab.active{background:var(--lime);color:var(--ink);font-weight:500;}
@@ -1609,6 +1642,11 @@ body{padding-bottom:74px;}
   <div class="hero-slogan" id="hero-slogan">based on magkänsla</div>
   <p class="hero-desc" data-i18n="hero_desc">Lyft tungt, lyft smart och för guds skull akta ryggen.</p>
 
+  <div id="onboard-wrap">
+    <p class="hero-pitch" data-i18n="hero_pitch">Periodiserat styrkelyftsprogram utifrån dina lyft. Logga passen, följ formen, jämför dig med svenska rankingen och sätt mål – gratis, utan konto, allt sparat på din mobil. Och på vilodagen: Mirakelmästerskapen. 🎮</p>
+    <button class="demo-btn" id="demo-btn" onclick="fillDemo()" data-i18n="demo_btn">✨ Nyfiken? Testa med exempeldata</button>
+  </div>
+
   <div class="prog-type-tabs">
     <button class="ptt active" id="ptt-2" onclick="setProgType(&#39;2veckor&#39;)" data-i18n="tab_2week">2-veckorscykel</button>
     <button class="ptt" id="ptt-5" onclick="setProgType(&#39;5veckor&#39;)" data-i18n="tab_5week">5-veckorscykel</button>
@@ -1774,6 +1812,7 @@ body{padding-bottom:74px;}
     <div class="rank-eyebrow" id="log-eyebrow">Träningslogg</div>
     <h2 class="rank-title" id="log-title">Logga <span>järnet</span></h2>
     <p class="rank-sub" id="log-sub">Kör dina pass direkt i appen – egna övningar, set för set – och följ utvecklingen över tid. Allt sparas lokalt i din webbläsare.</p>
+    <div id="data-guard" style="display:none"></div>
     <div class="log-tabs">
       <button class="log-tab active" id="log-tab-0" onclick="switchLogTab(0,this)">Logga pass</button>
       <button class="log-tab" id="log-tab-1" onclick="switchLogTab(1,this)">Historik</button>
@@ -2917,6 +2956,14 @@ const T = {
   sv: {
     toptag: 'Styrkelyft · Periodisering',
     hero_desc: 'Lyft tungt, lyft smart och för guds skull akta ryggen.',
+    guard_msg: (n) => `Du har ${n} pass sparade endast i den här webbläsaren. En rensad cache eller borttappad mobil raderar allt – aktivera synk eller ladda ner en backup.`,
+    guard_sync: '☁ Aktivera synk',
+    guard_export: '⬇ Ladda ner backup',
+    guard_stale: (d) => `Senaste synken var för ${d} dagar sedan – pass loggade sedan dess finns bara på den här enheten.`,
+    guard_syncnow: '☁ Synka nu',
+    hero_pitch: 'Periodiserat styrkelyftsprogram utifrån dina lyft. Logga passen, följ formen, jämför dig med svenska rankingen och sätt mål – gratis, utan konto, allt sparat på din mobil. Och på vilodagen: Mirakelmästerskapen. 🎮',
+    demo_btn: '✨ Nyfiken? Testa med exempeldata',
+    demo_note: '🧪 Detta är ett exempelprogram byggt på påhittade lyft (130 / 85 / 170 kg). Fyll i dina egna högst upp och tryck Generera när du är redo – exemplet skriver inte över något.',
     tab_2week: '2-veckorscykel', tab_5week: '5-veckorscykel',
     int_full: '🏋️ Full', int_light: '🥂 Light – för latmaskar & glaslyftare',
     imt_pb: 'Personbästa', imt_e1rm: 'Toppset',
@@ -3289,6 +3336,14 @@ const T = {
   en: {
     toptag: 'Powerlifting · Periodization',
     hero_desc: 'Lift heavy, lift smart and for the love of god, protect your back.',
+    guard_msg: (n) => `You have ${n} sessions stored only in this browser. A cleared cache or a lost phone erases everything – enable sync or download a backup.`,
+    guard_sync: '☁ Enable sync',
+    guard_export: '⬇ Download backup',
+    guard_stale: (d) => `Last sync was ${d} days ago – sessions logged since then only exist on this device.`,
+    guard_syncnow: '☁ Sync now',
+    hero_pitch: 'A periodized powerlifting program built from your lifts. Log your sessions, track your form, compare yourself to the Swedish rankings and set goals – free, no account, everything stored on your phone. And on rest days: Mirakelmästerskapen. 🎮',
+    demo_btn: '✨ Curious? Try with example data',
+    demo_note: '🧪 This is an example program built on made-up lifts (285 / 185 / 375 lbs). Enter your own at the top and hit Generate when you\'re ready – the example doesn\'t overwrite anything.',
     tab_2week: '2-week cycle', tab_5week: '5-week cycle',
     int_full: '🏋️ Full', int_light: '🥂 Light – for lazy days & beginners',
     imt_pb: 'Personal best', imt_e1rm: 'Top set',
@@ -4462,6 +4517,83 @@ function applyComebackDrop(days){
 window.addEventListener('DOMContentLoaded', ()=>{ setTimeout(checkComeback, 100); });
 
 // ── VYVÄXLING (bottennav) ─────────────────────────────────────────
+// ── DATAVAKT: knuffar mot synk/backup när historiken växer oskyddad ─
+function updateDataGuard(){
+  const el = document.getElementById('data-guard');
+  if(!el) return;
+  let html = '';
+  try{
+    const n = (logData.workouts || []).length;
+    if(!syncState.key){
+      // Ingen synk alls: knuffa från 5 pass, igen var 5:e efter avfärdande
+      const dismissedAt = parseInt(localStorage.getItem('mp_guard_dismiss') || '-999', 10);
+      if(n >= 5 && n >= dismissedAt + 5){
+        html = `
+          <div class="dg-banner">
+            <div class="dg-txt">🛡️ ${t('guard_msg', n)}</div>
+            <div class="dg-row">
+              <button class="dg-btn" onclick="switchLogTab(3, document.getElementById('log-tab-3'))">${t('guard_sync')}</button>
+              <button class="dg-btn ghost" onclick="exportLog();guardDismiss()">${t('guard_export')}</button>
+              <button class="dg-x" onclick="guardDismiss()">✕</button>
+            </div>
+          </div>`;
+      }
+    } else if(syncState.lastSync){
+      // Synk finns men har inte körts på länge
+      const days = Math.floor((Date.now() - syncState.lastSync) / 86400000);
+      const staleDismiss = parseInt(localStorage.getItem('mp_guard_stale') || '0', 10);
+      if(days >= 14 && Date.now() - staleDismiss > 7 * 86400000){
+        html = `
+          <div class="dg-banner">
+            <div class="dg-txt">☁️ ${t('guard_stale', days)}</div>
+            <div class="dg-row">
+              <button class="dg-btn" onclick="syncNow(true);guardStaleDismiss()">${t('guard_syncnow')}</button>
+              <button class="dg-x" onclick="guardStaleDismiss()">✕</button>
+            </div>
+          </div>`;
+      }
+    }
+  }catch(e){}
+  el.innerHTML = html;
+  el.style.display = html ? 'block' : 'none';
+}
+function guardDismiss(){
+  try{ localStorage.setItem('mp_guard_dismiss', String((logData.workouts || []).length)); }catch(e){}
+  updateDataGuard();
+}
+function guardStaleDismiss(){
+  try{ localStorage.setItem('mp_guard_stale', String(Date.now())); }catch(e){}
+  updateDataGuard();
+}
+
+// ── ONBOARDING: exempeldata för förstagångsbesökare ─────────────────
+function fillDemo(){
+  setInputMode('pb');
+  if(typeof progType !== 'undefined' && progType === 'breakingbad') setProgType('2veckor');
+  const vals = (typeof currentUnit !== 'undefined' && currentUnit === 'lbs')
+    ? { s: 285, b: 185, d: 375 }
+    : { s: 130, b: 85, d: 170 };
+  document.getElementById('squat').value = vals.s;
+  document.getElementById('bench').value = vals.b;
+  document.getElementById('dead').value = vals.d;
+  generate();
+  // Demo-lapp under programsammanfattningen (en gång)
+  const sum = document.getElementById('prog-summary');
+  if(sum && !document.getElementById('demo-note')){
+    sum.insertAdjacentHTML('afterend', `<div class="demo-note" id="demo-note">${t('demo_note')}</div>`);
+  }
+}
+// Göm pitch + demo-knapp för den som redan har egen data
+(function(){
+  try{
+    const returning = localStorage.getItem('pb_s') || localStorage.getItem(LOG_KEY);
+    if(returning){
+      const w = document.getElementById('onboard-wrap');
+      if(w) w.style.display = 'none';
+    }
+  }catch(e){}
+})();
+
 // ── SWIPE-NAVIGERING mellan flikarna ────────────────────────────────
 // Skyddszoner: aldrig i spelet (oavsiktlig swipe mitt i ett lyft vore
 // katastrof), aldrig från sliders/inputs/grafer, aldrig från skärmkanterna
@@ -4530,7 +4662,7 @@ function switchView(v){
   document.querySelectorAll('.bn-btn').forEach(b=>b.classList.remove('active'));
   const btn = document.getElementById('bn-' + v);
   if(btn) btn.classList.add('active');
-  if(v === 'log') renderLogUI();
+  if(v === 'log'){ renderLogUI(); updateDataGuard(); }
   if(v === 'goals') renderGoals();
   if(v === 'game') initGame();
   updateLogDot();
@@ -5860,6 +5992,7 @@ async function syncNow(interactive){
       if(!push.ok) throw new Error('HTTP ' + push.status);
     }
     syncState.lastSync = Date.now(); saveSyncState();
+    if(typeof updateDataGuard === 'function') updateDataGuard();
     setSyncStatus(t('sync_merged', logData.workouts.length));
     if(typeof gtag==='function' && interactive) gtag('event','sync_manual');
   }catch(e){
