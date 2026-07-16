@@ -5913,6 +5913,14 @@ const GAME_BEST_KEY = 'mp_game_best';
 const GAME_INSTR_KEY = 'mp_game_instr_v1';
 const GAME_NAME_KEY = 'mp_game_name';
 const GAME_API_URL = 'https://mp-game.jonathan-soderling.workers.dev';
+// Rekordmigrering: rekord satta före ombalanseringen (v2) speglar den
+// gamla, snällare fysiken – nollställ dem en gång per enhet.
+try{
+  if(localStorage.getItem('mp_game_best_v') !== '2'){
+    localStorage.removeItem(GAME_BEST_KEY);
+    localStorage.setItem('mp_game_best_v', '2');
+  }
+}catch(e){}
 
 let G = null;      // spelstate
 let gRAF = null;   // aktiv animationsloop
@@ -6201,7 +6209,7 @@ async function gShareResult(total, bs, bb, bd){
   // Footer
   ctx.fillStyle = 'rgba(203,255,77,0.6)';
   ctx.font = '500 30px "DM Mono", monospace';
-  ctx.fillText('soederj.github.io/mirakelprogrammet', W/2, H - 68);
+  ctx.fillText('mirakelprogrammet.se', W/2, H - 68);
 
   // Dela eller ladda ner
   cv.toBlob(async (blob)=>{
