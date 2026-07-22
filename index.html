@@ -917,10 +917,11 @@ input.q-range.set::-moz-range-thumb{background:var(--lime);}
 
 /* ── SETKVALITET ── */
 .ls-q{
-  width:36px;height:44px;flex-shrink:0;background:var(--ink2);
-  border:1px solid var(--ink4);border-radius:10px;color:var(--dust2);
-  font-size:15px;cursor:pointer;transition:all 0.12s;
+  width:32px;height:28px;flex-shrink:0;background:none;
+  border:none;border-radius:8px;color:var(--dust2);
+  font-size:14px;cursor:pointer;transition:all 0.12s;touch-action:manipulation;
 }
+.ls-q:active{background:var(--ink2);}
 .ls-q.filled{color:var(--lime);border-color:rgba(203,255,77,0.4);}
 .ls-rec:empty{min-width:0;display:none;}
 .ls-grp{display:flex;align-items:center;gap:4px;flex-shrink:1;min-width:0;}
@@ -938,14 +939,12 @@ html,body{overflow-x:hidden;max-width:100vw;}
   .ls-kg,.ls-reps{width:52px;padding:9px 3px;font-size:15px;border-radius:8px;}
   .ls-x{font-size:9px;}
   .ls-actions{gap:4px;}
-  .ls-done{width:38px;height:40px;font-size:15px;}
-  .ls-q{width:30px;height:40px;font-size:14px;}
-  .ls-del{width:22px;height:40px;font-size:12px;}
-  .ls-e1rm{
-    display:block;width:100%;order:10;text-align:right;
-    font-size:9px;color:var(--dust2);margin-top:-4px;padding-right:2px;
-  }
-  .ls-e1rm:empty{display:none;}
+  .ls-done{width:44px;height:40px;font-size:16px;}
+  .ls-q{width:30px;height:26px;font-size:13px;}
+  .ls-del{width:26px;height:26px;font-size:11px;}
+  .ls-meta{padding-left:18px;gap:8px;margin-top:0;}
+  .ls-e1rm{font-size:9px;}
+  .ls-meta-btns{gap:0;}
   .lsq{padding-left:20px;}
   .lsq-end{width:72px;font-size:7.5px;}
   /* redigeraren */
@@ -1126,6 +1125,23 @@ body{padding-bottom:74px;}
   white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis;
 }
 #rec-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+#undo-toast{
+  position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);
+  display:flex;align-items:center;gap:14px;
+  background:var(--ink3);border:1px solid var(--ink4);color:var(--cream);
+  font-family:var(--sg);font-size:12.5px;
+  padding:11px 12px 11px 18px;border-radius:100px;
+  box-shadow:0 8px 30px rgba(0,0,0,0.5);
+  opacity:0;pointer-events:none;z-index:501;
+  transition:opacity 0.2s, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  max-width:92vw;
+}
+#undo-toast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto;}
+#undo-toast button{
+  font-family:var(--mono);font-size:11px;letter-spacing:0.05em;
+  background:var(--lime);color:var(--ink);border:none;border-radius:100px;
+  padding:7px 15px;cursor:pointer;font-weight:600;flex-shrink:0;
+}
 .ls-rec{font-size:13px;flex-shrink:0;min-width:18px;text-align:center;}
 .rlc-best{
   display:inline-block;font-family:var(--mono);font-size:9px;
@@ -1345,9 +1361,26 @@ body{padding-bottom:74px;}
 .ls-name{flex:1;min-width:200px;font-family:var(--bb);font-size:26px;letter-spacing:0.03em;color:var(--cream);background:var(--ink3);border:1px solid var(--ink4);border-radius:10px;padding:10px 16px;outline:none;}
 .ls-name:focus{border-color:var(--lime);}
 .ls-elapsed{font-family:var(--mono);font-size:14px;color:var(--lime);letter-spacing:0.1em;background:var(--lime-dim);border:1px solid rgba(203,255,77,0.2);border-radius:10px;padding:11px 16px;}
+.ls-sticky{
+  position:sticky;top:0;z-index:60;
+  display:flex;align-items:center;gap:12px;
+  background:rgba(9,9,10,0.92);backdrop-filter:blur(12px);
+  border:1px solid var(--ink4);border-radius:12px;
+  padding:9px 14px;margin:0 0 14px;
+}
+body.light-mode .ls-sticky{background:rgba(248,246,240,0.92);}
+.lss-time{font-family:var(--mono);font-size:12px;color:var(--lime);letter-spacing:0.08em;flex-shrink:0;}
+.lss-now{
+  font-family:var(--sg);font-size:12px;font-weight:600;color:var(--dust);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
 .ls-ex{background:var(--ink3);border:1px solid var(--ink4);border-radius:14px;padding:18px;margin-bottom:14px;}
 .ls-ex-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;}
 .ls-ex-name{font-family:var(--sg);font-weight:600;font-size:15px;color:var(--cream);letter-spacing:0.02em;}
+.ls-ex-tools{display:flex;align-items:center;gap:2px;flex-shrink:0;}
+.ls-warm{background:none;border:none;font-size:14px;cursor:pointer;padding:6px 8px;border-radius:8px;opacity:0.75;touch-action:manipulation;}
+.ls-warm:active{opacity:1;background:rgba(255,170,68,0.12);}
+.ls-row.warm .ls-num{font-size:12px;}
 .ls-ex-del{background:none;border:none;color:var(--dust2);font-size:15px;cursor:pointer;padding:6px 10px;border-radius:8px;}
 .ls-ex-del:hover{color:#ff6b6b;background:rgba(255,80,80,0.08);}
 .ls-row{display:flex;align-items:center;gap:10px;padding:5px 0;}
@@ -1361,7 +1394,8 @@ body{padding-bottom:74px;}
 .ls-x{font-family:var(--mono);color:var(--dust2);font-size:12px;}
 .ls-done{width:44px;height:44px;border-radius:10px;border:1px solid var(--ink4);background:var(--ink2);color:var(--dust2);font-size:17px;cursor:pointer;transition:all 0.15s;flex-shrink:0;}
 .ls-row.done .ls-done{background:var(--lime);color:var(--ink);border-color:var(--lime);}
-.ls-del{width:34px;height:44px;background:none;border:none;color:var(--ink4);font-size:13px;cursor:pointer;flex-shrink:0;}
+.ls-del{width:30px;height:28px;background:none;border:none;color:var(--ink4);font-size:12px;cursor:pointer;flex-shrink:0;border-radius:8px;touch-action:manipulation;}
+.ls-del:active{background:rgba(255,80,80,0.12);color:#ff6b6b;}
 .ls-del:hover{color:#ff6b6b;}
 .ls-addset{font-family:var(--mono);font-size:11px;letter-spacing:0.06em;color:var(--dust);background:none;border:1px dashed var(--ink4);border-radius:9px;padding:9px 16px;cursor:pointer;margin-top:8px;transition:all 0.2s;}
 .ls-addset:hover{color:var(--lime);border-color:rgba(203,255,77,0.4);}
@@ -1413,8 +1447,14 @@ body{padding-bottom:74px;}
 .lh-ex-sum{font-size:9px;color:var(--dust2);margin-left:8px;font-weight:400;}
 .lh-set{display:inline-block;margin:2px 10px 2px 0;white-space:nowrap;}
 .lh-e1{color:var(--dust2);}
-.ls-e1rm{font-family:var(--mono);font-size:9.5px;color:var(--dust2);letter-spacing:0.03em;white-space:nowrap;}
-@media(max-width:480px){.ls-e1rm{display:none;}}
+.ls-e1rm{font-family:var(--mono);font-size:9.5px;color:var(--dust2);letter-spacing:0.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* metarad: e1rm + skivor till vänster, sekundärknappar till höger */
+.ls-meta{
+  width:100%;order:10;display:flex;align-items:center;gap:10px;
+  margin-top:-2px;padding-left:26px;
+}
+.ls-meta .ls-e1rm{flex:1;min-width:0;text-align:left;}
+.ls-meta-btns{display:flex;align-items:center;gap:2px;flex-shrink:0;margin-left:auto;}
 .sync-key-box{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--ink3);border:1px solid var(--ink4);border-radius:12px;padding:16px;margin:14px 0;}
 .sync-key-val{font-family:var(--mono);font-size:15px;letter-spacing:0.1em;color:var(--lime);word-break:break-all;flex:1;min-width:200px;}
 .sync-small-btn{font-family:var(--mono);font-size:10px;letter-spacing:0.06em;color:var(--dust);background:none;border:1px solid var(--ink4);border-radius:8px;padding:8px 14px;cursor:pointer;}
@@ -2974,6 +3014,16 @@ const T = {
   sv: {
     toptag: 'Styrkelyft · Periodisering',
     hero_desc: 'Lyft tungt, lyft smart och för guds skull akta ryggen.',
+    undo_btn: 'Ångra',
+    undo_close: 'OK',
+    undo_set: 'Set borttaget',
+    undo_ex: (n) => `${n || 'Övning'} borttagen`,
+    lss_set: 'set',
+    lss_alldone: 'Alla set avklarade 💪',
+    warm_title: 'Lägg till uppvärmningsset',
+    warm_added: (n) => `${n} uppvärmningsset tillagda`,
+    warm_need: 'Fyll i en arbetsvikt först',
+    warm_none: 'Vikten är för låg för en uppvärmningsstege',
     guard_msg: (n) => `Du har ${n} pass sparade endast i den här webbläsaren. En rensad cache eller borttappad mobil raderar allt – aktivera synk eller ladda ner en backup.`,
     guard_sync: '☁ Aktivera synk',
     guard_export: '⬇ Ladda ner backup',
@@ -3354,6 +3404,16 @@ const T = {
   en: {
     toptag: 'Powerlifting · Periodization',
     hero_desc: 'Lift heavy, lift smart and for the love of god, protect your back.',
+    undo_btn: 'Undo',
+    undo_close: 'OK',
+    undo_set: 'Set removed',
+    undo_ex: (n) => `${n || 'Exercise'} removed`,
+    lss_set: 'set',
+    lss_alldone: 'All sets done 💪',
+    warm_title: 'Add warm-up sets',
+    warm_added: (n) => `${n} warm-up sets added`,
+    warm_need: 'Enter a working weight first',
+    warm_none: 'The weight is too low for a warm-up ramp',
     guard_msg: (n) => `You have ${n} sessions stored only in this browser. A cleared cache or a lost phone erases everything – enable sync or download a backup.`,
     guard_sync: '☁ Enable sync',
     guard_export: '⬇ Download backup',
@@ -4419,23 +4479,34 @@ function renderSessionPanel(){
   let h = `<div class="ls-head">
     <input class="ls-name" value="${escapeHtml(activeSession.name)}" placeholder="${t('log_session_name_ph')}" oninput="activeSession.name=this.value;saveActive()">
     <div class="ls-elapsed" id="ls-elapsed">⏱ ${elapsedStr()}</div>
+  </div>
+  <div class="ls-sticky" id="ls-sticky">
+    <span class="lss-time" id="lss-time">⏱ ${elapsedStr()}</span>
+    <span class="lss-now" id="lss-now">${escapeHtml(currentExLabel())}</span>
   </div>`;
   activeSession.ex.forEach((e, ei)=>{
     h += `<div class="ls-ex"><div class="ls-ex-head"><span class="ls-ex-name">${escapeHtml(e.name)}</span>
-      <button class="ls-ex-del" onclick="removeLogEx(${ei})">✕</button></div>`;
+      <span class="ls-ex-tools">
+        <button class="ls-warm" onclick="addWarmup(${ei})" title="${t('warm_title')}">🔥</button>
+        <button class="ls-ex-del" onclick="removeLogEx(${ei})">✕</button>
+      </span></div>`;
     e.sets.forEach((s, si)=>{
-      h += `<div class="ls-row${s.done?' done':''}${s.sug?' sug':''}" id="lsr-${ei}-${si}">
-        <span class="ls-num">${si+1}</span>
+      h += `<div class="ls-row${s.done?' done':''}${s.sug?' sug':''}${s.warm?' warm':''}" id="lsr-${ei}-${si}">
+        <span class="ls-num">${s.warm?'🔥':si+1}</span>
         <div class="ls-grp"><button class="ls-step" onclick="stepLogKg(${ei},${si},-2.5)">−</button><input class="ls-kg" type="number" inputmode="decimal" step="0.5" min="0" value="${s.kg===''?'':s.kg}" placeholder="kg" oninput="onLogSetInput(${ei},${si},'kg',this.value)"><button class="ls-step" onclick="stepLogKg(${ei},${si},2.5)">+</button></div>
         <span class="ls-x">×</span>
         <div class="ls-grp"><button class="ls-step" onclick="stepLogReps(${ei},${si},-1)">−</button><input class="ls-reps" type="number" inputmode="numeric" min="0" value="${s.reps===''?'':s.reps}" placeholder="reps" oninput="onLogSetInput(${ei},${si},'reps',this.value)"><button class="ls-step" onclick="stepLogReps(${ei},${si},1)">+</button></div>
         <div class="ls-actions">
           <span class="ls-rec" id="lrec-${ei}-${si}">${s.rec==='pb'?'🏆':s.rec==='yb'?'📅':''}</span>
           <button class="ls-done" onclick="toggleLogSet(${ei},${si})">✓</button>
-          <button class="ls-q${s.q?' filled':''}" id="lsqbtn-${ei}-${si}" onclick="toggleQPanel(${ei},${si})">${s.q?'★':'☆'}</button>
-          <button class="ls-del" onclick="removeLogSet(${ei},${si})">✕</button>
         </div>
-        <span class="ls-e1rm" id="lse-${ei}-${si}">${s.kg>0&&s.reps>0?'e1rm '+rkg(Math.round(epley(s.kg,s.reps)*2)/2):''}</span>
+        <div class="ls-meta">
+          <span class="ls-e1rm" id="lse-${ei}-${si}">${setMetaLine(s)}</span>
+          <span class="ls-meta-btns">
+            <button class="ls-q${s.q?' filled':''}" id="lsqbtn-${ei}-${si}" onclick="toggleQPanel(${ei},${si})">${s.q?'★':'☆'}</button>
+            <button class="ls-del" onclick="removeLogSet(${ei},${si})">✕</button>
+          </span>
+        </div>
       </div>
       <div class="lsq" id="lsq-${ei}-${si}" style="display:none">${qPanelHtml(e.name, ei, si, s.q)}</div>`;
     });
@@ -4455,11 +4526,46 @@ function renderSessionPanel(){
   </div>`;
   panel.innerHTML = h;
   sessionTicker = setInterval(()=>{
+    if(!activeSession) return;
     const el = document.getElementById('ls-elapsed');
-    if(el && activeSession) el.textContent = '⏱ ' + elapsedStr();
+    if(el) el.textContent = '⏱ ' + elapsedStr();
+    const st = document.getElementById('lss-time');
+    if(st) st.textContent = '⏱ ' + elapsedStr();
+    const nw = document.getElementById('lss-now');
+    if(nw){ const lbl = currentExLabel(); if(nw.textContent !== lbl) nw.textContent = lbl; }
   }, 1000);
 }
 
+// Kompakt skivuppdelning per sida: "25+20+5" (bara för skivstångsvikter)
+function platesLabel(kg){
+  const v = parseFloat(kg);
+  if(!(v > BAR_WEIGHT + COLLAR_WEIGHT)) return '';
+  const p = calcPlates(v);
+  if(!p.length) return '';
+  const out = [];
+  p.forEach(pl => {
+    const last = out[out.length-1];
+    if(last && last.kg === pl.kg) last.n++;
+    else out.push({kg: pl.kg, n: 1});
+  });
+  return out.map(o => (o.n > 1 ? `${o.n}×${o.kg}` : `${o.kg}`)).join('+');
+}
+function setMetaLine(s){
+  const bits = [];
+  if(s.kg > 0 && s.reps > 0) bits.push('e1rm ' + rkg(Math.round(epley(s.kg, s.reps)*2)/2));
+  const pl = platesLabel(s.kg);
+  if(pl) bits.push('🏋 ' + pl);
+  return bits.join('  ·  ');
+}
+function currentExLabel(){
+  if(!activeSession) return '';
+  for(const e of activeSession.ex){
+    const total = e.sets.length;
+    const done = e.sets.filter(s=>s.done).length;
+    if(done < total) return `${e.name} · ${t('lss_set')} ${done+1}/${total}`;
+  }
+  return t('lss_alldone');
+}
 function escapeHtml(s){ return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 // ── Aktivt pass: interaktion ──
@@ -4468,7 +4574,7 @@ function onLogSetInput(ei, si, field, val){
   s[field] = val === '' ? '' : parseFloat(val);
   unsuggest(ei, si);
   const e1 = document.getElementById(`lse-${ei}-${si}`);
-  if(e1) e1.textContent = (s.kg>0 && s.reps>0) ? 'e1rm ' + rkg(Math.round(epley(s.kg,s.reps)*2)/2) : '';
+  if(e1) e1.textContent = setMetaLine(s);
   saveActive();
 }
 function nextPlannedKg(ei, si){
@@ -5162,6 +5268,28 @@ function checkSetRecord(exName, kg, reps, ei, si){
 }
 
 let recToastTimer = null;
+// ── TOAST med valfri ångra-knapp ────────────────────────────────────
+let undoToastTimer = null;
+function showUndoToast(msg, label, fn){
+  let el = document.getElementById('undo-toast');
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'undo-toast';
+    document.body.appendChild(el);
+  }
+  el.innerHTML = `<span>${escapeHtml(msg)}</span>`;
+  const b = document.createElement('button');
+  b.textContent = label;
+  b.onclick = ()=>{
+    el.classList.remove('show');
+    if(navigator.vibrate) navigator.vibrate(12);
+    fn();
+  };
+  el.appendChild(b);
+  el.classList.add('show');
+  clearTimeout(undoToastTimer);
+  undoToastTimer = setTimeout(()=>el.classList.remove('show'), 5000);
+}
 function showRecordToast(type, exName, kg, reps){
   let el = document.getElementById('rec-toast');
   if(!el){
@@ -5187,7 +5315,7 @@ function stepLogKg(ei, si, delta){
   const inp = row ? row.querySelector('.ls-kg') : null;
   if(inp) inp.value = next;
   const e1 = document.getElementById(`lse-${ei}-${si}`);
-  if(e1) e1.textContent = (s.kg>0 && s.reps>0) ? 'e1rm '+rkg(Math.round(epley(s.kg,s.reps)*2)/2) : '';
+  if(e1) e1.textContent = setMetaLine(s);
   saveActive();
   if(navigator.vibrate) navigator.vibrate(8);
 }
@@ -5202,7 +5330,7 @@ function stepLogReps(ei, si, delta){
   const inp = row ? row.querySelector('.ls-reps') : null;
   if(inp) inp.value = next;
   const e1 = document.getElementById(`lse-${ei}-${si}`);
-  if(e1) e1.textContent = (s.kg>0 && s.reps>0) ? 'e1rm '+rkg(Math.round(epley(s.kg,s.reps)*2)/2) : '';
+  if(e1) e1.textContent = setMetaLine(s);
   saveActive();
   if(navigator.vibrate) navigator.vibrate(8);
 }
@@ -5296,6 +5424,8 @@ function toggleLogSet(ei, si){
     if(bbKg > 0){ currentBarbellKg = bbKg; drawBarbell(bbKg); }
     applyRestFor(activeSession.ex[ei].name);
     delete s.sug;                                  // avbockat set är på riktigt
+    const nw = document.getElementById('lss-now');
+    if(nw) nw.textContent = currentExLabel();
     if(autoTimer) startGlobalTimer();
     if(navigator.vibrate) navigator.vibrate(15);
     // PB/ÅB-detektion
@@ -5322,12 +5452,28 @@ function addLogSet(ei){
   saveActive(); renderSessionPanel();
 }
 function removeLogSet(ei, si){
+  const removed = activeSession.ex[ei].sets[si];
   activeSession.ex[ei].sets.splice(si,1);
   saveActive(); renderSessionPanel();
+  if(navigator.vibrate) navigator.vibrate(18);
+  showUndoToast(t('undo_set'), t('undo_btn'), ()=>{
+    if(activeSession && activeSession.ex[ei]){
+      activeSession.ex[ei].sets.splice(si, 0, removed);
+      saveActive(); renderSessionPanel();
+    }
+  });
 }
 function removeLogEx(ei){
+  const removed = activeSession.ex[ei];
   activeSession.ex.splice(ei,1);
   saveActive(); renderSessionPanel();
+  if(navigator.vibrate) navigator.vibrate(18);
+  showUndoToast(t('undo_ex', removed ? removed.name : ''), t('undo_btn'), ()=>{
+    if(activeSession){
+      activeSession.ex.splice(ei, 0, removed);
+      saveActive(); renderSessionPanel();
+    }
+  });
 }
 // Senast loggade set för en övning – används som förslag i nya pass
 function lastSetsFor(name){
@@ -5350,6 +5496,31 @@ function unsuggest(ei, si){
     const row = document.getElementById(`lsr-${ei}-${si}`);
     if(row) row.classList.remove('sug');
   }
+}
+// Bygger en uppvärmningsstege mot tyngsta planerade vikten i övningen
+function addWarmup(ei){
+  const ex = activeSession.ex[ei];
+  const top = Math.max(...ex.sets.map(s => parseFloat(s.kg) || 0));
+  if(!(top > BAR_WEIGHT)){ showUndoToast(t('warm_need'), t('undo_close'), ()=>{}); return; }
+  const steps = [[0.4, 8], [0.6, 5], [0.75, 3], [0.85, 2]];
+  const warm = [];
+  let prev = 0;
+  steps.forEach(([pct, reps])=>{
+    const kg = Math.max(BAR_WEIGHT, Math.round(top * pct / 2.5) * 2.5);
+    if(kg >= top || kg === prev) return;      // hoppa över dubletter och för tunga
+    prev = kg;
+    warm.push({ kg, reps, done: false, sug: true, warm: true });
+  });
+  if(!warm.length){ showUndoToast(t('warm_none'), t('undo_close'), ()=>{}); return; }
+  ex.sets = warm.concat(ex.sets);
+  saveActive(); renderSessionPanel();
+  if(navigator.vibrate) navigator.vibrate(15);
+  showUndoToast(t('warm_added', warm.length), t('undo_btn'), ()=>{
+    if(activeSession && activeSession.ex[ei]){
+      activeSession.ex[ei].sets = activeSession.ex[ei].sets.filter(s => !s.warm);
+      saveActive(); renderSessionPanel();
+    }
+  });
 }
 function addLogEx(){
   const sel = document.getElementById('ls-ex-select');
