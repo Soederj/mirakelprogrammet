@@ -926,7 +926,7 @@ input.q-range.set::-moz-range-thumb{background:var(--lime);}
 .ls-rec:empty{min-width:0;display:none;}
 .ls-grp{display:flex;align-items:center;gap:4px;flex-shrink:1;min-width:0;}
 .ls-grp .ls-kg,.ls-grp .ls-reps{min-width:0;}
-.ls-actions{display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0;}
+.ls-actions{display:flex;align-items:center;gap:6px;flex-shrink:0;}
 .ls-row{flex-wrap:wrap;}
 
 /* ══ MOBILE FIRST ══ */
@@ -1380,6 +1380,7 @@ body.light-mode .ls-sticky{background:rgba(248,246,240,0.92);}
 .ls-ex-tools{display:flex;align-items:center;gap:2px;flex-shrink:0;}
 .ls-warm{background:none;border:none;font-size:14px;cursor:pointer;padding:6px 8px;border-radius:8px;opacity:0.75;touch-action:manipulation;}
 .ls-warm:active{opacity:1;background:rgba(255,170,68,0.12);}
+.ls-warm.on{opacity:1;background:rgba(255,170,68,0.16);box-shadow:inset 0 0 0 1px rgba(255,170,68,0.45);}
 .ls-row.warm .ls-num{font-size:12px;}
 .ls-ex-del{background:none;border:none;color:var(--dust2);font-size:15px;cursor:pointer;padding:6px 10px;border-radius:8px;}
 .ls-ex-del:hover{color:#ff6b6b;background:rgba(255,80,80,0.08);}
@@ -1450,7 +1451,7 @@ body.light-mode .ls-sticky{background:rgba(248,246,240,0.92);}
 .ls-e1rm{font-family:var(--mono);font-size:9.5px;color:var(--dust2);letter-spacing:0.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 /* metarad: e1rm + skivor till vänster, sekundärknappar till höger */
 .ls-meta{
-  width:100%;order:10;display:flex;align-items:center;gap:10px;
+  width:100%;flex-basis:100%;order:10;display:flex;align-items:center;gap:10px;
   margin-top:-2px;padding-left:26px;
 }
 .ls-meta .ls-e1rm{flex:1;min-width:0;text-align:left;}
@@ -3022,6 +3023,7 @@ const T = {
     lss_alldone: 'Alla set avklarade 💪',
     warm_title: 'Lägg till uppvärmningsset',
     warm_added: (n) => `${n} uppvärmningsset tillagda`,
+    warm_removed: 'Uppvärmningen borttagen',
     warm_need: 'Fyll i en arbetsvikt först',
     warm_none: 'Vikten är för låg för en uppvärmningsstege',
     guard_msg: (n) => `Du har ${n} pass sparade endast i den här webbläsaren. En rensad cache eller borttappad mobil raderar allt – aktivera synk eller ladda ner en backup.`,
@@ -3412,6 +3414,7 @@ const T = {
     lss_alldone: 'All sets done 💪',
     warm_title: 'Add warm-up sets',
     warm_added: (n) => `${n} warm-up sets added`,
+    warm_removed: 'Warm-up removed',
     warm_need: 'Enter a working weight first',
     warm_none: 'The weight is too low for a warm-up ramp',
     guard_msg: (n) => `You have ${n} sessions stored only in this browser. A cleared cache or a lost phone erases everything – enable sync or download a backup.`,
@@ -4487,7 +4490,7 @@ function renderSessionPanel(){
   activeSession.ex.forEach((e, ei)=>{
     h += `<div class="ls-ex"><div class="ls-ex-head"><span class="ls-ex-name">${escapeHtml(e.name)}</span>
       <span class="ls-ex-tools">
-        <button class="ls-warm" onclick="addWarmup(${ei})" title="${t('warm_title')}">🔥</button>
+        <button class="ls-warm${e.sets.some(s=>s.warm)?' on':''}" onclick="addWarmup(${ei})" title="${t('warm_title')}">🔥</button>
         <button class="ls-ex-del" onclick="removeLogEx(${ei})">✕</button>
       </span></div>`;
     e.sets.forEach((s, si)=>{
@@ -5500,7 +5503,21 @@ function unsuggest(ei, si){
 // Bygger en uppvärmningsstege mot tyngsta planerade vikten i övningen
 function addWarmup(ei){
   const ex = activeSession.ex[ei];
-  const top = Math.max(...ex.sets.map(s => parseFloat(s.kg) || 0));
+  // Redan uppvärmning? Då tar knappen bort den igen (växling).
+  if(ex.sets.some(s => s.warm)){
+    const removed = ex.sets.filter(s => s.warm);
+    ex.sets = ex.sets.filter(s => !s.warm);
+    saveActive(); renderSessionPanel();
+    if(navigator.vibrate) navigator.vibrate(18);
+    showUndoToast(t('warm_removed'), t('undo_btn'), ()=>{
+      if(activeSession && activeSession.ex[ei]){
+        activeSession.ex[ei].sets = removed.concat(activeSession.ex[ei].sets);
+        saveActive(); renderSessionPanel();
+      }
+    });
+    return;
+  }
+  const top = Math.max(...ex.sets.filter(s => !s.warm).map(s => parseFloat(s.kg) || 0));
   if(!(top > BAR_WEIGHT)){ showUndoToast(t('warm_need'), t('undo_close'), ()=>{}); return; }
   const steps = [[0.4, 8], [0.6, 5], [0.75, 3], [0.85, 2]];
   const warm = [];
