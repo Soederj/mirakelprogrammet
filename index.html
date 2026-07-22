@@ -1352,6 +1352,8 @@ body{padding-bottom:74px;}
 .ls-ex-del:hover{color:#ff6b6b;background:rgba(255,80,80,0.08);}
 .ls-row{display:flex;align-items:center;gap:10px;padding:5px 0;}
 .ls-row.done .ls-kg,.ls-row.done .ls-reps{border-color:rgba(203,255,77,0.4);}
+/* förslag från förra passet – dämpade tills man rör dem */
+.ls-row.sug .ls-kg,.ls-row.sug .ls-reps{opacity:0.45;border-style:dashed;}
 .ls-num{font-family:var(--mono);font-size:11px;color:var(--dust2);min-width:22px;}
 .ls-kg,.ls-reps{width:86px;font-family:var(--mono);font-size:16px;color:var(--cream);background:var(--ink2);border:1px solid var(--ink4);border-radius:9px;padding:11px 10px;outline:none;text-align:center;-moz-appearance:textfield;}
 .ls-kg::-webkit-outer-spin-button,.ls-kg::-webkit-inner-spin-button,.ls-reps::-webkit-outer-spin-button,.ls-reps::-webkit-inner-spin-button{-webkit-appearance:none;}
@@ -2212,6 +2214,7 @@ function closeTimer(){
 function onKnobChange(val){
   timerMinutes = parseInt(val);
   document.getElementById('knob-label').textContent = t('timer_knob_label', timerMinutes);
+  if(restCtxEx){ restByEx[restCtxEx] = timerMinutes; saveRestByEx(); }
   if(!globalTimerInterval){
     document.getElementById('timer-countdown').textContent = formatTime(timerMinutes*60);
     document.getElementById('timer-sub').textContent = t('timer_set');
@@ -2223,7 +2226,22 @@ function formatTime(s){
   return Math.floor(s/60).toString().padStart(2,'0')+':'+((s%60).toString().padStart(2,'0'));
 }
 
-let autoTimer = localStorage.getItem('auto_timer') === '1';
+let autoTimer = localStorage.getItem('auto_timer') !== '0';   // på som standard
+// Vilotid minns sig per övning (tunga baslyft vill ha längre vila än biceps)
+let restByEx = loadJSON('mp_rest_ex', {});
+let restCtxEx = null;   // övningen vars vila timern senast startades för
+function saveRestByEx(){ try{ localStorage.setItem('mp_rest_ex', JSON.stringify(restByEx)); }catch(e){} }
+function applyRestFor(name){
+  restCtxEx = name || null;
+  const m = name ? restByEx[name] : null;
+  if(m && m !== timerMinutes){
+    timerMinutes = m;
+    const knob = document.getElementById('timer-knob');
+    if(knob) knob.value = m;
+    const lbl = document.getElementById('knob-label');
+    if(lbl) lbl.textContent = t('timer_knob_label', m);
+  }
+}
 function toggleAutoTimer(v){
   autoTimer = v;
   localStorage.setItem('auto_timer', v ? '1' : '0');
@@ -4281,12 +4299,30 @@ function renderLogUI(){
   else renderSyncPanel();
 }
 
+// ── SKÄRMLÅS: håll skärmen vaken så länge ett pass pågår ────────────
+let wakeLock = null;
+async function requestWakeLock(){
+  if(!('wakeLock' in navigator) || wakeLock) return;
+  try{
+    wakeLock = await navigator.wakeLock.request('screen');
+    wakeLock.addEventListener('release', ()=>{ wakeLock = null; });
+  }catch(e){ wakeLock = null; }   // t.ex. lågt batteri – tyst fallback
+}
+function releaseWakeLock(){
+  if(wakeLock){ try{ wakeLock.release(); }catch(e){} wakeLock = null; }
+}
+// Systemet släpper låset när appen döljs – ta det igen vid återkomst
+document.addEventListener('visibilitychange', ()=>{
+  if(document.visibilityState === 'visible' && activeSession) requestWakeLock();
+});
+
 // ── Starta pass ──
 function newSession(name, exList){
   activeSession = { start: Date.now(), name, ex: exList };
   saveActive();
   switchLogTab(0, null);
   showTimerFab();
+  requestWakeLock();
   switchView('log');
 }
 
@@ -4300,7 +4336,7 @@ function showTimerFab(){
   }
 }
 // Om ett aktivt pass fanns sparat sedan tidigare: visa timern direkt
-window.addEventListener('DOMContentLoaded', ()=>{ if(activeSession) showTimerFab(); });
+window.addEventListener('DOMContentLoaded', ()=>{ if(activeSession){ showTimerFab(); requestWakeLock(); } });
 
 
 function copySelectedWorkout(){
@@ -4388,7 +4424,7 @@ function renderSessionPanel(){
     h += `<div class="ls-ex"><div class="ls-ex-head"><span class="ls-ex-name">${escapeHtml(e.name)}</span>
       <button class="ls-ex-del" onclick="removeLogEx(${ei})">✕</button></div>`;
     e.sets.forEach((s, si)=>{
-      h += `<div class="ls-row${s.done?' done':''}" id="lsr-${ei}-${si}">
+      h += `<div class="ls-row${s.done?' done':''}${s.sug?' sug':''}" id="lsr-${ei}-${si}">
         <span class="ls-num">${si+1}</span>
         <div class="ls-grp"><button class="ls-step" onclick="stepLogKg(${ei},${si},-2.5)">−</button><input class="ls-kg" type="number" inputmode="decimal" step="0.5" min="0" value="${s.kg===''?'':s.kg}" placeholder="kg" oninput="onLogSetInput(${ei},${si},'kg',this.value)"><button class="ls-step" onclick="stepLogKg(${ei},${si},2.5)">+</button></div>
         <span class="ls-x">×</span>
@@ -4430,6 +4466,7 @@ function escapeHtml(s){ return String(s??'').replace(/&/g,'&amp;').replace(/</g,
 function onLogSetInput(ei, si, field, val){
   const s = activeSession.ex[ei].sets[si];
   s[field] = val === '' ? '' : parseFloat(val);
+  unsuggest(ei, si);
   const e1 = document.getElementById(`lse-${ei}-${si}`);
   if(e1) e1.textContent = (s.kg>0 && s.reps>0) ? 'e1rm ' + rkg(Math.round(epley(s.kg,s.reps)*2)/2) : '';
   saveActive();
@@ -5141,6 +5178,7 @@ function showRecordToast(type, exName, kg, reps){
 }
 
 function stepLogKg(ei, si, delta){
+  unsuggest(ei, si);
   const s = activeSession.ex[ei].sets[si];
   const cur = parseFloat(s.kg) || 0;
   const next = Math.max(0, Math.round((cur + delta) * 4) / 4);
@@ -5155,6 +5193,7 @@ function stepLogKg(ei, si, delta){
 }
 
 function stepLogReps(ei, si, delta){
+  unsuggest(ei, si);
   const s = activeSession.ex[ei].sets[si];
   const cur = parseInt(s.reps) || 0;
   const next = Math.max(0, cur + delta);
@@ -5255,6 +5294,8 @@ function toggleLogSet(ei, si){
     const nextKg = nextPlannedKg(ei, si);
     const bbKg = nextKg ?? (s.kg > 0 ? s.kg : 0);
     if(bbKg > 0){ currentBarbellKg = bbKg; drawBarbell(bbKg); }
+    applyRestFor(activeSession.ex[ei].name);
+    delete s.sug;                                  // avbockat set är på riktigt
     if(autoTimer) startGlobalTimer();
     if(navigator.vibrate) navigator.vibrate(15);
     // PB/ÅB-detektion
@@ -5288,6 +5329,28 @@ function removeLogEx(ei){
   activeSession.ex.splice(ei,1);
   saveActive(); renderSessionPanel();
 }
+// Senast loggade set för en övning – används som förslag i nya pass
+function lastSetsFor(name){
+  const ws = (logData.workouts || []);
+  for(let i = ws.length - 1; i >= 0; i--){
+    const ex = (ws[i].ex || []).find(e => e.name === name);
+    if(ex && ex.sets && ex.sets.length) return ex.sets;
+  }
+  return null;
+}
+function suggestedSets(name){
+  const prev = lastSetsFor(name);
+  if(!prev) return [{kg:'',reps:'',done:false},{kg:'',reps:'',done:false},{kg:'',reps:'',done:false}];
+  return prev.slice(0, 6).map(s => ({ kg: s.kg, reps: s.reps, done: false, sug: true }));
+}
+function unsuggest(ei, si){
+  const s = activeSession.ex[ei].sets[si];
+  if(s && s.sug){
+    delete s.sug;
+    const row = document.getElementById(`lsr-${ei}-${si}`);
+    if(row) row.classList.remove('sug');
+  }
+}
 function addLogEx(){
   const sel = document.getElementById('ls-ex-select');
   const inp = document.getElementById('ls-ex-new');
@@ -5299,13 +5362,13 @@ function addLogEx(){
     logData.customEx.push({id:'c'+Date.now(), name});
     saveLogData();
   }
-  activeSession.ex.push({name, sets:[{kg:'',reps:'',done:false},{kg:'',reps:'',done:false},{kg:'',reps:'',done:false}]});
+  activeSession.ex.push({name, sets: suggestedSets(name)});
   saveActive(); renderSessionPanel();
 }
 
 function finishSession(){
   const cleaned = activeSession.ex
-    .map(e=>({name:e.name, sets:e.sets.filter(s=>s.kg>0 && s.reps>0).map(s=>({kg:s.kg, reps:s.reps, ...(s.q?{q:s.q}:{})}))}))
+    .map(e=>({name:e.name, sets:e.sets.filter(s=>s.kg>0 && s.reps>0 && !s.sug).map(s=>({kg:s.kg, reps:s.reps, ...(s.q?{q:s.q}:{})}))}))
     .filter(e=>e.sets.length);
   if(!cleaned.length){ alert(t('log_need_sets')); return; }
   logData.workouts.push({
@@ -5316,7 +5379,7 @@ function finishSession(){
     ex: cleaned
   });
   saveLogData();
-  activeSession = null; saveActive();
+  activeSession = null; saveActive(); releaseWakeLock();
   clearInterval(sessionTicker);
   if(typeof gtag==='function') gtag('event','workout_saved');
   const card = document.getElementById('log-card');
@@ -5327,7 +5390,7 @@ function finishSession(){
 
 function cancelSession(){
   if(!confirm(t('log_cancel_confirm'))) return;
-  activeSession = null; saveActive();
+  activeSession = null; saveActive(); releaseWakeLock();
   clearInterval(sessionTicker);
   renderSessionPanel();
 }
