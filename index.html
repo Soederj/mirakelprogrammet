@@ -2,7 +2,7 @@
 <!-- saved from url=(0058)file:///C:/Users/jonat/Downloads/mirakelprogrammet_37.html -->
 <html lang="sv"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 100 100&#39;&gt;&lt;text y=&#39;.9em&#39; font-size=&#39;90&#39;&gt;%F0%9F%8F%8B%EF%B8%8F&lt;/text&gt;&lt;/svg&gt;">
 <link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#09090A">
@@ -223,7 +223,7 @@ body.light-mode{
 }
 .theme-btn:hover{opacity:0.7;}
 html{scroll-behavior:smooth;}
-body{background:var(--ink);color:var(--cream);font-family:var(--sg);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+body{background:var(--ink);color:var(--cream);font-family:var(--sg);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;touch-action:manipulation;}
 
 /* ── TOPBAR ── */
 .topbar{
@@ -596,7 +596,7 @@ footer{
   font-size:15px;font-weight:600;line-height:1;
   cursor:pointer;transition:all 0.12s;
   display:flex;align-items:center;justify-content:center;
-  user-select:none;
+  user-select:none;touch-action:manipulation;
 }
 .ls-step:active{background:var(--lime);color:var(--ink);transform:scale(0.94);}
 /* ══ MIRAKELMÄSTERSKAPEN ══ */
@@ -4517,6 +4517,33 @@ function applyComebackDrop(days){
 window.addEventListener('DOMContentLoaded', ()=>{ setTimeout(checkComeback, 100); });
 
 // ── VYVÄXLING (bottennav) ─────────────────────────────────────────
+// ── APPKÄNSLA: ingen zoom + markera hela värdet när man tar i ett fält ─
+(function(){
+  // iOS Safari ignorerar user-scalable=no – blockera pinch-gesterna direkt.
+  ['gesturestart','gesturechange','gestureend'].forEach(ev=>{
+    document.addEventListener(ev, e => e.preventDefault(), { passive: false });
+  });
+
+  // Markera hela siffran vid fokus, så man skriver över istället för att
+  // pilla med markören. Bara sifferfält, och bara första gången fokus tas
+  // (så man fortfarande kan placera markören genom att trycka igen).
+  const SEL = '.ls-kg, .ls-reps, .lift-num, .e1rm-input, .goal-num, input[type="number"]';
+  document.addEventListener('focusin', (e)=>{
+    const el = e.target;
+    if(!el || !el.matches || !el.matches(SEL)) return;
+    if(el.value === '' || el.dataset.selHeld === '1') return;
+    // rAF: iOS sätter markören efter focus-eventet
+    requestAnimationFrame(()=>{
+      try{ el.select(); }catch(err){}
+    });
+    el.dataset.selHeld = '1';
+  });
+  document.addEventListener('focusout', (e)=>{
+    const el = e.target;
+    if(el && el.dataset) delete el.dataset.selHeld;
+  });
+})();
+
 // ── DATAVAKT: knuffar mot synk/backup när historiken växer oskyddad ─
 function updateDataGuard(){
   const el = document.getElementById('data-guard');
