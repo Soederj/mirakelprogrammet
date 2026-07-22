@@ -924,8 +924,11 @@ input.q-range.set::-moz-range-thumb{background:var(--lime);}
 .ls-q:active{background:var(--ink2);}
 .ls-q.filled{color:var(--lime);border-color:rgba(203,255,77,0.4);}
 .ls-rec:empty{min-width:0;display:none;}
-.ls-grp{display:flex;align-items:center;gap:4px;flex-shrink:1;min-width:0;}
-.ls-grp .ls-kg,.ls-grp .ls-reps{min-width:0;}
+/* Grupperna delar på överblivet utrymme och KRYMPER vid trängsel,
+   så att ✓ alltid får plats på samma rad som kg och reps. */
+.ls-grp{display:flex;align-items:center;gap:4px;flex:1 1 0;min-width:0;}
+.ls-grp .ls-kg,.ls-grp .ls-reps{width:100%;min-width:0;flex:1 1 auto;}
+.ls-num,.ls-x,.ls-actions,.ls-step{flex-shrink:0;}
 .ls-actions{display:flex;align-items:center;gap:6px;flex-shrink:0;}
 .ls-row{flex-wrap:wrap;}
 
@@ -936,7 +939,7 @@ html,body{overflow-x:hidden;max-width:100vw;}
   .ls-num{min-width:14px;font-size:10px;}
   .ls-grp{gap:3px;}
   .ls-step{width:22px;height:40px;font-size:14px;border-radius:6px;}
-  .ls-kg,.ls-reps{width:52px;padding:9px 3px;font-size:15px;border-radius:8px;}
+  .ls-kg,.ls-reps{width:auto;min-width:38px;padding:9px 2px;font-size:15px;border-radius:8px;}
   .ls-x{font-size:9px;}
   .ls-actions{gap:4px;}
   .ls-done{width:44px;height:40px;font-size:16px;}
@@ -973,7 +976,7 @@ html,body{overflow-x:hidden;max-width:100vw;}
   .bn-label{font-size:8px;}
 }
 @media(max-width:370px){
-  .ls-kg,.ls-reps{width:46px;}
+  .ls-kg,.ls-reps{min-width:34px;}
   .ls-step{width:20px;}
   .ls-num{display:none;}
 }
@@ -1389,7 +1392,7 @@ body.light-mode .ls-sticky{background:rgba(248,246,240,0.92);}
 /* förslag från förra passet – dämpade tills man rör dem */
 .ls-row.sug .ls-kg,.ls-row.sug .ls-reps{opacity:0.45;border-style:dashed;}
 .ls-num{font-family:var(--mono);font-size:11px;color:var(--dust2);min-width:22px;}
-.ls-kg,.ls-reps{width:86px;font-family:var(--mono);font-size:16px;color:var(--cream);background:var(--ink2);border:1px solid var(--ink4);border-radius:9px;padding:11px 10px;outline:none;text-align:center;-moz-appearance:textfield;}
+.ls-kg,.ls-reps{width:86px;max-width:110px;font-family:var(--mono);font-size:16px;color:var(--cream);background:var(--ink2);border:1px solid var(--ink4);border-radius:9px;padding:11px 10px;outline:none;text-align:center;-moz-appearance:textfield;}
 .ls-kg::-webkit-outer-spin-button,.ls-kg::-webkit-inner-spin-button,.ls-reps::-webkit-outer-spin-button,.ls-reps::-webkit-inner-spin-button{-webkit-appearance:none;}
 .ls-kg:focus,.ls-reps:focus{border-color:var(--lime);}
 .ls-x{font-family:var(--mono);color:var(--dust2);font-size:12px;}
@@ -4554,11 +4557,7 @@ function platesLabel(kg){
   return out.map(o => (o.n > 1 ? `${o.n}×${o.kg}` : `${o.kg}`)).join('+');
 }
 function setMetaLine(s){
-  const bits = [];
-  if(s.kg > 0 && s.reps > 0) bits.push('e1rm ' + rkg(Math.round(epley(s.kg, s.reps)*2)/2));
-  const pl = platesLabel(s.kg);
-  if(pl) bits.push('🏋 ' + pl);
-  return bits.join('  ·  ');
+  return (s.kg > 0 && s.reps > 0) ? 'e1rm ' + rkg(Math.round(epley(s.kg, s.reps)*2)/2) : '';
 }
 function currentExLabel(){
   if(!activeSession) return '';
@@ -5517,14 +5516,18 @@ function addWarmup(ei){
     });
     return;
   }
-  const top = Math.max(...ex.sets.filter(s => !s.warm).map(s => parseFloat(s.kg) || 0));
-  if(!(top > BAR_WEIGHT)){ showUndoToast(t('warm_need'), t('undo_close'), ()=>{}); return; }
+  // Uppvärmningen trappas upp mot FÖRSTA arbetssetet – det är ju den
+  // vikten du faktiskt börjar på.
+  const target = ex.sets.filter(s => !s.warm)
+                        .map(s => parseFloat(s.kg) || 0)
+                        .find(v => v > 0) || 0;
+  if(!(target > BAR_WEIGHT)){ showUndoToast(t('warm_need'), t('undo_close'), ()=>{}); return; }
   const steps = [[0.4, 8], [0.6, 5], [0.75, 3], [0.85, 2]];
   const warm = [];
   let prev = 0;
   steps.forEach(([pct, reps])=>{
-    const kg = Math.max(BAR_WEIGHT, Math.round(top * pct / 2.5) * 2.5);
-    if(kg >= top || kg === prev) return;      // hoppa över dubletter och för tunga
+    const kg = Math.max(BAR_WEIGHT, Math.round(target * pct / 2.5) * 2.5);
+    if(kg >= target || kg === prev) return;   // aldrig lika tungt som arbetssetet
     prev = kg;
     warm.push({ kg, reps, done: false, sug: true, warm: true });
   });
