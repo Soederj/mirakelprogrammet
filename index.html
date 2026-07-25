@@ -601,6 +601,87 @@ footer{
 .ls-step:active{background:var(--lime);color:var(--ink);transform:scale(0.94);}
 /* ══ MIRAKELMÄSTERSKAPEN ══ */
 .game-section{display:none;padding:20px 16px 80px;max-width:560px;margin:0 auto;min-height:70vh;}
+/* ══ COACHLÄGE ══ */
+.coach-section{display:none;padding:20px 16px 90px;max-width:560px;margin:0 auto;min-height:70vh;}
+.coach-head{display:flex;align-items:center;gap:12px;margin-bottom:6px;}
+.coach-back{background:none;border:none;color:var(--lime);font-family:var(--mono);font-size:12px;cursor:pointer;padding:6px 0;}
+.coach-h2{font-family:var(--bb);font-size:30px;color:var(--cream);letter-spacing:0.02em;margin:0;}
+.coach-intro{font-family:var(--sg);font-size:12.5px;line-height:1.6;color:var(--dust);margin:6px 0 20px;}
+.coach-list{display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
+.coach-card{
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--ink2);border:1px solid var(--ink4);border-radius:14px;
+  padding:16px 18px;cursor:pointer;text-align:left;transition:border-color 0.15s;
+}
+.coach-card:active{border-color:rgba(203,255,77,0.4);}
+.cc-name{font-family:var(--sg);font-size:15px;font-weight:600;color:var(--cream);}
+.cc-meta{font-family:var(--mono);font-size:10px;color:var(--dust2);letter-spacing:0.05em;}
+.coach-empty{font-family:var(--mono);font-size:11px;color:var(--dust2);text-align:center;padding:24px 0;letter-spacing:0.04em;}
+.coach-add,.coach-add-ex{display:flex;gap:8px;margin-top:8px;}
+.coach-input{
+  flex:1;min-width:0;background:var(--ink3);border:1px solid var(--ink4);border-radius:11px;
+  color:var(--cream);font-family:var(--sg);font-size:14px;padding:11px 13px;outline:none;
+}
+.coach-btn{
+  font-family:var(--mono);font-size:11px;letter-spacing:0.05em;background:var(--lime);
+  color:var(--ink);border:none;border-radius:11px;padding:11px 18px;cursor:pointer;
+  font-weight:600;flex-shrink:0;
+}
+.coach-btn.wide{width:100%;margin-top:14px;padding:14px;border-radius:12px;}
+.coach-btn.ghost{background:none;color:var(--dust);border:1px solid var(--ink4);}
+.coach-btn.share{background:rgba(203,255,77,0.14);color:var(--lime);border:1px solid rgba(203,255,77,0.5);}
+.coach-tpl{display:flex;gap:6px;align-items:stretch;}
+.coach-tpl-main{
+  flex:1;display:flex;justify-content:space-between;align-items:center;
+  background:var(--ink2);border:1px solid var(--ink4);border-radius:12px;
+  padding:14px 16px;cursor:pointer;text-align:left;min-width:0;
+}
+.coach-tpl-share,.coach-tpl-del{
+  background:var(--ink2);border:1px solid var(--ink4);border-radius:12px;
+  cursor:pointer;font-size:14px;flex-shrink:0;width:44px;color:var(--dust);
+}
+.coach-tpl-share:active{background:rgba(203,255,77,0.12);}
+.coach-del-athlete{background:none;border:none;color:var(--ink4);font-family:var(--mono);font-size:10px;cursor:pointer;margin-top:18px;padding:8px;width:100%;letter-spacing:0.05em;}
+.coach-tpl-name{
+  width:100%;background:var(--ink3);border:1px solid var(--ink4);border-radius:12px;
+  color:var(--cream);font-family:var(--bb);font-size:24px;letter-spacing:0.02em;
+  padding:12px 14px;outline:none;margin-bottom:16px;
+}
+.coach-builder{display:flex;flex-direction:column;gap:12px;}
+.cb-ex{background:var(--ink2);border:1px solid var(--ink4);border-radius:14px;padding:14px;}
+.cb-ex-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.cb-ex-name{font-family:var(--sg);font-size:14px;font-weight:600;color:var(--cream);}
+.cb-ex-del{background:none;border:none;color:var(--ink4);font-size:13px;cursor:pointer;}
+.cb-set{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
+.cb-setn{font-family:var(--mono);font-size:10px;color:var(--dust2);width:16px;flex-shrink:0;}
+.cb-kg,.cb-reps{
+  flex:1;min-width:0;background:var(--ink3);border:1px solid var(--ink4);border-radius:8px;
+  color:var(--cream);font-family:var(--mono);font-size:15px;text-align:center;padding:9px 4px;outline:none;
+  -moz-appearance:textfield;
+}
+.cb-kg::-webkit-outer-spin-button,.cb-kg::-webkit-inner-spin-button,
+.cb-reps::-webkit-outer-spin-button,.cb-reps::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+.cb-kg{flex:1.4;}
+.cb-x{color:var(--dust2);font-size:12px;flex-shrink:0;}
+.cb-set-del{background:none;border:none;color:var(--ink4);font-size:12px;cursor:pointer;flex-shrink:0;width:24px;}
+.cb-add-set{background:none;border:1px dashed var(--ink4);border-radius:8px;color:var(--dust);font-family:var(--mono);font-size:10px;padding:8px;width:100%;cursor:pointer;margin-top:4px;letter-spacing:0.05em;}
+.prog-quick-row{display:flex;gap:10px;justify-content:center;margin:16px 0 4px;flex-wrap:wrap;}
+.prog-quick-btn{
+  font-family:var(--mono);font-size:11px;letter-spacing:0.04em;color:var(--dust);
+  background:var(--ink2);border:1px solid var(--ink4);border-radius:99px;
+  padding:10px 16px;cursor:pointer;transition:all 0.15s;
+}
+.prog-quick-btn:active{border-color:rgba(203,255,77,0.4);color:var(--lime);}
+#coach-modal{
+  position:fixed;inset:0;z-index:620;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0.65);backdrop-filter:blur(5px);padding:22px;
+  opacity:0;pointer-events:none;transition:opacity 0.2s;
+}
+#coach-modal.show{opacity:1;pointer-events:auto;}
+.cm-box{background:var(--ink2);border:1px solid var(--ink4);border-radius:20px;padding:28px 24px;max-width:380px;width:100%;text-align:center;}
+.cm-title{font-family:var(--bb);font-size:26px;color:var(--cream);letter-spacing:0.02em;margin-bottom:14px;}
+.co-code{font-family:var(--bb);font-size:52px;color:var(--lime);letter-spacing:0.12em;margin:8px 0;text-shadow:0 0 24px rgba(203,255,77,0.4);}
+.co-code-hint{font-family:var(--sg);font-size:12.5px;line-height:1.55;color:var(--dust);margin:8px 0 18px;}
 .gm-card{background:var(--ink2);border:1px solid var(--ink3);border-radius:20px;padding:24px 20px;text-align:center;}
 .gm-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;color:var(--lime);text-transform:uppercase;margin-bottom:10px;}
 .gm-title{font-family:var(--bb);font-size:44px;line-height:0.95;color:var(--cream);letter-spacing:0.02em;margin-bottom:4px;}
@@ -1359,6 +1440,36 @@ body{padding-bottom:74px;}
 .log-tabs{display:inline-flex;gap:2px;background:var(--ink3);border-radius:100px;padding:3px;border:1px solid var(--ink4);margin-bottom:24px;flex-wrap:wrap;}
 .log-tab{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;color:var(--dust);background:none;border:none;border-radius:100px;padding:9px 18px;cursor:pointer;transition:all 0.2s;}
 .log-tab.active{background:var(--lime);color:var(--ink);font-weight:500;}
+.merge-tool-btn{
+  font-family:var(--mono);font-size:10px;letter-spacing:0.06em;
+  background:none;border:1px solid var(--ink4);border-radius:99px;
+  color:var(--dust);padding:8px 14px;cursor:pointer;transition:all 0.15s;
+}
+.merge-tool-btn:active{background:var(--ink3);color:var(--lime);border-color:rgba(203,255,77,0.4);}
+#merge-overlay{
+  position:fixed;inset:0;z-index:600;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);padding:20px;
+  opacity:0;pointer-events:none;transition:opacity 0.2s;
+}
+#merge-overlay.show{opacity:1;pointer-events:auto;}
+.merge-box{
+  background:var(--ink2);border:1px solid var(--ink4);border-radius:18px;
+  padding:24px 22px;max-width:400px;width:100%;
+}
+.merge-title{font-family:var(--bb);font-size:24px;color:var(--cream);letter-spacing:0.02em;margin-bottom:6px;}
+.merge-hint{font-family:var(--sg);font-size:12px;line-height:1.5;color:var(--dust);margin-bottom:18px;}
+.merge-lbl{font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--dust2);display:block;margin:12px 0 5px;}
+.merge-sel{
+  width:100%;background:var(--ink3);border:1px solid var(--ink4);border-radius:10px;
+  color:var(--cream);font-family:var(--sg);font-size:14px;padding:11px 12px;outline:none;
+}
+.merge-row{display:flex;gap:10px;margin-top:22px;}
+.merge-btn{
+  flex:1;font-family:var(--mono);font-size:11px;letter-spacing:0.05em;
+  background:var(--lime);color:var(--ink);border:none;border-radius:99px;
+  padding:12px;cursor:pointer;font-weight:600;
+}
+.merge-btn.ghost{background:none;color:var(--dust);border:1px solid var(--ink4);}
 .log-panel{display:none;}
 .log-panel.active{display:block;animation:cardIn 0.35s cubic-bezier(0.22,1,0.36,1) both;}
 .log-empty{font-family:var(--mono);font-size:12px;color:var(--dust2);line-height:1.7;padding:26px 0;letter-spacing:0.03em;max-width:520px;}
@@ -1381,8 +1492,11 @@ body.light-mode .ls-sticky{background:rgba(248,246,240,0.92);}
 .lss-time{font-family:var(--mono);font-size:12px;color:var(--lime);letter-spacing:0.08em;flex-shrink:0;}
 .lss-now{
   font-family:var(--sg);font-size:12px;font-weight:600;color:var(--dust);
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;
 }
+.lss-eta{font-family:var(--mono);font-size:10px;color:var(--dust2);letter-spacing:0.04em;flex-shrink:0;}
+.lh-dur{cursor:pointer;}
+.lh-dur:active{color:var(--lime);}
 .ls-ex{background:var(--ink3);border:1px solid var(--ink4);border-radius:14px;padding:18px;margin-bottom:14px;}
 .ls-ex-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;}
 .ls-ex-name{font-family:var(--sg);font-weight:600;font-size:15px;color:var(--cream);letter-spacing:0.02em;}
@@ -1699,6 +1813,11 @@ body.light-mode .ls-sticky{background:rgba(248,246,240,0.92);}
     <button class="demo-btn" id="demo-btn" onclick="fillDemo()" data-i18n="demo_btn">✨ Nyfiken? Testa med exempeldata</button>
   </div>
 
+  <div class="prog-quick-row">
+    <button class="prog-quick-btn" onclick="switchView('coach')">🧑‍🏫 ${'' /* label via i18n nedan */}<span data-i18n="co_entry">Coacha någon</span></button>
+    <button class="prog-quick-btn" onclick="promptPassCode()">📥 <span data-i18n="co_redeem">Ta emot pass</span></button>
+  </div>
+
   <div class="prog-type-tabs">
     <button class="ptt active" id="ptt-2" onclick="setProgType(&#39;2veckor&#39;)" data-i18n="tab_2week">2-veckorscykel</button>
     <button class="ptt" id="ptt-5" onclick="setProgType(&#39;5veckor&#39;)" data-i18n="tab_5week">5-veckorscykel</button>
@@ -1890,6 +2009,7 @@ body.light-mode .ls-sticky{background:rgba(248,246,240,0.92);}
           <button data-m="top" onclick="setStatMetric('top',this)">Toppvikt</button>
           <button data-m="vol" onclick="setStatMetric('vol',this)">Volym</button>
         </div>
+        <button class="merge-tool-btn" id="merge-tool-btn" onclick="openMergeTool()" data-i18n="merge_tool_btn">⇄ Slå ihop övningar</button>
       </div>
       <canvas id="st-chart"></canvas>
       <div class="st-best" id="st-best"></div>
@@ -1969,6 +2089,10 @@ body.light-mode .ls-sticky{background:rgba(248,246,240,0.92);}
 
 <section class="game-section" id="game-section">
   <div id="game-stage"></div>
+</section>
+
+<section class="coach-section" id="coach-section">
+  <div id="coach-stage"></div>
 </section>
 
 <nav class="bottom-nav" id="bottom-nav">
@@ -2301,6 +2425,8 @@ function toggleAutoTimer(v){
 function stopGlobalTimer(){
   clearInterval(globalTimerInterval);
   globalTimerInterval = null;
+  timerEndsAt = 0;
+  try{ localStorage.removeItem('mp_timer_end'); }catch(e){}
   document.getElementById('timer-barbell').classList.remove('pumping');
   document.getElementById('timer-countdown').classList.remove('urgent');
   document.getElementById('timer-countdown').textContent = formatTime(timerMinutes*60);
@@ -2316,26 +2442,32 @@ function globalTimerToggle(){
   startGlobalTimer();
 }
 
+let timerEndsAt = 0;   // absolut måltid (ms) – klockan räknas mot denna
 function startGlobalTimer(){
   if(globalTimerInterval){ clearInterval(globalTimerInterval); globalTimerInterval = null; }
   document.getElementById('timer-countdown').classList.remove('urgent');
   globalTimerLeft = timerMinutes * 60;
+  timerEndsAt = Date.now() + globalTimerLeft * 1000;
+  try{ localStorage.setItem('mp_timer_end', String(timerEndsAt)); }catch(e){}
   document.getElementById('timer-barbell').classList.add('pumping');
   document.getElementById('timer-action').textContent = t('timer_stop');
   document.getElementById('timer-action').classList.add('stop');
   document.getElementById('fab-timer').classList.add('running');
   updateTimerUI();
-  globalTimerInterval = setInterval(()=>{
-    globalTimerLeft--;
-    if(globalTimerLeft <= 30){
-      document.getElementById('timer-countdown').classList.add('urgent');
-    }
-    if(globalTimerLeft <= 0){
-      timerDone();
-    } else {
-      updateTimerUI();
-    }
-  }, 1000);
+  globalTimerInterval = setInterval(timerTick, 250);
+}
+function timerTick(){
+  // Beräkna kvarvarande tid från måltiden, inte genom att räkna ner en
+  // variabel – då stämmer den även efter att skärmen varit släckt.
+  globalTimerLeft = Math.max(0, Math.round((timerEndsAt - Date.now()) / 1000));
+  if(globalTimerLeft <= 30 && globalTimerLeft > 0){
+    document.getElementById('timer-countdown').classList.add('urgent');
+  }
+  if(globalTimerLeft <= 0){
+    timerDone();
+  } else {
+    updateTimerUI();
+  }
 }
 
 function updateTimerUI(){
@@ -2348,6 +2480,8 @@ function updateTimerUI(){
 function timerDone(){
   clearInterval(globalTimerInterval);
   globalTimerInterval = null;
+  timerEndsAt = 0;
+  try{ localStorage.removeItem('mp_timer_end'); }catch(e){}
   document.getElementById('timer-barbell').classList.remove('pumping');
   document.getElementById('timer-countdown').classList.remove('urgent');
   document.getElementById('timer-countdown').textContent = '💪';
@@ -3033,6 +3167,59 @@ const T = {
     warm_title: 'Lägg till uppvärmningsset',
     warm_added: (n) => `${n} uppvärmningsset tillagda`,
     warm_removed: 'Uppvärmningen borttagen',
+    merge_tool_btn: '⇄ Slå ihop övningar',
+    merge_title: 'Slå ihop övningar',
+    merge_hint: 'Importerade övningar kan ha olika namn för samma sak (t.ex. "Stoppbänk" och "Bänkpress med stopp"). Slå ihop dem så räknas historik och statistik samman.',
+    merge_from: 'Byt namn från',
+    merge_to: 'Till (behålls)',
+    merge_cancel: 'Avbryt',
+    merge_do: 'Slå ihop',
+    merge_same: 'Välj två olika övningar',
+    merge_need: 'Du behöver minst två olika övningar i historiken',
+    merge_done: (n, to) => `${n} set flyttade till "${to}"`,
+    eta_min: 'min',
+    eta_title: (n) => `Estimat baserat på dina ${n} senaste pass med samma namn`,
+    dur_edit_title: 'Redigera tidsåtgång',
+    dur_add: 'lägg till tid',
+    dur_prompt: 'Hur många minuter tog passet?',
+    dur_invalid: 'Ange en tid mellan 0 och 600 minuter',
+    co_entry: 'Coacha någon',
+    co_redeem: 'Ta emot pass',
+    co_title: 'Coachläge',
+    co_intro: 'Bygg passmallar åt dina adepter och dela dem med en kod. Pass du bygger här loggas aldrig som din egen träning – de skickas till adepten som kör och loggar dem i sin egen app.',
+    co_no_athletes: 'Inga adepter än. Lägg till en nedan för att komma igång.',
+    co_name_ph: 'Adeptens namn…',
+    co_add: 'Lägg till',
+    co_tpl_count: (n) => `${n} ${n===1?'mall':'mallar'}`,
+    co_ex_count: (n) => `${n} ${n===1?'övning':'övningar'}`,
+    co_all: 'Alla adepter',
+    co_no_tpl: 'Inga mallar än – skapa ett pass nedan.',
+    co_new_tpl: '+ Nytt pass',
+    co_tpl_default: 'Nytt pass',
+    co_tpl_name_ph: 'Passets namn…',
+    co_del_athlete: 'Ta bort adept',
+    co_del_athlete_confirm: (n) => `Ta bort ${n} och alla dess mallar?`,
+    co_exit: 'Tillbaka',
+    co_share: 'Dela',
+    co_add_set: 'set',
+    co_add_ex: 'Lägg till',
+    co_make_code: 'Skapa delningskod',
+    co_empty_tpl: 'Lägg till minst en övning först',
+    co_sending: 'Skapar kod…',
+    co_code_ready: 'Passet är delat!',
+    co_code_hint: 'Ge koden till din adept – hon skriver in den under "Ta emot pass", eller öppnar länken direkt. Koden gäller i 90 dagar.',
+    co_share_link: 'Dela länk',
+    co_share_text: (code, link) => `Här är ditt pass i Mirakelprogrammet! Öppna ${link} eller skriv in koden ${code} under "Ta emot pass".`,
+    co_close: 'Stäng',
+    co_copied: 'Länk kopierad!',
+    co_error_title: 'Något gick fel',
+    co_error: 'Kunde inte skapa koden. Kontrollera att mp-share-workern är deployad och att du har nätverk.',
+    co_redeem_prompt: 'Skriv in passkoden du fått:',
+    co_bad_code: 'Ogiltig kod – den ska vara 5 tecken',
+    co_fetching: 'Hämtar passet…',
+    co_get_error: 'Kunde inte hämta passet. Kontrollera koden och att den inte gått ut.',
+    co_replace_active: 'Du har ett aktivt pass. Vill du ersätta det med det delade passet?',
+    co_imported: (n) => `"${n}" laddat – kör igång! 💪`,
     warm_need: 'Fyll i en arbetsvikt först',
     warm_none: 'Vikten är för låg för en uppvärmningsstege',
     guard_msg: (n) => `Du har ${n} pass sparade endast i den här webbläsaren. En rensad cache eller borttappad mobil raderar allt – aktivera synk eller ladda ner en backup.`,
@@ -3424,6 +3611,59 @@ const T = {
     warm_title: 'Add warm-up sets',
     warm_added: (n) => `${n} warm-up sets added`,
     warm_removed: 'Warm-up removed',
+    merge_tool_btn: '⇄ Merge exercises',
+    merge_title: 'Merge exercises',
+    merge_hint: 'Imported exercises can have different names for the same movement (e.g. "Paused bench" and "Bench press w/ pause"). Merge them so history and stats add up.',
+    merge_from: 'Rename from',
+    merge_to: 'Into (kept)',
+    merge_cancel: 'Cancel',
+    merge_do: 'Merge',
+    merge_same: 'Pick two different exercises',
+    merge_need: 'You need at least two different exercises in your history',
+    merge_done: (n, to) => `${n} sets moved to "${to}"`,
+    eta_min: 'min',
+    eta_title: (n) => `Estimate based on your ${n} most recent sessions with the same name`,
+    dur_edit_title: 'Edit duration',
+    dur_add: 'add time',
+    dur_prompt: 'How many minutes did the session take?',
+    dur_invalid: 'Enter a time between 0 and 600 minutes',
+    co_entry: 'Coach someone',
+    co_redeem: 'Receive a workout',
+    co_title: 'Coach mode',
+    co_intro: 'Build workout templates for your athletes and share them with a code. Workouts you build here are never logged as your own training – they go to the athlete, who runs and logs them in their own app.',
+    co_no_athletes: 'No athletes yet. Add one below to get started.',
+    co_name_ph: 'Athlete name…',
+    co_add: 'Add',
+    co_tpl_count: (n) => `${n} ${n===1?'template':'templates'}`,
+    co_ex_count: (n) => `${n} ${n===1?'exercise':'exercises'}`,
+    co_all: 'All athletes',
+    co_no_tpl: 'No templates yet – create a workout below.',
+    co_new_tpl: '+ New workout',
+    co_tpl_default: 'New workout',
+    co_tpl_name_ph: 'Workout name…',
+    co_del_athlete: 'Remove athlete',
+    co_del_athlete_confirm: (n) => `Remove ${n} and all their templates?`,
+    co_exit: 'Back',
+    co_share: 'Share',
+    co_add_set: 'set',
+    co_add_ex: 'Add',
+    co_make_code: 'Create share code',
+    co_empty_tpl: 'Add at least one exercise first',
+    co_sending: 'Creating code…',
+    co_code_ready: 'Workout shared!',
+    co_code_hint: 'Give the code to your athlete – she enters it under "Receive a workout", or opens the link directly. The code is valid for 90 days.',
+    co_share_link: 'Share link',
+    co_share_text: (code, link) => `Here is your Mirakelprogrammet workout! Open ${link} or enter code ${code} under "Receive a workout".`,
+    co_close: 'Close',
+    co_copied: 'Link copied!',
+    co_error_title: 'Something went wrong',
+    co_error: 'Could not create the code. Check that the mp-share worker is deployed and that you have a network connection.',
+    co_redeem_prompt: 'Enter the workout code you received:',
+    co_bad_code: 'Invalid code – it should be 5 characters',
+    co_fetching: 'Fetching the workout…',
+    co_get_error: 'Could not fetch the workout. Check the code and that it has not expired.',
+    co_replace_active: 'You have an active session. Replace it with the shared workout?',
+    co_imported: (n) => `"${n}" loaded – let's go! 💪`,
     warm_need: 'Enter a working weight first',
     warm_none: 'The weight is too low for a warm-up ramp',
     guard_msg: (n) => `You have ${n} sessions stored only in this browser. A cleared cache or a lost phone erases everything – enable sync or download a backup.`,
@@ -4371,6 +4611,255 @@ function renderLogUI(){
   else renderSyncPanel();
 }
 
+// ══ COACHLÄGE: bygg och dela passmallar åt adepter ═════════════════
+const SHARE_API_URL = 'https://mp-share.jonathan-soderling.workers.dev';
+let coachData = loadJSON('mp_coach_v1', { athletes: [] });
+function saveCoach(){ try{ localStorage.setItem('mp_coach_v1', JSON.stringify(coachData)); }catch(e){} }
+let coachView = { screen: 'list', athleteId: null, templateId: null };
+
+function renderCoach(){
+  const st = document.getElementById('coach-stage');
+  if(!st) return;
+  if(coachView.screen === 'builder') return renderCoachBuilder(st);
+  if(coachView.screen === 'athlete') return renderCoachAthlete(st);
+  return renderCoachList(st);
+}
+
+// — Lista över adepter —
+function renderCoachList(st){
+  const a = coachData.athletes;
+  st.innerHTML = `
+    <div class="coach-head">
+      <button class="coach-back" onclick="switchView('program')">‹ ${t('co_exit')}</button>
+      <h2 class="coach-h2">${t('co_title')}</h2>
+    </div>
+    <p class="coach-intro">${t('co_intro')}</p>
+    <div class="coach-list">
+      ${a.length ? a.map(ath => {
+        const n = ath.templates.length;
+        return `<button class="coach-card" onclick="openAthlete('${ath.id}')">
+          <span class="cc-name">${escapeHtml(ath.name)}</span>
+          <span class="cc-meta">${t('co_tpl_count', n)}</span>
+        </button>`;
+      }).join('') : `<div class="coach-empty">${t('co_no_athletes')}</div>`}
+    </div>
+    <div class="coach-add">
+      <input id="co-new-name" class="coach-input" maxlength="40" placeholder="${t('co_name_ph')}">
+      <button class="coach-btn" onclick="addAthlete()">${t('co_add')}</button>
+    </div>`;
+}
+function addAthlete(){
+  const inp = document.getElementById('co-new-name');
+  const name = (inp.value || '').trim().slice(0, 40);
+  if(!name) return;
+  coachData.athletes.push({ id: 'a' + Date.now(), name, templates: [] });
+  saveCoach();
+  renderCoach();
+  if(navigator.vibrate) navigator.vibrate(12);
+}
+function openAthlete(id){ coachView = { screen:'athlete', athleteId:id, templateId:null }; renderCoach(); }
+
+// — En adepts mallar —
+function renderCoachAthlete(st){
+  const ath = coachData.athletes.find(a => a.id === coachView.athleteId);
+  if(!ath){ coachView.screen = 'list'; return renderCoach(); }
+  st.innerHTML = `
+    <div class="coach-head">
+      <button class="coach-back" onclick="coachToList()">‹ ${t('co_all')}</button>
+      <h2 class="coach-h2">${escapeHtml(ath.name)}</h2>
+    </div>
+    <div class="coach-list">
+      ${ath.templates.length ? ath.templates.map(tp => `
+        <div class="coach-tpl">
+          <button class="coach-tpl-main" onclick="editTemplate('${ath.id}','${tp.id}')">
+            <span class="cc-name">${escapeHtml(tp.name)}</span>
+            <span class="cc-meta">${t('co_ex_count', tp.ex.length)}</span>
+          </button>
+          <button class="coach-tpl-share" onclick="shareTemplate('${ath.id}','${tp.id}')" title="${t('co_share')}">📤</button>
+          <button class="coach-tpl-del" onclick="delTemplate('${ath.id}','${tp.id}')">✕</button>
+        </div>`).join('') : `<div class="coach-empty">${t('co_no_tpl')}</div>`}
+    </div>
+    <button class="coach-btn wide" onclick="newTemplate('${ath.id}')">${t('co_new_tpl')}</button>
+    <button class="coach-del-athlete" onclick="delAthlete('${ath.id}')">${t('co_del_athlete')}</button>`;
+}
+function coachToList(){ coachView = { screen:'list' }; renderCoach(); }
+function delAthlete(id){
+  const ath = coachData.athletes.find(a=>a.id===id);
+  if(!ath) return;
+  if(!confirm(t('co_del_athlete_confirm', ath.name))) return;
+  coachData.athletes = coachData.athletes.filter(a=>a.id!==id);
+  saveCoach(); coachToList();
+}
+function newTemplate(aid){
+  const ath = coachData.athletes.find(a=>a.id===aid);
+  if(!ath) return;
+  const tp = { id:'t'+Date.now(), name: t('co_tpl_default'), ex: [] };
+  ath.templates.push(tp); saveCoach();
+  coachView = { screen:'builder', athleteId:aid, templateId:tp.id };
+  renderCoach();
+}
+function editTemplate(aid, tid){ coachView = { screen:'builder', athleteId:aid, templateId:tid }; renderCoach(); }
+function delTemplate(aid, tid){
+  const ath = coachData.athletes.find(a=>a.id===aid);
+  if(!ath) return;
+  ath.templates = ath.templates.filter(t=>t.id!==tid);
+  saveCoach(); renderCoach();
+}
+
+// — Mallbyggare (INGEN spara-till-egen-logg-väg finns här) —
+function curTpl(){
+  const ath = coachData.athletes.find(a=>a.id===coachView.athleteId);
+  return ath ? { ath, tp: ath.templates.find(t=>t.id===coachView.templateId) } : {};
+}
+function renderCoachBuilder(st){
+  const { ath, tp } = curTpl();
+  if(!ath || !tp){ coachView.screen='athlete'; return renderCoach(); }
+  const lib = [...t('log_exlib'), ...logData.customEx.map(c=>c.name)];
+  st.innerHTML = `
+    <div class="coach-head">
+      <button class="coach-back" onclick="backToAthlete()">‹ ${escapeHtml(ath.name)}</button>
+    </div>
+    <input class="coach-tpl-name" value="${escapeHtml(tp.name)}" maxlength="50"
+      oninput="renameTpl(this.value)" placeholder="${t('co_tpl_name_ph')}">
+    <div class="coach-builder">
+      ${tp.ex.map((e, ei) => `
+        <div class="cb-ex">
+          <div class="cb-ex-head">
+            <span class="cb-ex-name">${escapeHtml(e.name)}</span>
+            <button class="cb-ex-del" onclick="cbDelEx(${ei})">✕</button>
+          </div>
+          ${e.sets.map((s, si) => `
+            <div class="cb-set">
+              <span class="cb-setn">${si+1}</span>
+              <input class="cb-kg" type="number" inputmode="decimal" value="${s.kg??''}" placeholder="kg"
+                oninput="cbSet(${ei},${si},'kg',this.value)">
+              <span class="cb-x">×</span>
+              <input class="cb-reps" type="number" inputmode="numeric" value="${s.reps??''}" placeholder="reps"
+                oninput="cbSet(${ei},${si},'reps',this.value)">
+              <button class="cb-set-del" onclick="cbDelSet(${ei},${si})">✕</button>
+            </div>`).join('')}
+          <button class="cb-add-set" onclick="cbAddSet(${ei})">+ ${t('co_add_set')}</button>
+        </div>`).join('')}
+    </div>
+    <div class="coach-add-ex">
+      <select id="cb-ex-select" class="coach-input">${lib.map(n=>`<option>${escapeHtml(n)}</option>`).join('')}</select>
+      <button class="coach-btn" onclick="cbAddEx()">${t('co_add_ex')}</button>
+    </div>
+    <button class="coach-btn wide share" onclick="shareTemplate('${ath.id}','${tp.id}')">📤 ${t('co_make_code')}</button>`;
+}
+function backToAthlete(){ coachView = { screen:'athlete', athleteId:coachView.athleteId }; renderCoach(); }
+function renameTpl(v){ const {tp}=curTpl(); if(tp){ tp.name=v; saveCoach(); } }
+function cbAddEx(){
+  const { tp } = curTpl();
+  const name = document.getElementById('cb-ex-select').value;
+  if(!tp || !name) return;
+  const prev = lastSetsFor(name);
+  tp.ex.push({ name, sets: prev ? prev.slice(0,6).map(s=>({kg:s.kg,reps:s.reps})) : [{kg:'',reps:''}] });
+  saveCoach(); renderCoach();
+}
+function cbDelEx(ei){ const {tp}=curTpl(); if(tp){ tp.ex.splice(ei,1); saveCoach(); renderCoach(); } }
+function cbAddSet(ei){ const {tp}=curTpl(); if(tp){ const last=tp.ex[ei].sets[tp.ex[ei].sets.length-1]; tp.ex[ei].sets.push(last?{...last}:{kg:'',reps:''}); saveCoach(); renderCoach(); } }
+function cbDelSet(ei,si){ const {tp}=curTpl(); if(tp){ tp.ex[ei].sets.splice(si,1); saveCoach(); renderCoach(); } }
+function cbSet(ei,si,f,v){ const {tp}=curTpl(); if(tp){ tp.ex[ei].sets[si][f] = v===''?'':parseFloat(v); saveCoach(); } }
+
+// — Dela mall → kod via workern —
+async function shareTemplate(aid, tid){
+  const ath = coachData.athletes.find(a=>a.id===aid);
+  const tp = ath && ath.templates.find(t=>t.id===tid);
+  if(!tp) return;
+  if(!tp.ex.length){ showUndoToast(t('co_empty_tpl'), t('undo_close'), ()=>{}); return; }
+  const workout = {
+    name: tp.name,
+    ex: tp.ex.map(e => ({ name: e.name, sets: e.sets
+      .filter(s => s.kg!=='' || s.reps!=='')
+      .map(s => ({ kg: parseFloat(s.kg)||0, reps: parseFloat(s.reps)||0 })) }))
+  };
+  showCoachModal(t('co_sending'), '');
+  try{
+    const res = await fetch(SHARE_API_URL + '/put', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ workout })
+    });
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const j = await res.json();
+    const link = 'https://mirakelprogrammet.se/#pass=' + j.code;
+    showCoachModal(t('co_code_ready'), `
+      <div class="co-code">${j.code}</div>
+      <p class="co-code-hint">${t('co_code_hint')}</p>
+      <button class="coach-btn wide" onclick="coachShareLink('${j.code}')">🔗 ${t('co_share_link')}</button>
+      <button class="coach-btn wide ghost" onclick="closeCoachModal()">${t('co_close')}</button>`);
+  }catch(e){
+    showCoachModal(t('co_error_title'), `<p class="co-code-hint">${t('co_error')}</p>
+      <button class="coach-btn wide ghost" onclick="closeCoachModal()">${t('co_close')}</button>`);
+  }
+}
+async function coachShareLink(code){
+  const link = 'https://mirakelprogrammet.se/#pass=' + code;
+  const text = t('co_share_text', code, link);
+  if(navigator.share){ try{ await navigator.share({ text }); return; }catch(e){ if(e&&e.name==='AbortError') return; } }
+  try{ await navigator.clipboard.writeText(link); showUndoToast(t('co_copied'), t('undo_close'), ()=>{}); }catch(e){}
+}
+function showCoachModal(title, bodyHtml){
+  let ov = document.getElementById('coach-modal');
+  if(!ov){ ov = document.createElement('div'); ov.id='coach-modal'; document.body.appendChild(ov); }
+  ov.innerHTML = `<div class="cm-box"><div class="cm-title">${title}</div>${bodyHtml}</div>`;
+  ov.classList.add('show');
+}
+function closeCoachModal(){ const ov=document.getElementById('coach-modal'); if(ov) ov.classList.remove('show'); }
+
+// — MOTTAGARSIDAN: lös in en pass-kod —
+async function redeemPassCode(code){
+  code = (code||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,5);
+  if(code.length !== 5){ showUndoToast(t('co_bad_code'), t('undo_close'), ()=>{}); return; }
+  showCoachModal(t('co_fetching'), '');
+  try{
+    const res = await fetch(SHARE_API_URL + '/get?code=' + code);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const j = await res.json();
+    const w = j.workout;
+    closeCoachModal();
+    const exList = w.ex.map(e => ({ name:e.name, sets:e.sets.map(s=>({kg:s.kg,reps:s.reps,done:false})) }));
+    if(activeSession && !confirm(t('co_replace_active'))) return;
+    newSession(w.name, exList);
+    showUndoToast(t('co_imported', w.name), t('undo_close'), ()=>{});
+  }catch(e){
+    showCoachModal(t('co_error_title'), `<p class="co-code-hint">${t('co_get_error')}</p>
+      <button class="coach-btn wide ghost" onclick="closeCoachModal()">${t('co_close')}</button>`);
+  }
+}
+function promptPassCode(){
+  const code = prompt(t('co_redeem_prompt'));
+  if(code) redeemPassCode(code);
+}
+// Länk med #pass=KOD öppnar direkt import
+function checkPassLink(){
+  const m = (location.hash || '').match(/pass=([A-Z0-9]{5})/i);
+  if(m){ history.replaceState(null,'',location.pathname); redeemPassCode(m[1]); }
+}
+
+// ── PASSTIDSESTIMAT: median av tidigare tider, outliers bortsållade ─
+function estimateDuration(name){
+  const durs = (logData.workouts || [])
+    .filter(w => w.name === name && w.dur > 0)
+    .map(w => w.dur)
+    .sort((a,b)=>a-b);
+  if(durs.length < 2) return null;
+  // Sålla bort orimliga tider: glömda avstängningar (>3h) och
+  // statistiska outliers via IQR-metoden.
+  const capped = durs.filter(d => d <= 3*3600);
+  if(capped.length < 2) return null;
+  const q = p => {
+    const i = (capped.length - 1) * p, lo = Math.floor(i), hi = Math.ceil(i);
+    return capped[lo] + (capped[hi] - capped[lo]) * (i - lo);
+  };
+  const q1 = q(0.25), q3 = q(0.75), iqr = q3 - q1;
+  const clean = capped.filter(d => d >= q1 - 1.5*iqr && d <= q3 + 1.5*iqr);
+  const use = clean.length ? clean : capped;
+  const mid = Math.floor(use.length / 2);
+  const median = use.length % 2 ? use[mid] : (use[mid-1] + use[mid]) / 2;
+  return { mins: Math.round(median / 60), n: use.length };
+}
+
 // ── SKÄRMLÅS: håll skärmen vaken så länge ett pass pågår ────────────
 let wakeLock = null;
 async function requestWakeLock(){
@@ -4385,7 +4874,28 @@ function releaseWakeLock(){
 }
 // Systemet släpper låset när appen döljs – ta det igen vid återkomst
 document.addEventListener('visibilitychange', ()=>{
-  if(document.visibilityState === 'visible' && activeSession) requestWakeLock();
+  if(document.visibilityState === 'visible'){
+    if(activeSession) requestWakeLock();
+    if(globalTimerInterval) timerTick();   // återställ klockan direkt
+  }
+});
+// Återuppta en löpande timer om sidan laddades om under vilan
+window.addEventListener('DOMContentLoaded', ()=>{
+  try{
+    const saved = parseInt(localStorage.getItem('mp_timer_end') || '0', 10);
+    if(saved > Date.now()){
+      timerEndsAt = saved;
+      globalTimerLeft = Math.round((saved - Date.now()) / 1000);
+      document.getElementById('timer-barbell').classList.add('pumping');
+      document.getElementById('timer-action').textContent = t('timer_stop');
+      document.getElementById('timer-action').classList.add('stop');
+      document.getElementById('fab-timer').classList.add('running');
+      updateTimerUI();
+      globalTimerInterval = setInterval(timerTick, 250);
+    } else if(saved){
+      localStorage.removeItem('mp_timer_end');
+    }
+  }catch(e){}
 });
 
 // ── Starta pass ──
@@ -4408,7 +4918,7 @@ function showTimerFab(){
   }
 }
 // Om ett aktivt pass fanns sparat sedan tidigare: visa timern direkt
-window.addEventListener('DOMContentLoaded', ()=>{ if(activeSession){ showTimerFab(); requestWakeLock(); } });
+window.addEventListener('DOMContentLoaded', ()=>{ if(activeSession){ showTimerFab(); requestWakeLock(); } checkPassLink(); });
 
 
 function copySelectedWorkout(){
@@ -4495,6 +5005,7 @@ function renderSessionPanel(){
   <div class="ls-sticky" id="ls-sticky">
     <span class="lss-time" id="lss-time">⏱ ${elapsedStr()}</span>
     <span class="lss-now" id="lss-now">${escapeHtml(currentExLabel())}</span>
+    ${(()=>{ const e = estimateDuration(activeSession.name); return e ? `<span class="lss-eta" title="${t('eta_title', e.n)}">~${e.mins} ${t('eta_min')}</span>` : ''; })()}
   </div>`;
   activeSession.ex.forEach((e, ei)=>{
     h += `<div class="ls-ex"><div class="ls-ex-head"><span class="ls-ex-name">${escapeHtml(e.name)}</span>
@@ -4821,6 +5332,7 @@ const VIEW_SECTIONS = {
   goals:   ['#goals-section'],
   rank:    ['#rank-section'],
   game:    ['#game-section'],
+  coach:   ['#coach-section'],
 };
 function switchView(v){
   currentView = v;
@@ -4841,6 +5353,7 @@ function switchView(v){
   const btn = document.getElementById('bn-' + v);
   if(btn) btn.classList.add('active');
   if(v === 'log'){ renderLogUI(); updateDataGuard(); }
+  if(v === 'coach') renderCoach();
   if(v === 'goals') renderGoals();
   if(v === 'game') initGame();
   updateLogDot();
@@ -5660,7 +6173,7 @@ function renderHistory(){
     const vol = workoutVolume(w);
     h += `<div class="lh-item" id="lh-${w.id}" onclick="toggleHist(${w.id},event)">
       <div class="lh-top"><span class="lh-name">${w.comp?'🏆 ':''}${escapeHtml(w.name)}</span>
-        <span class="lh-date">${d.toLocaleDateString(loc,{weekday:'short',day:'numeric',month:'short',year:'numeric'})}${w.dur>0?' · '+t('log_dur', Math.max(1,Math.round(w.dur/60))):''}</span></div>
+        <span class="lh-date">${d.toLocaleDateString(loc,{weekday:'short',day:'numeric',month:'short',year:'numeric'})}<span class="lh-dur" onclick="editDur(${w.id},event)" title="${t('dur_edit_title')}">${w.dur>0?' · '+t('log_dur', Math.max(1,Math.round(w.dur/60)))+' ✎':' · + '+t('dur_add')}</span></span></div>
       <div class="lh-meta">${t('log_meta', w.ex.length, setsCount(w), fmtNum(dispVol(vol)), unitLabel())}</div>
       <div class="lh-detail">
         ${w.ex.map(e=>{
@@ -5686,6 +6199,21 @@ function renderHistory(){
   }
   panel.innerHTML = h + ioButtons();
 }
+function editDur(id, ev){
+  if(ev) ev.stopPropagation();
+  const w = logData.workouts.find(x=>x.id===id);
+  if(!w) return;
+  const cur = w.dur > 0 ? Math.round(w.dur/60) : '';
+  const input = prompt(t('dur_prompt'), cur);
+  if(input === null) return;
+  const mins = parseInt(input, 10);
+  if(isNaN(mins) || mins < 0 || mins > 600){ showUndoToast(t('dur_invalid'), t('undo_close'), ()=>{}); return; }
+  w.dur = mins * 60;
+  saveLogData();
+  renderHistory();
+  if(navigator.vibrate) navigator.vibrate(12);
+}
+
 // ── REDIGERA GAMMALT PASS ─────────────────────────────────────────
 let editingWorkout = null;
 function editWorkout(id, ev){
@@ -5956,6 +6484,64 @@ function weekStreak(ws){
   return streak;
 }
 
+// Alla unika övningsnamn i historiken + antal set per namn
+function exNameStats(){
+  const m = {};
+  (logData.workouts || []).forEach(w => (w.ex || []).forEach(e => {
+    if(!e.name) return;
+    m[e.name] = m[e.name] || { sets: 0, workouts: 0 };
+    m[e.name].sets += (e.sets || []).length;
+    m[e.name].workouts++;
+  }));
+  return m;
+}
+function openMergeTool(){
+  const stats = exNameStats();
+  const names = Object.keys(stats).sort((a,b)=>stats[b].sets - stats[a].sets);
+  if(names.length < 2){ showUndoToast(t('merge_need'), t('undo_close'), ()=>{}); return; }
+  const opts = names.map(n => `<option value="${escapeHtml(n)}">${escapeHtml(n)} (${stats[n].sets} set)</option>`).join('');
+  let ov = document.getElementById('merge-overlay');
+  if(!ov){ ov = document.createElement('div'); ov.id = 'merge-overlay'; document.body.appendChild(ov); }
+  ov.innerHTML = `
+    <div class="merge-box">
+      <div class="merge-title">${t('merge_title')}</div>
+      <div class="merge-hint">${t('merge_hint')}</div>
+      <label class="merge-lbl">${t('merge_from')}</label>
+      <select id="merge-from" class="merge-sel">${opts}</select>
+      <label class="merge-lbl">${t('merge_to')}</label>
+      <select id="merge-to" class="merge-sel">${opts}</select>
+      <div class="merge-row">
+        <button class="merge-btn ghost" onclick="closeMerge()">${t('merge_cancel')}</button>
+        <button class="merge-btn" onclick="doMerge()">${t('merge_do')}</button>
+      </div>
+    </div>`;
+  if(names[1]) document.getElementById('merge-to').value = names[0];
+  if(names[1]) document.getElementById('merge-from').value = names[1];
+  ov.classList.add('show');
+}
+function closeMerge(){
+  const ov = document.getElementById('merge-overlay');
+  if(ov) ov.classList.remove('show');
+}
+function doMerge(){
+  const from = document.getElementById('merge-from').value;
+  const to = document.getElementById('merge-to').value;
+  if(from === to){ showUndoToast(t('merge_same'), t('undo_close'), ()=>{}); return; }
+  // Säkerhetskopia för ångra
+  const backup = JSON.stringify(logData.workouts);
+  let touched = 0;
+  logData.workouts.forEach(w => (w.ex || []).forEach(e => {
+    if(e.name === from){ e.name = to; touched++; }
+  }));
+  saveLogData();
+  closeMerge();
+  renderStats();
+  if(navigator.vibrate) navigator.vibrate([40,40,60]);
+  showUndoToast(t('merge_done', touched, to), t('undo_btn'), ()=>{
+    try{ logData.workouts = JSON.parse(backup); saveLogData(); renderStats(); }catch(e){}
+  });
+}
+
 function renderStats(){
   const ws = logData.workouts;
   const empty = document.getElementById('st-empty');
@@ -5964,6 +6550,8 @@ function renderStats(){
   empty.textContent = t('log_stats_empty');
   document.getElementById('st-cards').style.display = hasData ? 'grid' : 'none';
   document.querySelector('.st-controls').style.display = hasData ? 'flex' : 'none';
+  const mb = document.getElementById('merge-tool-btn');
+  if(mb) mb.style.display = hasData ? 'inline-flex' : 'none';
   document.getElementById('st-chart').style.display = hasData ? 'block' : 'none';
   document.getElementById('st-best').style.display = hasData ? 'flex' : 'none';
   if(!hasData) return;
