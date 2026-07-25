@@ -652,20 +652,49 @@ footer{
 .cb-ex-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
 .cb-ex-name{font-family:var(--sg);font-size:14px;font-weight:600;color:var(--cream);}
 .cb-ex-del{background:none;border:none;color:var(--ink4);font-size:13px;cursor:pointer;}
-.cb-set{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
-.cb-setn{font-family:var(--mono);font-size:10px;color:var(--dust2);width:16px;flex-shrink:0;}
+.cb-set{display:flex;align-items:center;gap:5px;margin-bottom:6px;flex-wrap:wrap;}
+.cb-setn{font-family:var(--mono);font-size:10px;color:var(--dust2);width:14px;flex-shrink:0;}
+.cb-grp{display:flex;align-items:center;gap:3px;flex:1 1 0;min-width:0;}
+.cb-kgg{flex:1.4 1 0;}
+.cb-repsg{flex:1 1 0;}
+.cb-step{
+  width:24px;height:34px;flex-shrink:0;background:var(--ink2);border:1px solid var(--ink4);
+  border-radius:7px;color:var(--dust);font-size:15px;font-weight:600;line-height:1;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;user-select:none;
+  touch-action:manipulation;
+}
+.cb-step:active{background:var(--lime);color:var(--ink);}
 .cb-kg,.cb-reps{
-  flex:1;min-width:0;background:var(--ink3);border:1px solid var(--ink4);border-radius:8px;
-  color:var(--cream);font-family:var(--mono);font-size:15px;text-align:center;padding:9px 4px;outline:none;
+  width:100%;min-width:0;flex:1 1 auto;background:var(--ink3);border:1px solid var(--ink4);border-radius:8px;
+  color:var(--cream);font-family:var(--mono);font-size:15px;text-align:center;padding:9px 2px;outline:none;
   -moz-appearance:textfield;
 }
 .cb-kg::-webkit-outer-spin-button,.cb-kg::-webkit-inner-spin-button,
 .cb-reps::-webkit-outer-spin-button,.cb-reps::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
-.cb-kg{flex:1.4;}
 .cb-x{color:var(--dust2);font-size:12px;flex-shrink:0;}
-.cb-set-del{background:none;border:none;color:var(--ink4);font-size:12px;cursor:pointer;flex-shrink:0;width:24px;}
+.cb-set-del{background:none;border:none;color:var(--ink4);font-size:12px;cursor:pointer;flex-shrink:0;width:22px;}
+.cb-e1rm{flex-basis:100%;order:10;font-family:var(--mono);font-size:9px;color:var(--dust2);letter-spacing:0.03em;padding-left:18px;}
+.cb-e1rm:empty{display:none;}
 .cb-add-set{background:none;border:1px dashed var(--ink4);border-radius:8px;color:var(--dust);font-family:var(--mono);font-size:10px;padding:8px;width:100%;cursor:pointer;margin-top:4px;letter-spacing:0.05em;}
+.inbox-wrap{
+  background:rgba(203,255,77,0.05);border:1px solid rgba(203,255,77,0.3);
+  border-radius:16px;padding:14px;margin-bottom:16px;
+}
+.inbox-head{font-family:var(--mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--lime);margin-bottom:10px;}
+.inbox-item{display:flex;gap:6px;margin-bottom:8px;}
+.inbox-item:last-child{margin-bottom:0;}
+.inbox-main{
+  flex:1;display:flex;justify-content:space-between;align-items:center;gap:10px;
+  background:var(--ink2);border:1px solid var(--ink4);border-radius:11px;
+  padding:13px 15px;cursor:pointer;text-align:left;min-width:0;transition:border-color 0.15s;
+}
+.inbox-main:active{border-color:rgba(203,255,77,0.5);}
+.inbox-name{font-family:var(--sg);font-size:14px;font-weight:600;color:var(--cream);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.inbox-meta{font-family:var(--mono);font-size:9px;color:var(--dust2);letter-spacing:0.04em;flex-shrink:0;}
+.inbox-del{background:var(--ink2);border:1px solid var(--ink4);border-radius:11px;color:var(--ink4);font-size:12px;cursor:pointer;width:42px;flex-shrink:0;}
+.inbox-del:active{color:#ff6b6b;background:rgba(255,80,80,0.1);}
 .prog-quick-row{display:flex;gap:10px;justify-content:center;margin:16px 0 4px;flex-wrap:wrap;}
+.coach-quick-row{display:flex;gap:10px;justify-content:center;margin:22px 0 4px;flex-wrap:wrap;padding-top:18px;border-top:1px solid var(--ink3);}
 .prog-quick-btn{
   font-family:var(--mono);font-size:11px;letter-spacing:0.04em;color:var(--dust);
   background:var(--ink2);border:1px solid var(--ink4);border-radius:99px;
@@ -1811,11 +1840,6 @@ body.light-mode .ls-sticky{background:rgba(248,246,240,0.92);}
   <div id="onboard-wrap">
     <p class="hero-pitch" data-i18n="hero_pitch">Periodiserat styrkelyftsprogram utifrån dina lyft. Logga passen, följ formen, jämför dig med svenska rankingen och sätt mål – gratis, utan konto, allt sparat på din mobil. Och på vilodagen: Mirakelmästerskapen. 🎮</p>
     <button class="demo-btn" id="demo-btn" onclick="fillDemo()" data-i18n="demo_btn">✨ Nyfiken? Testa med exempeldata</button>
-  </div>
-
-  <div class="prog-quick-row">
-    <button class="prog-quick-btn" onclick="switchView('coach')">🧑‍🏫 <span data-i18n="co_entry">Coacha någon</span></button>
-    <button class="prog-quick-btn" onclick="promptPassCode()">📥 <span data-i18n="co_redeem">Ta emot pass</span></button>
   </div>
 
   <div class="prog-type-tabs">
@@ -3219,7 +3243,15 @@ const T = {
     co_fetching: 'Hämtar passet…',
     co_get_error: 'Kunde inte hämta passet. Kontrollera koden och att den inte gått ut.',
     co_replace_active: 'Du har ett aktivt pass. Vill du ersätta det med det delade passet?',
-    co_imported: (n) => `"${n}" laddat – kör igång! 💪`,
+    co_imported: (n) => `"${n}" tillagt bland dina pass 📥`,
+    co_week_imported: (n) => `${n} pass tillagda bland dina pass 📦`,
+    co_share_week: 'Dela hela veckan (en kod)',
+    co_week_ready: (n) => `${n} pass delade!`,
+    co_week_hint: 'Ge koden till din adept – hela veckans pass laddas in bland hennes egna pass, redo att köra och redigera. Koden gäller i 90 dagar.',
+    co_empty_week: 'Inga pass med övningar att dela än',
+    inbox_title: 'Dina mottagna pass',
+    inbox_from: (n) => `från ${n}`,
+    inbox_removed: 'Pass borttaget',
     warm_need: 'Fyll i en arbetsvikt först',
     warm_none: 'Vikten är för låg för en uppvärmningsstege',
     guard_msg: (n) => `Du har ${n} pass sparade endast i den här webbläsaren. En rensad cache eller borttappad mobil raderar allt – aktivera synk eller ladda ner en backup.`,
@@ -3663,7 +3695,15 @@ const T = {
     co_fetching: 'Fetching the workout…',
     co_get_error: 'Could not fetch the workout. Check the code and that it has not expired.',
     co_replace_active: 'You have an active session. Replace it with the shared workout?',
-    co_imported: (n) => `"${n}" loaded – let's go! 💪`,
+    co_imported: (n) => `"${n}" added to your workouts 📥`,
+    co_week_imported: (n) => `${n} workouts added to your list 📦`,
+    co_share_week: 'Share the whole week (one code)',
+    co_week_ready: (n) => `${n} workouts shared!`,
+    co_week_hint: 'Give the code to your athlete – the whole week loads into her own workouts, ready to run and edit. The code is valid for 90 days.',
+    co_empty_week: 'No workouts with exercises to share yet',
+    inbox_title: 'Your received workouts',
+    inbox_from: (n) => `from ${n}`,
+    inbox_removed: 'Workout removed',
     warm_need: 'Enter a working weight first',
     warm_none: 'The weight is too low for a warm-up ramp',
     guard_msg: (n) => `You have ${n} sessions stored only in this browser. A cleared cache or a lost phone erases everything – enable sync or download a backup.`,
@@ -4611,10 +4651,47 @@ function renderLogUI(){
   else renderSyncPanel();
 }
 
+// ══ MOTTAGNA PASS: bibliotek av delade pass hos adepten ════════════
+let inbox = loadJSON('mp_inbox_v1', []);
+function saveInbox(){ try{ localStorage.setItem('mp_inbox_v1', JSON.stringify(inbox)); }catch(e){} }
+function inboxAdd(workout, from){
+  inbox.unshift({
+    id: 'in' + Date.now() + Math.floor(Math.random()*1000),
+    name: workout.name || 'Pass',
+    from: from || '',
+    ex: workout.ex.map(e => ({ name:e.name, sets:e.sets.map(s=>({kg:s.kg,reps:s.reps})) })),
+    added: Date.now()
+  });
+  saveInbox();
+}
+// Starta ett mottaget pass som ett vanligt, redigerbart pass i loggen
+function startInboxWorkout(id){
+  const w = inbox.find(x=>x.id===id);
+  if(!w) return;
+  if(activeSession && !confirm(t('co_replace_active'))) return;
+  const exList = w.ex.map(e => ({ name:e.name, sets:e.sets.map(s=>({kg:s.kg,reps:s.reps,done:false})) }));
+  newSession(w.name, exList);
+}
+function removeInbox(id, ev){
+  if(ev) ev.stopPropagation();
+  const w = inbox.find(x=>x.id===id);
+  inbox = inbox.filter(x=>x.id!==id);
+  saveInbox();
+  renderSessionPanel();
+  if(navigator.vibrate) navigator.vibrate(14);
+  showUndoToast(t('inbox_removed'), t('undo_btn'), ()=>{
+    if(w){ inbox.unshift(w); saveInbox(); renderSessionPanel(); }
+  });
+}
+
 // ══ COACHLÄGE: bygg och dela passmallar åt adepter ═════════════════
 const SHARE_API_URL = 'https://mp-share.jonathan-soderling.workers.dev';
-let coachData = loadJSON('mp_coach_v1', { athletes: [] });
-function saveCoach(){ try{ localStorage.setItem('mp_coach_v1', JSON.stringify(coachData)); }catch(e){} }
+let coachData = loadJSON('mp_coach_v1', { athletes: [], updated: 0 });
+function saveCoach(){
+  coachData.updated = Date.now();
+  try{ localStorage.setItem('mp_coach_v1', JSON.stringify(coachData)); }catch(e){}
+  if(typeof scheduleSync === 'function') scheduleSync();
+}
 let coachView = { screen: 'list', athleteId: null, templateId: null };
 
 function renderCoach(){
@@ -4680,6 +4757,7 @@ function renderCoachAthlete(st){
         </div>`).join('') : `<div class="coach-empty">${t('co_no_tpl')}</div>`}
     </div>
     <button class="coach-btn wide" onclick="newTemplate('${ath.id}')">${t('co_new_tpl')}</button>
+    ${ath.templates.length >= 2 ? `<button class="coach-btn wide share" onclick="shareWeek('${ath.id}')">📦 ${t('co_share_week')}</button>` : ''}
     <button class="coach-del-athlete" onclick="delAthlete('${ath.id}')">${t('co_del_athlete')}</button>`;
 }
 function coachToList(){ coachView = { screen:'list' }; renderCoach(); }
@@ -4728,16 +4806,27 @@ function renderCoachBuilder(st){
             <span class="cb-ex-name">${escapeHtml(e.name)}</span>
             <button class="cb-ex-del" onclick="cbDelEx(${ei})">✕</button>
           </div>
-          ${e.sets.map((s, si) => `
+          ${e.sets.map((s, si) => {
+            const e1 = (s.kg>0 && s.reps>0) ? 'e1rm ' + rkg(Math.round(epley(s.kg,s.reps)*2)/2) : '';
+            return `
             <div class="cb-set">
               <span class="cb-setn">${si+1}</span>
-              <input class="cb-kg" type="number" inputmode="decimal" value="${s.kg??''}" placeholder="kg"
-                oninput="cbSet(${ei},${si},'kg',this.value)">
+              <div class="cb-grp cb-kgg">
+                <button class="cb-step" onclick="cbStep(${ei},${si},'kg',-2.5)">−</button>
+                <input class="cb-kg" type="number" inputmode="decimal" id="cbk-${ei}-${si}" value="${s.kg??''}" placeholder="kg"
+                  oninput="cbSet(${ei},${si},'kg',this.value)">
+                <button class="cb-step" onclick="cbStep(${ei},${si},'kg',2.5)">+</button>
+              </div>
               <span class="cb-x">×</span>
-              <input class="cb-reps" type="number" inputmode="numeric" value="${s.reps??''}" placeholder="reps"
-                oninput="cbSet(${ei},${si},'reps',this.value)">
+              <div class="cb-grp cb-repsg">
+                <button class="cb-step" onclick="cbStep(${ei},${si},'reps',-1)">−</button>
+                <input class="cb-reps" type="number" inputmode="numeric" id="cbr-${ei}-${si}" value="${s.reps??''}" placeholder="reps"
+                  oninput="cbSet(${ei},${si},'reps',this.value)">
+                <button class="cb-step" onclick="cbStep(${ei},${si},'reps',1)">+</button>
+              </div>
               <button class="cb-set-del" onclick="cbDelSet(${ei},${si})">✕</button>
-            </div>`).join('')}
+              <span class="cb-e1rm" id="cbe-${ei}-${si}">${e1}</span>
+            </div>`; }).join('')}
           <button class="cb-add-set" onclick="cbAddSet(${ei})">+ ${t('co_add_set')}</button>
         </div>`).join('')}
     </div>
@@ -4760,7 +4849,30 @@ function cbAddEx(){
 function cbDelEx(ei){ const {tp}=curTpl(); if(tp){ tp.ex.splice(ei,1); saveCoach(); renderCoach(); } }
 function cbAddSet(ei){ const {tp}=curTpl(); if(tp){ const last=tp.ex[ei].sets[tp.ex[ei].sets.length-1]; tp.ex[ei].sets.push(last?{...last}:{kg:'',reps:''}); saveCoach(); renderCoach(); } }
 function cbDelSet(ei,si){ const {tp}=curTpl(); if(tp){ tp.ex[ei].sets.splice(si,1); saveCoach(); renderCoach(); } }
-function cbSet(ei,si,f,v){ const {tp}=curTpl(); if(tp){ tp.ex[ei].sets[si][f] = v===''?'':parseFloat(v); saveCoach(); } }
+function cbSet(ei,si,f,v){
+  const {tp}=curTpl(); if(!tp) return;
+  tp.ex[ei].sets[si][f] = v===''?'':parseFloat(v);
+  saveCoach();
+  cbUpdateE1(ei,si);
+}
+function cbStep(ei,si,f,d){
+  const {tp}=curTpl(); if(!tp) return;
+  const s = tp.ex[ei].sets[si];
+  const cur = parseFloat(s[f]) || 0;
+  const next = f==='kg' ? Math.max(0, Math.round((cur+d)*4)/4) : Math.max(0, Math.round(cur+d));
+  s[f] = next;
+  saveCoach();
+  const inp = document.getElementById((f==='kg'?'cbk-':'cbr-')+ei+'-'+si);
+  if(inp) inp.value = next;
+  cbUpdateE1(ei,si);
+  if(navigator.vibrate) navigator.vibrate(8);
+}
+function cbUpdateE1(ei,si){
+  const {tp}=curTpl(); if(!tp) return;
+  const s = tp.ex[ei].sets[si];
+  const el = document.getElementById('cbe-'+ei+'-'+si);
+  if(el) el.textContent = (s.kg>0 && s.reps>0) ? 'e1rm ' + rkg(Math.round(epley(s.kg,s.reps)*2)/2) : '';
+}
 
 // — Dela mall → kod via workern —
 async function shareTemplate(aid, tid){
@@ -4807,6 +4919,38 @@ function showCoachModal(title, bodyHtml){
 }
 function closeCoachModal(){ const ov=document.getElementById('coach-modal'); if(ov) ov.classList.remove('show'); }
 
+// — Dela ALLA en adepts mallar som EN kod —
+async function shareWeek(aid){
+  const ath = coachData.athletes.find(a=>a.id===aid);
+  if(!ath || ath.templates.length < 2) return;
+  const workouts = ath.templates
+    .filter(tp => tp.ex.length)
+    .map(tp => ({
+      name: tp.name,
+      ex: tp.ex.map(e => ({ name:e.name, sets:e.sets
+        .filter(s => s.kg!=='' || s.reps!=='')
+        .map(s => ({ kg:parseFloat(s.kg)||0, reps:parseFloat(s.reps)||0 })) }))
+    }));
+  if(!workouts.length){ showUndoToast(t('co_empty_week'), t('undo_close'), ()=>{}); return; }
+  showCoachModal(t('co_sending'), '');
+  try{
+    const res = await fetch(SHARE_API_URL + '/put', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ workouts, title: ath.name })
+    });
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const j = await res.json();
+    showCoachModal(t('co_week_ready', workouts.length), `
+      <div class="co-code">${j.code}</div>
+      <p class="co-code-hint">${t('co_week_hint')}</p>
+      <button class="coach-btn wide" onclick="coachShareLink('${j.code}')">🔗 ${t('co_share_link')}</button>
+      <button class="coach-btn wide ghost" onclick="closeCoachModal()">${t('co_close')}</button>`);
+  }catch(e){
+    showCoachModal(t('co_error_title'), `<p class="co-code-hint">${t('co_error')}</p>
+      <button class="coach-btn wide ghost" onclick="closeCoachModal()">${t('co_close')}</button>`);
+  }
+}
+
 // — MOTTAGARSIDAN: lös in en pass-kod —
 async function redeemPassCode(code){
   code = (code||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,5);
@@ -4816,12 +4960,20 @@ async function redeemPassCode(code){
     const res = await fetch(SHARE_API_URL + '/get?code=' + code);
     if(!res.ok) throw new Error('HTTP '+res.status);
     const j = await res.json();
-    const w = j.workout;
     closeCoachModal();
-    const exList = w.ex.map(e => ({ name:e.name, sets:e.sets.map(s=>({kg:s.kg,reps:s.reps,done:false})) }));
-    if(activeSession && !confirm(t('co_replace_active'))) return;
-    newSession(w.name, exList);
-    showUndoToast(t('co_imported', w.name), t('undo_close'), ()=>{});
+    if(Array.isArray(j.workouts)){
+      // Helt veckoprogram: lägg alla pass i biblioteket
+      j.workouts.forEach(w => inboxAdd(w, j.title || ''));
+      if(currentView !== 'log') switchView('log'); else renderSessionPanel();
+      switchLogTab(0, null);
+      showUndoToast(t('co_week_imported', j.workouts.length), t('undo_close'), ()=>{});
+    } else if(j.workout){
+      // Enskilt pass: lägg i biblioteket (redigerbart), hoppa till loggen
+      inboxAdd(j.workout, '');
+      if(currentView !== 'log') switchView('log'); else renderSessionPanel();
+      switchLogTab(0, null);
+      showUndoToast(t('co_imported', j.workout.name), t('undo_close'), ()=>{});
+    }
   }catch(e){
     showCoachModal(t('co_error_title'), `<p class="co-code-hint">${t('co_get_error')}</p>
       <button class="coach-btn wide ghost" onclick="closeCoachModal()">${t('co_close')}</button>`);
@@ -4970,7 +5122,21 @@ function renderSessionPanel(){
   const panel = document.getElementById('log-panel-0');
   clearInterval(sessionTicker);
   if(!activeSession){
-    let h = `<button class="log-big-btn" onclick="startEmptySession()">${t('log_start_empty')}</button>`;
+    let h = '';
+    if(inbox.length){
+      h += `<div class="inbox-wrap"><div class="inbox-head">📥 ${t('inbox_title')}</div>`;
+      inbox.forEach(w => {
+        h += `<div class="inbox-item">
+          <button class="inbox-main" onclick="startInboxWorkout('${w.id}')">
+            <span class="inbox-name">${escapeHtml(w.name)}</span>
+            <span class="inbox-meta">${w.from ? t('inbox_from', escapeHtml(w.from)) + ' · ' : ''}${t('co_ex_count', w.ex.length)}</span>
+          </button>
+          <button class="inbox-del" onclick="removeInbox('${w.id}',event)">✕</button>
+        </div>`;
+      });
+      h += `</div>`;
+    }
+    h += `<button class="log-big-btn" onclick="startEmptySession()">${t('log_start_empty')}</button>`;
     const ws = logData.workouts.slice().sort((a,b)=>b.id-a.id).slice(0,30);
     const hasProg = Object.keys(progDays).length > 0;
     if(ws.length || hasProg){
@@ -4995,6 +5161,10 @@ function renderSessionPanel(){
       h += `<button class="ls-addex-btn" onclick="copySelectedWorkout()">${t('log_copy_btn')}</button></div>`;
     }
     h += `<div class="log-empty">${t('log_start_hint')}</div>`;
+    h += `<div class="coach-quick-row">
+      <button class="prog-quick-btn" onclick="switchView('coach')">🧑‍🏫 ${t('co_entry')}</button>
+      <button class="prog-quick-btn" onclick="promptPassCode()">📥 ${t('co_redeem')}</button>
+    </div>`;
     panel.innerHTML = h;
     return;
   }
@@ -6859,12 +7029,20 @@ async function syncNow(interactive){
     } else {
       logData = merged; writeLogLocal();
     }
-    // Pusha om molnet saknar något
-    if(logFingerprint(merged) !== logFingerprint(remote)){
+    // Coach-data: senaste ändringen (tidsstämpel) vinner
+    const remoteCoach = cloud && cloud.coach ? cloud.coach : null;
+    if(remoteCoach && (remoteCoach.updated || 0) > (coachData.updated || 0)){
+      coachData = remoteCoach;
+      try{ localStorage.setItem('mp_coach_v1', JSON.stringify(coachData)); }catch(e){}
+      if(currentView === 'coach') renderCoach();
+    }
+    // Pusha om molnet saknar något (logg ELLER coach)
+    const coachStale = !remoteCoach || (coachData.updated || 0) > (remoteCoach.updated || 0);
+    if(logFingerprint(merged) !== logFingerprint(remote) || coachStale){
       const push = await fetch(`${SYNC_API_URL}/sync?key=${syncState.key}`, {
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(merged),
+        body: JSON.stringify({ ...merged, coach: coachData }),
       });
       if(!push.ok) throw new Error('HTTP ' + push.status);
     }
