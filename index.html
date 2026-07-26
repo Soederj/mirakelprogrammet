@@ -5041,13 +5041,29 @@ async function redeemPassCode(code){
       throw new Error((j && j.error) ? j.error : ('HTTP ' + res.status));
     }
     closeCoachModal();
+    // Skala bort ev. extra inkapsling: {workout:{workout:{...}}} → {...}
+    let root = j;
+    let guard = 0;
+    while(root && root.workout && !Array.isArray(root.ex) && guard++ < 5){ root = root.workout; }
     // Normalisera till en lista av pass, oavsett format servern gav
     let list = [];
-    if(Array.isArray(j.workouts)) list = j.workouts;
-    else if(j.workout) list = [j.workout];
-    else if(Array.isArray(j.ex)) list = [j];            // gammalt format: passet låg i roten
-    list = list.filter(w => w && Array.isArray(w.ex) && w.ex.length);
-    if(!list.length){ coachError(new Error(t('co_get_empty'))); return; }
+    if(Array.isArray(root.workouts)) list = root.workouts;
+    else if(Array.isArray(root.ex)) list = [root];
+    else if(root.workout) list = [root.workout];
+    // Gräv ur ev. inkapsling per pass också
+    list = list.map(w => {
+      let x = w, g = 0;
+      while(x && x.workout && !Array.isArray(x.ex) && g++ < 5){ x = x.workout; }
+      return x;
+    }).filter(w => w && Array.isArray(w.ex) && w.ex.length);
+    if(!list.length){
+      // Visa det råa svaret så vi ser exakt vad servern gav
+      showCoachModal(t('co_error_title'), `
+        <p class="co-code-hint">${t('co_get_empty')}</p>
+        <p class="co-err-detail">RAW: ${escapeHtml(JSON.stringify(j).slice(0,300))}</p>
+        <button class="coach-btn wide ghost" onclick="closeCoachModal()">${t('co_close')}</button>`);
+      return;
+    }
     const before = inbox.length;
     list.forEach(w => inboxAdd(w, j.title || ''));
     const added = inbox.length - before;
