@@ -710,7 +710,15 @@ footer{
 .cm-box{background:var(--ink2);border:1px solid var(--ink4);border-radius:20px;padding:28px 24px;max-width:380px;width:100%;text-align:center;}
 .cm-title{font-family:var(--bb);font-size:26px;color:var(--cream);letter-spacing:0.02em;margin-bottom:14px;}
 .co-code{font-family:var(--bb);font-size:52px;color:var(--lime);letter-spacing:0.12em;margin:8px 0;text-shadow:0 0 24px rgba(203,255,77,0.4);}
-.co-code-hint{font-family:var(--sg);font-size:12.5px;line-height:1.55;color:var(--dust);margin:8px 0 18px;}
+.co-code-hint{font-family:var(--sg);font-size:12.5px;line-height:1.55;color:var(--dust);margin:8px 0 12px;}
+.co-err-detail{font-family:var(--mono);font-size:10px;color:var(--dust2);background:var(--ink3);border-radius:8px;padding:8px 10px;margin:0 0 16px;word-break:break-word;}
+.co-week{margin-bottom:16px;}
+.co-week-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;}
+.co-week-name{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--lime);}
+.co-week-share{font-family:var(--mono);font-size:10px;letter-spacing:0.04em;background:rgba(203,255,77,0.12);color:var(--lime);border:1px solid rgba(203,255,77,0.45);border-radius:99px;padding:6px 12px;cursor:pointer;flex-shrink:0;}
+.co-week-share:active{background:rgba(203,255,77,0.22);}
+.co-week-field{margin-bottom:16px;}
+.co-week-lbl{font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--dust2);display:block;margin-bottom:5px;}
 .gm-card{background:var(--ink2);border:1px solid var(--ink3);border-radius:20px;padding:24px 20px;text-align:center;}
 .gm-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;color:var(--lime);text-transform:uppercase;margin-bottom:10px;}
 .gm-title{font-family:var(--bb);font-size:44px;line-height:0.95;color:var(--cream);letter-spacing:0.02em;margin-bottom:4px;}
@@ -3249,6 +3257,12 @@ const T = {
     co_week_ready: (n) => `${n} pass delade!`,
     co_week_hint: 'Ge koden till din adept – hela veckans pass laddas in bland hennes egna pass, redo att köra och redigera. Koden gäller i 90 dagar.',
     co_empty_week: 'Inga pass med övningar att dela än',
+    co_loose: 'Lösa pass',
+    co_week_label: 'Vecka (valfritt – grupperar passet)',
+    co_week_ph: 't.ex. Vecka 32',
+    co_share_this_week: 'Dela hela denna vecka som en kod',
+    co_err_network: 'Kunde inte nå servern. Kontrollera att du har nätverk och att mp-share-workern är deployad.',
+    co_err_kv: 'Servern svarar men kan inte spara passet. Detta beror nästan alltid på att KV-bindningen saknas: gå till mp-share → Settings → Bindings och lägg till en KV Namespace med variabelnamn SHARES kopplad till MP_SHARES, och deploya om workern.',
     inbox_title: 'Dina mottagna pass',
     inbox_from: (n) => `från ${n}`,
     inbox_removed: 'Pass borttaget',
@@ -3701,6 +3715,12 @@ const T = {
     co_week_ready: (n) => `${n} workouts shared!`,
     co_week_hint: 'Give the code to your athlete – the whole week loads into her own workouts, ready to run and edit. The code is valid for 90 days.',
     co_empty_week: 'No workouts with exercises to share yet',
+    co_loose: 'Loose workouts',
+    co_week_label: 'Week (optional – groups the workout)',
+    co_week_ph: 'e.g. Week 32',
+    co_share_this_week: 'Share this whole week as one code',
+    co_err_network: 'Could not reach the server. Check your network and that the mp-share worker is deployed.',
+    co_err_kv: 'The server responds but cannot save the workout. This is almost always a missing KV binding: go to mp-share → Settings → Bindings and add a KV Namespace with variable name SHARES bound to MP_SHARES, then redeploy the worker.',
     inbox_title: 'Your received workouts',
     inbox_from: (n) => `from ${n}`,
     inbox_removed: 'Workout removed',
@@ -4740,24 +4760,46 @@ function openAthlete(id){ coachView = { screen:'athlete', athleteId:id, template
 function renderCoachAthlete(st){
   const ath = coachData.athletes.find(a => a.id === coachView.athleteId);
   if(!ath){ coachView.screen = 'list'; return renderCoach(); }
+  // Gruppera passen per vecka-etikett (tomt = "Lösa pass")
+  const groups = {};
+  ath.templates.forEach(tp => {
+    const wk = tp.week || '';
+    (groups[wk] = groups[wk] || []).push(tp);
+  });
+  // Ordna: namngivna veckor först (alfabetiskt/nummer), lösa pass sist
+  const weekKeys = Object.keys(groups).filter(k=>k).sort((a,b)=>a.localeCompare(b,'sv',{numeric:true}));
+  if(groups['']) weekKeys.push('');
+
+  const tplRow = tp => `
+    <div class="coach-tpl">
+      <button class="coach-tpl-main" onclick="editTemplate('${ath.id}','${tp.id}')">
+        <span class="cc-name">${escapeHtml(tp.name)}</span>
+        <span class="cc-meta">${t('co_ex_count', tp.ex.length)}</span>
+      </button>
+      <button class="coach-tpl-share" onclick="shareTemplate('${ath.id}','${tp.id}')" title="${t('co_share')}">📤</button>
+      <button class="coach-tpl-del" onclick="delTemplate('${ath.id}','${tp.id}')">✕</button>
+    </div>`;
+
+  const groupsHtml = ath.templates.length ? weekKeys.map(wk => {
+    const list = groups[wk];
+    const label = wk ? escapeHtml(wk) : t('co_loose');
+    const shareBtn = wk
+      ? `<button class="co-week-share" onclick="shareWeek('${ath.id}','${encodeURIComponent(wk)}')" title="${t('co_share_this_week')}">📦 ${t('co_share')}</button>`
+      : '';
+    return `
+      <div class="co-week">
+        <div class="co-week-head"><span class="co-week-name">${label}</span>${shareBtn}</div>
+        ${list.map(tplRow).join('')}
+      </div>`;
+  }).join('') : `<div class="coach-empty">${t('co_no_tpl')}</div>`;
+
   st.innerHTML = `
     <div class="coach-head">
       <button class="coach-back" onclick="coachToList()">‹ ${t('co_all')}</button>
       <h2 class="coach-h2">${escapeHtml(ath.name)}</h2>
     </div>
-    <div class="coach-list">
-      ${ath.templates.length ? ath.templates.map(tp => `
-        <div class="coach-tpl">
-          <button class="coach-tpl-main" onclick="editTemplate('${ath.id}','${tp.id}')">
-            <span class="cc-name">${escapeHtml(tp.name)}</span>
-            <span class="cc-meta">${t('co_ex_count', tp.ex.length)}</span>
-          </button>
-          <button class="coach-tpl-share" onclick="shareTemplate('${ath.id}','${tp.id}')" title="${t('co_share')}">📤</button>
-          <button class="coach-tpl-del" onclick="delTemplate('${ath.id}','${tp.id}')">✕</button>
-        </div>`).join('') : `<div class="coach-empty">${t('co_no_tpl')}</div>`}
-    </div>
+    ${groupsHtml}
     <button class="coach-btn wide" onclick="newTemplate('${ath.id}')">${t('co_new_tpl')}</button>
-    ${ath.templates.length >= 2 ? `<button class="coach-btn wide share" onclick="shareWeek('${ath.id}')">📦 ${t('co_share_week')}</button>` : ''}
     <button class="coach-del-athlete" onclick="delAthlete('${ath.id}')">${t('co_del_athlete')}</button>`;
 }
 function coachToList(){ coachView = { screen:'list' }; renderCoach(); }
@@ -4799,6 +4841,16 @@ function renderCoachBuilder(st){
     </div>
     <input class="coach-tpl-name" value="${escapeHtml(tp.name)}" maxlength="50"
       oninput="renameTpl(this.value)" placeholder="${t('co_tpl_name_ph')}">
+    <div class="co-week-field">
+      <label class="co-week-lbl">${t('co_week_label')}</label>
+      <input class="coach-input" value="${escapeHtml(tp.week||'')}" maxlength="30"
+        oninput="setTplWeek(this.value)" placeholder="${t('co_week_ph')}"
+        list="co-week-list">
+      <datalist id="co-week-list">${
+        [...new Set(ath.templates.map(x=>x.week).filter(Boolean))]
+          .map(w=>`<option value="${escapeHtml(w)}">`).join('')
+      }</datalist>
+    </div>
     <div class="coach-builder">
       ${tp.ex.map((e, ei) => `
         <div class="cb-ex">
@@ -4838,6 +4890,7 @@ function renderCoachBuilder(st){
 }
 function backToAthlete(){ coachView = { screen:'athlete', athleteId:coachView.athleteId }; renderCoach(); }
 function renameTpl(v){ const {tp}=curTpl(); if(tp){ tp.name=v; saveCoach(); } }
+function setTplWeek(v){ const {tp}=curTpl(); if(tp){ tp.week = v.trim(); saveCoach(); } }
 function cbAddEx(){
   const { tp } = curTpl();
   const name = document.getElementById('cb-ex-select').value;
@@ -4892,18 +4945,32 @@ async function shareTemplate(aid, tid){
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ workout })
     });
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const j = await res.json();
-    const link = 'https://mirakelprogrammet.se/#pass=' + j.code;
+    const j = await res.json().catch(()=>null);
+    if(!res.ok || !j || !j.code){
+      throw new Error((j && j.error) ? j.error : ('HTTP ' + res.status));
+    }
     showCoachModal(t('co_code_ready'), `
       <div class="co-code">${j.code}</div>
       <p class="co-code-hint">${t('co_code_hint')}</p>
       <button class="coach-btn wide" onclick="coachShareLink('${j.code}')">🔗 ${t('co_share_link')}</button>
       <button class="coach-btn wide ghost" onclick="closeCoachModal()">${t('co_close')}</button>`);
   }catch(e){
-    showCoachModal(t('co_error_title'), `<p class="co-code-hint">${t('co_error')}</p>
-      <button class="coach-btn wide ghost" onclick="closeCoachModal()">${t('co_close')}</button>`);
+    coachError(e);
   }
+}
+// Tydlig feldiagnos: visar det faktiska felet + trolig orsak
+function coachError(e){
+  const msg = (e && e.message) ? e.message : String(e);
+  let hint = t('co_error');
+  if(/Failed to fetch|NetworkError|Load failed/i.test(msg)){
+    hint = t('co_err_network');
+  } else if(/KV|SHARES|not defined|undefined/i.test(msg)){
+    hint = t('co_err_kv');
+  }
+  showCoachModal(t('co_error_title'), `
+    <p class="co-code-hint">${hint}</p>
+    <p class="co-err-detail">${escapeHtml(msg)}</p>
+    <button class="coach-btn wide ghost" onclick="closeCoachModal()">${t('co_close')}</button>`);
 }
 async function coachShareLink(code){
   const link = 'https://mirakelprogrammet.se/#pass=' + code;
@@ -4920,10 +4987,12 @@ function showCoachModal(title, bodyHtml){
 function closeCoachModal(){ const ov=document.getElementById('coach-modal'); if(ov) ov.classList.remove('show'); }
 
 // — Dela ALLA en adepts mallar som EN kod —
-async function shareWeek(aid){
+async function shareWeek(aid, weekEnc){
   const ath = coachData.athletes.find(a=>a.id===aid);
-  if(!ath || ath.templates.length < 2) return;
-  const workouts = ath.templates
+  if(!ath) return;
+  const week = weekEnc ? decodeURIComponent(weekEnc) : null;
+  const pool = week ? ath.templates.filter(tp => (tp.week||'') === week) : ath.templates;
+  const workouts = pool
     .filter(tp => tp.ex.length)
     .map(tp => ({
       name: tp.name,
@@ -4932,22 +5001,24 @@ async function shareWeek(aid){
         .map(s => ({ kg:parseFloat(s.kg)||0, reps:parseFloat(s.reps)||0 })) }))
     }));
   if(!workouts.length){ showUndoToast(t('co_empty_week'), t('undo_close'), ()=>{}); return; }
+  const title = week ? `${ath.name} · ${week}` : ath.name;
   showCoachModal(t('co_sending'), '');
   try{
     const res = await fetch(SHARE_API_URL + '/put', {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ workouts, title: ath.name })
+      body: JSON.stringify({ workouts, title })
     });
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const j = await res.json();
+    const j = await res.json().catch(()=>null);
+    if(!res.ok || !j || !j.code){
+      throw new Error((j && j.error) ? j.error : ('HTTP ' + res.status));
+    }
     showCoachModal(t('co_week_ready', workouts.length), `
       <div class="co-code">${j.code}</div>
       <p class="co-code-hint">${t('co_week_hint')}</p>
       <button class="coach-btn wide" onclick="coachShareLink('${j.code}')">🔗 ${t('co_share_link')}</button>
       <button class="coach-btn wide ghost" onclick="closeCoachModal()">${t('co_close')}</button>`);
   }catch(e){
-    showCoachModal(t('co_error_title'), `<p class="co-code-hint">${t('co_error')}</p>
-      <button class="coach-btn wide ghost" onclick="closeCoachModal()">${t('co_close')}</button>`);
+    coachError(e);
   }
 }
 
@@ -4975,8 +5046,7 @@ async function redeemPassCode(code){
       showUndoToast(t('co_imported', j.workout.name), t('undo_close'), ()=>{});
     }
   }catch(e){
-    showCoachModal(t('co_error_title'), `<p class="co-code-hint">${t('co_get_error')}</p>
-      <button class="coach-btn wide ghost" onclick="closeCoachModal()">${t('co_close')}</button>`);
+    coachError(e);
   }
 }
 function promptPassCode(){
