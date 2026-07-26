@@ -636,10 +636,11 @@ footer{
   background:var(--ink2);border:1px solid var(--ink4);border-radius:12px;
   padding:14px 16px;cursor:pointer;text-align:left;min-width:0;
 }
-.coach-tpl-share,.coach-tpl-del{
+.coach-tpl-copy,.coach-tpl-share,.coach-tpl-del{
   background:var(--ink2);border:1px solid var(--ink4);border-radius:12px;
   cursor:pointer;font-size:14px;flex-shrink:0;width:44px;color:var(--dust);
 }
+.coach-tpl-copy:active{background:rgba(203,255,77,0.12);}
 .coach-tpl-share:active{background:rgba(203,255,77,0.12);}
 .coach-del-athlete{background:none;border:none;color:var(--ink4);font-family:var(--mono);font-size:10px;cursor:pointer;margin-top:18px;padding:8px;width:100%;letter-spacing:0.05em;}
 .coach-tpl-name{
@@ -3258,6 +3259,8 @@ const T = {
     co_week_hint: 'Ge koden till din adept – hela veckans pass laddas in bland hennes egna pass, redo att köra och redigera. Koden gäller i 90 dagar.',
     co_empty_week: 'Inga pass med övningar att dela än',
     co_loose: 'Lösa pass',
+    co_copy: 'Kopiera passet',
+    co_copy_suffix: ' (kopia)',
     co_get_empty: 'Koden gäller men passet kunde inte läsas – det kan ha skapats i en äldre version. Be din adept skapa en ny kod.',
     co_week_label: 'Vecka (valfritt – grupperar passet)',
     co_week_ph: 't.ex. Vecka 32',
@@ -3717,6 +3720,8 @@ const T = {
     co_week_hint: 'Give the code to your athlete – the whole week loads into her own workouts, ready to run and edit. The code is valid for 90 days.',
     co_empty_week: 'No workouts with exercises to share yet',
     co_loose: 'Loose workouts',
+    co_copy: 'Copy workout',
+    co_copy_suffix: ' (copy)',
     co_get_empty: 'The code is valid but the workout could not be read – it may have been created in an older version. Ask for a new code.',
     co_week_label: 'Week (optional – groups the workout)',
     co_week_ph: 'e.g. Week 32',
@@ -4783,6 +4788,7 @@ function renderCoachAthlete(st){
         <span class="cc-name">${escapeHtml(tp.name)}</span>
         <span class="cc-meta">${t('co_ex_count', tp.ex.length)}</span>
       </button>
+      <button class="coach-tpl-copy" onclick="copyTemplate('${ath.id}','${tp.id}')" title="${t('co_copy')}">⧉</button>
       <button class="coach-tpl-share" onclick="shareTemplate('${ath.id}','${tp.id}')" title="${t('co_share')}">📤</button>
       <button class="coach-tpl-del" onclick="delTemplate('${ath.id}','${tp.id}')">✕</button>
     </div>`;
@@ -4826,6 +4832,26 @@ function newTemplate(aid){
   renderCoach();
 }
 function editTemplate(aid, tid){ coachView = { screen:'builder', athleteId:aid, templateId:tid }; renderCoach(); }
+function copyTemplate(aid, tid){
+  const ath = coachData.athletes.find(a=>a.id===aid);
+  if(!ath) return;
+  const src = ath.templates.find(t=>t.id===tid);
+  if(!src) return;
+  const copy = {
+    id: 't' + Date.now(),
+    name: src.name + t('co_copy_suffix'),
+    week: src.week || '',
+    ex: src.ex.map(e => ({ name:e.name, sets:e.sets.map(s=>({kg:s.kg, reps:s.reps})) }))
+  };
+  // Lägg kopian direkt efter originalet
+  const idx = ath.templates.indexOf(src);
+  ath.templates.splice(idx+1, 0, copy);
+  saveCoach();
+  if(navigator.vibrate) navigator.vibrate(12);
+  // Öppna kopian i byggaren direkt så man kan justera
+  coachView = { screen:'builder', athleteId:aid, templateId:copy.id };
+  renderCoach();
+}
 function delTemplate(aid, tid){
   const ath = coachData.athletes.find(a=>a.id===aid);
   if(!ath) return;
