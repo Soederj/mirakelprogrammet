@@ -3258,6 +3258,7 @@ const T = {
     co_week_hint: 'Ge koden till din adept – hela veckans pass laddas in bland hennes egna pass, redo att köra och redigera. Koden gäller i 90 dagar.',
     co_empty_week: 'Inga pass med övningar att dela än',
     co_loose: 'Lösa pass',
+    co_get_empty: 'Koden gäller men passet kunde inte läsas – det kan ha skapats i en äldre version. Be din adept skapa en ny kod.',
     co_week_label: 'Vecka (valfritt – grupperar passet)',
     co_week_ph: 't.ex. Vecka 32',
     co_share_this_week: 'Dela hela denna vecka som en kod',
@@ -3716,6 +3717,7 @@ const T = {
     co_week_hint: 'Give the code to your athlete – the whole week loads into her own workouts, ready to run and edit. The code is valid for 90 days.',
     co_empty_week: 'No workouts with exercises to share yet',
     co_loose: 'Loose workouts',
+    co_get_empty: 'The code is valid but the workout could not be read – it may have been created in an older version. Ask for a new code.',
     co_week_label: 'Week (optional – groups the workout)',
     co_week_ph: 'e.g. Week 32',
     co_share_this_week: 'Share this whole week as one code',
@@ -4675,11 +4677,16 @@ function renderLogUI(){
 let inbox = loadJSON('mp_inbox_v1', []);
 function saveInbox(){ try{ localStorage.setItem('mp_inbox_v1', JSON.stringify(inbox)); }catch(e){} }
 function inboxAdd(workout, from){
+  if(!workout || typeof workout !== 'object') return;
+  const ex = Array.isArray(workout.ex) ? workout.ex.map(e => ({
+    name: (e && e.name) ? e.name : '',
+    sets: Array.isArray(e && e.sets) ? e.sets.map(s => ({ kg: s&&s.kg, reps: s&&s.reps })) : []
+  })).filter(e => e.name) : [];
   inbox.unshift({
     id: 'in' + Date.now() + Math.floor(Math.random()*1000),
     name: workout.name || 'Pass',
     from: from || '',
-    ex: workout.ex.map(e => ({ name:e.name, sets:e.sets.map(s=>({kg:s.kg,reps:s.reps})) })),
+    ex,
     added: Date.now()
   });
   saveInbox();
@@ -5029,22 +5036,24 @@ async function redeemPassCode(code){
   showCoachModal(t('co_fetching'), '');
   try{
     const res = await fetch(SHARE_API_URL + '/get?code=' + code);
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const j = await res.json();
-    closeCoachModal();
-    if(Array.isArray(j.workouts)){
-      // Helt veckoprogram: lägg alla pass i biblioteket
-      j.workouts.forEach(w => inboxAdd(w, j.title || ''));
-      if(currentView !== 'log') switchView('log'); else renderSessionPanel();
-      switchLogTab(0, null);
-      showUndoToast(t('co_week_imported', j.workouts.length), t('undo_close'), ()=>{});
-    } else if(j.workout){
-      // Enskilt pass: lägg i biblioteket (redigerbart), hoppa till loggen
-      inboxAdd(j.workout, '');
-      if(currentView !== 'log') switchView('log'); else renderSessionPanel();
-      switchLogTab(0, null);
-      showUndoToast(t('co_imported', j.workout.name), t('undo_close'), ()=>{});
+    const j = await res.json().catch(()=>null);
+    if(!res.ok || !j || j.error){
+      throw new Error((j && j.error) ? j.error : ('HTTP ' + res.status));
     }
+    closeCoachModal();
+    // Normalisera till en lista av pass, oavsett format servern gav
+    let list = [];
+    if(Array.isArray(j.workouts)) list = j.workouts;
+    else if(j.workout) list = [j.workout];
+    else if(Array.isArray(j.ex)) list = [j];            // gammalt format: passet låg i roten
+    list = list.filter(w => w && Array.isArray(w.ex) && w.ex.length);
+    if(!list.length){ coachError(new Error(t('co_get_empty'))); return; }
+    const before = inbox.length;
+    list.forEach(w => inboxAdd(w, j.title || ''));
+    const added = inbox.length - before;
+    if(currentView !== 'log') switchView('log'); else renderSessionPanel();
+    switchLogTab(0, null);
+    showUndoToast(added > 1 ? t('co_week_imported', added) : t('co_imported', list[0].name || ''), t('undo_close'), ()=>{});
   }catch(e){
     coachError(e);
   }
