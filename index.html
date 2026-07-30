@@ -713,6 +713,12 @@ footer{
 .co-code{font-family:var(--bb);font-size:52px;color:var(--lime);letter-spacing:0.12em;margin:8px 0;text-shadow:0 0 24px rgba(203,255,77,0.4);}
 .co-code-hint{font-family:var(--sg);font-size:12.5px;line-height:1.55;color:var(--dust);margin:8px 0 12px;}
 .co-err-detail{font-family:var(--mono);font-size:10px;color:var(--dust2);background:var(--ink3);border-radius:8px;padding:8px 10px;margin:0 0 16px;word-break:break-word;}
+.cp-sub{font-family:var(--mono);font-size:10px;letter-spacing:0.05em;color:var(--dust2);margin-bottom:14px;}
+.cp-list{text-align:left;max-height:46vh;overflow-y:auto;margin-bottom:16px;-webkit-overflow-scrolling:touch;}
+.cp-ex{background:var(--ink3);border-radius:10px;padding:11px 13px;margin-bottom:7px;}
+.cp-ex-name{font-family:var(--sg);font-size:13.5px;font-weight:600;color:var(--cream);margin-bottom:3px;}
+.cp-sets{font-family:var(--mono);font-size:11px;color:var(--dust);line-height:1.5;}
+.cp-empty{color:var(--dust2);}
 .co-week{margin-bottom:16px;}
 .co-week-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;}
 .co-week-name{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--lime);}
@@ -1099,11 +1105,20 @@ html,body{overflow-x:hidden;max-width:100vw;}
   .bn-ico{font-size:17px;}
   .bn-label{font-size:8px;}
 }
-@media(max-width:370px){
+/* iPhone mini/SE och zoomad display: krymp allt utom fälten så siffrorna syns */
+@media(max-width:400px){
   .ls-kg{min-width:52px;font-size:14px;}
   .ls-reps{min-width:40px;font-size:14px;}
-  .ls-step{width:22px;}
-  .ls-num{display:none;}
+  .ls-step{width:20px;}
+  .ls-done{width:40px;}
+  .ls-num{min-width:0;font-size:9px;}
+}
+@media(max-width:345px){
+  .ls-x{display:none;}
+  .ls-kg{min-width:46px;font-size:13px;}
+  .ls-reps{min-width:34px;font-size:13px;}
+  .ls-step{width:19px;}
+  .ls-done{width:38px;}
 }
 .lsq{
   display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;
@@ -3260,6 +3275,12 @@ const T = {
     co_empty_week: 'Inga pass med övningar att dela än',
     co_loose: 'Lösa pass',
     co_copy: 'Kopiera passet',
+    sync_bad_len: 'Nyckeln ska vara 16 tecken efter MP – kontrollera att du fått med hela.',
+    sync_bad_chars: (ch) => `Nyckeln innehåller tecken som aldrig används: ${ch}. Nycklar innehåller varken I, L, O, 0 eller 1 – lätt att blanda ihop med J, 7 eller Q.`,
+    co_all_dupes: (n) => `Du har redan ${n === 1 ? 'det passet' : `de ${n} passen`} i listan`,
+    cp_start: 'Starta passet',
+    cp_sets: (n) => `${n} set`,
+    cp_no_sets: 'inga set angivna',
     co_copy_suffix: ' (kopia)',
     co_get_empty: 'Koden gäller men passet kunde inte läsas – det kan ha skapats i en äldre version. Be din adept skapa en ny kod.',
     co_week_label: 'Vecka (valfritt – grupperar passet)',
@@ -3721,6 +3742,12 @@ const T = {
     co_empty_week: 'No workouts with exercises to share yet',
     co_loose: 'Loose workouts',
     co_copy: 'Copy workout',
+    sync_bad_len: 'The key should be 16 characters after MP – check that you copied all of it.',
+    sync_bad_chars: (ch) => `The key contains characters that cannot occur: ${ch}. Keys never use I, L, O, 0 or 1 – check for a misread character.`,
+    co_all_dupes: (n) => `You already have ${n === 1 ? 'that workout' : `those ${n} workouts`} in your list`,
+    cp_start: 'Start workout',
+    cp_sets: (n) => `${n} sets`,
+    cp_no_sets: 'no sets specified',
     co_copy_suffix: ' (copy)',
     co_get_empty: 'The code is valid but the workout could not be read – it may have been created in an older version. Ask for a new code.',
     co_week_label: 'Week (optional – groups the workout)',
@@ -4680,22 +4707,63 @@ function renderLogUI(){
 
 // ══ MOTTAGNA PASS: bibliotek av delade pass hos adepten ════════════
 let inbox = loadJSON('mp_inbox_v1', []);
-function saveInbox(){ try{ localStorage.setItem('mp_inbox_v1', JSON.stringify(inbox)); }catch(e){} }
+let inboxUpdated = parseInt(localStorage.getItem('mp_inbox_upd') || '0', 10) || 0;
+function saveInbox(){
+  inboxUpdated = Date.now();
+  try{
+    localStorage.setItem('mp_inbox_v1', JSON.stringify(inbox));
+    localStorage.setItem('mp_inbox_upd', String(inboxUpdated));
+  }catch(e){}
+  if(typeof scheduleSync === 'function') scheduleSync();
+}
+// Fingeravtryck för ett pass – används för att inte importera samma pass två gånger
+function inboxSig(name, ex){
+  return (name || '') + '|' + (ex || []).map(e =>
+    e.name + ':' + (e.sets || []).map(s => `${s.kg||0}x${s.reps||0}`).join(',')
+  ).join('|');
+}
 function inboxAdd(workout, from){
-  if(!workout || typeof workout !== 'object') return;
+  if(!workout || typeof workout !== 'object') return false;
   const ex = Array.isArray(workout.ex) ? workout.ex.map(e => ({
     name: (e && e.name) ? e.name : '',
     sets: Array.isArray(e && e.sets) ? e.sets.map(s => ({ kg: s&&s.kg, reps: s&&s.reps })) : []
   })).filter(e => e.name) : [];
+  const name = workout.name || 'Pass';
+  const sig = inboxSig(name, ex);
+  // Redan hämtat? Hoppa över i stället för att lägga till en dubblett.
+  if(inbox.some(w => (w.sig || inboxSig(w.name, w.ex)) === sig)) return false;
   inbox.unshift({
     id: 'in' + Date.now() + Math.floor(Math.random()*1000),
-    name: workout.name || 'Pass',
+    name,
     from: from || '',
     ex,
+    sig,
     added: Date.now()
   });
   saveInbox();
+  return true;
 }
+// Översikt över ett mottaget pass – visas innan man startar det
+function previewInbox(id){
+  const w = inbox.find(x=>x.id===id);
+  if(!w) return;
+  const totalSets = w.ex.reduce((n,e)=>n+e.sets.length, 0);
+  const body = `
+    <div class="cp-sub">${w.from ? escapeHtml(t('inbox_from', w.from)) + ' · ' : ''}${t('co_ex_count', w.ex.length)} · ${t('cp_sets', totalSets)}</div>
+    <div class="cp-list">
+      ${w.ex.map(e => `
+        <div class="cp-ex">
+          <div class="cp-ex-name">${escapeHtml(e.name)}</div>
+          <div class="cp-sets">${e.sets.length
+            ? e.sets.map(s => `${s.kg!==''&&s.kg!=null?rkg(s.kg):'–'}×${s.reps!==''&&s.reps!=null?s.reps:'–'}`).join('  ·  ')
+            : '<span class="cp-empty">' + t('cp_no_sets') + '</span>'}</div>
+        </div>`).join('')}
+    </div>
+    <button class="coach-btn wide" onclick="closeCoachModal();startInboxWorkout('${w.id}')">▶ ${t('cp_start')}</button>
+    <button class="coach-btn wide ghost" onclick="closeCoachModal()">${t('co_close')}</button>`;
+  showCoachModal(escapeHtml(w.name), body);
+}
+
 // Starta ett mottaget pass som ett vanligt, redigerbart pass i loggen
 function startInboxWorkout(id){
   const w = inbox.find(x=>x.id===id);
@@ -5090,9 +5158,15 @@ async function redeemPassCode(code){
         <button class="coach-btn wide ghost" onclick="closeCoachModal()">${t('co_close')}</button>`);
       return;
     }
-    const before = inbox.length;
-    list.forEach(w => inboxAdd(w, j.title || ''));
-    const added = inbox.length - before;
+    let added = 0, dupes = 0;
+    list.forEach(w => { if(inboxAdd(w, root.title || j.title || '')) added++; else dupes++; });
+    if(!added){
+      // Allt fanns redan – säg det i stället för att skapa dubbletter
+      if(currentView !== 'log') switchView('log'); else renderSessionPanel();
+      switchLogTab(0, null);
+      showUndoToast(t('co_all_dupes', dupes), t('undo_close'), ()=>{});
+      return;
+    }
     if(currentView !== 'log') switchView('log'); else renderSessionPanel();
     switchLogTab(0, null);
     showUndoToast(added > 1 ? t('co_week_imported', added) : t('co_imported', list[0].name || ''), t('undo_close'), ()=>{});
@@ -5248,7 +5322,7 @@ function renderSessionPanel(){
       h += `<div class="inbox-wrap"><div class="inbox-head">📥 ${t('inbox_title')}</div>`;
       inbox.forEach(w => {
         h += `<div class="inbox-item">
-          <button class="inbox-main" onclick="startInboxWorkout('${w.id}')">
+          <button class="inbox-main" onclick="previewInbox('${w.id}')">
             <span class="inbox-name">${escapeHtml(w.name)}</span>
             <span class="inbox-meta">${w.from ? t('inbox_from', escapeHtml(w.from)) + ' · ' : ''}${t('co_ex_count', w.ex.length)}</span>
           </button>
@@ -7157,13 +7231,25 @@ async function syncNow(interactive){
       try{ localStorage.setItem('mp_coach_v1', JSON.stringify(coachData)); }catch(e){}
       if(currentView === 'coach') renderCoach();
     }
-    // Pusha om molnet saknar något (logg ELLER coach)
+    // Mottagna pass (inbox): senaste ändringen vinner, precis som coach-datan
+    const remoteInbox = cloud && cloud.inbox ? cloud.inbox : null;
+    if(remoteInbox && Array.isArray(remoteInbox.items) && (remoteInbox.updated || 0) > inboxUpdated){
+      inbox = remoteInbox.items;
+      inboxUpdated = remoteInbox.updated || 0;
+      try{
+        localStorage.setItem('mp_inbox_v1', JSON.stringify(inbox));
+        localStorage.setItem('mp_inbox_upd', String(inboxUpdated));
+      }catch(e){}
+      if(currentView === 'log') renderSessionPanel();
+    }
+    // Pusha om molnet saknar något (logg, coach ELLER mottagna pass)
     const coachStale = !remoteCoach || (coachData.updated || 0) > (remoteCoach.updated || 0);
-    if(logFingerprint(merged) !== logFingerprint(remote) || coachStale){
+    const inboxStale = !remoteInbox || inboxUpdated > (remoteInbox.updated || 0);
+    if(logFingerprint(merged) !== logFingerprint(remote) || coachStale || inboxStale){
       const push = await fetch(`${SYNC_API_URL}/sync?key=${syncState.key}`, {
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ ...merged, coach: coachData }),
+        body: JSON.stringify({ ...merged, coach: coachData, inbox: { items: inbox, updated: inboxUpdated } }),
       });
       if(!push.ok) throw new Error('HTTP ' + push.status);
     }
@@ -7230,10 +7316,25 @@ function createSyncKey(){
   renderSyncPanel();
   syncNow(true);
 }
+// Plockar ut nyckeln ur vad användaren än klistrat in: mellanslag, radbrytningar,
+// smarta streck (– —), gemener och saknat MP-prefix ska alla fungera.
+function normalizeSyncKey(raw){
+  const s = String(raw || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  const body = s.startsWith('MP') ? s.slice(2) : s;
+  if(body.length !== 16) return null;
+  return 'MP-' + body.match(/.{4}/g).join('-');
+}
 function connectSyncKey(){
   const inp = document.getElementById('sync-key-input');
-  const key = (inp.value || '').trim().toUpperCase();
-  if(!SYNC_KEY_RE.test(key)){ setSyncStatus(t('sync_bad_key')); return; }
+  const key = normalizeSyncKey(inp.value);
+  if(!key){ setSyncStatus(t('sync_bad_len')); return; }
+  if(!SYNC_KEY_RE.test(key)){
+    // Peka ut exakt vilka tecken som inte kan ingå i en nyckel
+    const bad = [...new Set(key.replace(/^MP|-/g,'').split('').filter(ch => !/[A-HJ-NP-Z2-9]/.test(ch)))];
+    setSyncStatus(bad.length ? t('sync_bad_chars', bad.join(' ')) : t('sync_bad_key'));
+    return;
+  }
+  inp.value = key;
   syncState.key = key; syncState.lastSync = 0; saveSyncState();
   syncKeyVisible = false;
   renderSyncPanel();
