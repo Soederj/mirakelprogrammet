@@ -1053,8 +1053,8 @@ input.q-range.set::-moz-range-thumb{background:var(--lime);}
    så att ✓ alltid får plats på samma rad som kg och reps. */
 .ls-grp{display:flex;align-items:center;gap:4px;flex:1 1 0;min-width:0;}
 /* vikten behöver plats för "242,5" – repsfältet klarar sig på två tecken */
-.ls-grp.kgg{flex:1.35 1 0;}
-.ls-grp.repsg{flex:1.1 1 0;}
+.ls-grp.kgg{flex:1.2 1 0;}
+.ls-grp.repsg{flex:1 1 0;}
 .ls-grp .ls-kg,.ls-grp .ls-reps{width:100%;min-width:0;flex:1 1 auto;}
 .ls-num,.ls-x,.ls-actions,.ls-step{flex-shrink:0;}
 .ls-actions{display:flex;align-items:center;gap:6px;flex-shrink:0;}
@@ -1067,9 +1067,9 @@ html,body{overflow-x:hidden;max-width:100vw;}
   .ls-num{min-width:14px;font-size:10px;}
   .ls-grp{gap:3px;}
   .ls-step{width:22px;height:40px;font-size:14px;border-radius:6px;}
-  .ls-kg,.ls-reps{width:auto;padding:9px 2px;font-size:15px;border-radius:8px;letter-spacing:0;}
-  .ls-kg{min-width:60px;}
-  .ls-reps{min-width:46px;}
+  .ls-kg,.ls-reps{width:auto;padding:9px 1px;font-size:15px;border-radius:8px;letter-spacing:0;}
+  .ls-kg{min-width:58px;}
+  .ls-reps{min-width:50px;}
   .ls-x{font-size:9px;}
   .ls-actions{gap:4px;}
   .ls-done{width:44px;height:40px;font-size:16px;}
@@ -1107,8 +1107,8 @@ html,body{overflow-x:hidden;max-width:100vw;}
 }
 /* iPhone mini/SE och zoomad display: krymp allt utom fälten så siffrorna syns */
 @media(max-width:400px){
-  .ls-kg{min-width:52px;font-size:14px;}
-  .ls-reps{min-width:40px;font-size:14px;}
+  .ls-kg{min-width:50px;font-size:14px;}
+  .ls-reps{min-width:44px;font-size:14px;}
   .ls-step{width:20px;}
   .ls-done{width:40px;}
   .ls-num{min-width:0;font-size:9px;}
@@ -1116,7 +1116,7 @@ html,body{overflow-x:hidden;max-width:100vw;}
 @media(max-width:345px){
   .ls-x{display:none;}
   .ls-kg{min-width:46px;font-size:13px;}
-  .ls-reps{min-width:34px;font-size:13px;}
+  .ls-reps{min-width:40px;font-size:13px;}
   .ls-step{width:19px;}
   .ls-done{width:38px;}
 }
@@ -5360,7 +5360,7 @@ function renderSessionPanel(){
       <button class="prog-quick-btn" onclick="switchView('coach')">🧑‍🏫 ${t('co_entry')}</button>
       <button class="prog-quick-btn" onclick="promptPassCode()">📥 ${t('co_redeem')}</button>
     </div>`;
-    panel.innerHTML = h;
+    panel.innerHTML = h; requestAnimationFrame(fitAllNumFields);
     return;
   }
   let h = `<div class="ls-head">
@@ -5412,7 +5412,7 @@ function renderSessionPanel(){
     <button class="ls-finish" onclick="finishSession()">${t('log_finish')}</button>
     <button class="ls-cancel" onclick="cancelSession()">${t('log_cancel')}</button>
   </div>`;
-  panel.innerHTML = h;
+  panel.innerHTML = h; requestAnimationFrame(fitAllNumFields);
   sessionTicker = setInterval(()=>{
     if(!activeSession) return;
     const el = document.getElementById('ls-elapsed');
@@ -5457,6 +5457,8 @@ function onLogSetInput(ei, si, field, val){
   const s = activeSession.ex[ei].sets[si];
   s[field] = val === '' ? '' : parseFloat(val);
   unsuggest(ei, si);
+  const row = document.getElementById(`lsr-${ei}-${si}`);
+  if(row) fitNumField(row.querySelector(field === 'kg' ? '.ls-kg' : '.ls-reps'));
   const e1 = document.getElementById(`lse-${ei}-${si}`);
   if(e1) e1.textContent = setMetaLine(s);
   saveActive();
@@ -5544,6 +5546,32 @@ function applyComebackDrop(days){
 window.addEventListener('DOMContentLoaded', ()=>{ setTimeout(checkComeback, 100); });
 
 // ── VYVÄXLING (bottennav) ─────────────────────────────────────────
+// ── SIFFERPASSNING: krymp texten om värdet inte får plats i rutan ────
+// (Bättre att "15" visas något mindre än att andra siffran klipps bort.)
+let _fitCtx = null;
+function fitNumField(el){
+  if(!el || el.value === '' || el.value == null) return;
+  if(!_fitCtx) _fitCtx = document.createElement('canvas').getContext('2d');
+  el.style.fontSize = '';                       // börja om från CSS-storleken
+  const cs = getComputedStyle(el);
+  const pad = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+  const avail = el.clientWidth - pad - 1;
+  if(avail <= 0) return;
+  let fs = parseFloat(cs.fontSize) || 15;
+  let guard = 0;
+  while(guard++ < 12){
+    _fitCtx.font = `${cs.fontWeight} ${fs}px ${cs.fontFamily}`;
+    if(_fitCtx.measureText(String(el.value)).width <= avail || fs <= 8.5) break;
+    fs -= 0.75;
+  }
+  el.style.fontSize = fs + 'px';
+}
+function fitAllNumFields(){
+  document.querySelectorAll('.ls-kg,.ls-reps,.cb-kg,.cb-reps').forEach(fitNumField);
+}
+window.addEventListener('resize', ()=>requestAnimationFrame(fitAllNumFields));
+window.addEventListener('orientationchange', ()=>setTimeout(fitAllNumFields, 250));
+
 // ── APPKÄNSLA: ingen zoom + markera hela värdet när man tar i ett fält ─
 (function(){
   // iOS Safari ignorerar user-scalable=no – blockera pinch-gesterna direkt.
@@ -6199,7 +6227,7 @@ function stepLogKg(ei, si, delta){
   s.kg = next;
   const row = document.getElementById(`lsr-${ei}-${si}`);
   const inp = row ? row.querySelector('.ls-kg') : null;
-  if(inp) inp.value = next;
+  if(inp){ inp.value = next; fitNumField(inp); }
   const e1 = document.getElementById(`lse-${ei}-${si}`);
   if(e1) e1.textContent = setMetaLine(s);
   saveActive();
@@ -6214,7 +6242,7 @@ function stepLogReps(ei, si, delta){
   s.reps = next;
   const row = document.getElementById(`lsr-${ei}-${si}`);
   const inp = row ? row.querySelector('.ls-reps') : null;
-  if(inp) inp.value = next;
+  if(inp){ inp.value = next; fitNumField(inp); }
   const e1 = document.getElementById(`lse-${ei}-${si}`);
   if(e1) e1.textContent = setMetaLine(s);
   saveActive();
@@ -6623,7 +6651,7 @@ function renderWorkoutEditor(){
       <button class="ls-cancel" onclick="editingWorkout=null;renderHistory()">${t('log_cancel')}</button>
     </div>
   </div>`;
-  panel.innerHTML = h;
+  panel.innerHTML = h; requestAnimationFrame(fitAllNumFields);
 }
 function setEditDate(val){
   if(!val) return;
