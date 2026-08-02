@@ -685,13 +685,14 @@ footer{
 .inbox-item{display:flex;gap:6px;margin-bottom:8px;}
 .inbox-item:last-child{margin-bottom:0;}
 .inbox-main{
-  flex:1;display:flex;justify-content:space-between;align-items:center;gap:10px;
+  flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:3px;
   background:var(--ink2);border:1px solid var(--ink4);border-radius:11px;
-  padding:13px 15px;cursor:pointer;text-align:left;min-width:0;transition:border-color 0.15s;
+  padding:12px 15px;cursor:pointer;text-align:left;min-width:0;transition:border-color 0.15s;
 }
 .inbox-main:active{border-color:rgba(203,255,77,0.5);}
-.inbox-name{font-family:var(--sg);font-size:14px;font-weight:600;color:var(--cream);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.inbox-meta{font-family:var(--mono);font-size:9px;color:var(--dust2);letter-spacing:0.04em;flex-shrink:0;}
+/* namnet på egen rad – annars klämmer den långa metatexten ihop det på smala skärmar */
+.inbox-name{font-family:var(--sg);font-size:14px;font-weight:600;color:var(--cream);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.inbox-meta{font-family:var(--mono);font-size:9px;color:var(--dust2);letter-spacing:0.04em;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .inbox-del{background:var(--ink2);border:1px solid var(--ink4);border-radius:11px;color:var(--ink4);font-size:12px;cursor:pointer;width:42px;flex-shrink:0;}
 .inbox-del:active{color:#ff6b6b;background:rgba(255,80,80,0.1);}
 .prog-quick-row{display:flex;gap:10px;justify-content:center;margin:16px 0 4px;flex-wrap:wrap;}
@@ -3277,6 +3278,7 @@ const T = {
     co_copy: 'Kopiera passet',
     sync_bad_len: 'Nyckeln ska vara 16 tecken efter MP – kontrollera att du fått med hela.',
     sync_bad_chars: (ch) => `Nyckeln innehåller tecken som aldrig används: ${ch}. Nycklar innehåller varken I, L, O, 0 eller 1 – lätt att blanda ihop med J, 7 eller Q.`,
+    co_dupes_skipped: (n) => `${n} fanns redan`,
     co_all_dupes: (n) => `Du har redan ${n === 1 ? 'det passet' : `de ${n} passen`} i listan`,
     cp_start: 'Starta passet',
     cp_sets: (n) => `${n} set`,
@@ -3744,6 +3746,7 @@ const T = {
     co_copy: 'Copy workout',
     sync_bad_len: 'The key should be 16 characters after MP – check that you copied all of it.',
     sync_bad_chars: (ch) => `The key contains characters that cannot occur: ${ch}. Keys never use I, L, O, 0 or 1 – check for a misread character.`,
+    co_dupes_skipped: (n) => `${n} already there`,
     co_all_dupes: (n) => `You already have ${n === 1 ? 'that workout' : `those ${n} workouts`} in your list`,
     cp_start: 'Start workout',
     cp_sets: (n) => `${n} sets`,
@@ -4717,8 +4720,8 @@ function saveInbox(){
   if(typeof scheduleSync === 'function') scheduleSync();
 }
 // Fingeravtryck för ett pass – används för att inte importera samma pass två gånger
-function inboxSig(name, ex){
-  return (name || '') + '|' + (ex || []).map(e =>
+function inboxSig(name, ex, from){
+  return (from || '') + '\u2016' + (name || '') + '|' + (ex || []).map(e =>
     e.name + ':' + (e.sets || []).map(s => `${s.kg||0}x${s.reps||0}`).join(',')
   ).join('|');
 }
@@ -4729,9 +4732,10 @@ function inboxAdd(workout, from){
     sets: Array.isArray(e && e.sets) ? e.sets.map(s => ({ kg: s&&s.kg, reps: s&&s.reps })) : []
   })).filter(e => e.name) : [];
   const name = workout.name || 'Pass';
-  const sig = inboxSig(name, ex);
-  // Redan hämtat? Hoppa över i stället för att lägga till en dubblett.
-  if(inbox.some(w => (w.sig || inboxSig(w.name, w.ex)) === sig)) return false;
+  const sig = inboxSig(name, ex, from || '');
+  // Samma pass från samma leverans? Hoppa över. Ett pass med samma innehåll
+  // men ny vecka/avsändare räknas som en ny leverans och läggs till.
+  if(inbox.some(w => inboxSig(w.name, w.ex, w.from) === sig)) return false;
   inbox.unshift({
     id: 'in' + Date.now() + Math.floor(Math.random()*1000),
     name,
@@ -5169,7 +5173,9 @@ async function redeemPassCode(code){
     }
     if(currentView !== 'log') switchView('log'); else renderSessionPanel();
     switchLogTab(0, null);
-    showUndoToast(added > 1 ? t('co_week_imported', added) : t('co_imported', list[0].name || ''), t('undo_close'), ()=>{});
+    let msg = added > 1 ? t('co_week_imported', added) : t('co_imported', list[0].name || '');
+    if(dupes) msg += ' · ' + t('co_dupes_skipped', dupes);
+    showUndoToast(msg, t('undo_close'), ()=>{});
   }catch(e){
     coachError(e);
   }
@@ -6156,21 +6162,38 @@ function buildRepRecords(){
       });
     });
   });
+  // Gör tabellen monoton: rekordet för N reps = bästa vikt bland alla set
+  // med MINST N reps. Annars kan 140×2 räknas som rekord trots att du nyss
+  // gjorde 140×3, vilket ju är starkare.
+  Object.values(rec).forEach(byReps => {
+    const list = Object.keys(byReps).map(Number).sort((a,b)=>b-a);   // flest reps först
+    let pb = 0, pbDate = null, yb = 0, ybDate = null;
+    list.forEach(r => {
+      const o = byReps[r];
+      if(o.pb > pb){ pb = o.pb; pbDate = o.pbDate; } else { o.pb = pb; o.pbDate = pbDate; }
+      if(o.yb > yb){ yb = o.yb; ybDate = o.ybDate; } else { o.yb = yb; o.ybDate = ybDate; }
+    });
+  });
   repRecordsCache = rec;
   return rec;
 }
 
 function checkSetRecord(exName, kg, reps, ei, si){
   if(!(kg > 0 && reps > 0)) return null;
-  const rec = buildRepRecords();
-  let pb = rec[exName]?.[reps]?.pb ?? 0;
-  let yb = rec[exName]?.[reps]?.yb ?? 0;
+  const byReps = buildRepRecords()[exName] || {};
+  let pb = 0, yb = 0;
+  // Alla tidigare set med MINST lika många reps sätter ribban
+  Object.keys(byReps).forEach(k => {
+    if(Number(k) < reps) return;
+    if(byReps[k].pb > pb) pb = byReps[k].pb;
+    if(byReps[k].yb > yb) yb = byReps[k].yb;
+  });
   // Räkna även in tidigare avbockade set i pågående pass
   activeSession.ex.forEach((e, i) => {
     if(e.name !== exName) return;
     e.sets.forEach((s, j) => {
       if(i === ei && j === si) return;
-      if(s.done && s.reps === reps && s.kg > 0){
+      if(s.done && s.reps >= reps && s.kg > 0 && !qFail(s.q)){
         if(s.kg > pb) pb = s.kg;
         if(s.kg > yb) yb = s.kg;
       }
