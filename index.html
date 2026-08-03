@@ -1056,7 +1056,7 @@ input.q-range.set::-moz-range-thumb{background:var(--lime);}
 /* vikten behöver plats för "242,5" – repsfältet klarar sig på två tecken */
 .ls-grp.kgg{flex:1.2 1 0;}
 .ls-grp.repsg{flex:1 1 0;}
-.ls-grp .ls-kg,.ls-grp .ls-reps{width:100%;min-width:0;flex:1 1 auto;}
+.ls-grp .ls-kg,.ls-grp .ls-reps{width:auto;flex:1 1 0;min-width:46px;}
 .ls-num,.ls-x,.ls-actions,.ls-step{flex-shrink:0;}
 .ls-actions{display:flex;align-items:center;gap:6px;flex-shrink:0;}
 .ls-row{flex-wrap:wrap;}
@@ -1069,8 +1069,8 @@ html,body{overflow-x:hidden;max-width:100vw;}
   .ls-grp{gap:3px;}
   .ls-step{width:22px;height:40px;font-size:14px;border-radius:6px;}
   .ls-kg,.ls-reps{width:auto;padding:9px 1px;font-size:15px;border-radius:8px;letter-spacing:0;}
-  .ls-kg{min-width:58px;}
-  .ls-reps{min-width:50px;}
+  .ls-grp .ls-kg{min-width:58px;}
+  .ls-grp .ls-reps{min-width:50px;}
   .ls-x{font-size:9px;}
   .ls-actions{gap:4px;}
   .ls-done{width:44px;height:40px;font-size:16px;}
@@ -1108,16 +1108,18 @@ html,body{overflow-x:hidden;max-width:100vw;}
 }
 /* iPhone mini/SE och zoomad display: krymp allt utom fälten så siffrorna syns */
 @media(max-width:400px){
-  .ls-kg{min-width:50px;font-size:14px;}
-  .ls-reps{min-width:44px;font-size:14px;}
+  .ls-grp .ls-kg{min-width:50px;}
+  .ls-grp .ls-reps{min-width:44px;}
+  .ls-kg,.ls-reps{font-size:14px;}
   .ls-step{width:20px;}
   .ls-done{width:40px;}
   .ls-num{min-width:0;font-size:9px;}
 }
 @media(max-width:345px){
   .ls-x{display:none;}
-  .ls-kg{min-width:46px;font-size:13px;}
-  .ls-reps{min-width:40px;font-size:13px;}
+  .ls-grp .ls-kg{min-width:46px;}
+  .ls-grp .ls-reps{min-width:40px;}
+  .ls-kg,.ls-reps{font-size:13px;}
   .ls-step{width:19px;}
   .ls-done{width:38px;}
 }
@@ -1286,7 +1288,8 @@ body{padding-bottom:74px;}
   background:var(--lime);color:var(--ink);border:none;border-radius:100px;
   padding:7px 15px;cursor:pointer;font-weight:600;flex-shrink:0;
 }
-.ls-rec{font-size:13px;flex-shrink:0;min-width:18px;text-align:center;}
+.ls-rec{font-size:12px;flex-shrink:0;line-height:1;}
+.ls-rec:empty{display:none;}
 .rlc-best{
   display:inline-block;font-family:var(--mono);font-size:9px;
   color:var(--lime);border:1px solid rgba(203,255,77,0.4);
@@ -1765,6 +1768,41 @@ body.light-mode .ls-sticky{background:rgba(248,246,240,0.92);}
 /* Klickbar idag-banner */
 #today-banner > div{cursor:pointer;transition:border-color 0.2s;}
 #today-banner > div:hover{border-color:rgba(203,255,77,0.5)!important;}
+
+/* ══ SETRADENS MOBILANPASSNING ══════════════════════════════════════
+   Ligger MEDVETET sist i stilmallen. Tidigare låg dessa regler före
+   basreglerna för .ls-row/.ls-num/.ls-done, och eftersom media queries
+   inte höjer specificiteten vann basreglerna – mobilanpassningen hade
+   alltså aldrig effekt. Därav klippta siffror på smala skärmar.        */
+@media(max-width:520px){
+  .ls-row{gap:4px;row-gap:8px;padding:7px 0;}
+  .ls-num{min-width:12px;font-size:10px;}
+  .ls-grp{gap:3px;}
+  .ls-step{width:22px;height:40px;font-size:14px;border-radius:6px;}
+  .ls-kg,.ls-reps{padding:9px 2px;font-size:15px;letter-spacing:0;}
+  .ls-grp .ls-kg{min-width:58px;}
+  .ls-grp .ls-reps{min-width:48px;}
+  .ls-x{font-size:9px;}
+  .ls-actions{gap:4px;}
+  .ls-done{width:44px;height:40px;font-size:16px;}
+  .ls-meta{padding-left:14px;gap:8px;}
+}
+@media(max-width:400px){
+  .ls-num{min-width:0;font-size:9px;}
+  .ls-step{width:20px;}
+  .ls-done{width:40px;}
+  .ls-kg,.ls-reps{font-size:14px;padding:9px 1px;}
+  .ls-grp .ls-kg{min-width:52px;}
+  .ls-grp .ls-reps{min-width:42px;}
+}
+@media(max-width:345px){
+  .ls-x{display:none;}
+  .ls-step{width:19px;}
+  .ls-done{width:38px;}
+  .ls-kg,.ls-reps{font-size:13px;}
+  .ls-grp .ls-kg{min-width:46px;}
+  .ls-grp .ls-reps{min-width:38px;}
+}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3S4C1Q1HZT"></script>
 <script>
@@ -5391,10 +5429,10 @@ function renderSessionPanel(){
         <span class="ls-x">×</span>
         <div class="ls-grp repsg"><button class="ls-step" onclick="stepLogReps(${ei},${si},-1)">−</button><input class="ls-reps" type="number" inputmode="numeric" min="0" value="${s.reps===''?'':s.reps}" placeholder="reps" oninput="onLogSetInput(${ei},${si},'reps',this.value)"><button class="ls-step" onclick="stepLogReps(${ei},${si},1)">+</button></div>
         <div class="ls-actions">
-          <span class="ls-rec" id="lrec-${ei}-${si}">${s.rec==='pb'?'🏆':s.rec==='yb'?'📅':''}</span>
           <button class="ls-done" onclick="toggleLogSet(${ei},${si})">✓</button>
         </div>
         <div class="ls-meta">
+          <span class="ls-rec" id="lrec-${ei}-${si}">${s.rec==='pb'?'🏆':s.rec==='yb'?'📅':''}</span>
           <span class="ls-e1rm" id="lse-${ei}-${si}">${setMetaLine(s)}</span>
           <span class="ls-meta-btns">
             <button class="ls-q${s.q?' filled':''}" id="lsqbtn-${ei}-${si}" onclick="toggleQPanel(${ei},${si})">${s.q?'★':'☆'}</button>
