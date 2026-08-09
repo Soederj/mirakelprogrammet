@@ -1551,13 +1551,33 @@ body.light-mode .ls-sticky{background:rgba(248,246,240,0.92);}
   font-family:var(--sg);font-size:12px;font-weight:600;color:var(--dust);
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;
 }
-.lss-eta{font-family:var(--mono);font-size:10px;color:var(--dust2);letter-spacing:0.04em;flex-shrink:0;}
+.lss-eta{font-family:var(--mono);font-size:10px;color:var(--dust2);letter-spacing:0.04em;flex-shrink:0;cursor:pointer;}
+.lss-eta:active{color:var(--lime);}
 .lh-dur{cursor:pointer;}
 .lh-dur:active{color:var(--lime);}
 .ls-ex{background:var(--ink3);border:1px solid var(--ink4);border-radius:14px;padding:18px;margin-bottom:14px;}
 .ls-ex-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;}
 .ls-ex-name{font-family:var(--sg);font-weight:600;font-size:15px;color:var(--cream);letter-spacing:0.02em;}
 .ls-ex-tools{display:flex;align-items:center;gap:2px;flex-shrink:0;}
+.ls-ex-move{
+  background:none;border:none;color:var(--dust2);font-size:11px;cursor:pointer;
+  padding:6px 5px;border-radius:7px;touch-action:manipulation;line-height:1;
+}
+.ls-ex-move:active:not(:disabled){background:var(--ink3);color:var(--lime);}
+.ls-ex-move:disabled{opacity:0.22;cursor:default;}
+.ls-bw{
+  background:none;border:1px solid var(--ink4);border-radius:7px;color:var(--dust2);
+  font-family:var(--mono);font-size:9px;letter-spacing:0.06em;cursor:pointer;
+  padding:5px 7px;touch-action:manipulation;line-height:1;
+}
+.ls-bw.on{color:var(--lime);border-color:rgba(203,255,77,0.5);background:rgba(203,255,77,0.1);}
+.ls-bw-note{
+  font-family:var(--mono);font-size:9.5px;color:var(--dust2);letter-spacing:0.04em;
+  margin:-6px 0 10px;cursor:pointer;
+}
+.ls-bw-note:active{color:var(--lime);}
+.ls-ex.moved{animation:exMoved 0.5s ease;}
+@keyframes exMoved{0%{background:rgba(203,255,77,0.16);}100%{background:var(--ink3);}}
 .ls-warm{background:none;border:none;font-size:14px;cursor:pointer;padding:6px 8px;border-radius:8px;opacity:0.75;touch-action:manipulation;}
 .ls-warm:active{opacity:1;background:rgba(255,170,68,0.12);}
 .ls-warm.on{opacity:1;background:rgba(255,170,68,0.16);box-shadow:inset 0 0 0 1px rgba(255,170,68,0.45);}
@@ -3314,6 +3334,16 @@ const T = {
     co_empty_week: 'Inga pass med övningar att dela än',
     co_loose: 'Lösa pass',
     co_copy: 'Kopiera passet',
+    ex_up: 'Flytta upp',
+    eta_how_comp: (n) => `baserat på ${n} tidigare pass med liknande övningar`,
+    eta_how_name: (n) => `baserat på ${n} pass med samma namn`,
+    eta_how_sets: (n) => `grovt: din vanliga tid per set (${n} pass)`,
+    bw_title: 'Kroppsviktsövning – vikten du skriver är EXTRA vikt',
+    bw_note: (kg) => `⊕ Kroppsvikt ${kg} – viktfältet är extra vikt (tryck för att ändra)`,
+    bw_prompt: 'Vad väger du? (används för att räkna belastning på chins, dips m.m.)',
+    bw_invalid: 'Ange en rimlig kroppsvikt',
+    ex_down: 'Flytta ner',
+    eta_title_rough: (n) => `Grovt estimat: din vanliga tid per set (${n} pass) × antal set i det här passet`,
     sync_bad_len: 'Nyckeln ska vara 16 tecken efter MP – kontrollera att du fått med hela.',
     sync_bad_chars: (ch) => `Nyckeln innehåller tecken som aldrig används: ${ch}. Nycklar innehåller varken I, L, O, 0 eller 1 – lätt att blanda ihop med J, 7 eller Q.`,
     co_dupes_skipped: (n) => `${n} fanns redan`,
@@ -3782,6 +3812,16 @@ const T = {
     co_empty_week: 'No workouts with exercises to share yet',
     co_loose: 'Loose workouts',
     co_copy: 'Copy workout',
+    ex_up: 'Move up',
+    eta_how_comp: (n) => `based on ${n} earlier sessions with similar exercises`,
+    eta_how_name: (n) => `based on ${n} sessions with the same name`,
+    eta_how_sets: (n) => `rough: your usual time per set (${n} sessions)`,
+    bw_title: 'Bodyweight exercise – the weight you enter is ADDED weight',
+    bw_note: (kg) => `⊕ Bodyweight ${kg} – the weight field is added weight (tap to change)`,
+    bw_prompt: 'What do you weigh? (used to calculate load on chins, dips etc.)',
+    bw_invalid: 'Enter a reasonable bodyweight',
+    ex_down: 'Move down',
+    eta_title_rough: (n) => `Rough estimate: your usual time per set (${n} sessions) × the number of sets in this workout`,
     sync_bad_len: 'The key should be 16 characters after MP – check that you copied all of it.',
     sync_bad_chars: (ch) => `The key contains characters that cannot occur: ${ch}. Keys never use I, L, O, 0 or 1 – check for a misread character.`,
     co_dupes_skipped: (n) => `${n} already there`,
@@ -5229,15 +5269,9 @@ function checkPassLink(){
 }
 
 // ── PASSTIDSESTIMAT: median av tidigare tider, outliers bortsållade ─
-function estimateDuration(name){
-  const durs = (logData.workouts || [])
-    .filter(w => w.name === name && w.dur > 0)
-    .map(w => w.dur)
-    .sort((a,b)=>a-b);
-  if(durs.length < 2) return null;
-  // Sålla bort orimliga tider: glömda avstängningar (>3h) och
-  // statistiska outliers via IQR-metoden.
-  const capped = durs.filter(d => d <= 3*3600);
+// Median av en lista, med orimliga tider och IQR-outliers bortsållade
+function cleanMedian(durs){
+  const capped = durs.filter(d => d <= 3*3600).sort((a,b)=>a-b);
   if(capped.length < 2) return null;
   const q = p => {
     const i = (capped.length - 1) * p, lo = Math.floor(i), hi = Math.ceil(i);
@@ -5247,8 +5281,83 @@ function estimateDuration(name){
   const clean = capped.filter(d => d >= q1 - 1.5*iqr && d <= q3 + 1.5*iqr);
   const use = clean.length ? clean : capped;
   const mid = Math.floor(use.length / 2);
-  const median = use.length % 2 ? use[mid] : (use[mid-1] + use[mid]) / 2;
-  return { mins: Math.round(median / 60), n: use.length };
+  return { val: use.length % 2 ? use[mid] : (use[mid-1] + use[mid]) / 2, n: use.length };
+}
+// Reservestimat: median-tid PER SET över hela historiken × antal planerade set.
+// Gör att även nya eller unikt namngivna pass får ett estimat.
+function estimateBySets(){
+  if(!activeSession) return null;
+  const perSet = (logData.workouts || [])
+    .filter(w => w.dur > 0 && w.dur <= 3*3600)
+    .map(w => {
+      const sets = (w.ex || []).reduce((n,e)=>n + (e.sets||[]).length, 0);
+      return sets >= 3 ? w.dur / sets : null;
+    })
+    .filter(v => v);
+  if(perSet.length < 3) return null;
+  const m = cleanMedian(perSet);
+  if(!m) return null;
+  const planned = activeSession.ex.reduce((n,e)=>n + e.sets.filter(s=>!s.warm).length, 0);
+  if(planned < 1) return null;
+  return { mins: Math.round(m.val * planned / 60), n: m.n, kind: 'sets', rough: true };
+}
+// Passets övningar som en normaliserad mängd
+function exSetOf(list){
+  return new Set((list || [])
+    .map(e => (e.name || '').toLowerCase().trim())
+    .filter(Boolean));
+}
+// Hitta tidigare pass som INNEHÅLLSMÄSSIGT liknar det pågående.
+// Klart bättre än att matcha på passnamn – importerade namn som
+// "Söndag förmiddag: rygg, rumpa, triceps etc." upprepas sällan exakt,
+// men övningsuppsättningen gör det.
+function estimateByComposition(){
+  if(!activeSession) return null;
+  const cur = exSetOf(activeSession.ex);
+  if(cur.size < 2) return null;                 // för tunt underlag ännu
+  const hits = [];
+  (logData.workouts || []).forEach(w => {
+    if(!(w.dur > 0 && w.dur <= 3*3600)) return;
+    const other = exSetOf(w.ex);
+    if(!other.size) return;
+    let inter = 0;
+    cur.forEach(n => { if(other.has(n)) inter++; });
+    // Symmetrisk likhet: straffar både saknade och extra övningar
+    if(inter / Math.max(cur.size, other.size) >= 0.5) hits.push(w.dur);
+  });
+  if(hits.length < 2) return null;
+  const m = cleanMedian(hits);
+  return m ? { mins: Math.round(m.val / 60), n: m.n, kind: 'comp' } : null;
+}
+function estimateByName(name){
+  if(!name) return null;
+  const durs = (logData.workouts || [])
+    .filter(w => w.name === name && w.dur > 0)
+    .map(w => w.dur);
+  if(durs.length < 3) return null;              // kräver riktigt underlag
+  const m = cleanMedian(durs);
+  return m ? { mins: Math.round(m.val / 60), n: m.n, kind: 'name' } : null;
+}
+// Estimatet är dyrt att räkna om vid varje omritning – cachea per uppsättning
+let _etaCache = { key: '', val: null };
+function estimateDuration(name){
+  if(!activeSession) return null;
+  const sets = activeSession.ex.reduce((n,e)=>n + e.sets.filter(s=>!s.warm).length, 0);
+  const key = activeSession.ex.map(e=>e.name).join('|') + '#' + sets + '#' + (name || '');
+  if(_etaCache.key === key) return _etaCache.val;
+  // 1) Liknande övningsuppsättning  2) exakt passnamn  3) din tid per set
+  const val = estimateByComposition() || estimateByName(name) || estimateBySets();
+  _etaCache = { key, val };
+  return val;
+}
+// Tryck på estimatet för att se vad det bygger på
+function explainEta(){
+  const e = estimateDuration(activeSession ? activeSession.name : '');
+  if(!e) return;
+  const how = e.kind === 'comp' ? t('eta_how_comp', e.n)
+            : e.kind === 'name' ? t('eta_how_name', e.n)
+            : t('eta_how_sets', e.n);
+  showUndoToast(`~${e.mins} ${t('eta_min')} · ${how}`, t('undo_close'), ()=>{});
 }
 
 // ── SKÄRMLÅS: håll skärmen vaken så länge ett pass pågår ────────────
@@ -5414,18 +5523,24 @@ function renderSessionPanel(){
   <div class="ls-sticky" id="ls-sticky">
     <span class="lss-time" id="lss-time">⏱ ${elapsedStr()}</span>
     <span class="lss-now" id="lss-now">${escapeHtml(currentExLabel())}</span>
-    ${(()=>{ const e = estimateDuration(activeSession.name); return e ? `<span class="lss-eta" title="${t('eta_title', e.n)}">~${e.mins} ${t('eta_min')}</span>` : ''; })()}
+    ${(()=>{ const e = estimateDuration(activeSession.name); return e ? `<span class="lss-eta" onclick="explainEta()">~${e.mins} ${t('eta_min')}</span>` : ''; })()}
   </div>`;
   activeSession.ex.forEach((e, ei)=>{
     h += `<div class="ls-ex"><div class="ls-ex-head"><span class="ls-ex-name">${escapeHtml(e.name)}</span>
       <span class="ls-ex-tools">
+        <button class="ls-ex-move" onclick="moveLogEx(${ei},-1)" ${ei===0?'disabled':''} title="${t('ex_up')}">▲</button>
+        <button class="ls-ex-move" onclick="moveLogEx(${ei},1)" ${ei===activeSession.ex.length-1?'disabled':''} title="${t('ex_down')}">▼</button>
+        <button class="ls-bw${e.bw?' on':''}" onclick="toggleBwEx(${ei})" title="${t('bw_title')}">kv</button>
         <button class="ls-warm${e.sets.some(s=>s.warm)?' on':''}" onclick="addWarmup(${ei})" title="${t('warm_title')}">🔥</button>
         <button class="ls-ex-del" onclick="removeLogEx(${ei})">✕</button>
       </span></div>`;
+    if(e.bw){
+      h += `<div class="ls-bw-note" onclick="editBwEx(${ei})">${t('bw_note', rkg(e.bwKg))}</div>`;
+    }
     e.sets.forEach((s, si)=>{
       h += `<div class="ls-row${s.done?' done':''}${s.sug?' sug':''}${s.warm?' warm':''}" id="lsr-${ei}-${si}">
         <span class="ls-num">${s.warm?'🔥':si+1}</span>
-        <div class="ls-grp kgg"><button class="ls-step" onclick="stepLogKg(${ei},${si},-2.5)">−</button><input class="ls-kg" type="number" inputmode="decimal" step="0.5" min="0" value="${s.kg===''?'':s.kg}" placeholder="kg" oninput="onLogSetInput(${ei},${si},'kg',this.value)"><button class="ls-step" onclick="stepLogKg(${ei},${si},2.5)">+</button></div>
+        <div class="ls-grp kgg"><button class="ls-step" onclick="stepLogKg(${ei},${si},-2.5)">−</button><input class="ls-kg" type="number" inputmode="decimal" step="0.5" ${e.bw?'':'min="0"'} value="${s.kg===''?'':s.kg}" placeholder="${e.bw?'+kg':'kg'}" oninput="onLogSetInput(${ei},${si},'kg',this.value)"><button class="ls-step" onclick="stepLogKg(${ei},${si},2.5)">+</button></div>
         <span class="ls-x">×</span>
         <div class="ls-grp repsg"><button class="ls-step" onclick="stepLogReps(${ei},${si},-1)">−</button><input class="ls-reps" type="number" inputmode="numeric" min="0" value="${s.reps===''?'':s.reps}" placeholder="reps" oninput="onLogSetInput(${ei},${si},'reps',this.value)"><button class="ls-step" onclick="stepLogReps(${ei},${si},1)">+</button></div>
         <div class="ls-actions">
@@ -5433,7 +5548,7 @@ function renderSessionPanel(){
         </div>
         <div class="ls-meta">
           <span class="ls-rec" id="lrec-${ei}-${si}">${s.rec==='pb'?'🏆':s.rec==='yb'?'📅':''}</span>
-          <span class="ls-e1rm" id="lse-${ei}-${si}">${setMetaLine(s)}</span>
+          <span class="ls-e1rm" id="lse-${ei}-${si}">${setMetaLine(s, e)}</span>
           <span class="ls-meta-btns">
             <button class="ls-q${s.q?' filled':''}" id="lsqbtn-${ei}-${si}" onclick="toggleQPanel(${ei},${si})">${s.q?'★':'☆'}</button>
             <button class="ls-del" onclick="removeLogSet(${ei},${si})">✕</button>
@@ -5482,8 +5597,55 @@ function platesLabel(kg){
   });
   return out.map(o => (o.n > 1 ? `${o.n}×${o.kg}` : `${o.kg}`)).join('+');
 }
-function setMetaLine(s){
-  return (s.kg > 0 && s.reps > 0) ? 'e1rm ' + rkg(Math.round(epley(s.kg, s.reps)*2)/2) : '';
+// ── KROPPSVIKTSÖVNINGAR: viktfältet betyder EXTRA vikt ──────────────
+// Chins med +20 kg belastar kroppsvikt + 20. e1RM räknas på totalen,
+// medan själva siffran du skriver (och rekorden) är den extra vikten –
+// precis som lyftare pratar: "chins +20 kg".
+let bodyWeight = parseFloat(localStorage.getItem('mp_bw_v1') || '') || 0;
+const BW_EX_RE = /chins?|pull-?up|pullup|dips?|armhäv|push-?up|muscle-?up|räck|hängande/i;
+function setBodyWeight(v){
+  bodyWeight = v;
+  try{ localStorage.setItem('mp_bw_v1', String(v)); }catch(e){}
+}
+function askBodyWeight(){
+  const v = prompt(t('bw_prompt'), bodyWeight ? String(bodyWeight) : '');
+  if(v === null) return 0;
+  const n = parseFloat(String(v).replace(',', '.'));
+  if(!(n > 20 && n < 400)){ showUndoToast(t('bw_invalid'), t('undo_close'), ()=>{}); return 0; }
+  setBodyWeight(n);
+  return n;
+}
+function toggleBwEx(ei){
+  const e = activeSession.ex[ei];
+  if(e.bw){ delete e.bw; delete e.bwKg; saveActive(); renderSessionPanel(); return; }
+  const bw = bodyWeight || askBodyWeight();
+  if(!bw) return;
+  e.bw = true; e.bwKg = bw;
+  saveActive(); renderSessionPanel();
+  if(navigator.vibrate) navigator.vibrate(10);
+}
+// Ändra kroppsvikten för en övning (t.ex. om den ändrats sedan sist)
+function editBwEx(ei){
+  const bw = askBodyWeight();
+  if(!bw) return;
+  const e = activeSession.ex[ei];
+  e.bwKg = bw; saveActive(); renderSessionPanel();
+}
+// Faktisk belastning: kroppsvikt + extra vikt för kroppsviktsövningar
+function effLoad(s, ex){
+  const add = parseFloat(s.kg);
+  const extra = isFinite(add) ? add : 0;
+  return (ex && ex.bw) ? (ex.bwKg || 0) + extra : extra;
+}
+function setMetaLine(s, ex){
+  const load = effLoad(s, ex);
+  if(!(load > 0 && s.reps > 0)) return '';
+  let out = 'e1rm ' + rkg(Math.round(epley(load, s.reps)*2)/2);
+  if(ex && ex.bw){
+    const extra = parseFloat(s.kg) || 0;
+    out += '  ·  ' + rkg(ex.bwKg) + (extra ? (extra > 0 ? '+' : '') + rkg(extra) : '') + ' = ' + rkg(load);
+  }
+  return out;
 }
 function currentExLabel(){
   if(!activeSession) return '';
@@ -5504,7 +5666,7 @@ function onLogSetInput(ei, si, field, val){
   const row = document.getElementById(`lsr-${ei}-${si}`);
   if(row) fitNumField(row.querySelector(field === 'kg' ? '.ls-kg' : '.ls-reps'));
   const e1 = document.getElementById(`lse-${ei}-${si}`);
-  if(e1) e1.textContent = setMetaLine(s);
+  if(e1) e1.textContent = setMetaLine(s, activeSession.ex[ei]);
   saveActive();
 }
 function nextPlannedKg(ei, si){
@@ -6290,7 +6452,7 @@ function stepLogKg(ei, si, delta){
   const inp = row ? row.querySelector('.ls-kg') : null;
   if(inp){ inp.value = next; fitNumField(inp); }
   const e1 = document.getElementById(`lse-${ei}-${si}`);
-  if(e1) e1.textContent = setMetaLine(s);
+  if(e1) e1.textContent = setMetaLine(s, activeSession.ex[ei]);
   saveActive();
   if(navigator.vibrate) navigator.vibrate(8);
 }
@@ -6305,7 +6467,7 @@ function stepLogReps(ei, si, delta){
   const inp = row ? row.querySelector('.ls-reps') : null;
   if(inp){ inp.value = next; fitNumField(inp); }
   const e1 = document.getElementById(`lse-${ei}-${si}`);
-  if(e1) e1.textContent = setMetaLine(s);
+  if(e1) e1.textContent = setMetaLine(s, activeSession.ex[ei]);
   saveActive();
   if(navigator.vibrate) navigator.vibrate(8);
 }
@@ -6438,6 +6600,20 @@ function removeLogSet(ei, si){
     }
   });
 }
+function moveLogEx(ei, dir){
+  const list = activeSession.ex;
+  const to = ei + dir;
+  if(to < 0 || to >= list.length) return;
+  [list[ei], list[to]] = [list[to], list[ei]];
+  saveActive();
+  renderSessionPanel();
+  if(navigator.vibrate) navigator.vibrate(10);
+  // Låt den flyttade övningen blinka till så man ser var den hamnade
+  requestAnimationFrame(()=>{
+    const el = document.querySelectorAll('.ls-ex')[to];
+    if(el){ el.classList.add('moved'); setTimeout(()=>el.classList.remove('moved'), 500); }
+  });
+}
 function removeLogEx(ei){
   const removed = activeSession.ex[ei];
   activeSession.ex.splice(ei,1);
@@ -6528,13 +6704,20 @@ function addLogEx(){
     logData.customEx.push({id:'c'+Date.now(), name});
     saveLogData();
   }
-  activeSession.ex.push({name, sets: suggestedSets(name)});
+  const ex = {name, sets: suggestedSets(name)};
+  if(BW_EX_RE.test(name)){
+    const bw = bodyWeight || askBodyWeight();
+    if(bw){ ex.bw = true; ex.bwKg = bw; }
+  }
+  activeSession.ex.push(ex);
   saveActive(); renderSessionPanel();
 }
 
 function finishSession(){
   const cleaned = activeSession.ex
-    .map(e=>({name:e.name, sets:e.sets.filter(s=>s.kg>0 && s.reps>0 && !s.sug).map(s=>({kg:s.kg, reps:s.reps, ...(s.q?{q:s.q}:{})}))}))
+    .map(e=>({name:e.name, ...(e.bw?{bw:1, bwKg:e.bwKg}:{}),
+      sets:e.sets.filter(s=>(e.bw ? (s.kg!=='' && s.kg!=null) : s.kg>0) && s.reps>0 && !s.sug)
+                 .map(s=>({kg:s.kg, reps:s.reps, ...(s.q?{q:s.q}:{})}))}))
     .filter(e=>e.sets.length);
   if(!cleaned.length){ alert(t('log_need_sets')); return; }
   logData.workouts.push({
