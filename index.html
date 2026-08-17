@@ -1633,6 +1633,13 @@ body.light-mode .ls-sticky{background:rgba(248,246,240,0.92);}
 .lh-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;}
 .lh-name{font-family:var(--sg);font-weight:600;font-size:15px;color:var(--cream);}
 .lh-date{font-family:var(--mono);font-size:10px;color:var(--dust2);letter-spacing:0.06em;}
+.lh-datepick{position:relative;display:inline-block;cursor:pointer;}
+.lh-datepick:active{color:var(--lime);}
+.lh-date-input{
+  position:absolute;inset:0;width:100%;height:100%;
+  opacity:0;border:none;padding:0;margin:0;background:none;
+  cursor:pointer;-webkit-appearance:none;appearance:none;
+}
 .lh-meta{font-family:var(--mono);font-size:10.5px;color:var(--dust);margin-top:7px;letter-spacing:0.04em;}
 .lh-detail{display:none;margin-top:14px;border-top:1px solid var(--ink4);padding-top:14px;}
 .lh-item.open .lh-detail{display:block;}
@@ -3287,6 +3294,10 @@ const T = {
     eta_min: 'min',
     eta_title: (n) => `Estimat baserat på dina ${n} senaste pass med samma namn`,
     dur_edit_title: 'Redigera tidsåtgång',
+    date_edit_title: 'Ändra datum för passet',
+    date_invalid: 'Ogiltigt datum',
+    date_future: 'Du kan inte lägga ett pass i framtiden',
+    date_changed: 'Datum ändrat',
     dur_add: 'lägg till tid',
     dur_prompt: 'Hur många minuter tog passet?',
     dur_invalid: 'Ange en tid mellan 0 och 600 minuter',
@@ -3765,6 +3776,10 @@ const T = {
     eta_min: 'min',
     eta_title: (n) => `Estimate based on your ${n} most recent sessions with the same name`,
     dur_edit_title: 'Edit duration',
+    date_edit_title: 'Change the date of this session',
+    date_invalid: 'Invalid date',
+    date_future: 'You cannot place a session in the future',
+    date_changed: 'Date changed',
     dur_add: 'add time',
     dur_prompt: 'How many minutes did the session take?',
     dur_invalid: 'Enter a time between 0 and 600 minutes',
@@ -5485,7 +5500,7 @@ function renderSessionPanel(){
       h += `</div>`;
     }
     h += `<button class="log-big-btn" onclick="startEmptySession()">${t('log_start_empty')}</button>`;
-    const ws = logData.workouts.slice().sort((a,b)=>b.id-a.id).slice(0,30);
+    const ws = logData.workouts.slice().sort((a,b)=>wTime(b)-wTime(a)).slice(0,30);
     const hasProg = Object.keys(progDays).length > 0;
     if(ws.length || hasProg){
       const loc = currentLang==='sv'?'sv-SE':'en-US';
@@ -6794,7 +6809,7 @@ function renderHistory(){
     )) return false;
     return true;
   });
-  ws.sort((a,b)=> histFilter.asc ? a.id-b.id : b.id-a.id);
+  ws.sort((a,b)=> histFilter.asc ? wTime(a)-wTime(b) : wTime(b)-wTime(a));
   const total = ws.length;
   const shown = Math.min(histFilter.limit, total);
   ws = ws.slice(0, histFilter.limit);
@@ -6810,7 +6825,7 @@ function renderHistory(){
     const vol = workoutVolume(w);
     h += `<div class="lh-item" id="lh-${w.id}" onclick="toggleHist(${w.id},event)">
       <div class="lh-top"><span class="lh-name">${w.comp?'🏆 ':''}${escapeHtml(w.name)}</span>
-        <span class="lh-date">${d.toLocaleDateString(loc,{weekday:'short',day:'numeric',month:'short',year:'numeric'})}<span class="lh-dur" onclick="editDur(${w.id},event)" title="${t('dur_edit_title')}">${w.dur>0?' · '+t('log_dur', Math.max(1,Math.round(w.dur/60)))+' ✎':' · + '+t('dur_add')}</span></span></div>
+        <span class="lh-date"><span class="lh-datepick" title="${t('date_edit_title')}">${d.toLocaleDateString(loc,{weekday:'short',day:'numeric',month:'short',year:'numeric'})} ✎<input type="date" class="lh-date-input" value="${isoDate(w.date)}" max="${isoDate(Date.now())}" onclick="event.stopPropagation()" onchange="editDate(${w.id},this.value,event)"></span><span class="lh-dur" onclick="editDur(${w.id},event)" title="${t('dur_edit_title')}">${w.dur>0?' · '+t('log_dur', Math.max(1,Math.round(w.dur/60)))+' ✎':' · + '+t('dur_add')}</span></span></div>
       <div class="lh-meta">${t('log_meta', w.ex.length, setsCount(w), fmtNum(dispVol(vol)), unitLabel())}</div>
       <div class="lh-detail">
         ${w.ex.map(e=>{
@@ -6835,6 +6850,39 @@ function renderHistory(){
     h += `<button class="hf-more" onclick="histShowMore()">${t('hf_show_more', total - histFilter.limit)}</button>`;
   }
   panel.innerHTML = h + ioButtons();
+}
+// ÅÅÅÅ-MM-DD ur ett datumvärde (för <input type="date">)
+function isoDate(v){
+  const d = new Date(v);
+  if(isNaN(d.getTime())) return '';
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+// Tidsstämpel för sortering: det redigerbara datumet i första hand
+function wTime(w){
+  const t0 = new Date(w.date).getTime();
+  return isNaN(t0) ? (w.id || 0) : t0;
+}
+// Flytta ett loggat pass till rätt datum (t.ex. glömt logga i går)
+function editDate(id, val, ev){
+  if(ev) ev.stopPropagation();
+  const w = logData.workouts.find(x => x.id === id);
+  if(!w) return;
+  const m = String(val || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if(!m){ showUndoToast(t('date_invalid'), t('undo_close'), ()=>{}); return; }
+  const prev = new Date(w.date);
+  const hh = isNaN(prev.getTime()) ? 12 : prev.getHours();
+  const mm = isNaN(prev.getTime()) ? 0 : prev.getMinutes();
+  const d = new Date(+m[1], +m[2]-1, +m[3], hh, mm);
+  if(isNaN(d.getTime())){ showUndoToast(t('date_invalid'), t('undo_close'), ()=>{}); return; }
+  if(d.getTime() > Date.now() + 3600000){ showUndoToast(t('date_future'), t('undo_close'), ()=>{}); return; }
+  const before = w.date;
+  w.date = d.toISOString();
+  saveLogData();                       // nollställer även rekordcachen
+  renderHistory();
+  if(navigator.vibrate) navigator.vibrate(12);
+  showUndoToast(t('date_changed'), t('undo_btn'), ()=>{
+    w.date = before; saveLogData(); renderHistory();
+  });
 }
 function editDur(id, ev){
   if(ev) ev.stopPropagation();
@@ -7223,8 +7271,8 @@ function renderStatChart(){
   const periodDays = parseInt(document.getElementById('st-period')?.value || '0', 10);
   const cutoff = periodDays > 0 ? Date.now() - periodDays*86400000 : 0;
   const ws = logData.workouts.slice()
-    .filter(w => new Date(w.date).getTime() >= cutoff)
-    .sort((a,b)=>a.id-b.id);
+    .filter(w => wTime(w) >= cutoff)
+    .sort((a,b)=>wTime(a)-wTime(b));
   const pts = [];
   let bestSet = null, bestE1 = 0, bestE1Set = null;
   ws.forEach(w=>{
