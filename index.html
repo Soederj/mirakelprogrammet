@@ -721,6 +721,13 @@ footer{
 .cp-sets{font-family:var(--mono);font-size:11px;color:var(--dust);line-height:1.5;}
 .cp-empty{color:var(--dust2);}
 .co-week{margin-bottom:16px;}
+.co-res{margin-top:26px;padding-top:18px;border-top:1px solid var(--ink3);}
+.coach-tpl-main .cc-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
+.coach-tpl-main .cc-meta{flex-shrink:0;}
+.res-lbl{font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--dust2);margin-right:4px;}
+.res-plan{opacity:0.6;margin-top:2px;}
+.res-tag{font-family:var(--mono);font-size:9px;letter-spacing:0.05em;color:#ffaa44;font-weight:400;}
+.res-missing .cp-ex-name{color:var(--dust);}
 .co-week-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;}
 .co-week-name{font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--lime);}
 .co-week-share{font-family:var(--mono);font-size:10px;letter-spacing:0.04em;background:rgba(203,255,77,0.12);color:var(--lime);border:1px solid rgba(203,255,77,0.45);border-radius:99px;padding:6px 12px;cursor:pointer;flex-shrink:0;}
@@ -3346,6 +3353,29 @@ const T = {
     co_loose: 'Lösa pass',
     co_copy: 'Kopiera passet',
     ex_up: 'Flytta upp',
+    ren_btn: 'Byt namn',
+    ren_prompt: 'Nytt namn på passet:',
+    ren_all: (n, old) => `${n} andra pass heter också "${old}".\n\nOK = byt namn på alla\nAvbryt = bara det här`,
+    ren_done: (n) => n > 1 ? `${n} pass har bytt namn` : 'Namn ändrat',
+    res_share: 'Dela med coach',
+    res_ready: 'Resultatet är delat!',
+    res_hint: 'Skicka koden till din coach. Coachen lägger in den under dig i coachläget. Koden gäller i 90 dagar.',
+    res_send: 'Skicka till coach',
+    res_share_text: (code, link) => `Här är mitt pass! Öppna ${link} eller lägg in koden ${code} under mig i coachläget.`,
+    co_results: 'Resultat från adepten',
+    co_add_result: 'Lägg in',
+    co_no_results: 'Inga resultat än. Be adepten trycka "Dela med coach" på ett pass i sin historik.',
+    co_res_prompt: 'Skriv in resultatkoden du fått:',
+    co_res_added: (n) => `Resultatet är inlagt under ${n}`,
+    co_res_dupe: 'Det resultatet finns redan inlagt',
+    co_res_pick: 'Vilken adept gäller det?',
+    co_res_no_athletes: 'Lägg till din adept i coachläget först, och lös sedan in koden igen.',
+    co_not_result: 'Det här är en passkod, inte en resultatkod. Lös in den under "Ta emot pass" i stället.',
+    res_done: 'gjort',
+    res_plan: 'plan',
+    res_skipped: 'ej gjord',
+    res_extra: 'tillagd',
+    res_compare: (n) => `jämfört med mallen ${n}`,
     eta_how_comp: (n) => `baserat på ${n} tidigare pass med liknande övningar`,
     eta_how_name: (n) => `baserat på ${n} pass med samma namn`,
     eta_how_sets: (n) => `grovt: din vanliga tid per set (${n} pass)`,
@@ -3828,6 +3858,29 @@ const T = {
     co_loose: 'Loose workouts',
     co_copy: 'Copy workout',
     ex_up: 'Move up',
+    ren_btn: 'Rename',
+    ren_prompt: 'New name for the session:',
+    ren_all: (n, old) => `${n} other sessions are also named "${old}".\n\nOK = rename all\nCancel = just this one`,
+    ren_done: (n) => n > 1 ? `${n} sessions renamed` : 'Name changed',
+    res_share: 'Share with coach',
+    res_ready: 'Result shared!',
+    res_hint: 'Send the code to your coach, who adds it under you in coach mode. The code is valid for 90 days.',
+    res_send: 'Send to coach',
+    res_share_text: (code, link) => `Here is my session! Open ${link} or add code ${code} under me in coach mode.`,
+    co_results: 'Results from the athlete',
+    co_add_result: 'Add',
+    co_no_results: 'No results yet. Ask the athlete to tap "Share with coach" on a session in their history.',
+    co_res_prompt: 'Enter the result code you received:',
+    co_res_added: (n) => `Result added under ${n}`,
+    co_res_dupe: 'That result is already added',
+    co_res_pick: 'Which athlete is it for?',
+    co_res_no_athletes: 'Add your athlete in coach mode first, then redeem the code again.',
+    co_not_result: 'This is a workout code, not a result code. Redeem it under "Receive a workout" instead.',
+    res_done: 'done',
+    res_plan: 'plan',
+    res_skipped: 'not done',
+    res_extra: 'added',
+    res_compare: (n) => `compared with template ${n}`,
     eta_how_comp: (n) => `based on ${n} earlier sessions with similar exercises`,
     eta_how_name: (n) => `based on ${n} sessions with the same name`,
     eta_how_sets: (n) => `rough: your usual time per set (${n} sessions)`,
@@ -4978,6 +5031,20 @@ function renderCoachAthlete(st){
     </div>
     ${groupsHtml}
     <button class="coach-btn wide" onclick="newTemplate('${ath.id}')">${t('co_new_tpl')}</button>
+    <div class="co-res">
+      <div class="co-week-head"><span class="co-week-name">${t('co_results')}</span>
+        <button class="co-week-share" onclick="promptResultCode('${ath.id}')">📥 ${t('co_add_result')}</button></div>
+      ${(ath.results || []).length
+        ? ath.results.slice().sort((a,b) => (b.date || '').localeCompare(a.date || '')).map(r => `
+          <div class="coach-tpl">
+            <button class="coach-tpl-main" onclick="viewResult('${ath.id}','${r.id}')">
+              <span class="cc-name">${escapeHtml(r.name)}</span>
+              <span class="cc-meta">${r.date}${r.dur ? ' · ' + Math.round(r.dur/60) + ' min' : ''}</span>
+            </button>
+            <button class="coach-tpl-del" onclick="delResult('${ath.id}','${r.id}')">✕</button>
+          </div>`).join('')
+        : `<div class="coach-empty">${t('co_no_results')}</div>`}
+    </div>
     <button class="coach-del-athlete" onclick="delAthlete('${ath.id}')">${t('co_del_athlete')}</button>`;
 }
 function coachToList(){ coachView = { screen:'list' }; renderCoach(); }
@@ -5236,6 +5303,11 @@ async function redeemPassCode(code){
     let root = j;
     let guard = 0;
     while(root && root.workout && !Array.isArray(root.ex) && guard++ < 5){ root = root.workout; }
+    if(String((root && root.title) || j.title || '').startsWith('MPRES|')){
+      const parsed = parseShare(j);
+      if(parsed.list.length) routeResult(parsed, null);
+      return;
+    }
     // Normalisera till en lista av pass, oavsett format servern gav
     let list = [];
     if(Array.isArray(root.workouts)) list = root.workouts;
@@ -5273,6 +5345,130 @@ async function redeemPassCode(code){
     coachError(e);
   }
 }
+function parseShare(j){
+  let root = j, g = 0;
+  while(root && root.workout && !Array.isArray(root.ex) && g++ < 5) root = root.workout;
+  let list = [];
+  if(root && Array.isArray(root.workouts)) list = root.workouts;
+  else if(root && Array.isArray(root.ex)) list = [root];
+  else if(root && root.workout) list = [root.workout];
+  list = list.map(w => { let x = w, k = 0; while(x && x.workout && !Array.isArray(x.ex) && k++ < 5) x = x.workout; return x; })
+             .filter(w => w && Array.isArray(w.ex) && w.ex.length);
+  return { list, title: String((root && root.title) || (j && j.title) || '') };
+}
+
+// ── COACHENS SIDA: ta emot adeptens resultat ───────────────────────
+let pendingResult = null;
+function promptResultCode(aid){
+  const code = prompt(t('co_res_prompt'));
+  if(code) fetchResult(code, aid);
+}
+async function fetchResult(code, aid){
+  code = (code || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 5);
+  if(code.length !== 5){ showUndoToast(t('co_bad_code'), t('undo_close'), ()=>{}); return; }
+  showCoachModal(t('co_fetching'), '');
+  try{
+    const res = await fetch(SHARE_API_URL + '/get?code=' + code);
+    const j = await res.json().catch(()=>null);
+    if(!res.ok || !j || j.error) throw new Error((j && j.error) ? j.error : ('HTTP ' + res.status));
+    const parsed = parseShare(j);
+    if(!parsed.title.startsWith('MPRES|')){
+      showCoachModal(t('co_error_title'), `<p class="co-code-hint">${t('co_not_result')}</p>
+        <button class="coach-btn wide ghost" onclick="closeCoachModal()">${t('co_close')}</button>`);
+      return;
+    }
+    if(!parsed.list.length) throw new Error(t('co_get_empty'));
+    routeResult(parsed, aid);
+  }catch(e){ coachError(e); }
+}
+// Välj adept om det inte redan är givet
+function routeResult(parsed, aid){
+  pendingResult = parsed;
+  const list = coachData.athletes;
+  if(aid) return importPendingResult(aid);
+  if(!list.length){
+    showCoachModal(t('co_error_title'), `<p class="co-code-hint">${t('co_res_no_athletes')}</p>
+      <button class="coach-btn wide ghost" onclick="closeCoachModal()">${t('co_close')}</button>`);
+    return;
+  }
+  if(list.length === 1) return importPendingResult(list[0].id);
+  showCoachModal(t('co_res_pick'), list.map(a =>
+    `<button class="coach-btn wide" onclick="importPendingResult('${a.id}')">${escapeHtml(a.name)}</button>`).join('') +
+    `<button class="coach-btn wide ghost" onclick="closeCoachModal()">${t('co_close')}</button>`);
+}
+function importPendingResult(aid){
+  const ath = coachData.athletes.find(a => a.id === aid);
+  const p = pendingResult;
+  pendingResult = null;
+  if(!ath || !p) return;
+  const [, date, durMin] = p.title.split('|');
+  ath.results = ath.results || [];
+  let added = 0;
+  p.list.forEach(w => {
+    const ex = w.ex.map(e => ({ name: e.name, sets: (e.sets || []).map(s => ({ kg: s.kg, reps: s.reps })) }));
+    const sig = (date || '') + '|' + inboxSig(w.name, ex, '');
+    if(ath.results.some(r => r.sig === sig)) return;
+    ath.results.push({
+      id: 'r' + Date.now() + Math.floor(Math.random()*1000),
+      name: w.name || 'Pass', date: date || isoDate(Date.now()),
+      dur: (parseInt(durMin, 10) || 0) * 60, ex, sig, added: Date.now()
+    });
+    added++;
+  });
+  closeCoachModal();
+  if(!added){ showUndoToast(t('co_res_dupe'), t('undo_close'), ()=>{}); return; }
+  saveCoach();
+  coachView = { screen: 'athlete', athleteId: aid };
+  if(currentView !== 'coach') switchView('coach'); else renderCoach();
+  showUndoToast(t('co_res_added', ath.name), t('undo_close'), ()=>{});
+}
+function delResult(aid, rid){
+  const ath = coachData.athletes.find(a => a.id === aid);
+  if(!ath || !ath.results) return;
+  const idx = ath.results.findIndex(r => r.id === rid);
+  if(idx < 0) return;
+  const [removed] = ath.results.splice(idx, 1);
+  saveCoach(); renderCoach();
+  showUndoToast(t('inbox_removed'), t('undo_btn'), ()=>{
+    ath.results.splice(idx, 0, removed); saveCoach(); renderCoach();
+  });
+}
+// Kompakt setlista: 100×5, 100×5, 100×5 → "100×5 ×3"
+function fmtSets(sets){
+  const out = [];
+  (sets || []).forEach(s => {
+    const lbl = `${s.kg !== '' && s.kg != null ? rkg(s.kg) : '–'}×${s.reps !== '' && s.reps != null ? s.reps : '–'}`;
+    const last = out[out.length - 1];
+    if(last && last.lbl === lbl) last.n++; else out.push({ lbl, n: 1 });
+  });
+  return out.map(o => o.n > 1 ? `${o.lbl} ×${o.n}` : o.lbl).join('  ·  ');
+}
+// Visa resultatet – jämfört med mallen med samma namn om en sådan finns
+function viewResult(aid, rid){
+  const ath = coachData.athletes.find(a => a.id === aid);
+  const r = ath && (ath.results || []).find(x => x.id === rid);
+  if(!r) return;
+  const key = (r.name || '').toLowerCase().trim();
+  const plan = ath.templates.filter(tp => (tp.name || '').toLowerCase().trim() === key)
+                            .sort((a,b) => (b.id > a.id ? 1 : -1))[0];
+  const planMap = {};
+  if(plan) plan.ex.forEach(e => { planMap[e.name.toLowerCase().trim()] = e; });
+  const doneNames = new Set(r.ex.map(e => e.name.toLowerCase().trim()));
+  let body = `<div class="cp-sub">${r.date}${r.dur ? ' · ' + Math.round(r.dur/60) + ' min' : ''}${plan ? ' · ' + escapeHtml(t('res_compare', plan.name)) : ''}</div><div class="cp-list">`;
+  r.ex.forEach(e => {
+    const p = planMap[e.name.toLowerCase().trim()];
+    body += `<div class="cp-ex"><div class="cp-ex-name">${escapeHtml(e.name)}${plan && !p ? ` <span class="res-tag">${t('res_extra')}</span>` : ''}</div>
+      <div class="cp-sets"><span class="res-lbl">${t('res_done')}</span> ${fmtSets(e.sets)}</div>
+      ${p ? `<div class="cp-sets res-plan"><span class="res-lbl">${t('res_plan')}</span> ${fmtSets(p.sets)}</div>` : ''}</div>`;
+  });
+  if(plan) plan.ex.filter(e => !doneNames.has(e.name.toLowerCase().trim())).forEach(e => {
+    body += `<div class="cp-ex res-missing"><div class="cp-ex-name">${escapeHtml(e.name)} <span class="res-tag">${t('res_skipped')}</span></div>
+      <div class="cp-sets res-plan"><span class="res-lbl">${t('res_plan')}</span> ${fmtSets(e.sets)}</div></div>`;
+  });
+  body += `</div><button class="coach-btn wide ghost" onclick="closeCoachModal()">${t('co_close')}</button>`;
+  showCoachModal(escapeHtml(r.name), body);
+}
+
 function promptPassCode(){
   const code = prompt(t('co_redeem_prompt'));
   if(code) redeemPassCode(code);
@@ -5280,7 +5476,9 @@ function promptPassCode(){
 // Länk med #pass=KOD öppnar direkt import
 function checkPassLink(){
   const m = (location.hash || '').match(/pass=([A-Z0-9]{5})/i);
-  if(m){ history.replaceState(null,'',location.pathname); redeemPassCode(m[1]); }
+  if(m){ history.replaceState(null,'',location.pathname); redeemPassCode(m[1]); return; }
+  const r = (location.hash || '').match(/res=([A-Z0-9]{5})/i);
+  if(r){ history.replaceState(null,'',location.pathname); fetchResult(r[1], null); }
 }
 
 // ── PASSTIDSESTIMAT: median av tidigare tider, outliers bortsållade ─
@@ -6841,6 +7039,8 @@ function renderHistory(){
         <div class="lh-detail-btns">
           <button class="lh-rerun" onclick="rerunWorkout(${w.id},event)">${t('log_rerun')}</button>
           <button class="lh-rerun" onclick="editWorkout(${w.id},event)">✎ ${t('we_edit')}</button>
+          <button class="lh-rerun" onclick="renameWorkout(${w.id},event)">🏷 ${t('ren_btn')}</button>
+          <button class="lh-rerun" onclick="shareResult(${w.id},event)">📤 ${t('res_share')}</button>
           <button class="lh-del" onclick="deleteWorkout(${w.id},event)">✕ ${currentLang==='sv'?'Ta bort':'Delete'}</button>
         </div>
       </div>
@@ -6851,6 +7051,66 @@ function renderHistory(){
   }
   panel.innerHTML = h + ioButtons();
 }
+// ── BYT NAMN PÅ PASS ───────────────────────────────────────────────
+// Importerade namn ("Tisdag · Dag 2") återkommer ofta – därför erbjuds
+// att byta på alla pass med samma namn i ett svep.
+function renameWorkout(id, ev){
+  if(ev) ev.stopPropagation();
+  const w = logData.workouts.find(x => x.id === id);
+  if(!w) return;
+  const oldName = w.name || '';
+  const input = prompt(t('ren_prompt'), oldName);
+  if(input === null) return;
+  const newName = input.trim().slice(0, 80);
+  if(!newName || newName === oldName) return;
+  const same = logData.workouts.filter(x => x.id !== id && x.name === oldName);
+  let targets = [w];
+  if(same.length && confirm(t('ren_all', same.length, oldName))) targets = [w, ...same];
+  const backup = targets.map(x => [x, x.name]);
+  targets.forEach(x => { x.name = newName; });
+  saveLogData();
+  renderHistory();
+  if(navigator.vibrate) navigator.vibrate(12);
+  showUndoToast(t('ren_done', targets.length), t('undo_btn'), ()=>{
+    backup.forEach(([x, n]) => { x.name = n; });
+    saveLogData(); renderHistory();
+  });
+}
+
+// ── DELA RESULTAT MED COACHEN ──────────────────────────────────────
+// Adepten skickar ett loggat pass tillbaka som en kod. Samma mp-share-
+// worker som passen; titeln märks MPRES| så koden känns igen som resultat.
+async function shareResult(id, ev){
+  if(ev) ev.stopPropagation();
+  const w = logData.workouts.find(x => x.id === id);
+  if(!w) return;
+  const workout = {
+    name: w.name || 'Pass',
+    ex: w.ex.map(e => ({ name: e.name, sets: e.sets.map(s => ({ kg: s.kg, reps: s.reps })) }))
+  };
+  const title = `MPRES|${isoDate(w.date)}|${Math.round((w.dur || 0) / 60)}`;
+  showCoachModal(t('co_sending'), '');
+  try{
+    const res = await fetch(SHARE_API_URL + '/put', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ workouts: [workout], title })
+    });
+    const j = await res.json().catch(()=>null);
+    if(!res.ok || !j || !j.code) throw new Error((j && j.error) ? j.error : ('HTTP ' + res.status));
+    showCoachModal(t('res_ready'), `
+      <div class="co-code">${j.code}</div>
+      <p class="co-code-hint">${t('res_hint')}</p>
+      <button class="coach-btn wide" onclick="resultShareLink('${j.code}')">🔗 ${t('res_send')}</button>
+      <button class="coach-btn wide ghost" onclick="closeCoachModal()">${t('co_close')}</button>`);
+  }catch(e){ coachError(e); }
+}
+async function resultShareLink(code){
+  const link = 'https://mirakelprogrammet.se/#res=' + code;
+  const text = t('res_share_text', code, link);
+  if(navigator.share){ try{ await navigator.share({ text }); return; }catch(e){ if(e && e.name === 'AbortError') return; } }
+  try{ await navigator.clipboard.writeText(link); showUndoToast(t('co_copied'), t('undo_close'), ()=>{}); }catch(e){}
+}
+
 // ÅÅÅÅ-MM-DD ur ett datumvärde (för <input type="date">)
 function isoDate(v){
   const d = new Date(v);
